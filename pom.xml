@@ -76,6 +76,14 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.7.0</version>
 		</dependency>
+		
+		<!-- test(JUnit) -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<!-- deploy(server) -->
