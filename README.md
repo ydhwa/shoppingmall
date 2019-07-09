@@ -24,3 +24,4 @@
 ### 참고
 - <https://springboot.tistory.com/24>
 - <http://zetcode.com/springboot/postgresql/>
+- <https://www.postgresql.org/docs/9.1/datatype-enum.html>
