@@ -27,3 +27,4 @@
 - <https://www.postgresql.org/docs/9.1/datatype-enum.html>
 - <https://gompangs.tistory.com/entry/Spring-Springboot-JUnit-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8B%9C-%EC%84%A4%EC%A0%95>
 - <http://toby.epril.com/?p=1126>
+- <https://stackoverflow.com/questions/40356750/java-postgres-enums-how-do-i-make-them-work-together-for-update>
