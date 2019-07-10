@@ -16,19 +16,23 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	/*
+	 * 회원가입 성공 - 회원가입 성공한 멤버(MemberVo) 객체
+	 * 회원가입 실패 - 에러 메시지
+	 */
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public JSONResult join(@RequestBody MemberVo memberVo) {
-		// 성공 - 회원가입 성공한 멤버 객체
-		// 실패 - 에러 메시지
 		Object result = memberService.join(memberVo);
 		
 		return JSONResult.success(result);
 	}
 	
+	/*
+	 * 중복된 아이디 없음 - 입력했던 아이디
+	 * 중복된 아이디 있음 - 에러 메시지
+	 */
 	@RequestMapping(value="/username", method=RequestMethod.GET)
 	public JSONResult checkUsername(@RequestBody String username) {
-		// 성공 - 입력했던 아이디
-		// 실패 - 에러 메시지
 		Object result = memberService.checkUsername(username);
 		
 		return JSONResult.success(username);
