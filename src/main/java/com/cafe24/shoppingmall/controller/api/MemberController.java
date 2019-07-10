@@ -18,8 +18,8 @@ public class MemberController {
 
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public JSONResult join(@RequestBody MemberVo memberVo) {
-		// 회원가입 성공 - 회원가입 성공한 멤버 객체
-		// 회원가입 실패 - 에러 메시지
+		// 성공 - 회원가입 성공한 멤버 객체
+		// 실패 - 에러 메시지
 		Object result = memberService.join(memberVo);
 		
 		return JSONResult.success(result);
@@ -27,6 +27,9 @@ public class MemberController {
 	
 	@RequestMapping(value="/username", method=RequestMethod.GET)
 	public JSONResult checkUsername(@RequestBody String username) {
+		// 성공 - 입력했던 아이디
+		// 실패 - 에러 메시지
+		Object result = memberService.checkUsername(username);
 		
 		return JSONResult.success(username);
 	}

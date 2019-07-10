@@ -33,5 +33,10 @@ public class MemberService {
 	private boolean checkValidation(MemberVo memberVo) {
 		return false;
 	}
+	
+	public Object checkUsername(String username) {
+		
+		return username;
+	}
 
 }
