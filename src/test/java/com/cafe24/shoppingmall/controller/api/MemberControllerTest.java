@@ -19,12 +19,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.config.SwaggerConfig;
+import com.cafe24.shoppingmall.config.WebConfig;
 import com.cafe24.shoppingmall.vo.MemberVo;
+import com.cafe24.shoppingmall.vo.MemberVo.MemberRole;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {SwaggerConfig.class})
+@ContextConfiguration(classes = {WebConfig.class})
 @WebAppConfiguration
 public class MemberControllerTest {
 	private MockMvc mockMvc;
@@ -41,16 +42,17 @@ public class MemberControllerTest {
 	
 	@Test
 	public void testJoin() throws Exception {
-		MemberVo vo = new MemberVo("user1", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+		MemberVo memberVo = new MemberVo("user1", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+		memberVo.setRole(MemberRole.USER);
 		
 		ResultActions resultActions = mockMvc
-			.perform(post("/api/member/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(vo)));
+			.perform(post("/api/member/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 		
 			resultActions
 				.andExpect(status().isOk())
 				.andDo(print())
 				.andExpect(jsonPath("$.result", is("success")))
-				.andExpect(jsonPath("$.data.name", is(vo.getName())))
-				.andExpect(jsonPath("$.data.contents", is(vo.getName())));
+				.andExpect(jsonPath("$.data.username", is(memberVo.getUsername())))
+				.andExpect(jsonPath("$.data.name", is(memberVo.getName())));
 	}
 }

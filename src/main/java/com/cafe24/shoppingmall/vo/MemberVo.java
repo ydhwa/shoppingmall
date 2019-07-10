@@ -141,22 +141,21 @@ public class MemberVo {
 				+ phoneNumber + ", email=" + email + ", smsReception=" + smsReception + ", emailReception="
 				+ emailReception + ", savings=" + savings + ", status=" + status.toString() + ", role=" + role.toString() + "]";
 	}
-}
+	
+	public enum MemberStatus {
+		ENABLE("ENABLE"),
+		DISABLE("DISABLE");
 
-enum MemberStatus {
-	ENABLE("ENABLE"),
-	DISABLE("DISABLE");
+		private String str;
+		MemberStatus(String str) { this.str = str; }
+		public String toString() { return str; }
+	}
+	public enum MemberRole {
+		USER("USER"),
+		ADMIN("ADMIN");
 
-	private String str;
-	MemberStatus(String str) { this.str = str; }
-	public String toString() { return str; }
-}
-
-enum MemberRole {
-	USER("USER"),
-	ADMIN("ADMIN");
-
-	private String str;
-	MemberRole(String str) { this.str = str; }
-	public String toString() { return str; }
+		private String str;
+		MemberRole(String str) { this.str = str; }
+		public String toString() { return str; }
+	}
 }
