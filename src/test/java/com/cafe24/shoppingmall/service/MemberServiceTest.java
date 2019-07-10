@@ -3,7 +3,6 @@ package com.cafe24.shoppingmall.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +37,13 @@ public class MemberServiceTest {
 	public void testJoinFailureBecauseValidation() {
 		MemberVo memberVo = new MemberVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 		
-		assertEquals(memberService.join(memberVo), ExceptionMessage.WRONG_INPUT);
+		assertEquals(memberService.join(memberVo), ExceptionMessage.WRONG_INPUT.toString());
 	}
 	@Test
 	public void testJoinFailureBecauseMissingData() {
 		MemberVo memberVo = new MemberVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 		
-		assertEquals(memberService.join(memberVo), ExceptionMessage.MISSING_INPUT);
+		assertEquals(memberService.join(memberVo), ExceptionMessage.MISSING_INPUT.toString());
 	}
 	
 	@Test

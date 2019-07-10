@@ -28,9 +28,11 @@ public class MemberService {
 		return memberVo;
 	}
 	private boolean checkMissingData(MemberVo memberVo) {
+		
 		return false;
 	}
 	private boolean checkValidation(MemberVo memberVo) {
+		
 		return false;
 	}
 	
