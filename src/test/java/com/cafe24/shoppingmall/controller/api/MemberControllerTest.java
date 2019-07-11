@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import com.cafe24.shoppingmall.config.WebConfig;
 import com.cafe24.shoppingmall.exception.Message;
 import com.cafe24.shoppingmall.vo.MemberCheckDuplicateVo;
 import com.cafe24.shoppingmall.vo.MemberJoinVo;
+import com.cafe24.shoppingmall.vo.MemberLoginVo;
 import com.google.gson.Gson;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -88,7 +90,7 @@ public class MemberControllerTest {
 		ResultActions resultActions = mockMvc.perform(
 				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("failure")))
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(Message.USERNAME_DUPLICATED.toString())));
 	}
 	@Test
@@ -101,33 +103,33 @@ public class MemberControllerTest {
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 	
-//	@Test
-//	public void testLoginSuccessWithExistingAccount() throws Exception {
-//		MemberVo memberVo = new MemberVo("user", "asdf1234!");
-//
-//		ResultActions resultActions = mockMvc.perform(
-//				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
-//
-//		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-//				.andExpect(jsonPath("$.data", is("ok")));
-//	}
-//	@Test
-//	public void testLoginSuccessWithNonExistingAccount() throws Exception {
-//		MemberVo memberVo = new MemberVo("user", "asdf1234!");
-//
-//		ResultActions resultActions = mockMvc.perform(
-//				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
-//
-//		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-//				.andExpect(jsonPath("$.data", is("ok")));
-//	}
-//	@Test
-//	public void testLoginFailureBecauseInvalidData() throws Exception {
-//		MemberVo memberVo = new MemberVo("user", "asdf1234!");
-//
-//		ResultActions resultActions = mockMvc.perform(
-//				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
-//
-//		resultActions.andExpect(status().isBadRequest()).andDo(print());
-//	}
+	@Test
+	public void testLoginSuccessWithMatchingAccount() throws Exception {
+		MemberLoginVo memberVo = new MemberLoginVo("user", "asdf1234!");
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
+				.andExpect(jsonPath("$.data", is(Message.LOGIN_SUCCESS.toString())));
+	}
+	@Test
+	public void testLoginSuccessWithNotMatchingAccount() throws Exception {
+		MemberLoginVo memberVo = new MemberLoginVo("testuser", "asdf1234!");
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
+				.andExpect(jsonPath("$.data", is(Message.LOGIN_FAILURE.toString())));
+	}
+	@Test
+	public void testLoginFailureBecauseInvalidData() throws Exception {
+		MemberLoginVo memberVo = new MemberLoginVo("user**", "asdf1234!");
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+	}
 }
