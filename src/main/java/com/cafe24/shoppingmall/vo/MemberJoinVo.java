@@ -4,38 +4,42 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
-public class MemberVo {
+public class MemberJoinVo {
 	private Long no;				// 회원번호
-	@NotEmpty @Pattern(regexp = "[A-Za-z0-9_]{4,12}") @Length(min=4, max=12)
+	@NotBlank(message="아이디는 필수 입력 항목입니다.") 
+	@Pattern(regexp="[A-Za-z0-9_]{4,12}", message="아이디는 4자 이상 12자 이하의 알파벳, 숫자, _(언더바)를 이용하여 작성해야 합니다.") 
+	@Length(min=4, max=12, message="아이디는 4자 이상 12자 이하로 입력해야 합니다.")
 	private String username;		// 아이디
-	@NotEmpty @Pattern(regexp = "(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,20}") @Length(min=8, max=20)
+	@NotBlank(message="비밀번호는 필수 입력 항목입니다.") 
+	@Pattern(regexp="(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,20}", message="비밀번호는 8자 이상 20자 이하의 알파벳, 숫자, 특수문자를 조합하여 작성해야 합니다.") 
+	@Length(min=8, max=20, message="비밀번호는 8자 이상 20자 이하로 입력해야 합니다.")
 	private String password;		// 비밀번호
 	private String regDate;			// 가입일
-	@NotEmpty
+	@NotBlank(message="이름은 필수 입력 항목입니다.")
 	private String name;			// 이름
-	@NotEmpty
+	@NotBlank(message="생년월일은 필수 입력 항목입니다.")
 	private String birthDate;		// 생년월일
 	private String homeNumber;		// 유선전화번호
-	@NotEmpty
+	@NotBlank(message="휴대전화번호는 필수 입력 항목입니다.")
 	private String phoneNumber;		// 휴대전화번호
-	@NotEmpty
+	@NotBlank(message="이메일은 필수 입력 항목입니다.")
 	private String email;			// 이메일
-	@NotNull
+	@NotNull(message="SMS 수신여부를 체크해주세요.")
 	private Boolean smsReception;	// SMS수신여부
-	@NotNull
+	@NotNull(message="이메일 수신여부를 체크해주세요.")
 	private Boolean emailReception;	// 이메일수신여부
 	private Integer savings;		// 적립금
 	private MemberStatus status;	// 계정상태
 	private MemberRole role;		// 권한
 
-	public MemberVo() {}
-	public MemberVo(String username, String password) { 
+	public MemberJoinVo() {}
+	public MemberJoinVo(String username, String password) { 
 		this.username = username; 
 		this.password = password; 
 	}
-	public MemberVo(String username, String password, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception) {
+	public MemberJoinVo(String username, String password, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -46,7 +50,7 @@ public class MemberVo {
 		this.smsReception = smsReception;
 		this.emailReception = emailReception;
 	}
-	public MemberVo(Long no, String username, String password, String regDate, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception, Integer savings, MemberStatus status, MemberRole role) {
+	public MemberJoinVo(Long no, String username, String password, String regDate, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception, Integer savings, MemberStatus status, MemberRole role) {
 		this.no = no;
 		this.username = username;
 		this.password = password;

@@ -1,10 +1,14 @@
 package com.cafe24.shoppingmall.controller.api;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.MemberService;
-import com.cafe24.shoppingmall.vo.MemberVo;
+import com.cafe24.shoppingmall.vo.MemberCheckDuplicateVo;
+import com.cafe24.shoppingmall.vo.MemberJoinVo;
 
 @RestController("memberAPIController")
 @RequestMapping("/api/member")
@@ -21,26 +26,35 @@ public class MemberController {
 	private MemberService memberService;
 
 	@RequestMapping(value="", method=RequestMethod.POST)
-	public JSONResult join(@Valid @RequestBody MemberVo memberVo, BindingResult bindingResult) throws BindException {
+	public ResponseEntity<JSONResult> join(@Valid @RequestBody MemberJoinVo memberVo, BindingResult bindingResult) {
 		// Validation check
 		if(bindingResult.hasErrors()) {
-			throw new BindException(bindingResult);
+			List<ObjectError> errorList = bindingResult.getAllErrors();
+			for(ObjectError error: errorList) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
+			}
 		}
-		
 		Object result = memberService.join(memberVo);
 		
-		return JSONResult.success(result);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));		
 	}
 	
 	@RequestMapping(value="/username", method=RequestMethod.GET)
-	public JSONResult checkUsername(@Valid @RequestBody String username) {
-		Object result = memberService.checkUsername(username);
+	public ResponseEntity<JSONResult> checkUsername(@Valid @RequestBody MemberCheckDuplicateVo memberVo, BindingResult bindingResult) {
+		System.out.println(bindingResult);
+		if(bindingResult.hasErrors()) {
+			List<ObjectError> errorList = bindingResult.getAllErrors();
+			for(ObjectError error: errorList) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
+			}
+		}	
+		Object result = memberService.checkUsername(memberVo);
 		
-		return JSONResult.success(result);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public JSONResult login(@RequestBody MemberVo memberVo) {
+	public JSONResult login(@RequestBody MemberJoinVo memberVo) {
 		Object result = memberService.login(memberVo);
 		
 		return JSONResult.success(result);

@@ -29,3 +29,4 @@
 - <http://toby.epril.com/?p=1126>
 - <https://stackoverflow.com/questions/40356750/java-postgres-enums-how-do-i-make-them-work-together-for-update>
 - <https://www.freeformatter.com/java-regex-tester.html#ad-output>
+- <https://www.baeldung.com/spring-validate-requestparam-pathvariable>
