@@ -8,7 +8,7 @@ public class JSONResult {
 	public static JSONResult success(Object data) {
 		return new JSONResult("success", null, data);
 	}
-	public static JSONResult fail(String message) {
+	public static JSONResult failure(String message) {
 		return new JSONResult("failure", message, null);
 	}
 	

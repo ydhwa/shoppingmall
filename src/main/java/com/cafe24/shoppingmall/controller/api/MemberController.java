@@ -1,6 +1,10 @@
 package com.cafe24.shoppingmall.controller.api;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,33 +20,25 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	/*
-	 * 회원가입 성공 - 회원가입 성공한 멤버(MemberVo) 객체
-	 * 회원가입 실패 - 에러 메시지
-	 */
-	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public JSONResult join(@RequestBody MemberVo memberVo) {
-		// 유효성 검사를 여기에서 함
+	@RequestMapping(value="", method=RequestMethod.POST)
+	public JSONResult join(@Valid @RequestBody MemberVo memberVo, BindingResult bindingResult) throws BindException {
+		// Validation check
+		if(bindingResult.hasErrors()) {
+			throw new BindException(bindingResult);
+		}
+		
 		Object result = memberService.join(memberVo);
 		
 		return JSONResult.success(result);
 	}
 	
-	/*
-	 * 중복된 아이디 없음 - 입력했던 아이디
-	 * 중복된 아이디 있음 - 에러 메시지
-	 */
 	@RequestMapping(value="/username", method=RequestMethod.GET)
-	public JSONResult checkUsername(@RequestBody String username) {
+	public JSONResult checkUsername(@Valid @RequestBody String username) {
 		Object result = memberService.checkUsername(username);
 		
 		return JSONResult.success(result);
 	}
 	
-	/*
-	 * 로그인 성공 - ok
-	 * 로그인 실패 - 에러 메시지
-	 */
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public JSONResult login(@RequestBody MemberVo memberVo) {
 		Object result = memberService.login(memberVo);

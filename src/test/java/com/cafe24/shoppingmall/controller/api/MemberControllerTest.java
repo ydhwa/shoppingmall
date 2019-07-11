@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.shoppingmall.config.WebConfig;
-import com.cafe24.shoppingmall.exception.ExceptionMessage;
 import com.cafe24.shoppingmall.vo.MemberVo;
 import com.google.gson.Gson;
 
@@ -69,60 +68,60 @@ public class MemberControllerTest {
 
 	}
 	
-	public void testCheckUsernameSuccessWithNotDuplicatedData() throws Exception {
-		String username = "user02";
-
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(username));
-
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-				.andExpect(jsonPath("$.data", is(username)));
-	}
-	public void testCheckUsernameSuccessWithDuplicatedData() throws Exception {
-		String username = "user";
-
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(username));
-
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("failure")))
-		.andExpect(jsonPath("$.data", is(username)));
-	}
-	public void testCheckUsernameFailureBecauseInvalidData() throws Exception {
-		String username = "user02**@";
-
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(username));
-
-		resultActions.andExpect(status().isBadRequest()).andDo(print());
-	}
-	
-	@Test
-	public void testLoginSuccessWithExistingAccount() throws Exception {
-		MemberVo memberVo = new MemberVo("user", "asdf1234!");
-
-		ResultActions resultActions = mockMvc.perform(
-				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
-
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-				.andExpect(jsonPath("$.data", is("ok")));
-	}
-	@Test
-	public void testLoginSuccessWithNonExistingAccount() throws Exception {
-		MemberVo memberVo = new MemberVo("user", "asdf1234!");
-
-		ResultActions resultActions = mockMvc.perform(
-				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
-
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-				.andExpect(jsonPath("$.data", is("ok")));
-	}
-	@Test
-	public void testLoginFailureBecauseInvalidData() throws Exception {
-		MemberVo memberVo = new MemberVo("user", "asdf1234!");
-
-		ResultActions resultActions = mockMvc.perform(
-				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
-
-		resultActions.andExpect(status().isBadRequest()).andDo(print());
-	}
+//	public void testCheckUsernameSuccessWithNotDuplicatedUsername() throws Exception {
+//		String username = "user02";
+//
+//		ResultActions resultActions = mockMvc.perform(
+//				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(username));
+//
+//		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
+//				.andExpect(jsonPath("$.data", is(username)));
+//	}
+//	public void testCheckUsernameSuccessWithDuplicatedUsername() throws Exception {
+//		String username = "user";
+//
+//		ResultActions resultActions = mockMvc.perform(
+//				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(username));
+//
+//		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("failure")))
+//		.andExpect(jsonPath("$.data", is(username)));
+//	}
+//	public void testCheckUsernameFailureBecauseInvalidData() throws Exception {
+//		String username = "user02**@";
+//
+//		ResultActions resultActions = mockMvc.perform(
+//				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(username));
+//
+//		resultActions.andExpect(status().isBadRequest()).andDo(print());
+//	}
+//	
+//	@Test
+//	public void testLoginSuccessWithExistingAccount() throws Exception {
+//		MemberVo memberVo = new MemberVo("user", "asdf1234!");
+//
+//		ResultActions resultActions = mockMvc.perform(
+//				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+//
+//		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
+//				.andExpect(jsonPath("$.data", is("ok")));
+//	}
+//	@Test
+//	public void testLoginSuccessWithNonExistingAccount() throws Exception {
+//		MemberVo memberVo = new MemberVo("user", "asdf1234!");
+//
+//		ResultActions resultActions = mockMvc.perform(
+//				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+//
+//		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
+//				.andExpect(jsonPath("$.data", is("ok")));
+//	}
+//	@Test
+//	public void testLoginFailureBecauseInvalidData() throws Exception {
+//		MemberVo memberVo = new MemberVo("user", "asdf1234!");
+//
+//		ResultActions resultActions = mockMvc.perform(
+//				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+//
+//		resultActions.andExpect(status().isBadRequest()).andDo(print());
+//	}
 }

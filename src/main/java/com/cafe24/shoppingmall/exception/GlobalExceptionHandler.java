@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
 			// JSON 응답
 			response.setStatus(HttpServletResponse.SC_OK);
 			
-			JSONResult jsonResult = JSONResult.fail(e.toString());
+			JSONResult jsonResult = JSONResult.failure(e.toString());
 			// 결과를 직접 JSON 형식으로 만들어야 함.
 			String result = new ObjectMapper().writeValueAsString(jsonResult);
 

@@ -1,25 +1,26 @@
 package com.cafe24.shoppingmall.vo;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class MemberVo {
 	private Long no;				// 회원번호
-	@NotNull @Pattern(regexp = "^[A-Za-z0-9_]{4,12}$") @Min(4) @Max(12)
+	@NotEmpty @Pattern(regexp = "[A-Za-z0-9_]{4,12}") @Length(min=4, max=12)
 	private String username;		// 아이디
-	@NotNull @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\\\d)(?=.*[$@$!%*#?&])[A-Za-z\\\\d$@$!%*#?&]{8,20}$") @Min(8) @Max(20)
+	@NotEmpty @Pattern(regexp = "(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,20}") @Length(min=8, max=20)
 	private String password;		// 비밀번호
 	private String regDate;			// 가입일
-	@NotNull
+	@NotEmpty
 	private String name;			// 이름
-	@NotNull
+	@NotEmpty
 	private String birthDate;		// 생년월일
 	private String homeNumber;		// 유선전화번호
-	@NotNull
+	@NotEmpty
 	private String phoneNumber;		// 휴대전화번호
-	@NotNull
+	@NotEmpty
 	private String email;			// 이메일
 	@NotNull
 	private Boolean smsReception;	// SMS수신여부
