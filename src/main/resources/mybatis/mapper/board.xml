@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+<!-- getList(list, search)
+select <필요한것들>
+from board
+[where title like '%[키워드]%']
+order by group_no desc, order_no asc
+limit <0부터시작하는시작점> <수량>;
+-->
+<select id="getList" resultType="boardvo" parameterType="map">
+	<![CDATA[
+		select b.no as no, 
+			u.name as username, 
+			title, 
+			date_format(b.reg_date, '%Y-%m-%d %H:%i:%s') as regdate, 
+			hit, 
+			status, 
+			depth, 
+			u.no as userno 
+		from board b, user u 
+		where title like concat('%', #{ keyword }, '%') 
+			and b.user_no = u.no 
+		order by group_no desc, order_no asc 
+		limit #{ startIndex }, #{ countPerPage };
+	]]>
+</select>
+
+<!-- getByNo
+select b.no as no,
+	u.name as username,
+	title,
+	contents,
+	date_format(b.reg_date, '%Y-%m-%d %H:%i:%s') as regdate,
+	views,
+	b.user_no as userno
+from board b, user u
+where b.user_no = u.no
+	and b.no = #{ value };
+-->
+<select id="getByNo" resultType="boardvo" parameterType="map">
+	<![CDATA[
+		select b.no as no,
+			group_no as groupno,
+			order_no as orderno,
+			depth,
+			title,
+			b.user_no as userno,
+	]]>
+	<!-- view -->
+	<if test="mode == 'view'">
+		<![CDATA[
+			date_format(b.reg_date, '%Y-%m-%d %H:%i:%s') as regdate,
+			hit,
+			u.name as username,
+		]]>
+	</if>
+	<![CDATA[
+			contents
+		from board b, user u
+		where b.user_no = u.no
+			and b.no = #{ no };
+	]]>
+</select>
+
+<!-- getListSize
+
+select count(*)
+from board;
+-->
+<select id="getListSize" resultType="int" parameterType="string">
+	<![CDATA[
+		select count(*) 
+		from board 
+		where title like concat('%', #{ keyword }, '%'); 
+	]]>
+</select>
+
+
+<!-- insert
+
+insert
+into board
+values(<잘 채워넣기 (ifnull 등등 써야함)>);
+-->
+<insert id="insert"  parameterType="boardvo">	
+	<![CDATA[
+		insert 
+		into board 
+		values(null, #{ title }, #{ contents }, 0, now(), 
+	]]>
+	<choose>
+		<when test="groupNo == -1">
+			<![CDATA[
+				(select ifnull((select max(b.group_no) + 1 from board b), 1)), 
+    			1, 
+    			0, 
+    		]]>
+		</when>
+		<otherwise>
+			<![CDATA[
+				#{ groupNo }, 
+				#{ orderNo } + 1, 
+				#{ depth } + 1, 
+			]]>
+		</otherwise>
+	</choose>
+    <![CDATA[
+    		#{ userNo }, 'ACTIVE');
+	]]>
+</insert>
+
+
+<!-- update
+
+order_no 재정렬
+데이터가 insert 되기 전에 발생해야 한다.
+-->
+<update id="updateOrderNo" parameterType="map">
+	<![CDATA[
+		update board 
+		set order_no = order_no + 1 
+		where group_no = #{ groupNo } 
+			and order_no >= #{ orderNo } + 1;
+	]]>
+</update>
+
+
+<!-- update
+
+update board
+set <적당히필요한것들>
+where no = [번호];
+-->
+<update id="update" parameterType="boardvo">
+	<![CDATA[
+		update board 
+		set title = #{ title }, contents = #{ contents } 
+		where no = #{ no };
+	]]>
+</update>
+
+
+<update id="updateHit" parameterType="long">
+	<![CDATA[
+		update board
+		set hit = hit + 1
+		where no = #{ no }
+	]]>
+</update>
+
+<!-- delete
+
+delete
+from board
+where no = [번호];
+-->
+<!-- 
+<delete id="delete" parameterType="long">
+	<![CDATA[
+		delete 
+		from board 
+		where no = #{ value };
+	]]>
+</delete>
+ -->
+ <update id="delete" parameterType="long">
+ 	<![CDATA[
+ 		update board 
+ 		set status = 'DELETED' 
+ 		where no = #{ no };
+ 	]]>
+ </update>
+
+
+</mapper>

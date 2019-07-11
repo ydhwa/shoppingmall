@@ -39,19 +39,37 @@ public class MemberControllerTest {
 	}
 
 	@Test
-	public void testJoin() throws Exception {
+	public void testJoinSuccess() throws Exception {
 		MemberVo memberVo = new MemberVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member/join").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data.username", is(memberVo.getUsername())))
 				.andExpect(jsonPath("$.data.name", is(memberVo.getName())));
 	}
-	
 	@Test
-	public void testCheckUsername() throws Exception {
+	public void testJoinFailureBecauseInvalidData() throws Exception {
+		MemberVo memberVo = new MemberVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+	}
+	@Test
+	public void testJoinFailureBecauseMissingData() throws Exception {
+		MemberVo memberVo = new MemberVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+
+	}
+	
+	public void testCheckUsernameSuccessWithNotDuplicatedData() throws Exception {
 		String username = "user02";
 
 		ResultActions resultActions = mockMvc.perform(
@@ -59,5 +77,52 @@ public class MemberControllerTest {
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(username)));
+	}
+	public void testCheckUsernameSuccessWithDuplicatedData() throws Exception {
+		String username = "user";
+
+		ResultActions resultActions = mockMvc.perform(
+				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(username));
+
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("failure")))
+		.andExpect(jsonPath("$.data", is(username)));
+	}
+	public void testCheckUsernameFailureBecauseInvalidData() throws Exception {
+		String username = "user02**@";
+
+		ResultActions resultActions = mockMvc.perform(
+				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(username));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
+	}
+	
+	@Test
+	public void testLoginSuccessWithExistingAccount() throws Exception {
+		MemberVo memberVo = new MemberVo("user", "asdf1234!");
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
+				.andExpect(jsonPath("$.data", is("ok")));
+	}
+	@Test
+	public void testLoginSuccessWithNonExistingAccount() throws Exception {
+		MemberVo memberVo = new MemberVo("user", "asdf1234!");
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+
+		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
+				.andExpect(jsonPath("$.data", is("ok")));
+	}
+	@Test
+	public void testLoginFailureBecauseInvalidData() throws Exception {
+		MemberVo memberVo = new MemberVo("user", "asdf1234!");
+
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 }

@@ -2,7 +2,7 @@ package com.cafe24.shoppingmall.exception;
 
 // 예외상황 메시지들에 대한 enum class
 public enum ExceptionMessage {
-	WRONG_INPUT("wrong input"),
+	INVALID_INPUT("invalid input"),
 	MISSING_INPUT("missing input"),
 	DUPLICATE_USERNAME("ID(username) is duplicated");
 	

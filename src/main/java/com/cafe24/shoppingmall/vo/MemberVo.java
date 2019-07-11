@@ -1,16 +1,29 @@
 package com.cafe24.shoppingmall.vo;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class MemberVo {
 	private Long no;				// 회원번호
+	@NotNull @Pattern(regexp = "^[A-Za-z0-9_]{4,12}$") @Min(4) @Max(12)
 	private String username;		// 아이디
+	@NotNull @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\\\d)(?=.*[$@$!%*#?&])[A-Za-z\\\\d$@$!%*#?&]{8,20}$") @Min(8) @Max(20)
 	private String password;		// 비밀번호
 	private String regDate;			// 가입일
+	@NotNull
 	private String name;			// 이름
+	@NotNull
 	private String birthDate;		// 생년월일
 	private String homeNumber;		// 유선전화번호
+	@NotNull
 	private String phoneNumber;		// 휴대전화번호
+	@NotNull
 	private String email;			// 이메일
+	@NotNull
 	private Boolean smsReception;	// SMS수신여부
+	@NotNull
 	private Boolean emailReception;	// 이메일수신여부
 	private Integer savings;		// 적립금
 	private MemberStatus status;	// 계정상태

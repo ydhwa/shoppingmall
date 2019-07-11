@@ -1,7 +1,5 @@
 package com.cafe24.shoppingmall.service;
 
-import java.util.regex.Pattern;
-
 import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.exception.ExceptionMessage;
@@ -15,7 +13,7 @@ public class MemberService {
 
 	public Object join(MemberVo memberVo) {
 		if(!checkValidation(memberVo)) {
-			return ExceptionMessage.WRONG_INPUT.toString();
+			return ExceptionMessage.INVALID_INPUT.toString();
 		}
 		
 		if(!checkMissingData(memberVo)) {
@@ -62,6 +60,17 @@ public class MemberService {
 		// Dao 필요
 		
 		return username;
+	}
+	public Object login(MemberVo memberVo) {
+		// null값 처리
+		if(memberVo.getUsername() == null) { memberVo.setUsername(""); }
+		if(memberVo.getPassword() == null) { memberVo.setPassword(""); }
+		
+		
+		
+		// Dao 필요
+		
+		return null;
 	}
 
 }

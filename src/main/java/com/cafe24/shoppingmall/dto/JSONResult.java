@@ -9,7 +9,7 @@ public class JSONResult {
 		return new JSONResult("success", null, data);
 	}
 	public static JSONResult fail(String message) {
-		return new JSONResult("fail", message, null);
+		return new JSONResult("failure", message, null);
 	}
 	
 	private JSONResult(String result, String message, Object data) {

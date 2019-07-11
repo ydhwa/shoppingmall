@@ -22,6 +22,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public JSONResult join(@RequestBody MemberVo memberVo) {
+		// 유효성 검사를 여기에서 함
 		Object result = memberService.join(memberVo);
 		
 		return JSONResult.success(result);
@@ -35,6 +36,17 @@ public class MemberController {
 	public JSONResult checkUsername(@RequestBody String username) {
 		Object result = memberService.checkUsername(username);
 		
-		return JSONResult.success(username);
+		return JSONResult.success(result);
+	}
+	
+	/*
+	 * 로그인 성공 - ok
+	 * 로그인 실패 - 에러 메시지
+	 */
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public JSONResult login(@RequestBody MemberVo memberVo) {
+		Object result = memberService.login(memberVo);
+		
+		return JSONResult.success(result);
 	}
 }

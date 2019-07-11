@@ -26,24 +26,12 @@ public class MemberServiceTest {
 	public void testMemberServiceDI() {
 		assertNotNull(memberService);
 	}
-	
+	// Dao를 호출하는 비즈니스 로직 검증
 	@Test
 	public void testJoinSuccess() {
 		MemberVo memberVo = new MemberVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
 		assertEquals(memberService.join(memberVo), memberVo);
-	}
-	@Test
-	public void testJoinFailureBecauseValidation() {
-		MemberVo memberVo = new MemberVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
-		
-		assertEquals(memberService.join(memberVo), ExceptionMessage.WRONG_INPUT.toString());
-	}
-	@Test
-	public void testJoinFailureBecauseMissingData() {
-		MemberVo memberVo = new MemberVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
-		
-		assertEquals(memberService.join(memberVo), ExceptionMessage.MISSING_INPUT.toString());
 	}
 	
 	@Test
