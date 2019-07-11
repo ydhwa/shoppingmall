@@ -27,11 +27,5 @@ public class MemberServiceTest {
 	public void testMemberServiceDI() {
 		assertNotNull(memberService);
 	}
-	
-	@Test
-	public void testJoinSuccess() {
-		MemberJoinVo memberVo = new MemberJoinVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
-		assertEquals(memberService.join(memberVo), memberVo);
-	}
 }
