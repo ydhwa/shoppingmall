@@ -25,10 +25,10 @@ public class ProductVo {
 	private Integer stockQuantity;						// 재고수량
 	private Boolean optionAvailable;					// 옵션사용여부
 	
-	private List<ProductOption> productOptions;			// 상품 하나의 옵션들
-	private List<OrdersProductOption> ordersProductOptions;	// 옵션에 따른 상품들
-	private List<Category> categories;					// 카테고리들
-	private List<ProductImage> productImages;			// 상품 이미지들
+	private List<ProductOptionVo> productOptions;				// 상품 하나의 옵션들
+	private List<OrdersProductOptionVo> ordersProductOptions;	// 옵션에 따른 상품들
+	private List<CategoryVo> categories;						// 카테고리들
+	private List<ProductImageVo> productImages;					// 상품 이미지들
 	
 	public Long getNo() {
 		return no;
@@ -120,28 +120,28 @@ public class ProductVo {
 	public void setOptionAvailable(Boolean optionAvailable) {
 		this.optionAvailable = optionAvailable;
 	}
-	public List<ProductOption> getProductOptions() {
+	public List<ProductOptionVo> getProductOptions() {
 		return productOptions;
 	}
-	public void setProductOptions(List<ProductOption> productOptions) {
+	public void setProductOptions(List<ProductOptionVo> productOptions) {
 		this.productOptions = productOptions;
 	}
-	public List<OrdersProductOption> getOrdersProductOptions() {
+	public List<OrdersProductOptionVo> getOrdersProductOptions() {
 		return ordersProductOptions;
 	}
-	public void setOrdersProductOptions(List<OrdersProductOption> ordersProductOptions) {
+	public void setOrdersProductOptions(List<OrdersProductOptionVo> ordersProductOptions) {
 		this.ordersProductOptions = ordersProductOptions;
 	}
-	public List<Category> getCategories() {
+	public List<CategoryVo> getCategories() {
 		return categories;
 	}
-	public void setCategories(List<Category> categories) {
+	public void setCategories(List<CategoryVo> categories) {
 		this.categories = categories;
 	}
-	public List<ProductImage> getProductImages() {
+	public List<ProductImageVo> getProductImages() {
 		return productImages;
 	}
-	public void setProductImages(List<ProductImage> productImages) {
+	public void setProductImages(List<ProductImageVo> productImages) {
 		this.productImages = productImages;
 	}
 	

@@ -7,7 +7,7 @@ package com.cafe24.shoppingmall.vo;
  * @author YDH
  *
  */
-public class ProductOption {
+public class ProductOptionVo {
 	private Long productNo;
 	private String name;
 	private String value;

@@ -18,6 +18,10 @@
 - week1: 사용자 시나리오 작성 및 데이터베이스 설계
 - week2: 개발 환경 구축(Swagger(API 명세), JUnit(TDD) 적용)
 
+-----
+
+![swagger](https://github.com/ydhwa/cafe24-project/blob/master/week2/img/3-1-swagger.PNG)
+
 ### docs/
 - EXERD, queries
 

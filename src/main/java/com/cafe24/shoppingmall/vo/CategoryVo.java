@@ -7,7 +7,7 @@ package com.cafe24.shoppingmall.vo;
  * @author YDH
  *
  */
-public class Category {
+public class CategoryVo {
 	private Long no;		// 카테고리 번호
 	private String name;	// 카테고리명
 	private Long productNo;	// 상품번호
