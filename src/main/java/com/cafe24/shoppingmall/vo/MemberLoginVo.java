@@ -5,6 +5,12 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * 로그인 시 사용하는 회원 Vo
+ * 
+ * @author YDH
+ *
+ */
 public class MemberLoginVo {
 	@NotBlank(message="아이디는 필수 입력 항목입니다.") 
 	@Pattern(regexp="[A-Za-z0-9_]{4,12}", message="아이디는 4자 이상 12자 이하의 알파벳, 숫자, _(언더바)를 이용하여 작성해야 합니다.") 

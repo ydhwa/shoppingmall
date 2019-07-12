@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +23,16 @@ import org.springframework.web.context.WebApplicationContext;
 import com.cafe24.shoppingmall.config.WebConfig;
 import com.cafe24.shoppingmall.exception.Message;
 import com.cafe24.shoppingmall.vo.MemberCheckDuplicateVo;
-import com.cafe24.shoppingmall.vo.MemberJoinVo;
 import com.cafe24.shoppingmall.vo.MemberLoginVo;
+import com.cafe24.shoppingmall.vo.MemberVo;
 import com.google.gson.Gson;
 
+/**
+ * 회원 컨트롤러 동작에 대한 테스트
+ * 
+ * @author YDH
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { WebConfig.class })
 @WebAppConfiguration
@@ -42,9 +47,14 @@ public class MemberControllerTest {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
+	/**
+	 * 회원가입 성공
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testJoinSuccess() throws Exception {
-		MemberJoinVo memberVo = new MemberJoinVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+		MemberVo memberVo = new MemberVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
@@ -53,18 +63,30 @@ public class MemberControllerTest {
 				.andExpect(jsonPath("$.data.username", is(memberVo.getUsername())))
 				.andExpect(jsonPath("$.data.name", is(memberVo.getName())));
 	}
+	/**
+	 * 정규식에서 벗어나는 데이터로 인해 회원가입 실패
+	 * (validation)
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testJoinFailureBecauseInvalidData() throws Exception {
-		MemberJoinVo memberVo = new MemberJoinVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+		MemberVo memberVo = new MemberVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
+	/**
+	 * 필수 입력 사항을 입력하지 않아 회원가입 실패
+	 * (validation)
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testJoinFailureBecauseMissingData() throws Exception {
-		MemberJoinVo memberVo = new MemberJoinVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+		MemberVo memberVo = new MemberVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
@@ -73,6 +95,11 @@ public class MemberControllerTest {
 
 	}
 	
+	/**
+	 * 아이디 중복체크 - 중복되는 닉네임이 없음
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testCheckUsernameSuccessWithNotDuplicatedUsername() throws Exception {
 		MemberCheckDuplicateVo memberVo = new MemberCheckDuplicateVo("user02");
@@ -83,6 +110,11 @@ public class MemberControllerTest {
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(Message.USERNAME_UNIQUE.toString())));
 	}
+	/**
+	 * 아이디 중복체크 - 중복되는 닉네임이 있음
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testCheckUsernameSuccessWithDuplicatedUsername() throws Exception {
 		MemberCheckDuplicateVo memberVo = new MemberCheckDuplicateVo("user");
@@ -93,6 +125,12 @@ public class MemberControllerTest {
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(Message.USERNAME_DUPLICATED.toString())));
 	}
+	/**
+	 * 적절하지 않은 형식의 아이디 입력으로 중복체크 실패
+	 * (validation)
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testCheckUsernameFailureBecauseInvalidData() throws Exception {
 		MemberCheckDuplicateVo memberVo = new MemberCheckDuplicateVo("user02**@");
@@ -103,6 +141,11 @@ public class MemberControllerTest {
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 	
+	/**
+	 * 로그인 성공 - 아이디와 비밀번호에 맞는 회원이 있음
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testLoginSuccessWithMatchingAccount() throws Exception {
 		MemberLoginVo memberVo = new MemberLoginVo("user", "asdf1234!");
@@ -113,6 +156,11 @@ public class MemberControllerTest {
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(Message.LOGIN_SUCCESS.toString())));
 	}
+	/**
+	 * 로그인 실패 - 아이디와 비밀번호에 맞는 회원이 없음
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testLoginSuccessWithNotMatchingAccount() throws Exception {
 		MemberLoginVo memberVo = new MemberLoginVo("testuser", "asdf1234!");
@@ -123,6 +171,12 @@ public class MemberControllerTest {
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(Message.LOGIN_FAILURE.toString())));
 	}
+	/**
+	 * 적절하지 않은 데이터 입력으로 로그인 실패
+	 * (validation)
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testLoginFailureBecauseInvalidData() throws Exception {
 		MemberLoginVo memberVo = new MemberLoginVo("user**", "asdf1234!");

@@ -6,7 +6,13 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-public class MemberJoinVo {
+/**
+ * 회원가입과 고객관리 시 사용하는 회원 Vo
+ * 
+ * @author YDH
+ *
+ */
+public class MemberVo {
 	private Long no;				// 회원번호
 	@NotBlank(message="아이디는 필수 입력 항목입니다.") 
 	@Pattern(regexp="[A-Za-z0-9_]{4,12}", message="아이디는 4자 이상 12자 이하의 알파벳, 숫자, _(언더바)를 이용하여 작성해야 합니다.") 
@@ -34,12 +40,8 @@ public class MemberJoinVo {
 	private MemberStatus status;	// 계정상태
 	private MemberRole role;		// 권한
 
-	public MemberJoinVo() {}
-	public MemberJoinVo(String username, String password) { 
-		this.username = username; 
-		this.password = password; 
-	}
-	public MemberJoinVo(String username, String password, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception) {
+	public MemberVo() {}
+	public MemberVo(String username, String password, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -50,7 +52,7 @@ public class MemberJoinVo {
 		this.smsReception = smsReception;
 		this.emailReception = emailReception;
 	}
-	public MemberJoinVo(Long no, String username, String password, String regDate, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception, Integer savings, MemberStatus status, MemberRole role) {
+	public MemberVo(Long no, String username, String password, String regDate, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception, Integer savings, MemberStatus status, MemberRole role) {
 		this.no = no;
 		this.username = username;
 		this.password = password;
@@ -160,6 +162,13 @@ public class MemberJoinVo {
 				+ emailReception + ", savings=" + savings + ", status=" + status.toString() + ", role=" + role.toString() + "]";
 	}
 	
+	/**
+	 * 고객 상태에 대한 enum 클래스
+	 * ENABLE(활성)/DISABLE(비활성)
+	 * 
+	 * @author YDH
+	 *
+	 */
 	public enum MemberStatus {
 		ENABLE("ENABLE"),
 		DISABLE("DISABLE");
@@ -168,6 +177,13 @@ public class MemberJoinVo {
 		MemberStatus(String str) { this.str = str; }
 		public String toString() { return str; }
 	}
+	/**
+	 * 고객 권한에 대한 enum 클래스
+	 * USER(유저)/ADMIN(관리자)
+	 * 
+	 * @author YDH
+	 *
+	 */
 	public enum MemberRole {
 		USER("USER"),
 		ADMIN("ADMIN");
