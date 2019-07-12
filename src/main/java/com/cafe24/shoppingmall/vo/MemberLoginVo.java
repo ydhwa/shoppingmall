@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 로그인 시 사용하는 회원 Vo
+ * 로그인 시 사용하는 회원 VO
  * 
  * @author YDH
  *

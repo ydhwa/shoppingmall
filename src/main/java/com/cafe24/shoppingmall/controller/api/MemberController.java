@@ -56,7 +56,12 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
-
+	/**
+	 * 유저네임(=아이디) 중복검사
+	 * 
+	 * @param username 중복검사 할 아이디 
+	 * @return 중복검사 결과 (unique / duplicated)
+	 */
 	@RequestMapping(value = "/username/{username:[a-zA-Z0-9_]{4,12}}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> checkUsername(@PathVariable("username") String username) {
 		Object result = memberService.checkUsername(username);
