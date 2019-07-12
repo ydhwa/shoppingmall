@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.shoppingmall.config.WebConfig;
 import com.cafe24.shoppingmall.exception.Message;
-import com.cafe24.shoppingmall.vo.MemberCheckDuplicateVo;
 import com.cafe24.shoppingmall.vo.MemberLoginVo;
 import com.cafe24.shoppingmall.vo.MemberVo;
 import com.google.gson.Gson;
@@ -53,6 +53,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
+//	@Ignore
 	public void testJoinSuccess() throws Exception {
 		MemberVo memberVo = new MemberVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
@@ -70,6 +71,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
+//	@Ignore
 	public void testJoinFailureBecauseInvalidData() throws Exception {
 		MemberVo memberVo = new MemberVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
@@ -85,6 +87,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
+//	@Ignore
 	public void testJoinFailureBecauseMissingData() throws Exception {
 		MemberVo memberVo = new MemberVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
 
@@ -102,10 +105,9 @@ public class MemberControllerTest {
 	 */
 	@Test
 	public void testCheckUsernameSuccessWithNotDuplicatedUsername() throws Exception {
-		MemberCheckDuplicateVo memberVo = new MemberCheckDuplicateVo("user02");
+		String username = "user02";
 
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+		ResultActions resultActions = mockMvc.perform(get("/api/member/username/{username}", username).accept(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(Message.USERNAME_UNIQUE.toString())));
@@ -117,11 +119,10 @@ public class MemberControllerTest {
 	 */
 	@Test
 	public void testCheckUsernameSuccessWithDuplicatedUsername() throws Exception {
-		MemberCheckDuplicateVo memberVo = new MemberCheckDuplicateVo("user");
+		String username = "user";
 
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
-
+		ResultActions resultActions = mockMvc.perform(get("/api/member/username/{username}", username).accept(MediaType.APPLICATION_JSON));
+		
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(Message.USERNAME_DUPLICATED.toString())));
 	}
@@ -133,12 +134,11 @@ public class MemberControllerTest {
 	 */
 	@Test
 	public void testCheckUsernameFailureBecauseInvalidData() throws Exception {
-		MemberCheckDuplicateVo memberVo = new MemberCheckDuplicateVo("user02**@");
+		String username = "use";
 
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/member/username").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
-
-		resultActions.andExpect(status().isBadRequest()).andDo(print());
+		ResultActions resultActions = mockMvc.perform(get("/api/member/username/{username}", username).accept(MediaType.APPLICATION_JSON));
+		
+		resultActions.andExpect(status().isNotFound()).andDo(print());
 	}
 	
 	/**
@@ -147,6 +147,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
+//	@Ignore
 	public void testLoginSuccessWithMatchingAccount() throws Exception {
 		MemberLoginVo memberVo = new MemberLoginVo("user", "asdf1234!");
 
@@ -162,6 +163,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
+//	@Ignore
 	public void testLoginSuccessWithNotMatchingAccount() throws Exception {
 		MemberLoginVo memberVo = new MemberLoginVo("testuser", "asdf1234!");
 
@@ -178,6 +180,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
+//	@Ignore
 	public void testLoginFailureBecauseInvalidData() throws Exception {
 		MemberLoginVo memberVo = new MemberLoginVo("user**", "asdf1234!");
 

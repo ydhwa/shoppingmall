@@ -3,12 +3,16 @@ package com.cafe24.shoppingmall.controller.api;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.MemberService;
-import com.cafe24.shoppingmall.vo.MemberCheckDuplicateVo;
-import com.cafe24.shoppingmall.vo.MemberVo;
 import com.cafe24.shoppingmall.vo.MemberLoginVo;
+import com.cafe24.shoppingmall.vo.MemberVo;
 
 /**
  * 고객이 사용하는 회원 정보에 대한 API 컨트롤러
@@ -53,24 +56,10 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
-	/**
-	 * 유저네임(=아이디) 중복검사
-	 * 
-	 * @param memberVo 중복검사 할 최소한의 정보가 담겨 있는 회원 정보 객체
-	 * @param bindingResult 유효성 검사 결과
-	 * @return 중복 검사 결과 (unique / duplicated)
-	 */
-	@RequestMapping(value = "/username", method = RequestMethod.GET)
-	public ResponseEntity<JSONResult> checkUsername(@Valid @RequestBody MemberCheckDuplicateVo memberVo,
-			BindingResult bindingResult) {
-		// Validation check
-		if (bindingResult.hasErrors()) {
-			List<ObjectError> errorList = bindingResult.getAllErrors();
-			for (ObjectError error : errorList) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
-			}
-		}
-		Object result = memberService.checkUsername(memberVo);
+
+	@RequestMapping(value = "/username/{username:[a-zA-Z0-9_]{4,12}}", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> checkUsername(@PathVariable("username") String username) {
+		Object result = memberService.checkUsername(username);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}

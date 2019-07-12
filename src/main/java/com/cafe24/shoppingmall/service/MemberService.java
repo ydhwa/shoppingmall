@@ -5,15 +5,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.exception.Message;
-import com.cafe24.shoppingmall.vo.MemberCheckDuplicateVo;
+import com.cafe24.shoppingmall.vo.MemberLoginVo;
 import com.cafe24.shoppingmall.vo.MemberVo;
 import com.cafe24.shoppingmall.vo.MemberVo.MemberRole;
 import com.cafe24.shoppingmall.vo.MemberVo.MemberStatus;
-import com.cafe24.shoppingmall.vo.MemberLoginVo;
 
 /**
  * 회원에 대한 간단한 서비스.
@@ -60,9 +58,9 @@ public class MemberService {
 	 * @param memberVo 아이디만 담겨 있는 회원 정보
 	 * @return 상태 메시지(유니크하다/중복되어있다)
 	 */
-	public String checkUsername(MemberCheckDuplicateVo memberVo) {
+	public String checkUsername(String username) {
 		for(MemberVo member: memberList) {
-			if(memberVo.getUsername().equals(member.getUsername())) {
+			if(username.equals(member.getUsername())) {
 				return Message.USERNAME_DUPLICATED.toString();
 			}
 		}
