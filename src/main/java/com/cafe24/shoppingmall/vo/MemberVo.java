@@ -32,16 +32,11 @@ public class MemberVo {
 	private String phoneNumber;		// 휴대전화번호
 	@NotBlank(message="이메일은 필수 입력 항목입니다.")
 	private String email;			// 이메일
-	@NotNull(message="SMS 수신여부를 체크해주세요.")
-	private Boolean smsReception;	// SMS수신여부
-	@NotNull(message="이메일 수신여부를 체크해주세요.")
-	private Boolean emailReception;	// 이메일수신여부
-	private Integer savings;		// 적립금
 	private MemberStatus status;	// 계정상태
 	private MemberRole role;		// 권한
 
 	public MemberVo() {}
-	public MemberVo(String username, String password, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception) {
+	public MemberVo(String username, String password, String name, String birthDate, String homeNumber, String phoneNumber, String email) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -49,10 +44,16 @@ public class MemberVo {
 		this.homeNumber = homeNumber;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
-		this.smsReception = smsReception;
-		this.emailReception = emailReception;
 	}
-	public MemberVo(Long no, String username, String password, String regDate, String name, String birthDate, String homeNumber, String phoneNumber, String email, Boolean smsReception, Boolean emailReception, Integer savings, MemberStatus status, MemberRole role) {
+	public MemberVo(String username, String password, String name, String birthDate, String phoneNumber, String email) {
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+	}
+	public MemberVo(Long no, String username, String password, String regDate, String name, String birthDate, String homeNumber, String phoneNumber, String email, MemberStatus status, MemberRole role) {
 		this.no = no;
 		this.username = username;
 		this.password = password;
@@ -62,9 +63,6 @@ public class MemberVo {
 		this.homeNumber = homeNumber;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
-		this.smsReception = smsReception;
-		this.emailReception = emailReception;
-		this.savings = savings;
 		this.status = status;
 		this.role = role;
 	}
@@ -123,24 +121,7 @@ public class MemberVo {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Boolean getSmsReception() {
-		return smsReception;
-	}
-	public void setSmsReception(Boolean smsReception) {
-		this.smsReception = smsReception;
-	}
-	public Boolean getEmailReception() {
-		return emailReception;
-	}
-	public void setEmailReception(Boolean emailReception) {
-		this.emailReception = emailReception;
-	}
-	public Integer getSavings() {
-		return savings;
-	}
-	public void setSavings(Integer savings) {
-		this.savings = savings;
-	}
+
 	public MemberStatus getStatus() {
 		return status;
 	}
@@ -158,8 +139,7 @@ public class MemberVo {
 	public String toString() {
 		return "MemberVo [no=" + no + ", username=" + username + ", password=" + password + ", regDate=" + regDate
 				+ ", name=" + name + ", birthDate=" + birthDate + ", homeNumber=" + homeNumber + ", phoneNumber="
-				+ phoneNumber + ", email=" + email + ", smsReception=" + smsReception + ", emailReception="
-				+ emailReception + ", savings=" + savings + ", status=" + status.toString() + ", role=" + role.toString() + "]";
+				+ phoneNumber + ", email=" + email + ", status=" + status.toString() + ", role=" + role.toString() + "]";
 	}
 	
 	/**

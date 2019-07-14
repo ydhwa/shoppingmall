@@ -28,8 +28,8 @@ public class MemberService {
 	@PostConstruct
 	public void init() {
 		memberList = new ArrayList<MemberVo>();
-		memberList.add(new MemberVo("user", "asdf1234!", "기본유저", "1111-01-01", "031-111-1111", "010-1111-1111", "user1@test1.com", true, false));
-		memberList.add(new MemberVo("testuser", "aaaa111!", "유저", "2222-02-02", "032-222-2222", "011-2222-2222", "test@email.com", true, false));
+		memberList.add(new MemberVo(1L, "user", "asdf1234!", "2019-07-13", "기본유저", "1980-01-01", "031-111-1111", "010-1111-1111", "user1@test1.com", MemberStatus.ENABLE, MemberRole.USER));
+		memberList.add(new MemberVo(2L, "testuser", "aaaa111!", "2019-07-15", "유저", "1990-01-01", "032-222-2222", "011-2222-2222", "test@email.com", MemberStatus.ENABLE, MemberRole.USER));
 	}
 	
 	/**
@@ -41,7 +41,6 @@ public class MemberService {
 	public Object join(MemberVo memberVo) {
 		
 		// 남은 데이터 등록(회원번호, 등록일은 데이터베이스 단에서 처리)
-		memberVo.setSavings(0);
 		memberVo.setStatus(MemberStatus.ENABLE);
 		memberVo.setRole(MemberRole.USER);
 		

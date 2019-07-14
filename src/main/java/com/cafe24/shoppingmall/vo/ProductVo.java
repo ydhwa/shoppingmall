@@ -26,7 +26,7 @@ public class ProductVo {
 	private Boolean optionAvailable;					// 옵션사용여부
 	
 	private List<ProductOptionVo> productOptions;				// 상품 하나의 옵션들
-	private List<OrdersProductOptionVo> ordersProductOptions;	// 옵션에 따른 상품들
+	private List<ProductOptionItemVo> ordersProductOptions;	// 옵션에 따른 상품들
 	private List<CategoryVo> categories;						// 카테고리들
 	private List<ProductImageVo> productImages;					// 상품 이미지들
 	
@@ -126,10 +126,10 @@ public class ProductVo {
 	public void setProductOptions(List<ProductOptionVo> productOptions) {
 		this.productOptions = productOptions;
 	}
-	public List<OrdersProductOptionVo> getOrdersProductOptions() {
+	public List<ProductOptionItemVo> getOrdersProductOptions() {
 		return ordersProductOptions;
 	}
-	public void setOrdersProductOptions(List<OrdersProductOptionVo> ordersProductOptions) {
+	public void setOrdersProductOptions(List<ProductOptionItemVo> ordersProductOptions) {
 		this.ordersProductOptions = ordersProductOptions;
 	}
 	public List<CategoryVo> getCategories() {

@@ -55,7 +55,7 @@ public class MemberControllerTest {
 	@Test
 //	@Ignore
 	public void testJoinSuccess() throws Exception {
-		MemberVo memberVo = new MemberVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+		MemberVo memberVo = new MemberVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
@@ -73,7 +73,7 @@ public class MemberControllerTest {
 	@Test
 //	@Ignore
 	public void testJoinFailureBecauseInvalidData() throws Exception {
-		MemberVo memberVo = new MemberVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+		MemberVo memberVo = new MemberVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
@@ -89,7 +89,7 @@ public class MemberControllerTest {
 	@Test
 //	@Ignore
 	public void testJoinFailureBecauseMissingData() throws Exception {
-		MemberVo memberVo = new MemberVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com", true, false);
+		MemberVo memberVo = new MemberVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));

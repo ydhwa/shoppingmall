@@ -6,7 +6,7 @@ package com.cafe24.shoppingmall.vo;
  * @author YDH
  *
  */
-public class OrdersProductOptionVo {
+public class ProductOptionItemVo {
 	private Long no;					// 품목번호
 	private Long productNo;				// 상품번호
 	private String contents;			// 옵션내용(옵션명-옵션값/옵션명-옵션값/...)

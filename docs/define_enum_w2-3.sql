@@ -1,39 +1,20 @@
-/* ÇÁ·ÎÁ§Æ® µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ »ç¿ëÇÏ´Â enum Å¸ÀÔµé Á¤ÀÇ */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ enum Å¸ï¿½Ôµï¿½ ï¿½ï¿½ï¿½ï¿½ */
 
--- È¸¿ø
+-- È¸ï¿½ï¿½
 -- member.status
 -- member.role
 create type member_status as enum('ENABLE', 'DISABLE');
 create type member_role as enum('USER', 'ADMIN');
 
 
--- ÄíÆù
--- coupon.discount_method
-create type coupon_discount_method as enum('RATE', 'AMOUNT');
 
-
-
--- ÁÖ¹®
+-- ï¿½Ö¹ï¿½
 -- orders.status
 create type orders_status as enum('CANCEL', 'EXCHANGE', 'RETURN', 'ORDER_COMPLETE', 'SHIPMENT_COMPLETE');
 
 
 
--- ¹è¼Û
--- shipping.method
-create type shipping_method as enum('POST_OFFICE', 'PARCEL');
-
-
-
--- °áÁ¦
--- payment.method
--- payment.status
-create type payment_method as enum('CARD', 'DEPOSIT', 'KAKAO', 'NAVER');
-create type payment_status as enum('DEPOSIT_BEFORE', 'WAIT_ADDITIONAL_DEPOSIT', 'DEPOSIT_COMPLETE', 'PAYMENT_COMPLETE')
-
-
-
--- »óÇ°
+-- ï¿½ï¿½Ç°
 -- product.display_status
 -- product.manage_status
 create type product_display_status as enum('MAIN, EVENT, NONE');
@@ -41,6 +22,6 @@ create type product_manage_status as enum('STOCK', 'NON_STOCK', 'DISPLAY');
 
 
 
--- »óÇ° ÀÌ¹ÌÁö
+-- ï¿½ï¿½Ç° ï¿½Ì¹ï¿½ï¿½ï¿½
 -- product_image.status
 create type product_image_status as enum('MAIN', 'SUB');
