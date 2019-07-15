@@ -25,10 +25,10 @@ public class ProductVo {
 	private Integer stockQuantity;						// 재고수량
 	private Boolean optionAvailable;					// 옵션사용여부
 	
-	private List<ProductOptionVo> productOptions;				// 상품 하나의 옵션들
-	private List<ProductOptionItemVo> productOptionItems;		// 옵션에 따른 상품들
-	private List<CategoryVo> categories;						// 카테고리들
-	private List<ProductImageVo> productImages;					// 상품 이미지들
+	private List<ProductOptionVo> productOptionList;				// 상품 하나의 옵션들
+	private List<ProductOptionItemVo> productOptionItemList;		// 옵션에 따른 상품들
+	private List<CategoryVo> categoryList;						// 카테고리들
+	private List<ProductImageVo> productImageList;					// 상품 이미지들
 	
 	public ProductVo() {}
 	
@@ -122,31 +122,31 @@ public class ProductVo {
 	public void setOptionAvailable(Boolean optionAvailable) {
 		this.optionAvailable = optionAvailable;
 	}
-	public List<ProductOptionVo> getProductOptions() {
-		return productOptions;
+	public List<ProductOptionVo> getProductOptionList() {
+		return productOptionList;
 	}
-	public void setProductOptions(List<ProductOptionVo> productOptions) {
-		this.productOptions = productOptions;
+	public void setProductOptionList(List<ProductOptionVo> productOptionList) {
+		this.productOptionList = productOptionList;
 	}
-	public List<ProductOptionItemVo> getOrdersProductOptions() {
-		return productOptionItems;
+	public List<ProductOptionItemVo> getProductOptionItemList() {
+		return productOptionItemList;
 	}
-	public void setOrdersProductOptions(List<ProductOptionItemVo> productOptionItems) {
-		this.productOptionItems = productOptionItems;
+	public void setProductOptionItemList(List<ProductOptionItemVo> productOptionItemList) {
+		this.productOptionItemList = productOptionItemList;
 	}
-	public List<CategoryVo> getCategories() {
-		return categories;
+	public List<CategoryVo> getCategoryList() {
+		return categoryList;
 	}
-	public void setCategories(List<CategoryVo> categories) {
-		this.categories = categories;
+	public void setCategoryList(List<CategoryVo> categoryList) {
+		this.categoryList = categoryList;
 	}
-	public List<ProductImageVo> getProductImages() {
-		return productImages;
+	public List<ProductImageVo> getProductImageList() {
+		return productImageList;
 	}
-	public void setProductImages(List<ProductImageVo> productImages) {
-		this.productImages = productImages;
+	public void setProductImageList(List<ProductImageVo> productImageList) {
+		this.productImageList = productImageList;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ProductVo [no=" + no + ", code=" + code + ", name=" + name + ", supplyPrice=" + supplyPrice
@@ -154,11 +154,10 @@ public class ProductVo {
 				+ detailedDescription + ", regDate=" + regDate + ", productDisplayStatus=" + productDisplayStatus
 				+ ", availability=" + availability + ", buyNowUrl=" + buyNowUrl + ", weight=" + weight
 				+ ", productManageStatus=" + productManageStatus + ", stockQuantity=" + stockQuantity
-				+ ", optionAvailable=" + optionAvailable + ", productOptions=" + productOptions
-				+ ", productOptionItems=" + productOptionItems + ", categories=" + categories + ", productImages="
-				+ productImages + "]";
+				+ ", optionAvailable=" + optionAvailable + ", productOptionList=" + productOptionList
+				+ ", productOptionItemList=" + productOptionItemList + ", categoryList=" + categoryList
+				+ ", productImageList=" + productImageList + "]";
 	}
-
 
 	/**
 	 * 상품 진열 상태에 대한 enum 클래스

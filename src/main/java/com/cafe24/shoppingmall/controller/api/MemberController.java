@@ -3,11 +3,9 @@ package com.cafe24.shoppingmall.controller.api;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
+import com.cafe24.shoppingmall.dto.MemberLoginDto;
 import com.cafe24.shoppingmall.service.MemberService;
-import com.cafe24.shoppingmall.vo.MemberLoginVo;
 import com.cafe24.shoppingmall.vo.MemberVo;
 
 /**
@@ -32,6 +30,9 @@ import com.cafe24.shoppingmall.vo.MemberVo;
 @RestController("memberAPIController")
 @RequestMapping("/api/member")
 public class MemberController {
+	@Autowired
+	private MessageSource messageSource;
+	
 	@Autowired
 	private MemberService memberService;
 
@@ -72,12 +73,12 @@ public class MemberController {
 	/**
 	 * 로그인
 	 * 
-	 * @param memberVo 로그인 할 최소한의 정보가 담겨 있는 회원 정보 객체
+	 * @param memberDto 로그인 할 최소한의 정보가 담겨 있는 회원 정보 객체
 	 * @param bindingResult 유효성 검사 결과
 	 * @return 로그인에 성공한 회원의 정보
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<JSONResult> login(@Valid @RequestBody MemberLoginVo memberVo, BindingResult bindingResult) {
+	public ResponseEntity<JSONResult> login(@Valid @RequestBody MemberLoginDto memberDto, BindingResult bindingResult) {
 		// Validation check
 		if (bindingResult.hasErrors()) {
 			List<ObjectError> errorList = bindingResult.getAllErrors();
@@ -85,7 +86,8 @@ public class MemberController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
 			}
 		}
-		Object result = memberService.login(memberVo);
+		
+		Object result = memberService.login(memberDto);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
