@@ -54,25 +54,7 @@ public class WebConfig implements WebMvcConfigurer {
 		converters.add(mappingJackson2HttpMessageConverter());
 		converters.add(stringHttpMessageConverter());
 	}
-	
-	/*
-	 * MessageSource, Locale
-	 */
-	@Bean
-	public MessageSource messageSource() {
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("classpath:messages/messages_ko.properties");
-		messageSource.setDefaultEncoding("UTF-8");
-		
-		return messageSource;
-	}
-	@Bean
-	public LocalValidatorFactoryBean validator(MessageSource messageSource) {
-		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-	    bean.setValidationMessageSource(messageSource);
-	    return bean;
-	}
-	
+
 	/*
 	 * Swagger
 	 */
@@ -83,5 +65,15 @@ public class WebConfig implements WebMvcConfigurer {
 				.apis(RequestHandlerSelectors.basePackage("com.cafe24.shoppingmall.controller.api"))
 				.paths(PathSelectors.any())
 				.build();
+	}
+
+	/*
+	 * MessageSource
+	 */
+	@Bean
+	public LocalValidatorFactoryBean validator(MessageSource messageSource) {
+		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+		bean.setValidationMessageSource(messageSource);
+		return bean;
 	}
 }

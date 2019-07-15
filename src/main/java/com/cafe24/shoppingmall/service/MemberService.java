@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
-import com.cafe24.shoppingmall.dto.MemberLoginDto;
 import com.cafe24.shoppingmall.exception.Message;
 import com.cafe24.shoppingmall.vo.MemberVo;
 import com.cafe24.shoppingmall.vo.MemberVo.MemberRole;
@@ -72,12 +71,12 @@ public class MemberService {
 	/**
 	 * 로그인
 	 * 
-	 * @param memberDto username과 password 가 담겨 있는 회원 정보
+	 * @param memberVo username과 password 가 담겨 있는 회원 정보
 	 * @return 상태 메시지(로그인 성공/실패)
 	 */
-	public String login(MemberLoginDto memberDto) {
+	public String login(MemberVo memberVo) {
 		for(MemberVo member: memberList) {
-			if(memberDto.getUsername().equals(member.getUsername()) && memberDto.getPassword().equals(member.getPassword())) {
+			if(memberVo.getUsername().equals(member.getUsername()) && memberVo.getPassword().equals(member.getPassword())) {
 				return Message.LOGIN_SUCCESS.toString();
 			}
 		}

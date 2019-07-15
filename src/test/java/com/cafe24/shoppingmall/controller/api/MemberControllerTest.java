@@ -189,8 +189,8 @@ public class MemberControllerTest {
 //	@Ignore
 	public void testLoginFailureBecauseInvalidData() throws Exception {
 		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("user**");
-		memberVo.setPassword("asdf1234!");
+		memberVo.setUsername("user1");
+		memberVo.setPassword("asdf1");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
