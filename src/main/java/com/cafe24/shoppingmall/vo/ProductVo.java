@@ -26,9 +26,11 @@ public class ProductVo {
 	private Boolean optionAvailable;					// 옵션사용여부
 	
 	private List<ProductOptionVo> productOptions;				// 상품 하나의 옵션들
-	private List<ProductOptionItemVo> ordersProductOptions;	// 옵션에 따른 상품들
+	private List<ProductOptionItemVo> productOptionItems;		// 옵션에 따른 상품들
 	private List<CategoryVo> categories;						// 카테고리들
 	private List<ProductImageVo> productImages;					// 상품 이미지들
+	
+	public ProductVo() {}
 	
 	public Long getNo() {
 		return no;
@@ -127,10 +129,10 @@ public class ProductVo {
 		this.productOptions = productOptions;
 	}
 	public List<ProductOptionItemVo> getOrdersProductOptions() {
-		return ordersProductOptions;
+		return productOptionItems;
 	}
-	public void setOrdersProductOptions(List<ProductOptionItemVo> ordersProductOptions) {
-		this.ordersProductOptions = ordersProductOptions;
+	public void setOrdersProductOptions(List<ProductOptionItemVo> productOptionItems) {
+		this.productOptionItems = productOptionItems;
 	}
 	public List<CategoryVo> getCategories() {
 		return categories;
@@ -153,7 +155,7 @@ public class ProductVo {
 				+ ", availability=" + availability + ", buyNowUrl=" + buyNowUrl + ", weight=" + weight
 				+ ", productManageStatus=" + productManageStatus + ", stockQuantity=" + stockQuantity
 				+ ", optionAvailable=" + optionAvailable + ", productOptions=" + productOptions
-				+ ", ordersProductOptions=" + ordersProductOptions + ", categories=" + categories + ", productImages="
+				+ ", productOptionItems=" + productOptionItems + ", categories=" + categories + ", productImages="
 				+ productImages + "]";
 	}
 
@@ -175,7 +177,7 @@ public class ProductVo {
 		public String toString() { return str; }
 	}
 	/**
-	 * 삼품 관리 상태에 대한 enum 클래스
+	 * 상품 관리 상태에 대한 enum 클래스
 	 * STOCK(재고에 따라 상품 판매 여부 결정)/NON_STOCK(재고에 상관 없이 판매)/DISPLAY(진열되어 있는 상품 항목 중 하나라도 전부 팔리면 곧장 판매 중지)
 	 * 
 	 * @author YDH

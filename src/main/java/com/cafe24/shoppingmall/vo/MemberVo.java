@@ -1,6 +1,5 @@
 package com.cafe24.shoppingmall.vo;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;

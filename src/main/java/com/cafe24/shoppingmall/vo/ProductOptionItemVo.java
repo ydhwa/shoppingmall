@@ -13,6 +13,8 @@ public class ProductOptionItemVo {
 	private Integer additionalAmount;	// 추가금액
 	private String stockQuantity;		// 재고수량
 	
+	public ProductOptionItemVo() {}
+	
 	public Long getNo() {
 		return no;
 	}

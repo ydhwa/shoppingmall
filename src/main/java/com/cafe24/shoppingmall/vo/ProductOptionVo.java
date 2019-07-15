@@ -12,6 +12,8 @@ public class ProductOptionVo {
 	private String name;
 	private String value;
 	
+	public ProductOptionVo() {}
+	
 	public Long getProductNo() {
 		return productNo;
 	}

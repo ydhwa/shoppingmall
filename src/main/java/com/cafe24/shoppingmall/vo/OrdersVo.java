@@ -1,5 +1,13 @@
 package com.cafe24.shoppingmall.vo;
 
+import java.util.List;
+
+/**
+ * 주문, 주문조회/관리 시 사용하는 주문 VO
+ * 
+ * @author YDH
+ *
+ */
 public class OrdersVo {
 	private Long no;					// 주문번호
 	private String code;				// 주문코드
@@ -7,21 +15,29 @@ public class OrdersVo {
 	private String memo;				// 메모
 	private OrdersStatus ordersStatus;	// 주문상태
 	
-	private String ordererName;			// 주문자 이름
-	private String ordererHomeNumber;	// 주문자 유선전화번호
-	private String ordererPhoneNumber;	// 주문자 휴대전화번호
-	private String ordererEmail;		// 주문자 이메일
-	private String ordererAddress;		// 주문자 주소
+	private String ordererName;				// 주문자 이름
+	private String ordererHomeNumber;		// 주문자 유선전화번호
+	private String ordererPhoneNumber;		// 주문자 휴대전화번호
+	private String ordererEmail;			// 주문자 이메일
+	private String ordererPostalCode;		// 주문자 우편번호
+	private String ordererBaseAddress;		// 주문자 기본주소
+	private String ordererDetailAddress;	// 주문자 상세주소
 	
-	private String receiverName;		// 수령자 이름
-	private String receiverHomeNumber;	// 수령자 유선전화번호
-	private String receiverPhoneNumber;	// 수령자 휴대전화번호
-	private String receiverAddress;		// 수령자 주소
+	private String receiverName;			// 수령자 이름
+	private String receiverHomeNumber;		// 수령자 유선전화번호
+	private String receiverPhoneNumber;		// 수령자 휴대전화번호
+	private String receiverPostalCode;		// 수령자 우편번호
+	private String receiverBaseAddress;		// 수령자 기본주소
+	private String receiverDetailAddress;	// 수령자 상세주소
 	
 	private Integer totalOrderAccount;	// 주문총액(배송비 포함)
 	
 	private Long memberNo;				// (회원용)회원번호
 	private String password;			// (비회원용)주문조회 비밀번호
+	
+	private List<ProductOptionItemVo> ordersList;	// 주문 상품 목록
+
+	public OrdersVo() {}
 	
 	public Long getNo() {
 		return no;
@@ -77,11 +93,23 @@ public class OrdersVo {
 	public void setOrdererEmail(String ordererEmail) {
 		this.ordererEmail = ordererEmail;
 	}
-	public String getOrdererAddress() {
-		return ordererAddress;
+	public String getOrdererPostalCode() {
+		return ordererPostalCode;
 	}
-	public void setOrdererAddress(String ordererAddress) {
-		this.ordererAddress = ordererAddress;
+	public void setOrdererPostalCode(String ordererPostalCode) {
+		this.ordererPostalCode = ordererPostalCode;
+	}
+	public String getOrdererBaseAddress() {
+		return ordererBaseAddress;
+	}
+	public void setOrdererBaseAddress(String ordererBaseAddress) {
+		this.ordererBaseAddress = ordererBaseAddress;
+	}
+	public String getOrdererDetailAddress() {
+		return ordererDetailAddress;
+	}
+	public void setOrdererDetailAddress(String ordererDetailAddress) {
+		this.ordererDetailAddress = ordererDetailAddress;
 	}
 	public String getReceiverName() {
 		return receiverName;
@@ -101,11 +129,23 @@ public class OrdersVo {
 	public void setReceiverPhoneNumber(String receiverPhoneNumber) {
 		this.receiverPhoneNumber = receiverPhoneNumber;
 	}
-	public String getReceiverAddress() {
-		return receiverAddress;
+	public String getReceiverPostalCode() {
+		return receiverPostalCode;
 	}
-	public void setReceiverAddress(String receiverAddress) {
-		this.receiverAddress = receiverAddress;
+	public void setReceiverPostalCode(String receiverPostalCode) {
+		this.receiverPostalCode = receiverPostalCode;
+	}
+	public String getReceiverBaseAddress() {
+		return receiverBaseAddress;
+	}
+	public void setReceiverBaseAddress(String receiverBaseAddress) {
+		this.receiverBaseAddress = receiverBaseAddress;
+	}
+	public String getReceiverDetailAddress() {
+		return receiverDetailAddress;
+	}
+	public void setReceiverDetailAddress(String receiverDetailAddress) {
+		this.receiverDetailAddress = receiverDetailAddress;
 	}
 	public Integer getTotalOrderAccount() {
 		return totalOrderAccount;
@@ -125,19 +165,42 @@ public class OrdersVo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public List<ProductOptionItemVo> getOrdersList() {
+		return ordersList;
+	}
+	public void setOrdersList(List<ProductOptionItemVo> ordersList) {
+		this.ordersList = ordersList;
+	}
 	
 	@Override
 	public String toString() {
 		return "OrdersVo [no=" + no + ", code=" + code + ", date=" + date + ", memo=" + memo + ", ordersStatus="
 				+ ordersStatus + ", ordererName=" + ordererName + ", ordererHomeNumber=" + ordererHomeNumber
-				+ ", ordererPhoneNumber=" + ordererPhoneNumber + ", ordererEmail=" + ordererEmail + ", ordererAddress="
-				+ ordererAddress + ", receiverName=" + receiverName + ", receiverHomeNumber=" + receiverHomeNumber
-				+ ", receiverPhoneNumber=" + receiverPhoneNumber + ", receiverAddress=" + receiverAddress
-				+ ", totalOrderAccount=" + totalOrderAccount + ", memberNo=" + memberNo + ", password=" + password
-				+ "]";
+				+ ", ordererPhoneNumber=" + ordererPhoneNumber + ", ordererEmail=" + ordererEmail
+				+ ", ordererPostalCode=" + ordererPostalCode + ", ordererBaseAddress=" + ordererBaseAddress
+				+ ", ordererDetailAddress=" + ordererDetailAddress + ", receiverName=" + receiverName
+				+ ", receiverHomeNumber=" + receiverHomeNumber + ", receiverPhoneNumber=" + receiverPhoneNumber
+				+ ", receiverPostalCode=" + receiverPostalCode + ", receiverBaseAddress=" + receiverBaseAddress
+				+ ", receiverDetailAddress=" + receiverDetailAddress + ", totalOrderAccount=" + totalOrderAccount
+				+ ", memberNo=" + memberNo + ", password=" + password + ", ordersList=" + ordersList + "]";
 	}
 
+	/**
+	 * 주문 상태에 대한 enum 클래스
+	 * CANCEL(취소)/EXCHANGE(교환)/RETURN(환불)/ORDER_COMPLETE(주문완료)/SHIPMENT_COMPLETE(배송완료)
+	 * 
+	 * @author YDH
+	 *
+	 */
 	public enum OrdersStatus {
+		CANCEL("CANCEL"),
+		EXCHANGE("EXCHANGE"),
+		RETURN("RETURN"),
+		ORDER_COMPLETE("ORDER_COMPLETE"),
+		SHIPMENT_COMPLETE("SHIPMENT_COMPLETE");
 		
+		private String str;
+		OrdersStatus(String str) { this.str = str; }
+		public String toString() { return str; }
 	}
 }
