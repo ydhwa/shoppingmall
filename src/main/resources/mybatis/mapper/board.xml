@@ -12,19 +12,20 @@ limit <0부터시작하는시작점> <수량>;
 -->
 <select id="getList" resultType="boardvo" parameterType="map">
 	<![CDATA[
-		select b.no as no, 
-			u.name as username, 
+		select board.no as no, 
+			member.name as username, 
 			title, 
-			date_format(b.reg_date, '%Y-%m-%d %H:%i:%s') as regdate, 
+			to_char(board.reg_date, 'yyyy-mm-dd hh24:mi:ss') as regdate, 
 			hit, 
 			status, 
 			depth, 
-			u.no as userno 
-		from board b, user u 
+			member.no as userno 
+		from board, member 
 		where title like concat('%', #{ keyword }, '%') 
-			and b.user_no = u.no 
+			and board.user_no = member.no 
 		order by group_no desc, order_no asc 
-		limit #{ startIndex }, #{ countPerPage };
+		limit #{ countPerPage }
+		offset #{ startIndex };
 	]]>
 </select>
 
@@ -42,26 +43,26 @@ where b.user_no = u.no
 -->
 <select id="getByNo" resultType="boardvo" parameterType="map">
 	<![CDATA[
-		select b.no as no,
+		select board.no as no,
 			group_no as groupno,
 			order_no as orderno,
 			depth,
 			title,
-			b.user_no as userno,
+			board.user_no as userno,
 	]]>
 	<!-- view -->
 	<if test="mode == 'view'">
 		<![CDATA[
-			date_format(b.reg_date, '%Y-%m-%d %H:%i:%s') as regdate,
+			to_char(board.reg_date, 'yyyy-mm-dd hh24:mi:ss') as regdate, 
 			hit,
-			u.name as username,
+			member.name as username,
 		]]>
 	</if>
 	<![CDATA[
 			contents
-		from board b, user u
-		where b.user_no = u.no
-			and b.no = #{ no };
+		from board, member
+		where board.user_no = member.no
+			and board.no = #{ no };
 	]]>
 </select>
 
@@ -89,12 +90,12 @@ values(<잘 채워넣기 (ifnull 등등 써야함)>);
 	<![CDATA[
 		insert 
 		into board 
-		values(null, #{ title }, #{ contents }, 0, now(), 
+		values(nextval('seq_board'), #{ title }, #{ contents }, 0, now(), 
 	]]>
 	<choose>
 		<when test="groupNo == -1">
 			<![CDATA[
-				(select ifnull((select max(b.group_no) + 1 from board b), 1)), 
+				(select coalesce((select max(group_no) + 1 from board), 1)), 
     			1, 
     			0, 
     		]]>
@@ -147,7 +148,7 @@ where no = [번호];
 	<![CDATA[
 		update board
 		set hit = hit + 1
-		where no = #{ no }
+		where no = #{ no };
 	]]>
 </update>
 

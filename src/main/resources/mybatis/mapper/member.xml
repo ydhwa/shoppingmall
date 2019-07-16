@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<insert id="insert" parameterType="membervo">
+		<![CDATA[
+			insert 
+			into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status, role)
+			values(
+				nextval('seq_member_no'),
+				#{ membervo.username },
+				encode(digest(#{ membervo.password }, 'SHA512'), 'hex'),
+				now(),
+				encode(encrypt(convert_to(#{ membervo.name }, 'utf-8'), 'key', 'AES'), 'hex'),
+				encode(encrypt(convert_to(#{ membervo.birthDate }, 'utf-8'), 'key', 'AES'), 'hex'),
+		]]>
+		<if test="homeNumber != null">
+			<![CDATA[
+				encode(encrypt(convert_to(#{ membervo.homeNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
+			]]>
+		</if>
+		<![CDATA[
+				encode(encrypt(convert_to(#{ membervo.phoneNumber }, 'utf-8'), 'key', 'AES'), 'hex'),
+				encode(encrypt(convert_to(#{ membervo.email }, 'utf-8'), 'key', 'AES'), 'hex'),
+				'ENABLE',
+				'USER'
+			); 
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+				select currval('seq_member_no');
+			]]>
+		</selectKey>
+	</insert>
+
+	<select id="getByUsername" resultType="membervo"
+		parameterType="string">
+		<![CDATA[
+			select username
+			from member
+			where username = #{ value };
+		]]>
+	</select>
+
+	<select id="getByUsernameAndPassword" resultType="membervo"
+		parameterType="membervo">
+		<![CDATA[
+			select no, username, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8')
+			from member
+			where
+				username = #{ membervo.username } and
+				password = encode(digest(#{ membervo.password }, 'sha512'), 'hex');
+		]]>
+	</select>
+
+</mapper>

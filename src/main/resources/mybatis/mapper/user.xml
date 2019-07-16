@@ -7,12 +7,12 @@
 	<insert id="insert" parameterType="uservo">
 		<![CDATA[
 			insert 
-			into user(no, name, email, password, gender, join_date) 
-			values(null, #{ name }, #{ email }, #{ password }, #{ gender }, now());
+			into member(no, name, email, password, gender, join_date) 
+			values(nextval('seq_member'), #{ name }, #{ email }, #{ password }, #{ gender }, now());
 		]]>
 		<selectKey keyProperty="no" resultType="long" order="AFTER">
 			<![CDATA[
-				select last_insert_id();
+				select currval('seq_member');
 			]]>
 		</selectKey>
 	</insert>
@@ -20,7 +20,7 @@
 	<select id="getByEmailAndPassword" resultType="uservo" parameterType="map">
 		<![CDATA[
 			select no, name 
-			from user 
+			from member 
 			where email = #{ email } 
 				and password = #{ password };
 		]]>
@@ -29,7 +29,7 @@
 	<select id="getByEmail" resultType="uservo" parameterType="string">
 		<![CDATA[
 			select no, name, email, gender 
-			from user 
+			from member 
 			where email = #{ value };
 		]]>
 	</select>
@@ -37,7 +37,7 @@
 	<select id="getByNo" resultType="uservo" parameterType="long">
 		<![CDATA[
 			select name, email, gender 
-			from user 
+			from member 
 			where no = #{ value };
 		]]>
 	</select>
@@ -45,7 +45,7 @@
 	<select id="getNameByNo" resultType="string" parameterType="long">
 		<![CDATA[
 			select name 
-			from user 
+			from member 
 			where no = #{ value };
 		]]>
 	</select>
@@ -69,7 +69,7 @@
 
 	<update id="update" parameterType="uservo">
 		<![CDATA[
-			update user
+			update member
 			set email = #{ email }, 
 		]]>
 		<if test="name != ''">

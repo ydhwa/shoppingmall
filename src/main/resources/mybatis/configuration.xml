@@ -7,19 +7,9 @@
     </settings>
     
 	<typeAliases>
-		<!-- 표기는 관례상 모두 소문자로 표현 -->
-		<typeAlias alias="sitevo" type="com.cafe24.mysite.vo.SiteVo" />
-		<typeAlias alias="uservo" type="com.cafe24.mysite.vo.UserVo" />
-		<typeAlias alias="guestbookvo" type="com.cafe24.mysite.vo.GuestbookVo" />
-		<typeAlias alias="boardvo" type="com.cafe24.mysite.vo.BoardVo" />
-		<typeAlias alias="filevo" type="com.cafe24.mysite.vo.FileVo" />
+		<typeAlias alias="membervo" type="com.cafe24.shoppingmall.vo.MemberVo" />
 	</typeAliases>
 	<mappers>
-		<mapper resource="mybatis/mapper/site.xml" />
-		<mapper resource="mybatis/mapper/user.xml" />
-		<mapper resource="mybatis/mapper/guestbook.xml" />
-		<mapper resource="mybatis/mapper/board.xml" />
-		<mapper resource="mybatis/mapper/file.xml" />
-		
+		<mapper resource="mybatis/mapper/member.xml" />
 	</mappers>
 </configuration>

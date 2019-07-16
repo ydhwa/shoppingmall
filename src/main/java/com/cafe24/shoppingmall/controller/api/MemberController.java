@@ -37,7 +37,7 @@ public class MemberController {
 	 * 
 	 * @param memberVo      회원가입 할 정보가 담겨 있는 회원 정보 객체
 	 * @param bindingResult 유효성 검사 결과
-	 * @return 회원가입에 성공한 회원의 아이디만 담긴 정보
+	 * @return 회원가입 성공여부(true/false)
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> join(@RequestBody @Validated(MemberGroups.Join.class) MemberVo memberVo, BindingResult bindingResult) {
@@ -49,7 +49,7 @@ public class MemberController {
 			}
 		}
 
-		Object result = memberService.join(memberVo);
+		Boolean result = memberService.join(memberVo);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
@@ -62,7 +62,7 @@ public class MemberController {
 	 */
 	@RequestMapping(value = "/username/{username:[a-zA-Z0-9_]{4,12}}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> checkUsername(@PathVariable("username") String username) {
-		Object result = memberService.checkUsernameDuplication(username);
+		Boolean result = memberService.checkUsernameDuplication(username);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
@@ -84,7 +84,7 @@ public class MemberController {
 			}
 		}
 
-		Object result = memberService.login(memberVo);
+		MemberVo result = memberService.login(memberVo);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}

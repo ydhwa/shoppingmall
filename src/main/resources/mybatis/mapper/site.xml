@@ -7,14 +7,14 @@
 		<![CDATA[
 			select title, welcome_message as welcomeMessage, profile_url as profileUrl, description
 			from site
-			where no = 1;
+			limit 1;
 		]]>
 	</select>
 	
 	<insert id="insert" parameterType="sitevo">
 		<![CDATA[
 			insert into site
-			values(null, #{ title }, #{ welcomeMessage }, #{ profileUrl }, #{ description });
+			values(nextval('seq_site'), #{ title }, #{ welcomeMessage }, #{ profileUrl }, #{ description });
 		]]>
 	</insert>
 </mapper>

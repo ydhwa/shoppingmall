@@ -11,7 +11,7 @@
 		<choose>
 			<when test="boardNo == null">
 				<![CDATA[
-					(select `auto_increment` from information_schema.tables where table_schema = 'webdb' and table_name = 'board'), 
+					null, 
 				]]>	
 			</when>
 			<otherwise>

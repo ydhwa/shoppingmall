@@ -53,14 +53,6 @@ public class MemberVo {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 	}
-	public MemberVo(String username, String password, String name, String birthDate, String phoneNumber, String email) {
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.birthDate = birthDate;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-	}
 	public MemberVo(Long no, String username, String password, String regDate, String name, String birthDate, String homeNumber, String phoneNumber, String email, MemberStatus status, MemberRole role) {
 		this.no = no;
 		this.username = username;
