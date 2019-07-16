@@ -1,7 +1,6 @@
 package com.cafe24.shoppingmall.controller.api;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -14,6 +13,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.MemberService;
-import com.cafe24.shoppingmall.validator.MemberValidator;
 import com.cafe24.shoppingmall.validator.groups.MemberGroups;
 import com.cafe24.shoppingmall.vo.MemberVo;
 
@@ -37,11 +36,12 @@ import com.cafe24.shoppingmall.vo.MemberVo;
 @RestController("memberAPIController")
 @RequestMapping("/api/member")
 public class MemberController {
-	@Autowired
-	private MessageSource messageSource;
 
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private MessageSource messageSource;
 
 	/**
 	 * 회원가입
@@ -51,22 +51,12 @@ public class MemberController {
 	 * @return 회원가입에 성공한 회원 정보
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<JSONResult> join(@Valid @RequestBody MemberVo memberVo, BindingResult bindingResult) {
-//		// Validation check
-//		if (bindingResult.hasErrors()) {
-//			List<ObjectError> errorList = bindingResult.getAllErrors();
-//			for (ObjectError error : errorList) {
-//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
-//			}
-//		}
-		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-
-		Set<ConstraintViolation<MemberVo>> validatorResults = validator.validate(memberVo, MemberGroups.Login.class);
-
-		if (validatorResults.isEmpty() == false) {
-			for (ConstraintViolation<MemberVo> validatorResult : validatorResults) {
-				String message = validatorResult.getMessage();
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(message));
+	public ResponseEntity<JSONResult> join(@RequestBody @Validated(MemberGroups.Join.class) MemberVo memberVo, BindingResult bindingResult) {
+		// Validation check
+		if (bindingResult.hasErrors()) {
+			List<ObjectError> errorList = bindingResult.getAllErrors();
+			for (ObjectError error : errorList) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
 			}
 		}
 
@@ -96,40 +86,12 @@ public class MemberController {
 	 * @return 로그인에 성공한 회원의 정보
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<JSONResult> login(@Validated(MemberGroups.Login.class) @RequestBody MemberVo memberVo, BindingResult bindingResult) {
+	public ResponseEntity<JSONResult> login(@RequestBody @Validated(MemberGroups.Login.class) MemberVo memberVo, BindingResult bindingResult) {
 		// Validation check
-//		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-//
-//		Set<ConstraintViolation<MemberVo>> validatorResults = validator.validate(memberVo, MemberGroups.Login.class);
-//
-//		if (validatorResults.isEmpty() == false) {
-//			for (ConstraintViolation<MemberVo> validatorResult: validatorResults) {
-//				String message = validatorResult.getMessage();
-//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(message));
-//			}
-//		}
-//		SpringValidatorAdapter validatorAdapter = new SpringValidatorAdapter(validator);
-//	    validatorAdapter.validate(memberVo, errors, MemberGroups.Login.class);
-//
-//	    if(errors.hasErrors()) {
-//	    	for (ObjectError error : errors.getFieldErrors()) {
-//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
-//			}
-//	    }
-	    
-//		if (bindingResult.hasErrors()) {
-//			List<FieldError> errorList = bindingResult.getFieldErrors();
-//			for (ObjectError error : errorList) {
-//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(messageSource.getMessage(error, Locale.getDefault())));
-//			}
-//		}
-		
-		MemberValidator memberValidator = new MemberValidator();
-		memberValidator.validate(memberVo, bindingResult);
 		if (bindingResult.hasErrors()) {
 			List<ObjectError> errorList = bindingResult.getAllErrors();
 			for (ObjectError error : errorList) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(messageSource.getMessage(error, Locale.getDefault())));
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
 			}
 		}
 

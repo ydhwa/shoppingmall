@@ -9,13 +9,13 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.cafe24.shoppingmall.validator.constraints.PasswordPatternValidator;
+import com.cafe24.shoppingmall.validator.constraints.PhoneNumberPatternValidator;
 
-@Constraint(validatedBy = PasswordPatternValidator.class)
+@Constraint(validatedBy = PhoneNumberPatternValidator.class)
 @Retention(RUNTIME)
 @Target(FIELD)
-public @interface ValidPassword {
-	String message() default "비밀번호는 8자 이상 20자 이하의 알파벳, 숫자, 특수문자를 조합하여 작성해야 합니다.";
+public @interface ValidPhoneNumber {
+	String message() default "휴대전화번호 형식이 아닙니다.";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

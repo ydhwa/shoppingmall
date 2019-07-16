@@ -5,13 +5,13 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.cafe24.shoppingmall.validator.ValidPassword;
+import com.cafe24.shoppingmall.validator.ValidUsername;
 
-public class PasswordPatternValidator implements ConstraintValidator<ValidPassword, String> {
-	private Pattern pattern = Pattern.compile("(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,20}");
+public class UsernamePatternValidator implements ConstraintValidator<ValidUsername, String> {
+	private Pattern pattern = Pattern.compile("[A-Za-z0-9_]{4,12}");
 
 	@Override
-	public void initialize(ValidPassword constraintAnnotation) {
+	public void initialize(ValidUsername constraintAnnotation) {
 	}
 
 	@Override

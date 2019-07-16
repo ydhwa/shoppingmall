@@ -2,12 +2,12 @@ package com.cafe24.shoppingmall.vo;
 
 import java.util.List;
 
-import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import com.cafe24.shoppingmall.validator.ValidPassword;
+import com.cafe24.shoppingmall.validator.ValidPhoneNumber;
+import com.cafe24.shoppingmall.validator.ValidUsername;
 import com.cafe24.shoppingmall.validator.groups.MemberGroups;
 
 /**
@@ -18,23 +18,23 @@ import com.cafe24.shoppingmall.validator.groups.MemberGroups;
  */
 public class MemberVo {
 	private Long no;				// 회원번호
-	@NotBlank
-	@Pattern(regexp="[A-Za-z0-9_]{4,12}") 
+	@NotBlank(groups={MemberGroups.Join.class}, message="아이디는 필수 입력 항목입니다.")
+	@ValidUsername(groups={MemberGroups.Join.class}) 
 	private String username;		// 아이디
-	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Login.class})
+	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Login.class}, message="비밀번호는 필수 입력 항목입니다.")
 	@ValidPassword(groups={MemberGroups.Join.class, MemberGroups.Login.class})
 	private String password;		// 비밀번호
 	private String regDate;			// 가입일
-	@NotBlank
+	@NotBlank(groups={MemberGroups.Join.class}, message="이름은 필수 입력 항목입니다.")
 	private String name;			// 이름
-	@NotBlank
+	@NotBlank(groups={MemberGroups.Join.class}, message="생년월일은 필수 입력 항목입니다.")
 	private String birthDate;		// 생년월일
 	private String homeNumber;		// 유선전화번호
-	@NotBlank
-	@Pattern(regexp="[0-9]{3}-[0-9]{4}-[0-9]{4}") 
+	@NotBlank(groups={MemberGroups.Join.class}, message="휴대전화번호는 필수 입력 항목입니다.")
+	@ValidPhoneNumber(groups={MemberGroups.Join.class}) 
 	private String phoneNumber;		// 휴대전화번호
-	@NotBlank
-	@Email
+	@NotBlank(groups={MemberGroups.Join.class}, message="이메일은 필수 입력 항목입니다.")
+	@Email(groups={MemberGroups.Join.class}, message="이메일 형식이 아닙니다.")
 	private String email;			// 이메일
 	private MemberStatus status;	// 계정상태
 	private MemberRole role;		// 권한

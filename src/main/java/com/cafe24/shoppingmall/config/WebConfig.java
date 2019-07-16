@@ -15,7 +15,6 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -28,8 +27,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@ComponentScan(basePackages = {"com.cafe24.shoppingmall"})
-public class WebConfig implements WebMvcConfigurer {	
+@ComponentScan(basePackages = { "com.cafe24.shoppingmall" })
+public class WebConfig implements WebMvcConfigurer {
 	/*
 	 * Message Converter
 	 */
@@ -42,6 +41,7 @@ public class WebConfig implements WebMvcConfigurer {
 		converter.setSupportedMediaTypes(Arrays.asList(new MediaType("application", "json", Charset.forName("UTF-8"))));
 		return converter;
 	}
+
 	@Bean
 	public StringHttpMessageConverter stringHttpMessageConverter() {
 		StringHttpMessageConverter converter = new StringHttpMessageConverter();
@@ -49,6 +49,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 		return converter;
 	}
+
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(mappingJackson2HttpMessageConverter());
@@ -60,20 +61,20 @@ public class WebConfig implements WebMvcConfigurer {
 	 */
 	@Bean
 	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
+		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.cafe24.shoppingmall.controller.api"))
-				.paths(PathSelectors.any())
-				.build();
+				.paths(PathSelectors.any()).build();
 	}
-
+	
 	/*
 	 * MessageSource
 	 */
 	@Bean
-	public LocalValidatorFactoryBean validator(MessageSource messageSource) {
-		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-		bean.setValidationMessageSource(messageSource);
-		return bean;
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("messages/messages_ko");
+		messageSource.setDefaultEncoding("UTF-8");
+		
+		return messageSource;
 	}
 }

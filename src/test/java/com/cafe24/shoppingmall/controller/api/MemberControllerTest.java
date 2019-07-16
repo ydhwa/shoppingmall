@@ -52,7 +52,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testJoinSuccess() throws Exception {
 		MemberVo memberVo = new MemberVo("user01", "asdf1234!", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com");
 
@@ -70,9 +70,9 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testJoinFailureBecauseInvalidData() throws Exception {
-		MemberVo memberVo = new MemberVo("user01", "1234", "유저1", "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com");
+		MemberVo memberVo = new MemberVo("user01", "1234asdf!", "이름", "1996-09-18", "", "010-1111-111", "test1@test1.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
@@ -86,7 +86,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testJoinFailureBecauseMissingData() throws Exception {
 		MemberVo memberVo = new MemberVo("user01", "asdf1234!", null, "1996-09-18", "031-111-1111", "010-1111-1111", "test1@test1.com");
 
@@ -103,7 +103,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testCheckUsernameSuccessWithNotDuplicatedUsername() throws Exception {
 		String username = "user02";
 
@@ -118,7 +118,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testCheckUsernameSuccessWithDuplicatedUsername() throws Exception {
 		String username = "user";
 
@@ -134,7 +134,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testCheckUsernameFailureBecauseInvalidData() throws Exception {
 		String username = "use";
 
@@ -149,7 +149,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testLoginSuccessWithMatchingAccount() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("user");
@@ -167,7 +167,7 @@ public class MemberControllerTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
+//	@Ignore
 	public void testLoginSuccessWithNotMatchingAccount() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("testuser");

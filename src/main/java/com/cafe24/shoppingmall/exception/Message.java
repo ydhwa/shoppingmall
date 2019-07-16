@@ -1,7 +1,7 @@
 package com.cafe24.shoppingmall.exception;
 
 /**
- * 상태 메시지들에 대한 enum class
+ * 정상 상태 메시지들에 대한 enum class
  * 
  * @author YDH
  *
