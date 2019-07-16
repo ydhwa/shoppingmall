@@ -1,6 +1,5 @@
 package com.cafe24.shoppingmall.service;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -11,8 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.cafe24.shoppingmall.config.WebConfig;
-import com.cafe24.shoppingmall.exception.Message;
-import com.cafe24.shoppingmall.vo.MemberVo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { WebConfig.class })

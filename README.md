@@ -17,6 +17,8 @@
 ## 내용
 - week1: 사용자 시나리오 작성 및 데이터베이스 설계
 - week2: 개발 환경 구축(Swagger(API 명세), JUnit(TDD) 적용)
+- week3: API 개발
+- week4: API 개발
 
 -----
 
@@ -24,15 +26,4 @@
 
 ### docs/
 - EXERD, queries
-
-### 참고
-- <https://springboot.tistory.com/24>
-- <https://projectjt.tistory.com/7>
-- <https://www.postgresql.org/docs/9.1/datatype-enum.html>
-- <https://gompangs.tistory.com/entry/Spring-Springboot-JUnit-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8B%9C-%EC%84%A4%EC%A0%95>
-- <http://toby.epril.com/?p=1126>
-- <https://stackoverflow.com/questions/40356750/java-postgres-enums-how-do-i-make-them-work-together-for-update>
-- <https://www.freeformatter.com/java-regex-tester.html#ad-output>
-- <https://www.baeldung.com/spring-validate-requestparam-pathvariable>
-- <https://marobiana.tistory.com/105>
 

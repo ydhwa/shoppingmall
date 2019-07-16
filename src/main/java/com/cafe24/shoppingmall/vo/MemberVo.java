@@ -18,8 +18,8 @@ import com.cafe24.shoppingmall.validator.groups.MemberGroups;
  */
 public class MemberVo {
 	private Long no;				// 회원번호
-	@NotBlank(groups={MemberGroups.Join.class}, message="아이디는 필수 입력 항목입니다.")
-	@ValidUsername(groups={MemberGroups.Join.class}) 
+	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Login.class}, message="아이디는 필수 입력 항목입니다.")
+	@ValidUsername(groups={MemberGroups.Join.class, MemberGroups.Login.class}) 
 	private String username;		// 아이디
 	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Login.class}, message="비밀번호는 필수 입력 항목입니다.")
 	@ValidPassword(groups={MemberGroups.Join.class, MemberGroups.Login.class})

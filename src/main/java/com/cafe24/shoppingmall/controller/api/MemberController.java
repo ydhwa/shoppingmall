@@ -1,19 +1,11 @@
 package com.cafe24.shoppingmall.controller.api;
 
 import java.util.List;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,15 +32,12 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	@Autowired
-	private MessageSource messageSource;
-
 	/**
 	 * 회원가입
 	 * 
 	 * @param memberVo      회원가입 할 정보가 담겨 있는 회원 정보 객체
 	 * @param bindingResult 유효성 검사 결과
-	 * @return 회원가입에 성공한 회원 정보
+	 * @return 회원가입에 성공한 회원의 아이디만 담긴 정보
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> join(@RequestBody @Validated(MemberGroups.Join.class) MemberVo memberVo, BindingResult bindingResult) {
@@ -69,11 +58,11 @@ public class MemberController {
 	 * 유저네임(=아이디) 중복검사
 	 * 
 	 * @param username 중복검사 할 아이디
-	 * @return 중복검사 결과 (unique / duplicated)
+	 * @return 중복검사 결과 (false(unique) / true(duplicated))
 	 */
 	@RequestMapping(value = "/username/{username:[a-zA-Z0-9_]{4,12}}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> checkUsername(@PathVariable("username") String username) {
-		Object result = memberService.checkUsername(username);
+		Object result = memberService.checkUsernameDuplication(username);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}

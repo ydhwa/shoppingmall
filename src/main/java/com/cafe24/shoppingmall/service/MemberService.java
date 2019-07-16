@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
-import com.cafe24.shoppingmall.exception.Message;
 import com.cafe24.shoppingmall.vo.MemberVo;
 import com.cafe24.shoppingmall.vo.MemberVo.MemberRole;
 import com.cafe24.shoppingmall.vo.MemberVo.MemberStatus;
@@ -35,55 +34,61 @@ public class MemberService {
 	 * 회원가입
 	 * 
 	 * @param memberVo 회원가입 할 고객의 회원 정보
-	 * @return 회원가입 된 고객의 회원 정보
+	 * @return 회원가입 된 고객의 회원의 아이디만 담긴 정보
 	 */
 	public Object join(MemberVo memberVo) {
-		
 		// 남은 데이터 등록(회원번호, 등록일은 데이터베이스 단에서 처리)
 		memberVo.setStatus(MemberStatus.ENABLE);
 		memberVo.setRole(MemberRole.USER);
 		
 		memberList.add(memberVo);
 		
+		MemberVo joinMemberVo = new MemberVo();
+		joinMemberVo.setUsername(memberVo.getUsername());
+		
 		// memberDao.insert(memberVo);
 		
-		return memberVo;
+		return joinMemberVo;
 	}
 	
 	/**
 	 * 유저네임(아이디) 중복 체크
 	 * 
 	 * @param memberVo 아이디만 담겨 있는 회원 정보
-	 * @return 상태 메시지(유니크하다/중복되어있다)
+	 * @return 중복 아이디 존재 여부(true/false)
 	 */
-	public String checkUsername(String username) {
+	public Boolean checkUsernameDuplication(String username) {
 		for(MemberVo member: memberList) {
 			if(username.equals(member.getUsername())) {
-				return Message.USERNAME_DUPLICATED.toString();
+				return true;
 			}
 		}
 		
 		// memberDao.existUsername(memberVo);
 		
-		return Message.USERNAME_UNIQUE.toString();
+		return false;
 	}
 	
 	/**
 	 * 로그인
 	 * 
 	 * @param memberVo username과 password 가 담겨 있는 회원 정보
-	 * @return 상태 메시지(로그인 성공/실패)
+	 * @return 로그인에 성공한 회원의 간략한 정보(번호, 아이디, 이름) 
 	 */
-	public String login(MemberVo memberVo) {
+	public Object login(MemberVo memberVo) {
 		for(MemberVo member: memberList) {
 			if(memberVo.getUsername().equals(member.getUsername()) && memberVo.getPassword().equals(member.getPassword())) {
-				return Message.LOGIN_SUCCESS.toString();
+				MemberVo loginMemberVo = new MemberVo();
+				loginMemberVo.setNo(member.getNo());
+				loginMemberVo.setUsername(member.getUsername());
+				loginMemberVo.setName(member.getName());
+				return loginMemberVo;
 			}
 		}
 		
 		// memberDao.existMember(memberVo);
 		
-		return Message.LOGIN_FAILURE.toString();
+		return null;
 	}
 
 }
