@@ -67,7 +67,7 @@ public class MemberControllerTest {
 		memberVo.setEmail("userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/members").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(true)));
@@ -83,7 +83,7 @@ public class MemberControllerTest {
 		MemberVo memberVo = new MemberVo("userA01", "asdf1234!", "회원B", "1990-01-01", "333-333-3333", "333-3333-3333", "userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/members").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
@@ -99,7 +99,7 @@ public class MemberControllerTest {
 		MemberVo memberVo = new MemberVo("userB01", "asdf1234!", null, "1990-01-01", "333-333-3333", "333-3333-3333", "userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/members").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 
@@ -116,7 +116,7 @@ public class MemberControllerTest {
 		MemberVo memberVo = new MemberVo("userB01", "asdf1!", "회원B-1", "1990-01-01", null, "333-3333-3333", "userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/members").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
@@ -131,7 +131,7 @@ public class MemberControllerTest {
 	public void testCheckUsernameDuplicationSuccessWithNotDuplicatedUsername() throws Exception {
 		String username = "userB02";
 
-		ResultActions resultActions = mockMvc.perform(get("/api/member/username/{username}", username).accept(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/members/username/{username}", username).accept(MediaType.APPLICATION_JSON));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(false)));
@@ -146,7 +146,7 @@ public class MemberControllerTest {
 	public void testCheckUsernameDuplicationSuccessWithDuplicatedUsername() throws Exception {
 		String username = "userA01";
 
-		ResultActions resultActions = mockMvc.perform(get("/api/member/username/{username}", username).accept(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/members/username/{username}", username).accept(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 		.andExpect(jsonPath("$.data", is(true)));
@@ -162,7 +162,7 @@ public class MemberControllerTest {
 	public void testCheckUsernameDuplicationFailureBecauseInvalidData() throws Exception {
 		String username = "use";
 
-		ResultActions resultActions = mockMvc.perform(get("/api/member/username/{username}", username).accept(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = mockMvc.perform(get("/api/members/username/{username}", username).accept(MediaType.APPLICATION_JSON));
 		
 		resultActions.andExpect(status().isNotFound()).andDo(print());
 	}
@@ -180,7 +180,7 @@ public class MemberControllerTest {
 		memberVo.setPassword("asdf1234!");
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/members/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data.username", is(memberVo.getUsername())));
@@ -198,7 +198,7 @@ public class MemberControllerTest {
 		memberVo.setPassword("asdf1234@");
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/members/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data").doesNotExist());
@@ -217,7 +217,7 @@ public class MemberControllerTest {
 		memberVo.setPassword("asdf1234!");
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/members/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
@@ -235,7 +235,7 @@ public class MemberControllerTest {
 		memberVo.setPassword("asdf");
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/member/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/api/members/login").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
 		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
