@@ -21,3 +21,7 @@ create sequence seq_product_option_item_no;
 -- category
 drop sequence seq_category_no;
 create sequence seq_category_no;
+
+-- product_option_name_no
+drop sequence seq_product_option_name_no;
+create sequence seq_product_option_name_no;
