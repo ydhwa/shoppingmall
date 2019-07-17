@@ -3,6 +3,7 @@ package com.cafe24.shoppingmall.controller.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -48,10 +49,14 @@ public class MemberController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
 			}
 		}
-
-		Boolean result = memberService.join(memberVo);
-
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
+		
+		// DuplicateKeyException
+		try {
+			Boolean result = memberService.join(memberVo);
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
+		} catch(DuplicateKeyException exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("이미 존재하는 아이디로는 회원가입을 할 수 없습니다."));
+		}
 	}
 
 	/**

@@ -12,19 +12,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.config.WebConfig;
 import com.cafe24.shoppingmall.vo.MemberVo;
 import com.google.gson.Gson;
 
@@ -35,9 +32,7 @@ import com.google.gson.Gson;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {WebConfig.class})
-@TestPropertySource(locations="classpath:application.properties")
-@WebAppConfiguration
+@SpringBootTest
 @Transactional
 public class MemberControllerTest {
 	private MockMvc mockMvc;
@@ -62,7 +57,14 @@ public class MemberControllerTest {
 	@Test
 //	@Ignore
 	public void testJoinSuccessInsertSuccess() throws Exception {
-		MemberVo memberVo = new MemberVo("userB01", "asdf1234!", "회원B", "1990-01-01", "333-333-3333", "333-3333-3333", "userB01@test.com");
+		MemberVo memberVo = new MemberVo();
+		memberVo.setUsername("userB01");
+		memberVo.setPassword("asdf1234!");
+		memberVo.setName("회원B");
+		memberVo.setBirthDate("1990-01-01");
+		memberVo.setHomeNumber("333-333-3333");
+		memberVo.setPhoneNumber("333-3333-3333");
+		memberVo.setEmail("userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
@@ -71,21 +73,19 @@ public class MemberControllerTest {
 				.andExpect(jsonPath("$.data", is(true)));
 	}
 	/**
-	 * 회원가입 성공 - 회원 테이블에 정보를 넣는 것은 실패
+	 * 중복된 아이디로 회원가입을 시도하여 회원가입 실패
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 //	@Ignore
 	public void testJoinSuccessInsertFailure() throws Exception {
-		// 중복되는 아이디로 넣어본다.
 		MemberVo memberVo = new MemberVo("userA01", "asdf1234!", "회원B", "1990-01-01", "333-333-3333", "333-3333-3333", "userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/member").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
 
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-				.andExpect(jsonPath("$.data", is(false)));
+		resultActions.andExpect(status().isBadRequest()).andDo(print());
 	}
 	/**
 	 * 필수 입력 사항을 입력하지 않아 회원가입 실패
@@ -176,7 +176,7 @@ public class MemberControllerTest {
 //	@Ignore
 	public void testLoginSuccessWithMatchingAccount() throws Exception {
 		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userB01");
+		memberVo.setUsername("userA01");
 		memberVo.setPassword("asdf1234!");
 
 		ResultActions resultActions = mockMvc.perform(

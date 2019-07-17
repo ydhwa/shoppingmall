@@ -9,20 +9,20 @@
 			into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status, role)
 			values(
 				nextval('seq_member_no'),
-				#{ membervo.username },
-				encode(digest(#{ membervo.password }, 'SHA512'), 'hex'),
+				'${ username }',
+				encode(digest('${ password }', 'SHA512'), 'hex'),
 				now(),
-				encode(encrypt(convert_to(#{ membervo.name }, 'utf-8'), 'key', 'AES'), 'hex'),
-				encode(encrypt(convert_to(#{ membervo.birthDate }, 'utf-8'), 'key', 'AES'), 'hex'),
+				encode(encrypt(convert_to('${ name }', 'utf-8'), 'key', 'AES'), 'hex'),
+				encode(encrypt(convert_to('${ birthDate }', 'utf-8'), 'key', 'AES'), 'hex'),
 		]]>
 		<if test="homeNumber != null">
 			<![CDATA[
-				encode(encrypt(convert_to(#{ membervo.homeNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
+				encode(encrypt(convert_to('${ homeNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
 			]]>
 		</if>
 		<![CDATA[
-				encode(encrypt(convert_to(#{ membervo.phoneNumber }, 'utf-8'), 'key', 'AES'), 'hex'),
-				encode(encrypt(convert_to(#{ membervo.email }, 'utf-8'), 'key', 'AES'), 'hex'),
+				encode(encrypt(convert_to('${ phoneNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
+				encode(encrypt(convert_to('${ email }', 'utf-8'), 'key', 'AES'), 'hex'),
 				'ENABLE',
 				'USER'
 			); 
@@ -49,8 +49,8 @@
 			select no, username, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8')
 			from member
 			where
-				username = #{ membervo.username } and
-				password = encode(digest(#{ membervo.password }, 'sha512'), 'hex');
+				username = #{ username } and
+				password = encode(digest(#{ password }, 'sha512'), 'hex');
 		]]>
 	</select>
 
