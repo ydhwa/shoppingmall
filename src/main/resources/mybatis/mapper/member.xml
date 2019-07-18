@@ -6,7 +6,7 @@
 	<insert id="insert" parameterType="membervo">
 		<![CDATA[
 			insert 
-			into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status, role)
+			into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status)
 			values(
 				nextval('seq_member_no'),
 				'${ username }',
@@ -23,21 +23,24 @@
 		<![CDATA[
 				encode(encrypt(convert_to('${ phoneNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
 				encode(encrypt(convert_to('${ email }', 'utf-8'), 'key', 'AES'), 'hex'),
-				'ENABLE',
-				'USER'
-			); 
+				'ENABLE'
+			);
 		]]>
-		<selectKey keyProperty="no" resultType="long" order="AFTER">
-			<![CDATA[
-				select currval('seq_member_no');
-			]]>
-		</selectKey>
+	</insert>
+	
+	<insert id="insertAuthority">
+		<![CDATA[
+			insert
+			into authority
+			values(currval('seq_member_no'), 'ROLE_USER');
+		]]>
 	</insert>
 
+	<!-- Spring security 적용 대비하여 password 포함한 정보 가져오도록 함 -->	
 	<select id="getByUsername" resultType="membervo"
 		parameterType="string">
 		<![CDATA[
-			select username
+			select no, username, password, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8')
 			from member
 			where username = #{ value };
 		]]>

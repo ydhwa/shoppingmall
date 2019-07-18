@@ -1,5 +1,7 @@
 package com.cafe24.shoppingmall.vo;
 
+import com.cafe24.shoppingmall.vo.Enum.ProductImageStatus;
+
 /**
  * 상품 이미지 등록/보이기 시 사용하는 상품 이미지 VO
  * 
@@ -52,19 +54,5 @@ public class ProductImageVo {
 				+ ", productNo=" + productNo + "]";
 	}
 	
-	/**
-	 * 상품 이미지 상태에 대한 enum 클래스
-	 * MAIN(메인이미지)/SUB(서브이미지)
-	 * 
-	 * @author YDH
-	 *
-	 */
-	public enum ProductImageStatus {
-		MAIN("MAIN"),
-		SUB("SUB");
-		
-		private String str;
-		ProductImageStatus(String str) { this.str = str; }
-		public String toString() { return str; }
-	}
+
 }

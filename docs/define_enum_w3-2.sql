@@ -4,9 +4,9 @@ create type member_status as enum('ENABLE', 'DISABLE');
 drop type member_role cascade;
 
 
--- role
--- role.role
-create type role_role as enum('ROLE_USER', 'ROLE_ADMIN');
+-- authority
+-- authority.role
+create type authority_role as enum('ROLE_USER', 'ROLE_ADMIN');
 
 
 

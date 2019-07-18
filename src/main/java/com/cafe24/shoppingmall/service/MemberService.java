@@ -1,17 +1,12 @@
 package com.cafe24.shoppingmall.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.shoppingmall.repository.MemberDao;
+import com.cafe24.shoppingmall.vo.Enum.MemberStatus;
 import com.cafe24.shoppingmall.vo.MemberVo;
-import com.cafe24.shoppingmall.vo.MemberVo.MemberRole;
-import com.cafe24.shoppingmall.vo.MemberVo.MemberStatus;
 
 /**
  * 회원에 대한 비즈니스 로직이 담긴 서비스.
@@ -31,12 +26,13 @@ public class MemberService {
 	 * @param memberVo 회원가입 할 고객의 회원 정보
 	 * @return 회원가입 성공여부
 	 */
+	@Transactional
 	public Boolean join(MemberVo memberVo) {
 		// 남은 데이터 등록(회원번호, 등록일은 데이터베이스 단에서 처리)
 		memberVo.setStatus(MemberStatus.ENABLE);
-		memberVo.setRole(MemberRole.USER);
 		
-		return memberDao.insert(memberVo);
+		// 회원가입 이후 권한 테이블에 ROLE_USER 생김
+		return memberDao.insert(memberVo) && memberDao.insertAuthority();
 	}
 	
 	/**

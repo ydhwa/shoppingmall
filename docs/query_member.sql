@@ -5,12 +5,13 @@ create extension pgcrypto;
 
 -- member
 select * from member;
+select * from authority;
 select currval('seq_member_no');
 
 
 -- member.insert
 insert 
-into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status, role)
+into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status)
 values(
 	nextval('seq_member_no'),
 	'userA01',
@@ -21,11 +22,14 @@ values(
 	encode(encrypt(convert_to('111-111-1111', 'utf-8'), 'key', 'AES'), 'hex'),
 	encode(encrypt(convert_to('111-1111-1111', 'utf-8'), 'key', 'AES'), 'hex'),
 	encode(encrypt(convert_to('userA01@test.com', 'utf-8'), 'key', 'AES'), 'hex'),
-	'ENABLE',
-	'USER'
+	'ENABLE'
 );
+insert
+into authority
+values(currval('seq_member_no'), 'ROLE_USER');
+
 insert 
-into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status, role)
+into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status)
 values(
 	nextval('seq_member_no'),
 	'userA02',
@@ -36,9 +40,11 @@ values(
 	null,
 	encode(encrypt(convert_to('222-2222-2222', 'utf-8'), 'key', 'AES'), 'hex'),
 	encode(encrypt(convert_to('userA02@test.com', 'utf-8'), 'key', 'AES'), 'hex'),
-	'ENABLE',
-	'USER'
+	'ENABLE'
 );
+insert
+into authority
+values(currval('seq_member_no'), 'ROLE_USER');
 
 
 -- member.getByUsername

@@ -19,6 +19,11 @@ public class MemberDao {
 	public Boolean insert(MemberVo memberVo) {
 		return 1 == sqlSession.insert("member.insert", memberVo);
 	}
+	
+	// 회원가입 작업 이후에 곧장 실행됨. currval() 때문에 파라미터 넣을 필요 없다.
+	public Boolean insertAuthority() {
+		return 1 == sqlSession.insert("member.insertAuthority");
+	}
 
 	public MemberVo get(String username) {
 		return sqlSession.selectOne("member.getByUsername", username);

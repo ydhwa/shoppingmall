@@ -2,6 +2,8 @@ package com.cafe24.shoppingmall.vo;
 
 import java.util.List;
 
+import com.cafe24.shoppingmall.vo.Enum.OrdersStatus;
+
 /**
  * 주문, 주문조회/관리 시 사용하는 주문 VO
  * 
@@ -185,22 +187,5 @@ public class OrdersVo {
 				+ ", memberNo=" + memberNo + ", password=" + password + ", ordersList=" + ordersList + "]";
 	}
 
-	/**
-	 * 주문 상태에 대한 enum 클래스
-	 * CANCEL(취소)/EXCHANGE(교환)/RETURN(환불)/ORDER_COMPLETE(주문완료)/SHIPMENT_COMPLETE(배송완료)
-	 * 
-	 * @author YDH
-	 *
-	 */
-	public enum OrdersStatus {
-		CANCEL("CANCEL"),
-		EXCHANGE("EXCHANGE"),
-		RETURN("RETURN"),
-		ORDER_COMPLETE("ORDER_COMPLETE"),
-		SHIPMENT_COMPLETE("SHIPMENT_COMPLETE");
-		
-		private String str;
-		OrdersStatus(String str) { this.str = str; }
-		public String toString() { return str; }
-	}
+
 }
