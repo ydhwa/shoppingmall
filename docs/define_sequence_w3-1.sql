@@ -10,10 +10,6 @@ create sequence seq_product_no;
 drop sequence seq_orders_no;
 create sequence seq_orders_no;
 
--- bucket
-drop sequence seq_bucket_no;
-create sequence seq_bucket_no;
-
 -- product_option_item
 drop sequence seq_product_option_item_no;
 create sequence seq_product_option_item_no;

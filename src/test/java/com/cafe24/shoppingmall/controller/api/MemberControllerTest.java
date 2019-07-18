@@ -80,7 +80,14 @@ public class MemberControllerTest {
 	@Test
 //	@Ignore
 	public void testJoinSuccessInsertFailure() throws Exception {
-		MemberVo memberVo = new MemberVo("userA01", "asdf1234!", "회원B", "1990-01-01", "333-333-3333", "333-3333-3333", "userB01@test.com");
+		MemberVo memberVo = new MemberVo();
+		memberVo.setUsername("userA01");
+		memberVo.setPassword("asdf1234!");
+		memberVo.setName("회원B");
+		memberVo.setBirthDate("1990-01-01");
+		memberVo.setHomeNumber("333-333-3333");
+		memberVo.setPhoneNumber("333-3333-3333");
+		memberVo.setEmail("userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/members").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
@@ -96,7 +103,13 @@ public class MemberControllerTest {
 	@Test
 //	@Ignore
 	public void testJoinFailureBecauseMissingData() throws Exception {
-		MemberVo memberVo = new MemberVo("userB01", "asdf1234!", null, "1990-01-01", "333-333-3333", "333-3333-3333", "userB01@test.com");
+		MemberVo memberVo = new MemberVo();
+		memberVo.setUsername("userB01");
+		memberVo.setPassword("asdf1234!");
+		memberVo.setBirthDate("1990-01-01");
+		memberVo.setHomeNumber("333-333-3333");
+		memberVo.setPhoneNumber("333-3333-3333");
+		memberVo.setEmail("userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/members").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
@@ -113,7 +126,14 @@ public class MemberControllerTest {
 	@Test
 //	@Ignore
 	public void testJoinFailureBecauseInvalidData() throws Exception {
-		MemberVo memberVo = new MemberVo("userB01", "asdf1!", "회원B-1", "1990-01-01", null, "333-3333-3333", "userB01@test.com");
+		MemberVo memberVo = new MemberVo();
+		memberVo.setUsername("userB01");
+		memberVo.setPassword("asdf1!");
+		memberVo.setName("회원B");
+		memberVo.setBirthDate("1990-01-01");
+		memberVo.setHomeNumber("333-333-3333");
+		memberVo.setPhoneNumber("333-3333-3333");
+		memberVo.setEmail("userB01@test.com");
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/members").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));

@@ -9,24 +9,17 @@ import java.util.List;
  *
  */
 public class BucketVo {
-	private Long no;				// 장바구니 번호
-	private String sessionId;		// 비회원용 식별자 - 세션 아이디
+	private String identifier;		// 고객 식별자
 	private Long memberNo;			// 회원용 식별자 - 회원 번호
 	private List<BucketItemVo> buekctItemList;	// 장바구니 상품 목록
 	
 	public BucketVo() {}
 	
-	public Long getNo() {
-		return no;
+	public String getIdentifier() {
+		return identifier;
 	}
-	public void setNo(Long no) {
-		this.no = no;
-	}
-	public String getSessionId() {
-		return sessionId;
-	}
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
 	}
 	public Long getMemberNo() {
 		return memberNo;
@@ -43,7 +36,7 @@ public class BucketVo {
 	
 	@Override
 	public String toString() {
-		return "BucketVo [no=" + no + ", sessionId=" + sessionId + ", memberNo=" + memberNo + ", buekctItemList="
+		return "BucketVo [identifier=" + identifier + ", memberNo=" + memberNo + ", buekctItemList="
 				+ buekctItemList + "]";
 	}
 }

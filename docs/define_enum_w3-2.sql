@@ -19,7 +19,7 @@ create type orders_status as enum('CANCEL', 'EXCHANGE', 'RETURN', 'ORDER_COMPLET
 -- product
 -- product.display_status
 -- product.manage_status
-create type product_display_status as enum('MAIN, EVENT, NONE');
+create type product_display_status as enum('MAIN', 'EVENT', 'NONE');
 create type product_manage_status as enum('STOCK', 'NON_STOCK', 'DISPLAY');
 
 

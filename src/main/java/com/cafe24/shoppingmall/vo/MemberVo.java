@@ -44,27 +44,6 @@ public class MemberVo {
 	private List<OrdersVo> ordersList;
 
 	public MemberVo() {}
-	public MemberVo(String username, String password, String name, String birthDate, String homeNumber, String phoneNumber, String email) {
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.birthDate = birthDate;
-		this.homeNumber = homeNumber;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-	}
-	public MemberVo(Long no, String username, String password, String regDate, String name, String birthDate, String homeNumber, String phoneNumber, String email, MemberStatus status) {
-		this.no = no;
-		this.username = username;
-		this.password = password;
-		this.regDate = regDate;
-		this.name = name;
-		this.birthDate = birthDate;
-		this.homeNumber = homeNumber;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.status = status;
-	}
 
 	public Long getNo() {
 		return no;
