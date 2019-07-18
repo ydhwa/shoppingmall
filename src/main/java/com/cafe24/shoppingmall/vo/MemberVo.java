@@ -39,7 +39,7 @@ public class MemberVo {
 	private String email;			// 이메일
 	private MemberStatus status;	// 계정상태
 
-	private List<ShippingAddressManageVo> shippingAddressList;
+	private List<ShippingAddressVo> shippingAddressList;
 	private List<BucketVo> bucketList;
 	private List<OrdersVo> ordersList;
 
@@ -66,33 +66,85 @@ public class MemberVo {
 		this.status = status;
 	}
 
-	public Long getNo() { return no; }
-	public void setNo(Long no) { this.no = no; }
-	public String getUsername() { return username; }
-	public void setUsername(String username) { this.username = username; }
-	public String getPassword() { return password; }
-	public void setPassword(String password) { this.password = password; }
-	public String getRegDate() { return regDate; }
-	public void setRegDate(String regDate) { this.regDate = regDate; }
-	public String getName() { return name; }
-	public void setName(String name) { this.name = name; }
-	public String getBirthDate() { return birthDate; }
-	public void setBirthDate(String birthDate) { this.birthDate = birthDate; }
-	public String getHomeNumber() { return homeNumber; }
-	public void setHomeNumber(String homeNumber) { this.homeNumber = homeNumber; }
-	public String getPhoneNumber() { return phoneNumber; }
-	public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-	public String getEmail() { return email; }
-	public void setEmail(String email) { this.email = email; }
-	public MemberStatus getStatus() { return status; }
-	public void setStatus(MemberStatus status) { this.status = status; }
-	public List<ShippingAddressManageVo> getShippingAddressList() { return shippingAddressList; }
-	public void setShippingAddressList(List<ShippingAddressManageVo> shippingAddressList) { this.shippingAddressList = shippingAddressList; }
-	public List<BucketVo> getBucketList() { return bucketList; }
-	public void setBucketList(List<BucketVo> bucketList) { this.bucketList = bucketList; }
-	public List<OrdersVo> getOrdersList() { return ordersList; }
-	public void setOrdersList(List<OrdersVo> ordersList) { this.ordersList = ordersList; }
-
+	public Long getNo() {
+		return no;
+	}
+	public void setNo(Long no) {
+		this.no = no;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getBirthDate() {
+		return birthDate;
+	}
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+	public String getHomeNumber() {
+		return homeNumber;
+	}
+	public void setHomeNumber(String homeNumber) {
+		this.homeNumber = homeNumber;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public MemberStatus getStatus() {
+		return status;
+	}
+	public void setStatus(MemberStatus status) {
+		this.status = status;
+	}
+	public List<ShippingAddressVo> getShippingAddressList() {
+		return shippingAddressList;
+	}
+	public void setShippingAddressList(List<ShippingAddressVo> shippingAddressList) {
+		this.shippingAddressList = shippingAddressList;
+	}
+	public List<BucketVo> getBucketList() {
+		return bucketList;
+	}
+	public void setBucketList(List<BucketVo> bucketList) {
+		this.bucketList = bucketList;
+	}
+	public List<OrdersVo> getOrdersList() {
+		return ordersList;
+	}
+	public void setOrdersList(List<OrdersVo> ordersList) {
+		this.ordersList = ordersList;
+	}
+	
 	@Override
 	public String toString() {
 		return "MemberVo [no=" + no + ", username=" + username + ", password=" + password + ", regDate=" + regDate

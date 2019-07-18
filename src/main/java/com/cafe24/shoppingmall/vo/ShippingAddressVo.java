@@ -1,23 +1,23 @@
 package com.cafe24.shoppingmall.vo;
 
 /**
- * 회원 배송지 관리를 위한 배송지 관리 VO
+ * 회원 배송지 관리를 위한 배송지 VO
  * 
  * @author YDH
  *
  */
-public class ShippingAddressManageVo {
-	private Long memberNo;
+public class ShippingAddressVo {
+	private Long no;
 	private String postalCode;
 	private String baseAddress;
 	private String detailAddress;
 	private String description;
 	
-	public Long getMemberNo() {
-		return memberNo;
+	public Long getNo() {
+		return no;
 	}
-	public void setMemberNo(Long memberNo) {
-		this.memberNo = memberNo;
+	public void setNo(Long no) {
+		this.no = no;
 	}
 	public String getPostalCode() {
 		return postalCode;
@@ -46,7 +46,7 @@ public class ShippingAddressManageVo {
 	
 	@Override
 	public String toString() {
-		return "ShippingAddressManageVo [memberNo=" + memberNo + ", postalCode=" + postalCode + ", baseAddress="
-				+ baseAddress + ", detailAddress=" + detailAddress + ", description=" + description + "]";
+		return "ShippingAddressVo [no=" + no + ", postalCode=" + postalCode + ", baseAddress=" + baseAddress
+				+ ", detailAddress=" + detailAddress + ", description=" + description + "]";
 	}
 }

@@ -15,7 +15,7 @@ public class OrdersVo {
 	private String code;				// 주문코드
 	private String date;				// 주문일
 	private String memo;				// 메모
-	private OrdersStatus ordersStatus;	// 주문상태
+	private OrdersStatus status;		// 주문상태
 	
 	private String ordererName;				// 주문자 이름
 	private String ordererHomeNumber;		// 주문자 유선전화번호
@@ -37,7 +37,7 @@ public class OrdersVo {
 	private Long memberNo;				// (회원용)회원번호
 	private String password;			// (비회원용)주문조회 비밀번호
 	
-	private List<ProductOptionItemVo> ordersList;	// 주문 상품 목록
+	private List<OrdersItemVo> ordersItemList;	// 주문 상품 목록
 
 	public OrdersVo() {}
 	
@@ -65,11 +65,11 @@ public class OrdersVo {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-	public OrdersStatus getOrdersStatus() {
-		return ordersStatus;
+	public OrdersStatus getStatus() {
+		return status;
 	}
-	public void setOrdersStatus(OrdersStatus ordersStatus) {
-		this.ordersStatus = ordersStatus;
+	public void setStatus(OrdersStatus status) {
+		this.status = status;
 	}
 	public String getOrdererName() {
 		return ordererName;
@@ -167,25 +167,23 @@ public class OrdersVo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public List<ProductOptionItemVo> getOrdersList() {
-		return ordersList;
+	public List<OrdersItemVo> getOrdersList() {
+		return ordersItemList;
 	}
-	public void setOrdersList(List<ProductOptionItemVo> ordersList) {
-		this.ordersList = ordersList;
+	public void setOrdersList(List<OrdersItemVo> ordersItemList) {
+		this.ordersItemList = ordersItemList;
 	}
 	
 	@Override
 	public String toString() {
-		return "OrdersVo [no=" + no + ", code=" + code + ", date=" + date + ", memo=" + memo + ", ordersStatus="
-				+ ordersStatus + ", ordererName=" + ordererName + ", ordererHomeNumber=" + ordererHomeNumber
+		return "OrdersVo [no=" + no + ", code=" + code + ", date=" + date + ", memo=" + memo + ", status="
+				+ status + ", ordererName=" + ordererName + ", ordererHomeNumber=" + ordererHomeNumber
 				+ ", ordererPhoneNumber=" + ordererPhoneNumber + ", ordererEmail=" + ordererEmail
 				+ ", ordererPostalCode=" + ordererPostalCode + ", ordererBaseAddress=" + ordererBaseAddress
 				+ ", ordererDetailAddress=" + ordererDetailAddress + ", receiverName=" + receiverName
 				+ ", receiverHomeNumber=" + receiverHomeNumber + ", receiverPhoneNumber=" + receiverPhoneNumber
 				+ ", receiverPostalCode=" + receiverPostalCode + ", receiverBaseAddress=" + receiverBaseAddress
 				+ ", receiverDetailAddress=" + receiverDetailAddress + ", totalOrderAccount=" + totalOrderAccount
-				+ ", memberNo=" + memberNo + ", password=" + password + ", ordersList=" + ordersList + "]";
+				+ ", memberNo=" + memberNo + ", password=" + password + ", ordersItemList=" + ordersItemList + "]";
 	}
-
-
 }

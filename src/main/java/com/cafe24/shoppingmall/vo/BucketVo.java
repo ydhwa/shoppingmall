@@ -1,5 +1,7 @@
 package com.cafe24.shoppingmall.vo;
 
+import java.util.List;
+
 /**
  * 장바구니 관련 작업 시 사용하는 장바구니 VO
  * 
@@ -7,24 +9,18 @@ package com.cafe24.shoppingmall.vo;
  *
  */
 public class BucketVo {
-	private Long no;
-	private Integer quantity;
-	private String sessionId;
-	private Long memberNo;
-	private Long productOptionItemNo;
-	private String expDate;
+	private Long no;				// 장바구니 번호
+	private String sessionId;		// 비회원용 식별자 - 세션 아이디
+	private Long memberNo;			// 회원용 식별자 - 회원 번호
+	private List<BucketItemVo> buekctItemList;	// 장바구니 상품 목록
+	
+	public BucketVo() {}
 	
 	public Long getNo() {
 		return no;
 	}
 	public void setNo(Long no) {
 		this.no = no;
-	}
-	public Integer getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
 	}
 	public String getSessionId() {
 		return sessionId;
@@ -38,22 +34,16 @@ public class BucketVo {
 	public void setMemberNo(Long memberNo) {
 		this.memberNo = memberNo;
 	}
-	public Long getProductOptionItemNo() {
-		return productOptionItemNo;
+	public List<BucketItemVo> getBuekctItemList() {
+		return buekctItemList;
 	}
-	public void setProductOptionItemNo(Long productOptionItemNo) {
-		this.productOptionItemNo = productOptionItemNo;
-	}
-	public String getExpDate() {
-		return expDate;
-	}
-	public void setExpDate(String expDate) {
-		this.expDate = expDate;
+	public void setBuekctItemList(List<BucketItemVo> buekctItemList) {
+		this.buekctItemList = buekctItemList;
 	}
 	
 	@Override
 	public String toString() {
-		return "BucketVo [no=" + no + ", quantity=" + quantity + ", sessionId=" + sessionId + ", memberNo=" + memberNo
-				+ ", productOptionItemNo=" + productOptionItemNo + ", expDate=" + expDate + "]";
+		return "BucketVo [no=" + no + ", sessionId=" + sessionId + ", memberNo=" + memberNo + ", buekctItemList="
+				+ buekctItemList + "]";
 	}
 }

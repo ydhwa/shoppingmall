@@ -28,13 +28,13 @@ public class ProductVo {
 	private Integer stockQuantity;						// 재고수량
 	private Boolean optionAvailable;					// 옵션사용여부
 	
-	private List<ProductOptionVo> productOptionList;				// 상품 하나의 옵션들
-	private List<ProductOptionItemVo> productOptionItemList;		// 옵션에 따른 상품들
-	private List<CategoryVo> categoryList;						// 카테고리들
-	private List<ProductImageVo> productImageList;					// 상품 이미지들
+	private List<ProductOptionNameVo> productOptionList;		// 상품 하나의 옵션들
+	private List<ProductOptionItemVo> productOptionItemList;	// 옵션에 따른 상품들
+	private List<List<CategoryVo>> categoryList;				// 카테고리들(여러 카테고리/복수 카테고리)
+	private List<ProductImageVo> productImageList;				// 상품 이미지들
 	
 	public ProductVo() {}
-	
+
 	public Long getNo() {
 		return no;
 	}
@@ -125,10 +125,10 @@ public class ProductVo {
 	public void setOptionAvailable(Boolean optionAvailable) {
 		this.optionAvailable = optionAvailable;
 	}
-	public List<ProductOptionVo> getProductOptionList() {
+	public List<ProductOptionNameVo> getProductOptionList() {
 		return productOptionList;
 	}
-	public void setProductOptionList(List<ProductOptionVo> productOptionList) {
+	public void setProductOptionList(List<ProductOptionNameVo> productOptionList) {
 		this.productOptionList = productOptionList;
 	}
 	public List<ProductOptionItemVo> getProductOptionItemList() {
@@ -137,10 +137,10 @@ public class ProductVo {
 	public void setProductOptionItemList(List<ProductOptionItemVo> productOptionItemList) {
 		this.productOptionItemList = productOptionItemList;
 	}
-	public List<CategoryVo> getCategoryList() {
+	public List<List<CategoryVo>> getCategoryList() {
 		return categoryList;
 	}
-	public void setCategoryList(List<CategoryVo> categoryList) {
+	public void setCategoryList(List<List<CategoryVo>> categoryList) {
 		this.categoryList = categoryList;
 	}
 	public List<ProductImageVo> getProductImageList() {
@@ -161,5 +161,4 @@ public class ProductVo {
 				+ ", productOptionItemList=" + productOptionItemList + ", categoryList=" + categoryList
 				+ ", productImageList=" + productImageList + "]";
 	}
-	
 }

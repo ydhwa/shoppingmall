@@ -9,7 +9,7 @@ package com.cafe24.shoppingmall.vo;
 public class ProductOptionItemVo {
 	private Long no;					// 품목번호
 	private Long productNo;				// 상품번호
-	private String contents;			// 옵션내용(옵션명-옵션값/옵션명-옵션값/...)
+	private String details;				// 옵션 세부내용(옵션명-옵션값/옵션명-옵션값/...)
 	private Integer additionalAmount;	// 추가금액
 	private String stockQuantity;		// 재고수량
 	
@@ -28,10 +28,10 @@ public class ProductOptionItemVo {
 		this.productNo = productNo;
 	}
 	public String getContents() {
-		return contents;
+		return details;
 	}
 	public void setContents(String contents) {
-		this.contents = contents;
+		this.details = contents;
 	}
 	public Integer getAdditionalAmount() {
 		return additionalAmount;
@@ -48,7 +48,7 @@ public class ProductOptionItemVo {
 	
 	@Override
 	public String toString() {
-		return "OrdersProductOption [no=" + no + ", productNo=" + productNo + ", contents=" + contents
+		return "OrdersProductOption [no=" + no + ", productNo=" + productNo + ", contents=" + details
 				+ ", additionalAmount=" + additionalAmount + ", stockQuantity=" + stockQuantity + "]";
 	}
 }

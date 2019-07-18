@@ -13,6 +13,8 @@ public class CategoryVo {
 	private Long productNo;	// 상품번호
 	private Long parentNo;	// 상위 카테고리 번호
 	
+	public CategoryVo() {}
+	
 	public Long getNo() {
 		return no;
 	}
