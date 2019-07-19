@@ -39,7 +39,7 @@ public class MemberControllerTest {
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
-
+	
 	@Before
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();

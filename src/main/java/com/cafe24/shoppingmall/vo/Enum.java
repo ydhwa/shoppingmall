@@ -6,6 +6,7 @@ package com.cafe24.shoppingmall.vo;
  *
  */
 public class Enum {
+	
 	/**
 	 * 고객 상태에 대한 enum 클래스
 	 * ENABLE(활성)/DISABLE(비활성)
@@ -14,12 +15,10 @@ public class Enum {
 	 *
 	 */
 	public enum MemberStatus {
-		ENABLE("ENABLE"),
-		DISABLE("DISABLE");
+		ENABLE,
+		DISABLE;
 
-		private String str;
-		MemberStatus(String str) { this.str = str; }
-		public String toString() { return str; }
+		public String getValue() { return super.toString(); }
 	}
 	
 	
@@ -31,12 +30,10 @@ public class Enum {
 	 *
 	 */
 	public enum AuthorityRole {
-		USER("ROLE_USER"),
-		ADMIN("ROLE_ADMIN");
+		ROLE_USER,
+		ROLE_ADMIN;
 
-		private String str;
-		AuthorityRole(String str) { this.str = str; }
-		public String toString() { return str; }
+		public String getValue() { return super.toString(); }
 	}
 	
 	
@@ -48,15 +45,13 @@ public class Enum {
 	 *
 	 */
 	public enum OrdersStatus {
-		CANCEL("CANCEL"),
-		EXCHANGE("EXCHANGE"),
-		RETURN("RETURN"),
-		ORDER_COMPLETE("ORDER_COMPLETE"),
-		SHIPMENT_COMPLETE("SHIPMENT_COMPLETE");
+		CANCEL,
+		EXCHANGE,
+		RETURN,
+		ORDER_COMPLETE,
+		SHIPMENT_COMPLETE;
 		
-		private String str;
-		OrdersStatus(String str) { this.str = str; }
-		public String toString() { return str; }
+		public String getValue() { return super.toString(); }
 	}
 	
 	
@@ -68,13 +63,11 @@ public class Enum {
 	 *
 	 */
 	public enum ProductDisplayStatus {
-		MAIN("MAIN"),
-		EVENT("EVENT"),
-		NONE("NONE");
+		MAIN,
+		EVENT,
+		NONE;
 
-		private String str;
-		ProductDisplayStatus(String str) { this.str = str; }
-		public String toString() { return str; }
+		public String getValue() { return super.toString(); }
 	}
 	
 	
@@ -86,13 +79,11 @@ public class Enum {
 	 *
 	 */
 	public enum ProductManageStatus {
-		STOCK("STOCK"),
-		NON_STOCK("NON_STOCK"),
-		DISPLAY("DISPLAY");
+		STOCK,
+		NON_STOCK,
+		DISPLAY;
 		
-		private String str;
-		ProductManageStatus(String str) { this.str = str; }
-		public String toString() { return str; }
+		public String getValue() { return super.toString(); }
 	}
 	
 	
@@ -104,11 +95,9 @@ public class Enum {
 	 *
 	 */
 	public enum ProductImageStatus {
-		MAIN("MAIN"),
-		SUB("SUB");
+		MAIN,
+		SUB;
 		
-		private String str;
-		ProductImageStatus(String str) { this.str = str; }
-		public String toString() { return str; }
+		public String getValue() { return super.toString(); }
 	}
 }

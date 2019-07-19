@@ -23,7 +23,7 @@
 		<![CDATA[
 				encode(encrypt(convert_to('${ phoneNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
 				encode(encrypt(convert_to('${ email }', 'utf-8'), 'key', 'AES'), 'hex'),
-				'ENABLE'
+				'${ status.value }'
 			);
 		]]>
 	</insert>
