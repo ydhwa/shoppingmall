@@ -40,7 +40,7 @@ public class MemberVo {
 	private MemberStatus status;	// 계정상태
 
 	private List<ShippingAddressVo> shippingAddressList;
-	private List<BucketVo> bucketList;
+	private List<BucketItemVo> bucketItemList;
 	private List<OrdersVo> ordersList;
 
 	public MemberVo() {}
@@ -111,11 +111,11 @@ public class MemberVo {
 	public void setShippingAddressList(List<ShippingAddressVo> shippingAddressList) {
 		this.shippingAddressList = shippingAddressList;
 	}
-	public List<BucketVo> getBucketList() {
-		return bucketList;
+	public List<BucketItemVo> getBucketList() {
+		return bucketItemList;
 	}
-	public void setBucketList(List<BucketVo> bucketList) {
-		this.bucketList = bucketList;
+	public void setBucketList(List<BucketItemVo> bucketItemList) {
+		this.bucketItemList = bucketItemList;
 	}
 	public List<OrdersVo> getOrdersList() {
 		return ordersList;
@@ -129,6 +129,6 @@ public class MemberVo {
 		return "MemberVo [no=" + no + ", username=" + username + ", password=" + password + ", regDate=" + regDate
 				+ ", name=" + name + ", birthDate=" + birthDate + ", homeNumber=" + homeNumber + ", phoneNumber="
 				+ phoneNumber + ", email=" + email + ", status=" + status + ", shippingAddressList="
-				+ shippingAddressList + ", bucketList=" + bucketList + ", ordersList=" + ordersList + "]";
+				+ shippingAddressList + ", bucketItemList=" + bucketItemList + ", ordersList=" + ordersList + "]";
 	}
 }

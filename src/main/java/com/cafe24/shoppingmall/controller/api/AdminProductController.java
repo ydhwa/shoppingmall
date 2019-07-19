@@ -26,7 +26,7 @@ import com.cafe24.shoppingmall.vo.MemberVo;
  * @author YDH
  *
  */
-@RestController("memberAPIController")
+//@RestController("memberAPIController")
 @RequestMapping("/api/admin/products")
 public class AdminProductController {
 

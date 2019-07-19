@@ -39,6 +39,7 @@ public class GlobalExceptionHandler {
 			System.out.println(result);
 			OutputStream os = response.getOutputStream();	// socketOutputStream이 나옴.
 			os.write(result.getBytes("utf-8"));
+			os.flush();
 			os.close();
 		} else {
 			// 2. 안내 페이지 가기 + 정상 종료(response)
