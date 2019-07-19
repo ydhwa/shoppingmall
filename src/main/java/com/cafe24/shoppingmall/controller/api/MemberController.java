@@ -36,7 +36,7 @@ public class MemberController {
 	/**
 	 * 회원가입
 	 * 
-	 * @param memberVo      회원가입 할 정보가 담겨 있는 회원 정보 객체
+	 * @param memberVo 회원가입 할 정보가 담겨 있는 회원 정보 객체
 	 * @param bindingResult 유효성 검사 결과
 	 * @return 회원가입 성공여부(true/false)
 	 */
@@ -63,7 +63,7 @@ public class MemberController {
 	 * 유저네임(=아이디) 중복검사
 	 * 
 	 * @param username 중복검사 할 아이디
-	 * @return 중복검사 결과 (false(unique) / true(duplicated))
+	 * @return 중복여부(true(duplicated)/false(unique))
 	 */
 	@RequestMapping(value = "/username/{username:[a-zA-Z0-9_]{4,12}}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> checkUsername(@PathVariable("username") String username) {
@@ -75,7 +75,7 @@ public class MemberController {
 	/**
 	 * 로그인
 	 * 
-	 * @param memberVo      로그인 할 최소한의 정보가 담겨 있는 회원 정보 객체
+	 * @param memberVo 로그인 할 최소한의 정보가 담겨 있는 회원 정보 객체
 	 * @param bindingResult 유효성 검사 결과
 	 * @return 로그인에 성공한 회원의 정보
 	 */

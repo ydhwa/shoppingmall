@@ -26,7 +26,7 @@ import com.cafe24.shoppingmall.vo.ProductVo;
 import com.google.gson.Gson;
 
 /**
- * 상품 관리 동작에 대한 테스트
+ * 관리자의 상품 관리 동작에 대한 테스트
  * 
  * @author YDH
  *
@@ -57,6 +57,7 @@ public class AdminProductControllerTest {
 	@Test
 	public void testRegisterProductSuccessful() throws Exception {
 		ProductVo productVo = new ProductVo();
+		// 
 
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/admin/products").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(productVo)));
