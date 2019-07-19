@@ -13,13 +13,13 @@ import com.cafe24.shoppingmall.vo.ProductOptionValueVo;
 import com.cafe24.shoppingmall.vo.ProductVo;
 
 /**
- * 관리자의 상품 관리 대한 로직이 담긴 서비스
+ * 상품에 대한 로직이 담긴 서비스
  * 
  * @author YDH
  *
  */
 @Service
-public class AdminProductService {
+public class ProductService {
 	
 	@Autowired
 	private ProductDao productDao;
