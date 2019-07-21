@@ -1,7 +1,7 @@
-package com.cafe24.shoppingmall.controller.api;
+package com.cafe24.shoppingmall.controller;
 
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -22,13 +22,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.vo.MemberVo;
+import com.cafe24.shoppingmall.vo.ProductVo;
 import com.google.gson.Gson;
 
+/**
+ * 관리자의 상품 관리 동작에 대한 테스트
+ * 
+ * @author YDH
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Transactional
-public class ControllerTestForm {
+public class ProductControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
@@ -43,31 +49,21 @@ public class ControllerTestForm {
 	@Rollback(true)
 	public static void cleanUp() {}
 	
+	/**
+	 * 성공적으로 상품을 등록함
+	 * 
+	 * @throws Exception
+	 */
 	@Test
-	public void testJoinSuccessInsertSuccess() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userB01");
-		memberVo.setPassword("asdf1234!");
-		memberVo.setName("회원B");
-		memberVo.setBirthDate("1990-01-01");
-		memberVo.setHomeNumber("333-333-3333");
-		memberVo.setPhoneNumber("333-3333-3333");
-		memberVo.setEmail("userB01@test.com");
+	public void testRegisterProductSuccessful() throws Exception {
+		ProductVo productVo = new ProductVo();
+		// 
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/members").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(memberVo)));
+				post("/products").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(productVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-				.andExpect(jsonPath("$.data", is(true)));
+				.andExpect(jsonPath("$.data", is(notNullValue())));
 	}
 	
-	@Test
-	public void testCheckUsernameDuplicationSuccessWithNotDuplicatedUsername() throws Exception {
-		String username = "userB02";
-
-		ResultActions resultActions = mockMvc.perform(get("/api/members/username/{username}", username).accept(MediaType.APPLICATION_JSON));
-
-		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
-				.andExpect(jsonPath("$.data", is(false)));
-	}
 }

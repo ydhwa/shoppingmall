@@ -1,4 +1,4 @@
-package com.cafe24.shoppingmall.controller.api;
+package com.cafe24.shoppingmall.controller;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
