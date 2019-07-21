@@ -1,4 +1,4 @@
-package com.cafe24.shoppingmall.service;
+package com.cafe24.shoppingmall.controller;
 
 import java.util.Optional;
 
@@ -23,8 +23,8 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 @RequestMapping("/orders")
 public class OrdersController {
 	
-	@Autowired
-	private OrdersService ordersService;
+//	@Autowired
+//	private OrdersService ordersService;
 	
 	// 주문 등록
 	@RequestMapping(value="", method=RequestMethod.POST)

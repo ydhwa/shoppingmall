@@ -23,8 +23,8 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 @RequestMapping("/buckets")
 public class BucketController {
 
-	@Autowired
-	private BucketService bucketService;
+//	@Autowired
+//	private BucketService bucketService;
 	
 	// 장바구니 담기
 	@RequestMapping(value="", method=RequestMethod.POST)
