@@ -1,4 +1,4 @@
-package com.cafe24.shoppingmall.controller.api;
+package com.cafe24.shoppingmall.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,14 +13,14 @@ import com.cafe24.shoppingmall.service.ProductService;
 import com.cafe24.shoppingmall.vo.ProductVo;
 
 /**
- * 관리자의 상품 관리 동작에 대한 API 컨트롤러
+ * 상품에 대한 API 컨트롤러
  * 
  * @author YDH
  *
  */
-@RestController("adminProductAPIController")
-@RequestMapping("/api/admin/products")
-public class AdminProductController {
+@RestController("ProductAPIController")
+@RequestMapping("/products")
+public class ProductController {
 
 	@Autowired
 	private ProductService adminProductService;

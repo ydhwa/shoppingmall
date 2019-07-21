@@ -22,7 +22,7 @@ import com.cafe24.shoppingmall.validator.groups.MemberGroups;
 import com.cafe24.shoppingmall.vo.MemberVo;
 
 /**
- * 고객이 사용하는 회원 정보에 대한 API 컨트롤러
+ * 회원 정보에 대한 API 컨트롤러
  * 
  * @author YDH
  *

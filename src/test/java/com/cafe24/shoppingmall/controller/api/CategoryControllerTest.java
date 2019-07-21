@@ -36,7 +36,7 @@ import com.google.gson.Gson;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Transactional
-public class AdminCategoryControllerTest {
+public class CategoryControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
@@ -61,7 +61,7 @@ public class AdminCategoryControllerTest {
 		CategoryVo categoryVo = new CategoryVo();
 		
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/admin/categories").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(categoryVo)));
+				post("/categories").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(categoryVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(notNullValue())));
@@ -72,7 +72,7 @@ public class AdminCategoryControllerTest {
 		CategoryVo categoryVo = new CategoryVo();
 		
 		ResultActions resultActions = mockMvc.perform(
-				put("/api/admin/categories").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(categoryVo)));
+				put("/categories").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(categoryVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(notNullValue())));
@@ -83,7 +83,7 @@ public class AdminCategoryControllerTest {
 		CategoryVo categoryVo = new CategoryVo();
 		
 		ResultActions resultActions = mockMvc.perform(
-				MockMvcRequestBuilders.delete("/api/admin/categories")
+				MockMvcRequestBuilders.delete("/categories")
 				.contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(categoryVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))

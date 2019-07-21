@@ -34,7 +34,7 @@ import com.google.gson.Gson;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Transactional
-public class AdminProductControllerTest {
+public class ProductControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
@@ -60,7 +60,7 @@ public class AdminProductControllerTest {
 		// 
 
 		ResultActions resultActions = mockMvc.perform(
-				post("/api/admin/products").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(productVo)));
+				post("/products").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(productVo)));
 
 		resultActions.andExpect(status().isOk()).andDo(print()).andExpect(jsonPath("$.result", is("success")))
 				.andExpect(jsonPath("$.data", is(notNullValue())));
