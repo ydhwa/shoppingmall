@@ -1,4 +1,4 @@
-package com.cafe24.shoppingmall.controller.api;
+package com.cafe24.shoppingmall.controller;
 
 import java.util.List;
 
@@ -9,14 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.MemberService;
+import com.cafe24.shoppingmall.validator.constraints.UsernamePatternValidator;
 import com.cafe24.shoppingmall.validator.groups.MemberGroups;
 import com.cafe24.shoppingmall.vo.MemberVo;
 
@@ -27,7 +28,7 @@ import com.cafe24.shoppingmall.vo.MemberVo;
  *
  */
 @RestController("memberAPIController")
-@RequestMapping("/api/members")
+@RequestMapping("/members")
 public class MemberController {
 
 	@Autowired
@@ -65,8 +66,15 @@ public class MemberController {
 	 * @param username 중복검사 할 아이디
 	 * @return 중복여부(true(duplicated)/false(unique))
 	 */
-	@RequestMapping(value = "/username/{username:[a-zA-Z0-9_]{4,12}}", method = RequestMethod.GET)
-	public ResponseEntity<JSONResult> checkUsername(@PathVariable("username") String username) {
+	@RequestMapping(value = "/duplicate", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> checkUsername(@RequestParam("username") String username) {
+		// Validation check
+		UsernamePatternValidator validator = new UsernamePatternValidator();
+		if(!validator.isValid(username, null)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("적절한 형식의 데이터가 아닙니다."));
+		}
+	
+		
 		Boolean result = memberService.checkUsernameDuplication(username);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
