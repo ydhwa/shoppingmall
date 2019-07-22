@@ -39,7 +39,7 @@ with recursive sub_category as (
 	-- non-recursive term
 	select *
 	from category
-	where no = 1
+	where no = 3
 	
 	union all
 	

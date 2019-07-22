@@ -46,4 +46,9 @@ public class CategoryDao {
 		return 1 == sqlSession.delete("category.delete", no);
 	}
 
+	public boolean addProductCategories(List<List<CategoryVo>> categoryList) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

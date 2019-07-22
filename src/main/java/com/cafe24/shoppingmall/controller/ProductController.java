@@ -1,5 +1,8 @@
 package com.cafe24.shoppingmall.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,57 +40,69 @@ public class ProductController {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> registProduct(@RequestBody ProductVo productVo) {
-		ProductVo registProductVo = productService.registerProduct(productVo);
+		if (productVo == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
+		}
 		
-		if(productVo == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 등록에 실패했습니다."));
-		}
-		else {
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registProductVo));
-		}
+		boolean registResult = productService.registProduct(productVo);
+
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
-	
+
 	// 검색결과 조회
-	@RequestMapping(value="", method=RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> showProductsSearchResult(
-			@RequestParam(value="field", defaultValue="") String field, 
-			@RequestParam(value="keyword", defaultValue="") String keyword, 
-			@RequestParam(value="offset", required=true) Integer offset, 
-			@RequestParam(value="limit", required=true) Integer limit) {
-		
+			@RequestParam(value = "field", defaultValue = "") String field,
+			@RequestParam(value = "keyword", defaultValue = "") String keyword,
+			@RequestParam(value = "offset", required = true) Integer offset,
+			@RequestParam(value = "limit", required = true) Integer limit) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("field", field);
+		map.put("keyword", keyword);
+		map.put("offset", offset);
+		map.put("limit", limit);
+
+		List<ProductVo> productVoList = productService.searchProducts(map);
+
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
 	}
-	
+
 	// 상세조회
-	@RequestMapping(value="/{no}", method=RequestMethod.GET)
+	@RequestMapping(value = "/{no}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> showProductDetails(@PathVariable Optional<Long> no) {
 		// path variable check
-		if(!no.isPresent()) {
+		if (!no.isPresent()) {
 			return null;
 		}
-		
+
+		ProductVo productVo = productService.getProduct(no.get());
+
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
 	}
-	
+
 	// 수정
-	@RequestMapping(value="/{no}", method=RequestMethod.PUT)
-	public ResponseEntity<JSONResult> modifyProduct(@PathVariable Optional<Long> no) {
-		// path variable check
-		if(!no.isPresent()) {
-			return null;
+	@RequestMapping(value = "", method = RequestMethod.PUT)
+	public ResponseEntity<JSONResult> modifyProduct(@RequestBody ProductVo productVo) {
+		if (productVo == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 수정에 실패했습니다."));
 		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+
+		Boolean modifyResult = productService.modifyProduct(productVo);
+
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
 	}
-	
+
 	// 삭제
-	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
+	@RequestMapping(value = "/{no}", method = RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteProduct(@PathVariable Optional<Long> no) {
 		// path variable check
-		if(!no.isPresent()) {
-			return null;
+		if (!no.isPresent()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 삭제에 실패했습니다."));
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		Boolean deleteResult = productService.deleteProduct(no.get());
+
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
 	}
 }

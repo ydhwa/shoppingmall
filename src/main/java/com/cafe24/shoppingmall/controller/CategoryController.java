@@ -30,81 +30,79 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(value="", method=RequestMethod.POST)
-	public ResponseEntity<JSONResult> registCategory(@RequestBody CategoryVo categoryVo) {		
-		if(categoryVo == null) {
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public ResponseEntity<JSONResult> registCategory(@RequestBody CategoryVo categoryVo) {
+		if (categoryVo == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("카테고리 등록에 실패했습니다."));
 		}
-		else {
-			Boolean registResult = categoryService.registCategory(categoryVo);
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
-		}
+		
+		Boolean registResult = categoryService.registCategory(categoryVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
-	
+
 	// 전부 조회
-	@RequestMapping(value="", method=RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> showAllCategories() {
 		List<CategoryVo> categoryVoList = categoryService.getAllCategories();
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(categoryVoList));
 	}
-	
+
 	// 최상위 카테고리들 조회
-	@RequestMapping(value="/parents", method=RequestMethod.GET)
+	@RequestMapping(value = "/parents", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> showAllTopLevelCategories() {
 		List<CategoryVo> parentCategoryVoList = categoryService.getAllTopLevelCategories();
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(parentCategoryVoList));
 	}
-	
+
 	// 하위 카테고리까지 포함하여 조회
-	@RequestMapping(value="/{no}/children", method=RequestMethod.GET)
+	@RequestMapping(value = "/{no}/children", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> showChildrenCategories(@PathVariable Optional<Long> no) {
 		// path variable check
-		if(!no.isPresent()) {
+		if (!no.isPresent()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("올바른 데이터가 아닙니다."));
 		}
-		
-		List<CategoryVo> childCategoryVoList = categoryService.getChildrenOfCategory(no.get()); 
-		
+
+		List<CategoryVo> childCategoryVoList = categoryService.getChildrenOfCategory(no.get());
+
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(childCategoryVoList));
 	}
-	
+
 	// 특정 카테고리 조회
-	@RequestMapping(value="/{no}", method=RequestMethod.GET)
+	@RequestMapping(value = "/{no}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> showCategory(@PathVariable Optional<Long> no) {
 		// path variable check
-		if(!no.isPresent()) {
+		if (!no.isPresent()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("올바른 데이터가 아닙니다."));
 		}
-		
+
 		CategoryVo categoryVo = categoryService.getCategory(no.get());
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(categoryVo));
 	}
-	
+
 	// 수정
-	@RequestMapping(value="", method=RequestMethod.PUT)
+	@RequestMapping(value = "", method = RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyCategory(@RequestBody CategoryVo categoryVo) {
-		if(categoryVo == null) {
+		if (categoryVo == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("카테고리 수정에 실패했습니다."));
 		}
-		else {
-			Boolean modifyResult = categoryService.modifyCategory(categoryVo);
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
-		}
+		
+		Boolean modifyResult = categoryService.modifyCategory(categoryVo);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
 	}
-	
+
 	// 삭제
-	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
+	@RequestMapping(value = "/{no}", method = RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteCategory(@PathVariable Optional<Long> no) {
 		// path variable check
-		if(!no.isPresent()) {
+		if (!no.isPresent()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("올바른 데이터가 아닙니다."));
 		}
-		
+
 		Boolean deleteResult = categoryService.deleteCategory(no.get());
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
 	}
 }
