@@ -62,7 +62,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.cafe24.shoppingmall.controller.api"))
+				.apis(RequestHandlerSelectors.basePackage("com.cafe24.shoppingmall.controller"))
 				.paths(PathSelectors.any()).build();
 	}
 	

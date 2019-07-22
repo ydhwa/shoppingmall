@@ -64,9 +64,9 @@ public class MemberControllerTest {
 
 		if("post".contentEquals(method)) {
 			requestBuilder = MockMvcRequestBuilders.post(DEFAULT_PATH + url);
-		} else if("put".contentEquals("method")) {
+		} else if("put".contentEquals(method)) {
 			requestBuilder = MockMvcRequestBuilders.put(DEFAULT_PATH + url);
-		} else if("delete".contentEquals("method")) {
+		} else if("delete".contentEquals(method)) {
 			requestBuilder = MockMvcRequestBuilders.delete(DEFAULT_PATH + url);
 		}
 		

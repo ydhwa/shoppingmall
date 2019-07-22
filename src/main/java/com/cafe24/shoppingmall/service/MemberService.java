@@ -42,7 +42,6 @@ public class MemberService {
 	 * @return 중복 아이디 존재 여부(true/false)
 	 */
 	public Boolean checkUsernameDuplication(String username) {
-		
 		return memberDao.get(username) != null;
 	}
 	
@@ -53,7 +52,6 @@ public class MemberService {
 	 * @return 로그인에 성공한 회원의 간략한 정보(번호, 아이디, 이름) 
 	 */
 	public MemberVo login(MemberVo memberVo) {
-		
 		return memberDao.get(memberVo);
 	}
 

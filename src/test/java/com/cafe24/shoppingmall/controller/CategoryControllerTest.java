@@ -64,9 +64,9 @@ public class CategoryControllerTest {
 
 		if("post".contentEquals(method)) {
 			requestBuilder = MockMvcRequestBuilders.post(DEFAULT_PATH + url);
-		} else if("put".contentEquals("method")) {
+		} else if("put".contentEquals(method)) {
 			requestBuilder = MockMvcRequestBuilders.put(DEFAULT_PATH + url);
-		} else if("delete".contentEquals("method")) {
+		} else if("delete".contentEquals(method)) {
 			requestBuilder = MockMvcRequestBuilders.delete(DEFAULT_PATH + url);
 		}
 		
@@ -101,7 +101,7 @@ public class CategoryControllerTest {
 	@Test
 	public void testRegistCategorySuccess() throws Exception {
 		CategoryVo categoryVo = new CategoryVo();
-		categoryVo.setName("카테고리4");
+		categoryVo.setName("카테고리3");
 		
 		successAction("post", "", categoryVo, "", true);
 	}
@@ -109,19 +109,19 @@ public class CategoryControllerTest {
 	// 카테고리 전부 조회 성공
 	@Test
 	public void testShowAllCategoriesSuccess() throws Exception {
-		successAction("get", "", null, ".length", 5);
+		successAction("get", "", null, ".length()", 5);
 	}
 	
 	// 최상위 카테고리들만 조회 성공
 	@Test
 	public void testShowAllTopLevelCategoriesSuccess() throws Exception {
-		successAction("get", "/parents", null, ".length", 3);
+		successAction("get", "/parents", null, ".length()", 2);
 	}
 	
-	// 하위 카테고리들 조회 성공
+	// 하위 카테고리들 포함하여 조회 성공
 	@Test
 	public void testShowChildrenCategoriesSuccess() throws Exception {
-		successAction("get", "/" + 1 + "/children", null, ".length", 2);
+		successAction("get", "/" + 1 + "/children", null, ".length()", 4);
 	}
 	
 	// 특정 카테고리 조회 성공
@@ -134,14 +134,15 @@ public class CategoryControllerTest {
 	@Test
 	public void testModifyCategorySuccess() throws Exception {
 		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setNo(1L);
 		categoryVo.setName("수정된 카테고리1");
 		
-		successAction("put", "/" + 1, categoryVo, "", true);
+		successAction("put", "/", categoryVo, "", true);
 	}
 	
 	// 카테고리 삭제 성공
 	@Test
 	public void testDeleteCategorySuccess() throws Exception {
-		successAction("delete", "/" + 1, null, "", true);
+		successAction("delete", "/" + 5, null, "", true);
 	}
 }

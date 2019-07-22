@@ -8,8 +8,10 @@
     
 	<typeAliases>
 		<typeAlias alias="membervo" type="com.cafe24.shoppingmall.vo.MemberVo" />
+		<typeAlias alias="categoryvo" type="com.cafe24.shoppingmall.vo.CategoryVo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/member.xml" />
+		<mapper resource="mybatis/mapper/category.xml" />
 	</mappers>
 </configuration>

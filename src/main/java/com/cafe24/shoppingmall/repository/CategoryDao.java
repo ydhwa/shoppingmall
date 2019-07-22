@@ -1,5 +1,7 @@
 package com.cafe24.shoppingmall.repository;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,6 +20,30 @@ public class CategoryDao {
 
 	public Boolean insert(CategoryVo categoryVo) {
 		return 1 == sqlSession.insert("category.insert", categoryVo);
+	}
+
+	public List<CategoryVo> getAll() {
+		return sqlSession.selectList("category.getAll");
+	}
+
+	public List<CategoryVo> getAllParents() {
+		return sqlSession.selectList("category.getAllParents");
+	}
+
+	public List<CategoryVo> getChildren(Long no) {
+		return sqlSession.selectList("category.getChildren", no);
+	}
+
+	public CategoryVo getOne(Long no) {
+		return sqlSession.selectOne("category.get", no);
+	}
+
+	public Boolean update(CategoryVo categoryVo) {
+		return 1 == sqlSession.update("category.update", categoryVo);
+	}
+
+	public Boolean delete(Long no) {
+		return 1 == sqlSession.delete("category.delete", no);
 	}
 
 }

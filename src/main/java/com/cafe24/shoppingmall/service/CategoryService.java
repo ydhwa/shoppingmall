@@ -19,31 +19,31 @@ public class CategoryService {
 	@Autowired
 	private CategoryDao categoryDao;
 
-	public Boolean regist(CategoryVo categoryVo) {
-		return null;
+	public Boolean registCategory(CategoryVo categoryVo) {
+		return categoryDao.insert(categoryVo);
 	}
 
-	public List<CategoryVo> getAll() {
-		return null;
+	public List<CategoryVo> getAllCategories() {
+		return categoryDao.getAll();
 	}
 
-	public List<CategoryVo> getAllParents() {
-		return null;
+	public List<CategoryVo> getAllTopLevelCategories() {
+		return categoryDao.getAllParents();
 	}
 
-	public List<CategoryVo> getChildren(Long long1) {
-		return null;
+	public List<CategoryVo> getChildrenOfCategory(Long no) {
+		return categoryDao.getChildren(no);
 	}
 
-	public CategoryVo getOne(Long long1) {
-		return null;
+	public CategoryVo getCategory(Long no) {
+		return categoryDao.getOne(no);
 	}
 
-	public Boolean modify(Long long1) {
-		return null;
+	public Boolean modifyCategory(CategoryVo categoryVo) {
+		return categoryDao.update(categoryVo);
 	}
 
-	public Boolean delete(Long long1) {
-		return null;
+	public Boolean deleteCategory(Long no) {
+		return categoryDao.delete(no);
 	}
 }
