@@ -1,5 +1,7 @@
 package com.cafe24.shoppingmall.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,18 +19,31 @@ public class CategoryService {
 	@Autowired
 	private CategoryDao categoryDao;
 
-	/**
-	 * 카테고리 추가
-	 * 
-	 * @param categoryVo
-	 * @return
-	 */
-	public CategoryVo insert(CategoryVo categoryVo) {
-		if(categoryDao.insert(categoryVo)) {
-			return categoryVo;
-		}
-		else {
-			return null;
-		}
+	public Boolean regist(CategoryVo categoryVo) {
+		return null;
+	}
+
+	public List<CategoryVo> getAll() {
+		return null;
+	}
+
+	public List<CategoryVo> getAllParents() {
+		return null;
+	}
+
+	public List<CategoryVo> getChildren(Long long1) {
+		return null;
+	}
+
+	public CategoryVo getOne(Long long1) {
+		return null;
+	}
+
+	public Boolean modify(Long long1) {
+		return null;
+	}
+
+	public Boolean delete(Long long1) {
+		return null;
 	}
 }

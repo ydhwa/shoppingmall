@@ -1,16 +1,9 @@
--- category
-select * from category;
-
 -- product
 select * from product;
 select * from product_option_name;
 select * from product_option_value;
 select * from product_category;
 select * from product_image;
-
-
-
--- category.insert
 
 
 
