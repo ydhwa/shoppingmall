@@ -47,11 +47,8 @@ public class ProductService {
 		
 		return 
 				productDao.insert(productVo) &&
-				productOptionDao.deleteAllNames() &&
 				productOptionDao.insertNames(productOptionNameVoList) &&
-				productOptionDao.deleteAllValues() &&
 				productOptionDao.insertValues(productOptionValueVoList) &&
-				productOptionDao.deleteAllItems() &&
 				productOptionDao.insertItems(productVo.getProductOptionItemList()) &&
 				categoryDao.addProductCategories(productVo.getCategoryList()) &&
 				productDao.insertImages(productVo.getProductImageList());

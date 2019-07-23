@@ -66,3 +66,23 @@ where no = 5;
 delete
 from category
 where no = 1;
+
+
+
+-- recursive print
+with recursive sub_category(no, name, parent_no, level, path, cycle) as (
+	-- non-recursive term
+	select c.no, c.name, c.parent_no, 0, array[c.no], false
+	from category c
+	where parent_no is null
+	
+	union all
+	
+	-- recursive term
+	select c.no, c.name, c.parent_no, level + 1, path || c.no, c.no = any(path)
+	from category c, sub_category sb
+	where c.parent_no = sb.no and not cycle	
+)
+select no, parent_no, lpad(' ', level) || name, level, path
+from sub_category
+order by path;

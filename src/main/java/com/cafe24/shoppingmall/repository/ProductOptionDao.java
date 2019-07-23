@@ -23,16 +23,4 @@ public class ProductOptionDao {
 		return false;
 	}
 
-	public boolean deleteAllNames() {
-		return false;
-	}
-
-	public boolean deleteAllValues() {
-		return false;
-	}
-
-	public boolean deleteAllItems() {
-		return false;
-	}
-
 }

@@ -4,7 +4,7 @@ select * from product_option_name;
 select * from product_option_value;
 select * from product_option_item;
 select * from product_category;
-select * from produ6666446ct_image;
+select * from product_image;
 
 
 
