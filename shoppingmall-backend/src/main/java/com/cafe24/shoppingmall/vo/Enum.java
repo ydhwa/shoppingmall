@@ -73,15 +73,14 @@ public class Enum {
 	
 	/**
 	 * 상품 관리 상태에 대한 enum 클래스
-	 * STOCK(재고에 따라 상품 판매 여부 결정)/NON_STOCK(재고에 상관 없이 판매)/DISPLAY(진열되어 있는 상품 항목 중 하나라도 전부 팔리면 곧장 판매 중지)
+	 * STOCK(재고에 따라 상품 판매 여부 결정)/NON_STOCK(재고에 상관 없이 판매)
 	 * 
 	 * @author YDH
 	 *
 	 */
 	public enum ProductManageStatus {
 		STOCK,
-		NON_STOCK,
-		DISPLAY;
+		NON_STOCK;
 		
 		public String getValue() { return super.toString(); }
 	}

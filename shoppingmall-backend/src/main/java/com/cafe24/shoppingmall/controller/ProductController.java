@@ -39,12 +39,12 @@ public class ProductController {
 	 * @return 등록된 상품정보
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<JSONResult> registProduct(@RequestBody ProductVo productVo) {
-		if (productVo == null) {
+	public ResponseEntity<JSONResult> registProduct(@RequestBody Map<String, Object> productMap) {
+		if (productMap == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
 		}
 		
-		boolean registResult = productService.registProduct(productVo);
+		boolean registResult = productService.registProduct(productMap);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}

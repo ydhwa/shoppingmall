@@ -8,22 +8,6 @@ insert
 into category(no, name, parent_no)
 values(nextval('seq_category_no'), '카테고리1', null);
 
-insert 
-into category(no, name, parent_no)
-values(nextval('seq_category_no'), '카테고리2', null);
-
-insert 
-into category(no, name, parent_no)
-values(nextval('seq_category_no'), '카테고리1-1', 1);
-
-insert 
-into category(no, name, parent_no)
-values(nextval('seq_category_no'), '카테고리1-2', 1);
-
-insert 
-into category(no, name, parent_no)
-values(nextval('seq_category_no'), '카테고리3', null);
-
 
 
 -- getAllParents

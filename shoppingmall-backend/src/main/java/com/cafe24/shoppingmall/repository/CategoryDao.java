@@ -47,7 +47,7 @@ public class CategoryDao {
 	}
 
 	// 상품에 카테고리 추가
-	public boolean addProductCategories(List<List<CategoryVo>> categoryList) {
+	public boolean addProductCategories(List<CategoryVo> categoryList) {
 		// TODO Auto-generated method stub
 		return false;
 	}

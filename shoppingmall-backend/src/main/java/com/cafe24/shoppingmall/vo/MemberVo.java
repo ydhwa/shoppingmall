@@ -1,7 +1,5 @@
 package com.cafe24.shoppingmall.vo;
 
-import java.util.List;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -38,10 +36,7 @@ public class MemberVo {
 	@Email(groups={MemberGroups.Join.class}, message="이메일 형식이 아닙니다.")
 	private String email;			// 이메일
 	private MemberStatus status;	// 계정상태
-
-	private List<ShippingAddressVo> shippingAddressList;
-	private List<BucketItemVo> bucketItemList;
-	private List<OrdersVo> ordersList;
+	private String delStatus;		// 삭제여부(Y/N)
 
 	public MemberVo() {}
 
@@ -105,30 +100,17 @@ public class MemberVo {
 	public void setStatus(MemberStatus status) {
 		this.status = status;
 	}
-	public List<ShippingAddressVo> getShippingAddressList() {
-		return shippingAddressList;
+	public String getDelStatus() {
+		return delStatus;
 	}
-	public void setShippingAddressList(List<ShippingAddressVo> shippingAddressList) {
-		this.shippingAddressList = shippingAddressList;
+	public void setDelStatus(String delStatus) {
+		this.delStatus = delStatus;
 	}
-	public List<BucketItemVo> getBucketList() {
-		return bucketItemList;
-	}
-	public void setBucketList(List<BucketItemVo> bucketItemList) {
-		this.bucketItemList = bucketItemList;
-	}
-	public List<OrdersVo> getOrdersList() {
-		return ordersList;
-	}
-	public void setOrdersList(List<OrdersVo> ordersList) {
-		this.ordersList = ordersList;
-	}
-	
+
 	@Override
 	public String toString() {
 		return "MemberVo [no=" + no + ", username=" + username + ", password=" + password + ", regDate=" + regDate
 				+ ", name=" + name + ", birthDate=" + birthDate + ", homeNumber=" + homeNumber + ", phoneNumber="
-				+ phoneNumber + ", email=" + email + ", status=" + status + ", shippingAddressList="
-				+ shippingAddressList + ", bucketItemList=" + bucketItemList + ", ordersList=" + ordersList + "]";
+				+ phoneNumber + ", email=" + email + ", status=" + status + ", delStatus=" + delStatus + "]";
 	}
 }
