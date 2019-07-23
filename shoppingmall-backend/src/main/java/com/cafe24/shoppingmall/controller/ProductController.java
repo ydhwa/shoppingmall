@@ -65,7 +65,7 @@ public class ProductController {
 
 		List<ProductVo> productVoList = productService.searchProducts(map);
 
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productVoList));
 	}
 
 	// 상세조회
@@ -78,7 +78,7 @@ public class ProductController {
 
 		ProductVo productVo = productService.getProduct(no.get());
 
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productVo));
 	}
 
 	// 수정

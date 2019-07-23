@@ -97,14 +97,8 @@ public class MemberControllerTest {
 	}
 	
 
-	/**
-	 * 회원가입 성공 - 회원 테이블에 정보를 넣는 것까지 성공
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testJoinSuccessInsertSuccess() throws Exception {
+	public void 회원가입_성공() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("userB01");
 		memberVo.setPassword("asdf1234!");
@@ -116,14 +110,8 @@ public class MemberControllerTest {
 		
 		successAction("post", "", memberVo, "", true);
 	}
-	/**
-	 * 중복된 아이디로 회원가입을 시도하여 회원가입 실패
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testJoinSuccessInsertFailure() throws Exception {
+	public void 중복된_아이디로_회원가입_실패() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("userA01");
 		memberVo.setPassword("asdf1234!");
@@ -135,15 +123,8 @@ public class MemberControllerTest {
 		
 		failureAction("post", "", memberVo);
 	}
-	/**
-	 * 필수 입력 사항을 입력하지 않아 회원가입 실패
-	 * (validation)
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testJoinFailureBecauseMissingData() throws Exception {
+	public void 필수_입력_사항_누락으로_회원가입_실패() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("userB01");
 		memberVo.setPassword("asdf1234!");
@@ -154,15 +135,8 @@ public class MemberControllerTest {
 		
 		failureAction("post", "", memberVo);
 	}
-	/**
-	 * 정규식에서 벗어나는 데이터로 인해 회원가입 실패
-	 * (validation)
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testJoinFailureBecauseInvalidData() throws Exception {
+	public void 적절하지_않은_입력으로_회원가입_실패() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("userB01");
 		memberVo.setPassword("asdf1!");
@@ -175,96 +149,51 @@ public class MemberControllerTest {
 		failureAction("post", "", memberVo);
 	}
 	
-	/**
-	 * 아이디 중복체크 - 중복되는 닉네임이 없음
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testCheckUsernameDuplicationSuccessWithNotDuplicatedUsername() throws Exception {
+	public void 중복되지_않는_아이디로_아이디_중복체크() throws Exception {
 		String username = "userB02";
 		
 		successAction("get", "/duplicate?username=" + username, null, "", false);
 	}
-	/**
-	 * 아이디 중복체크 - 중복되는 아이디가 있음
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testCheckUsernameDuplicationSuccessWithDuplicatedUsername() throws Exception {
+	public void 중복되는_아이디로_아이디_중복체크() throws Exception {
 		String username = "userA01";
 
 		successAction("get", "/duplicate?username=" + username, null, "", true);
 	}
-	/**
-	 * 적절하지 않은 형식의 아이디 입력으로 중복체크 실패
-	 * (validation)
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testCheckUsernameDuplicationFailureBecauseInvalidData() throws Exception {
+	public void 적절하지_않은_입력으로_아이디_중복체크_실패() throws Exception {
 		String username = "use";
 		
 		failureAction("get", "/duplicate?username=" + username, null);
 	}
 	
-	/**
-	 * 로그인 성공 - 아이디와 비밀번호에 맞는 회원이 있음
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testLoginSuccessWithMatchingAccount() throws Exception {
+	public void 아이디와_비밀번호를_올바르게_입력하여_로그인_성공() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("userA01");
 		memberVo.setPassword("asdf1234!");
 		
 		successAction("post", "/login", memberVo, ".username", memberVo.getUsername());
 	}
-	/**
-	 * 로그인 실패 - 아이디와 비밀번호에 맞는 회원이 없음
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testLoginSuccessWithNotMatchingAccount() throws Exception {
+	public void 아이디와_비밀번호가_일치하는_회원이_없어_로그인_실패() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("userA01");
 		memberVo.setPassword("asdf1234@");
 		
 		successAction("post", "/login", memberVo, "", null);
 	}
-	/**
-	 * 아이디나 비밀번호를 입력하지 않아 로그인 실패
-	 * (validation)
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testLoginFailureBecauseMissingData() throws Exception {
+	public void 아이디나_비밀번호를_입력하지_않아_로그인_실패() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("");
 		memberVo.setPassword("asdf1234!");
 		
 		failureAction("post", "/login", memberVo);
 	}
-	/**
-	 * 적절하지 않은 데이터 입력으로 로그인 실패
-	 * (validation)
-	 * 
-	 * @throws Exception
-	 */
 	@Test
-//	@Ignore
-	public void testLoginFailureBecauseInvalidData() throws Exception {
+	public void 적절하지_않은_입력으로_로그인_실패() throws Exception {
 		MemberVo memberVo = new MemberVo();
 		memberVo.setUsername("userA01");
 		memberVo.setPassword("asdf");

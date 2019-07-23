@@ -97,52 +97,45 @@ public class CategoryControllerTest {
 	}
 	
 	
-	// 카테고리 추가 성공
 	@Test
-	public void testRegistCategorySuccess() throws Exception {
+	public void 카테고리_추가_성공() throws Exception {
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setName("카테고리3");
 		
 		successAction("post", "", categoryVo, "", true);
 	}
 	
-	// 카테고리 전부 조회 성공
 	@Test
-	public void testShowAllCategoriesSuccess() throws Exception {
+	public void 카테고리_전부_조회_성공() throws Exception {
 		successAction("get", "", null, ".length()", 5);
 	}
 	
-	// 최상위 카테고리들만 조회 성공
 	@Test
-	public void testShowAllTopLevelCategoriesSuccess() throws Exception {
+	public void 최상위_카테고리들만_조회_성공() throws Exception {
 		successAction("get", "/parents", null, ".length()", 2);
 	}
 	
-	// 하위 카테고리들 포함하여 조회 성공
 	@Test
-	public void testShowChildrenCategoriesSuccess() throws Exception {
+	public void 하위_카테고리들_포함하여_조회_성공() throws Exception {
 		successAction("get", "/" + 1 + "/children", null, ".length()", 4);
 	}
 	
-	// 특정 카테고리 조회 성공
 	@Test
-	public void testShowCategorySuccess() throws Exception {
+	public void 특정_카테고리_조회_성공() throws Exception {
 		successAction("get", "/" + 1, null, ".name", "카테고리1");
 	}
 	
-	// 카테고리 수정 성공
 	@Test
-	public void testModifyCategorySuccess() throws Exception {
+	public void 카테고리_수정_성공() throws Exception {
 		CategoryVo categoryVo = new CategoryVo();
-		categoryVo.setNo(1L);
+		categoryVo.setNo(5L);
 		categoryVo.setName("수정된 카테고리1");
 		
 		successAction("put", "/", categoryVo, "", true);
 	}
 	
-	// 카테고리 삭제 성공
 	@Test
-	public void testDeleteCategorySuccess() throws Exception {
-		successAction("delete", "/" + 5, null, "", true);
+	public void 카테고리_삭제_성공() throws Exception {
+		successAction("delete", "/" + 4, null, "", true);
 	}
 }

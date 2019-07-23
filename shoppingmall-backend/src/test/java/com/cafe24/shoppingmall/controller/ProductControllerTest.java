@@ -99,9 +99,8 @@ public class ProductControllerTest {
 	}
 	
 	
-	// 상품 추가 성공
 	@Test
-	public void testRegistProductSuccess() throws Exception {
+	public void 상품_추가_성공() throws Exception {
 		ProductVo productVo = new ProductVo();
 		productVo.setName("상품4");
 		productVo.setSupplyPrice(3000);
@@ -116,21 +115,18 @@ public class ProductControllerTest {
 		successAction("post", "", productVo, "", true);
 	}
 	
-	// 상품들 검색결과 조회 성공
 	@Test
-	public void testSearchAndPaginationProductsSuccess() throws Exception {
+	public void 상품들_검색결과_조회_성공() throws Exception {
 		successAction("get", "?field=name&keyword=상품&offset=1&limit=10", null, ".length()", 3);
 	}
 	
-	// 상품 상세조회 성공
 	@Test
-	public void testShowProductDetailsSuccess() throws Exception {
+	public void 상품_상세조회_성공() throws Exception {
 		successAction("get", "/" + 1L, null, ".name", "상품1");
 	}
 	
-	// 상품 수정 성공
 	@Test
-	public void testModifyProductSuccess() throws Exception {
+	public void 상품_수정_성공() throws Exception {
 		ProductVo productVo = new ProductVo();
 		productVo.setNo(2L);
 		productVo.setName("수정된 상품2");
@@ -142,9 +138,8 @@ public class ProductControllerTest {
 		successAction("post", "", productVo, "", true);
 	}
 	
-	// 상품 삭제 성공
 	@Test
-	public void testDeleteProductSuccess() throws Exception {
+	public void 상품_삭제_성공() throws Exception {
 		successAction("delete", "/" + 3L, null, "", true);
 	}
 }
