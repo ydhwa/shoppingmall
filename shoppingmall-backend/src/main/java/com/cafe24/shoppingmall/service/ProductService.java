@@ -13,7 +13,7 @@ import com.cafe24.shoppingmall.repository.ProductOptionDao;
 import com.cafe24.shoppingmall.vo.CategoryVo;
 import com.cafe24.shoppingmall.vo.ProductImageVo;
 import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
-import com.cafe24.shoppingmall.vo.ProductOptionNameVo;
+import com.cafe24.shoppingmall.vo.ProductOptionVo;
 import com.cafe24.shoppingmall.vo.ProductOptionValueVo;
 import com.cafe24.shoppingmall.vo.ProductVo;
 
@@ -43,7 +43,7 @@ public class ProductService {
 	public boolean registProduct(Map<String, Object> productMap) {
 		return 
 				productDao.insert((ProductVo) productMap.get("product")) &&
-				productOptionDao.insertNames((List<ProductOptionNameVo>) productMap.get("optionNameList")) &&
+				productOptionDao.insertNames((List<ProductOptionVo>) productMap.get("optionNameList")) &&
 				productOptionDao.insertValues((List<ProductOptionValueVo>) productMap.get("optionValueList")) &&
 				productOptionDao.insertItems((List<ProductOptionItemVo>) productMap.get("optionItemList")) &&
 				categoryDao.addProductCategories((List<CategoryVo>) productMap.get("categoryList")) &&

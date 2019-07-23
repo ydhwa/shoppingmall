@@ -20,18 +20,13 @@ public class ProductVo {
 	private String summaryDescription;					// 요약설명
 	private String detailedDescription;					// 상세설명
 	private String regDate;								// 등록일
+	private Double weight;								// 상품 하나 당 중량
+	private String optionAvailable;						// 옵션사용여부(Y/N)
+	private String delStatus;							// 삭제여부(Y/N)
 	private ProductDisplayStatus productDisplayStatus;	// 진열상태
 	private Boolean availability;						// 판매여부
-	private String buyNowUrl;							// 바로구매URL
-	private Double weight;								// 상품 하나 당 중량
 	private ProductManageStatus productManageStatus;	// 관리상태
 	private Integer stockQuantity;						// 재고수량
-	private Boolean optionAvailable;					// 옵션사용여부
-	
-	private List<ProductOptionNameVo> productOptionList;		// 상품 하나의 옵션들
-	private List<ProductOptionItemVo> productOptionItemList;	// 옵션에 따른 상품들
-	private List<List<CategoryVo>> categoryList;				// 카테고리들(여러 카테고리/복수 카테고리)
-	private List<ProductImageVo> productImageList;				// 상품 이미지들
 	
 	public ProductVo() {}
 
@@ -83,6 +78,24 @@ public class ProductVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	public Double getWeight() {
+		return weight;
+	}
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+	public String getOptionAvailable() {
+		return optionAvailable;
+	}
+	public void setOptionAvailable(String optionAvailable) {
+		this.optionAvailable = optionAvailable;
+	}
+	public String getDelStatus() {
+		return delStatus;
+	}
+	public void setDelStatus(String delStatus) {
+		this.delStatus = delStatus;
+	}
 	public ProductDisplayStatus getProductDisplayStatus() {
 		return productDisplayStatus;
 	}
@@ -94,18 +107,6 @@ public class ProductVo {
 	}
 	public void setAvailability(Boolean availability) {
 		this.availability = availability;
-	}
-	public String getBuyNowUrl() {
-		return buyNowUrl;
-	}
-	public void setBuyNowUrl(String buyNowUrl) {
-		this.buyNowUrl = buyNowUrl;
-	}
-	public Double getWeight() {
-		return weight;
-	}
-	public void setWeight(Double weight) {
-		this.weight = weight;
 	}
 	public ProductManageStatus getProductManageStatus() {
 		return productManageStatus;
@@ -119,46 +120,14 @@ public class ProductVo {
 	public void setStockQuantity(Integer stockQuantity) {
 		this.stockQuantity = stockQuantity;
 	}
-	public Boolean getOptionAvailable() {
-		return optionAvailable;
-	}
-	public void setOptionAvailable(Boolean optionAvailable) {
-		this.optionAvailable = optionAvailable;
-	}
-	public List<ProductOptionNameVo> getProductOptionList() {
-		return productOptionList;
-	}
-	public void setProductOptionList(List<ProductOptionNameVo> productOptionList) {
-		this.productOptionList = productOptionList;
-	}
-	public List<ProductOptionItemVo> getProductOptionItemList() {
-		return productOptionItemList;
-	}
-	public void setProductOptionItemList(List<ProductOptionItemVo> productOptionItemList) {
-		this.productOptionItemList = productOptionItemList;
-	}
-	public List<List<CategoryVo>> getCategoryList() {
-		return categoryList;
-	}
-	public void setCategoryList(List<List<CategoryVo>> categoryList) {
-		this.categoryList = categoryList;
-	}
-	public List<ProductImageVo> getProductImageList() {
-		return productImageList;
-	}
-	public void setProductImageList(List<ProductImageVo> productImageList) {
-		this.productImageList = productImageList;
-	}
 
 	@Override
 	public String toString() {
 		return "ProductVo [no=" + no + ", code=" + code + ", name=" + name + ", supplyPrice=" + supplyPrice
 				+ ", sellPrice=" + sellPrice + ", summaryDescription=" + summaryDescription + ", detailedDescription="
-				+ detailedDescription + ", regDate=" + regDate + ", productDisplayStatus=" + productDisplayStatus
-				+ ", availability=" + availability + ", buyNowUrl=" + buyNowUrl + ", weight=" + weight
-				+ ", productManageStatus=" + productManageStatus + ", stockQuantity=" + stockQuantity
-				+ ", optionAvailable=" + optionAvailable + ", productOptionList=" + productOptionList
-				+ ", productOptionItemList=" + productOptionItemList + ", categoryList=" + categoryList
-				+ ", productImageList=" + productImageList + "]";
+				+ detailedDescription + ", regDate=" + regDate + ", weight=" + weight + ", optionAvailable="
+				+ optionAvailable + ", delStatus=" + delStatus + ", productDisplayStatus=" + productDisplayStatus
+				+ ", availability=" + availability + ", productManageStatus=" + productManageStatus + ", stockQuantity="
+				+ stockQuantity + "]";
 	}
 }

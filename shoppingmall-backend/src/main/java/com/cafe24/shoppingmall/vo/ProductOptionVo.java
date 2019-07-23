@@ -3,18 +3,19 @@ package com.cafe24.shoppingmall.vo;
 import java.util.List;
 
 /**
- * 옵션명에 대한 VO.
- * 해당 옵션에 대한 옵션값들을 담을 리스트도 가지고 있도록 했다.
+ * 옵션에 대한 VO.
+ * product_option_name 테이블에 대응하는 VO이다.
+ * 옵션명을 기본적으로 포함하고, 해당 옵션명에 대한 옵션값들을 담을 리스트도 가지고 있도록 했다.
  * 
  * @author YDH
  *
  */
-public class ProductOptionNameVo {
+public class ProductOptionVo {
 	private Long no;		// 옵션명 번호
 	private String name;	// 옵션명
 	private List<ProductOptionValueVo> productOptionValueList;	// 옵션값 리스트
 	
-	public ProductOptionNameVo() {}
+	public ProductOptionVo() {}
 		
 	public Long getNo() {
 		return no;

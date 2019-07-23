@@ -6,7 +6,7 @@
 	<insert id="insert" parameterType="membervo">
 		<![CDATA[
 			insert 
-			into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status)
+			into member(no, username, password, reg_date, name, birth_date, home_number, phone_number, email, status, del_status)
 			values(
 				nextval('seq_member_no'),
 				'${ username }',
@@ -23,7 +23,8 @@
 		<![CDATA[
 				encode(encrypt(convert_to('${ phoneNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
 				encode(encrypt(convert_to('${ email }', 'utf-8'), 'key', 'AES'), 'hex'),
-				'${ status.value }'
+				'${ status.value }',
+				'N'
 			);
 		]]>
 	</insert>

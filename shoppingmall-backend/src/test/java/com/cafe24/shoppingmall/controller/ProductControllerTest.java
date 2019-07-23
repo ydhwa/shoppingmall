@@ -5,9 +5,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,13 +22,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.vo.CategoryVo;
-import com.cafe24.shoppingmall.vo.Enum.ProductDisplayStatus;
-import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
-import com.cafe24.shoppingmall.vo.ProductImageVo;
-import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
-import com.cafe24.shoppingmall.vo.ProductOptionNameVo;
-import com.cafe24.shoppingmall.vo.ProductOptionValueVo;
 import com.cafe24.shoppingmall.vo.ProductVo;
 import com.google.gson.Gson;
 
@@ -109,26 +99,7 @@ public class ProductControllerTest {
 	
 	@Test
 	public void 상품_추가_성공() throws Exception {
-		ProductVo productVo = new ProductVo();
-		productVo.setName("상품4");
-		productVo.setSupplyPrice(3000);
-		productVo.setSellPrice(5000);
-		productVo.setSummaryDescription("상품 4입니다.(요약)");
-		productVo.setDetailedDescription("상품 4입니다. 세부설명이에요!");
-		productVo.setProductDisplayStatus(ProductDisplayStatus.MAIN);
-		productVo.setProductManageStatus(ProductManageStatus.STOCK);
-		productVo.setStockQuantity(4444);
-		productVo.setOptionAvailable(true);
-		
-		List<ProductOptionNameVo> productOptionList = new ArrayList<>();
-		List<ProductOptionItemVo> productOptionItemList = new ArrayList<>();
-		List<List<CategoryVo>> categoryList = new ArrayList<>();
-		List<ProductImageVo> productImageList = new ArrayList<>();
-		
-		ProductOptionNameVo productOptionNameVo = new ProductOptionNameVo();
-		ProductOptionValueVo productOptionValueVo1 = new ProductOptionValueVo();
-		ProductOptionValueVo productOptionValueVo2 = new ProductOptionValueVo();
-		
+		ProductVo productVo = new ProductVo();		
 		
 		successAction("post", "", productVo, "", true);
 	}
@@ -146,13 +117,7 @@ public class ProductControllerTest {
 	@Test
 	public void 상품_수정_성공() throws Exception {
 		ProductVo productVo = new ProductVo();
-		productVo.setNo(2L);
-		productVo.setName("수정된 상품2");
-		productVo.setSellPrice(4000);
-		productVo.setProductDisplayStatus(ProductDisplayStatus.MAIN);
-		productVo.setStockQuantity(2222);
-		productVo.setOptionAvailable(true);
-		
+
 		successAction("post", "", productVo, "", true);
 	}
 	

@@ -65,6 +65,10 @@
 	<delete id="delete" parameterType="long">
 		<![CDATA[
 			delete
+			from product_category
+			where category_no = #{ value };
+		
+			delete
 			from category
 			where no = #{ value };
 		]]>

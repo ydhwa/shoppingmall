@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
-import com.cafe24.shoppingmall.vo.ProductOptionNameVo;
+import com.cafe24.shoppingmall.vo.ProductOptionVo;
 import com.cafe24.shoppingmall.vo.ProductOptionValueVo;
 
 @Repository
 public class ProductOptionDao {
 
-	public boolean insertNames(List<ProductOptionNameVo> productOptionNameVoList) {
+	public boolean insertNames(List<ProductOptionVo> productOptionNameVoList) {
 		return false;
 	}
 

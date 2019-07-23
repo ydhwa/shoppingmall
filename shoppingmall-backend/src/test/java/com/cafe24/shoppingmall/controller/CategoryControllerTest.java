@@ -136,6 +136,6 @@ public class CategoryControllerTest {
 	
 	@Test
 	public void 카테고리_삭제_성공() throws Exception {
-		successAction("delete", "/" + 4, null, "", true);
+		successAction("delete", "/" + 5, null, "", true);
 	}
 }
