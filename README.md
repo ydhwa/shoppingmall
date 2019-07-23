@@ -13,12 +13,14 @@
 - PostgreSQL
    - (CentOS 6.9)
    - Version - 10.2
+   - pgcrypto
 
 ## 내용
 - week1: 사용자 시나리오 작성 및 데이터베이스 설계
 - week2: 개발 환경 구축(Swagger(API 명세), JUnit(TDD) 적용)
-- week3: API 개발
-- week4: API 개발
+- week3: API 개발 - shoppingmall-backend
+- week4: API 개발 - shoppingmall-backend
+- week5: API 개발 및 문서 작성 - shoppingmall-backend
 
 -----
 
