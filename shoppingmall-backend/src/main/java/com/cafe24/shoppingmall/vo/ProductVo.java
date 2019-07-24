@@ -1,7 +1,5 @@
 package com.cafe24.shoppingmall.vo;
 
-import java.util.List;
-
 import com.cafe24.shoppingmall.vo.Enum.ProductDisplayStatus;
 import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
 
@@ -12,21 +10,21 @@ import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
  *
  */
 public class ProductVo {
-	private Long no;									// 상품번호
-	private String code;								// 상품코드
-	private String name;								// 상품명
-	private Integer supplyPrice;						// 공급가
-	private Integer sellPrice;							// 판매가(소비자가)
-	private String summaryDescription;					// 요약설명
-	private String detailedDescription;					// 상세설명
-	private String regDate;								// 등록일
-	private Double weight;								// 상품 하나 당 중량
-	private String optionAvailable;						// 옵션사용여부(Y/N)
-	private String delStatus;							// 삭제여부(Y/N)
-	private ProductDisplayStatus productDisplayStatus;	// 진열상태
-	private Boolean availability;						// 판매여부
-	private ProductManageStatus productManageStatus;	// 관리상태
-	private Integer stockQuantity;						// 재고수량
+	private Long no;							// 상품번호
+	private String code;						// 상품코드
+	private String name;						// 상품명
+	private Integer supplyPrice;				// 공급가
+	private Integer sellPrice;					// 판매가(소비자가)
+	private String summaryDescription;			// 요약설명
+	private String detailedDescription;			// 상세설명
+	private String regDate;						// 등록일
+	private Double weight;						// 상품 하나 당 중량
+	private String optionAvailable;				// 옵션사용여부(Y/N)
+	private String delStatus;					// 삭제여부(Y/N)
+	private ProductDisplayStatus displayStatus;	// 진열상태
+	private String availability;				// 판매여부(Y/N)
+	private ProductManageStatus manageStatus;	// 관리상태
+	private Integer stockQuantity;				// 재고수량
 	
 	public ProductVo() {}
 
@@ -96,23 +94,23 @@ public class ProductVo {
 	public void setDelStatus(String delStatus) {
 		this.delStatus = delStatus;
 	}
-	public ProductDisplayStatus getProductDisplayStatus() {
-		return productDisplayStatus;
+	public ProductDisplayStatus getDisplayStatus() {
+		return displayStatus;
 	}
-	public void setProductDisplayStatus(ProductDisplayStatus productDisplayStatus) {
-		this.productDisplayStatus = productDisplayStatus;
+	public void setProductDisplayStatus(ProductDisplayStatus displayStatus) {
+		this.displayStatus = displayStatus;
 	}
-	public Boolean getAvailability() {
+	public String getAvailability() {
 		return availability;
 	}
-	public void setAvailability(Boolean availability) {
+	public void setAvailability(String availability) {
 		this.availability = availability;
 	}
-	public ProductManageStatus getProductManageStatus() {
-		return productManageStatus;
+	public ProductManageStatus getManageStatus() {
+		return manageStatus;
 	}
-	public void setProductManageStatus(ProductManageStatus productManageStatus) {
-		this.productManageStatus = productManageStatus;
+	public void setProductManageStatus(ProductManageStatus manageStatus) {
+		this.manageStatus = manageStatus;
 	}
 	public Integer getStockQuantity() {
 		return stockQuantity;
@@ -126,8 +124,8 @@ public class ProductVo {
 		return "ProductVo [no=" + no + ", code=" + code + ", name=" + name + ", supplyPrice=" + supplyPrice
 				+ ", sellPrice=" + sellPrice + ", summaryDescription=" + summaryDescription + ", detailedDescription="
 				+ detailedDescription + ", regDate=" + regDate + ", weight=" + weight + ", optionAvailable="
-				+ optionAvailable + ", delStatus=" + delStatus + ", productDisplayStatus=" + productDisplayStatus
-				+ ", availability=" + availability + ", productManageStatus=" + productManageStatus + ", stockQuantity="
+				+ optionAvailable + ", delStatus=" + delStatus + ", displayStatus=" + displayStatus
+				+ ", availability=" + availability + ", manageStatus=" + manageStatus + ", stockQuantity="
 				+ stockQuantity + "]";
 	}
 }

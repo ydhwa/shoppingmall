@@ -15,7 +15,10 @@ public class CategoryVo {
 	private Integer level;	// 계층 단계 표시 (depth와 비슷함)
 	
 	public CategoryVo() {}
-	
+	public CategoryVo(Long no) {
+		this.no = no;
+	}
+
 	public Long getNo() {
 		return no;
 	}

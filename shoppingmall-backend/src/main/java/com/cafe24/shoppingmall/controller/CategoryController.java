@@ -30,7 +30,7 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<JSONResult> registCategory(@RequestBody CategoryVo categoryVo) {
 		if (categoryVo == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("카테고리 등록에 실패했습니다."));
@@ -41,7 +41,7 @@ public class CategoryController {
 	}
 
 	// 전부 조회
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping(value="", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showAllCategories() {
 		List<CategoryVo> categoryVoList = categoryService.getAllCategories();
 
@@ -49,7 +49,7 @@ public class CategoryController {
 	}
 
 	// 최상위 카테고리들 조회
-	@RequestMapping(value = "/parents", method = RequestMethod.GET)
+	@RequestMapping(value="/parents", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showAllTopLevelCategories() {
 		List<CategoryVo> parentCategoryVoList = categoryService.getAllTopLevelCategories();
 
@@ -57,7 +57,7 @@ public class CategoryController {
 	}
 
 	// 하위 카테고리까지 포함하여 조회
-	@RequestMapping(value = "/{no}/children", method = RequestMethod.GET)
+	@RequestMapping(value="/{no}/children", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showChildrenCategories(@PathVariable Optional<Long> no) {
 		// path variable check
 		if (!no.isPresent()) {
@@ -70,7 +70,7 @@ public class CategoryController {
 	}
 
 	// 특정 카테고리 조회
-	@RequestMapping(value = "/{no}", method = RequestMethod.GET)
+	@RequestMapping(value="/{no}", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showCategory(@PathVariable Optional<Long> no) {
 		// path variable check
 		if (!no.isPresent()) {
@@ -83,7 +83,7 @@ public class CategoryController {
 	}
 
 	// 수정
-	@RequestMapping(value = "", method = RequestMethod.PUT)
+	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyCategory(@RequestBody CategoryVo categoryVo) {
 		if (categoryVo == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("카테고리 수정에 실패했습니다."));
@@ -94,7 +94,7 @@ public class CategoryController {
 	}
 
 	// 삭제
-	@RequestMapping(value = "/{no}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteCategory(@PathVariable Optional<Long> no) {
 		// path variable check
 		if (!no.isPresent()) {

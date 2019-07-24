@@ -10,12 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cafe24.shoppingmall.repository.CategoryDao;
 import com.cafe24.shoppingmall.repository.ProductDao;
 import com.cafe24.shoppingmall.repository.ProductOptionDao;
-import com.cafe24.shoppingmall.vo.CategoryVo;
-import com.cafe24.shoppingmall.vo.ProductImageVo;
-import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
-import com.cafe24.shoppingmall.vo.ProductOptionVo;
 import com.cafe24.shoppingmall.vo.ProductOptionValueVo;
+import com.cafe24.shoppingmall.vo.ProductOptionVo;
 import com.cafe24.shoppingmall.vo.ProductVo;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 상품에 대한 로직이 담긴 서비스
@@ -41,13 +40,20 @@ public class ProductService {
 	 */
 	@Transactional
 	public boolean registProduct(Map<String, Object> productMap) {
+		ObjectMapper mapper = new ObjectMapper();
+		ProductVo product = mapper.convertValue(productMap.get("product"), ProductVo.class);
+		
+		List<ProductOptionVo> productOptionList = mapper.convertValue(productMap.get("productOptionList"), new TypeReference<List<ProductOptionVo>>() {});
+		for(ProductOptionVo productOption: productOptionList) {
+			productOption = mapper.convertValue(productOption, ProductOptionVo.class);
+		}
+		
 		return 
-				productDao.insert((ProductVo) productMap.get("product")) &&
-				productOptionDao.insertNames((List<ProductOptionVo>) productMap.get("optionNameList")) &&
-				productOptionDao.insertValues((List<ProductOptionValueVo>) productMap.get("optionValueList")) &&
-				productOptionDao.insertItems((List<ProductOptionItemVo>) productMap.get("optionItemList")) &&
-				categoryDao.addProductCategories((List<CategoryVo>) productMap.get("categoryList")) &&
-				productDao.insertImages((List<ProductImageVo>) productMap.get("productImageList"));
+				productDao.insert(product) &&
+				productOptionDao.insertOptions(productOptionList); //&&
+//				productOptionDao.insertOptionItems((List<ProductOptionItemVo>) productMap.get("productOptionItemList")) &&
+//				categoryDao.addProductCategories((List<CategoryVo>) productMap.get("categoryList")) &&
+//				productDao.insertImages((List<ProductImageVo>) productMap.get("productImageList"));
 	}
 
 	public List<ProductVo> searchProducts(Map<String, Object> map) {

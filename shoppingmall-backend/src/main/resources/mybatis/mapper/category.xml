@@ -11,6 +11,20 @@
 		]]>
 	</insert>
 	
+	<insert id="insertProductCategories" parameterType="java.util.ArrayList">
+		<![CDATA[
+			insert into product_category(product_no, category_no)
+		]]>
+		<foreach collection="list" item="category" separator=", ">
+			<![CDATA[
+				values(productNo, #{ category.no })
+			]]>
+		</foreach>
+		<![CDATA[
+			;
+		]]>
+	</insert>
+	
 	<select id="getAll" resultType="map">
 		<![CDATA[
 			with recursive sub_category(no, name, parent_no, level, path, cycle) as (

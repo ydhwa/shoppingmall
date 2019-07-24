@@ -11,6 +11,7 @@ public class ProductOptionValueVo {
 	private String value;	// 옵션값
 	
 	public ProductOptionValueVo() {}
+	public ProductOptionValueVo(String value) { this.value = value; }
 	
 	public Long getNo() {
 		return no;

@@ -16,6 +16,10 @@ public class ProductOptionVo {
 	private List<ProductOptionValueVo> productOptionValueList;	// 옵션값 리스트
 	
 	public ProductOptionVo() {}
+	public ProductOptionVo(String name, List<ProductOptionValueVo> productOptionValueList) {
+		this.name = name;
+		this.productOptionValueList = productOptionValueList;
+	}
 		
 	public Long getNo() {
 		return no;

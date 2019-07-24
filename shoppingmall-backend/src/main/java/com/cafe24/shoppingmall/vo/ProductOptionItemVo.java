@@ -11,15 +11,24 @@ import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
 public class ProductOptionItemVo {
 	private Long no;					// 품목번호
 	private Long productNo;				// 상품번호
-	private String optionNameKeys;		// 옵션명테이블키
-	private String optionValueKeys;		// 옵션값테이블키
+	private String optionNameKeys;		// 옵션명테이블키 (인덱스값 넣는 법 말고는 마땅한 방법이 떠오르지 않음)
+	private String optionValueKeys;		// 옵션값테이블키 (인덱스값 넣는 법 말고는 마땅한 방법이 떠오르지 않음)
 	private String details;				// 옵션 세부내용
 	private Integer additionalAmount;	// 추가금액
 	private String availability;		// 판매여부(Y/N)
 	private ProductManageStatus manageStatus;	// 관리상태
-	private String stockQuantity;		// 재고수량
+	private Integer stockQuantity;		// 재고수량
 	
 	public ProductOptionItemVo() {}
+	public ProductOptionItemVo(String optionNameKeys, String optionValueKeys, String details, Integer additionalAmount, String availability, ProductManageStatus manageStatus, Integer stockQuantity) {
+		this.optionNameKeys = optionNameKeys;
+		this.optionValueKeys = optionValueKeys;
+		this.details = details;
+		this.additionalAmount = additionalAmount;
+		this.availability = availability;
+		this.manageStatus = manageStatus;
+		this.stockQuantity = stockQuantity;
+	}
 
 	public Long getNo() {
 		return no;
@@ -69,10 +78,10 @@ public class ProductOptionItemVo {
 	public void setProductManageStatus(ProductManageStatus manageStatus) {
 		this.manageStatus = manageStatus;
 	}
-	public String getStockQuantity() {
+	public Integer getStockQuantity() {
 		return stockQuantity;
 	}
-	public void setStockQuantity(String stockQuantity) {
+	public void setStockQuantity(Integer stockQuantity) {
 		this.stockQuantity = stockQuantity;
 	}
 

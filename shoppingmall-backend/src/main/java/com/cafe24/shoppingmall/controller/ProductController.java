@@ -38,7 +38,7 @@ public class ProductController {
 	 * @param productVo 등록할 상품
 	 * @return 등록된 상품정보
 	 */
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<JSONResult> registProduct(@RequestBody Map<String, Object> productMap) {
 		if (productMap == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
@@ -50,16 +50,22 @@ public class ProductController {
 	}
 
 	// 검색결과 조회
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping(value="", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showProductsSearchResult(
-			@RequestParam(value = "field", defaultValue = "") String field,
-			@RequestParam(value = "keyword", defaultValue = "") String keyword,
-			@RequestParam(value = "offset", required = true) Integer offset,
-			@RequestParam(value = "limit", required = true) Integer limit) {
+			@RequestParam(value="no") Long no,
+			@RequestParam(value="code") String code,
+			@RequestParam(value="name") String name,
+			@RequestParam(value="categoryno") Long categoryNo,
+			@RequestParam(value="displaystatus") String displayStatus,
+			@RequestParam(value="offset", required=true) Integer offset,
+			@RequestParam(value="limit", required=true) Integer limit) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("field", field);
-		map.put("keyword", keyword);
+		map.put("no", no);
+		map.put("code", code);
+		map.put("name", name);
+		map.put("categoryno", categoryNo);
+		map.put("displaystatus", displayStatus);
 		map.put("offset", offset);
 		map.put("limit", limit);
 
@@ -69,7 +75,7 @@ public class ProductController {
 	}
 
 	// 상세조회
-	@RequestMapping(value = "/{no}", method = RequestMethod.GET)
+	@RequestMapping(value="/{no}", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showProductDetails(@PathVariable Optional<Long> no) {
 		// path variable check
 		if (!no.isPresent()) {
@@ -82,7 +88,7 @@ public class ProductController {
 	}
 
 	// 수정
-	@RequestMapping(value = "", method = RequestMethod.PUT)
+	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyProduct(@RequestBody ProductVo productVo) {
 		if (productVo == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 수정에 실패했습니다."));
@@ -94,7 +100,7 @@ public class ProductController {
 	}
 
 	// 삭제
-	@RequestMapping(value = "/{no}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteProduct(@PathVariable Optional<Long> no) {
 		// path variable check
 		if (!no.isPresent()) {

@@ -15,6 +15,13 @@ public class ProductImageVo {
 	private ProductImageStatus status;
 	
 	public ProductImageVo() {}
+	public ProductImageVo(String name, String extension, String path, ProductImageStatus status) {
+		super();
+		this.name = name;
+		this.extension = extension;
+		this.path = path;
+		this.status = status;
+	}
 
 	public String getName() {
 		return name;

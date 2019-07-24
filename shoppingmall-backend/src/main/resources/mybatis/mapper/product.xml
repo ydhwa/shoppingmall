@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+
+	<insert id="insert" parameterType="productvo">
+		<![CDATA[
+			insert into product(no, code, name, supply_price, sell_price, summary_description, detailed_description, reg_date, weight, option_available, del_status, display_status, availability, manage_status, stock_quantity)
+			values(
+				nextval('seq_product_no'),
+				concat('P', lpad(currval('seq_product_no')::varchar, 7, '0')),
+				#{ name },
+				#{ supplyPrice },
+				#{ sellPrice },
+				#{ summaryDescription },
+				#{ detailedDescription },
+				now(),
+				#{ weight },
+				#{ optionAvailable },
+				'N',
+				'${ displayStatus }',
+				#{ availability },
+				'${ manageStatus }',
+				#{ stockQuantity }
+			);
+		]]>
+	</insert>
+	
+	<insert id="insertImages" parameterType="java.util.ArrayList">
+		<![CDATA[
+			insert into product_image(name, extension, path, status, product_no)
+		]]>
+		<foreach collection="list" item="productimage" separator=", ">
+			<![CDATA[
+				values(
+					#{ productimage.name }, 
+					#{ productimage.extension }, 
+					#{ productimage.path }, 
+					#{ productimage.status }, 
+					productNo)
+			]]>
+		</foreach>
+		<![CDATA[
+			;
+		]]>
+	</insert>
+
+
+
+	
+<!-- 	<select id="getAll" resultType="map"> -->
+<!-- 		<![CDATA[ -->
+<!-- 			with recursive sub_category(no, name, parent_no, level, path, cycle) as ( -->
+<!-- 				select c.no, c.name, c.parent_no, 0, array[c.no], false -->
+<!-- 				from category c -->
+<!-- 				where parent_no is null -->
+	
+<!-- 				union all -->
+	
+<!-- 				select c.no, c.name, c.parent_no, level + 1, path || c.no, c.no = any(path) -->
+<!-- 				from category c, sub_category sb -->
+<!-- 				where c.parent_no = sb.no and not cycle	 -->
+<!-- 			) -->
+<!-- 			select no, parent_no, name, level, path -->
+<!-- 			from sub_category -->
+<!-- 			order by path; -->
+<!-- 		]]> -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="getAllParents" resultType="map"> -->
+<!-- 		<![CDATA[ -->
+<!-- 			select * -->
+<!-- 			from category -->
+<!-- 			where parent_no is null -->
+<!-- 			order by no asc; -->
+<!-- 		]]> -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="getChildren" parameterType="long" resultType="map"> -->
+<!-- 		<![CDATA[ -->
+<!-- 			with recursive sub_category as ( -->
+<!-- 				select * -->
+<!-- 				from category -->
+<!-- 				where no = #{ value } -->
+	
+<!-- 				union all -->
+	
+<!-- 				select c.* -->
+<!-- 				from category as c -->
+<!-- 				join sub_category as sc -->
+<!-- 				on (c.parent_no = sc.no) -->
+<!-- 			) -->
+<!-- 			select * from sub_category order by no; -->
+<!-- 		]]> -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="get" parameterType="long" resultType="categoryvo"> -->
+<!-- 		select * -->
+<!-- 		from category -->
+<!-- 		where no = #{ value }; -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="update" parameterType="categoryvo"> -->
+<!-- 		<![CDATA[ -->
+<!-- 			update category -->
+<!-- 			set -->
+<!-- 			name = #{ name }, -->
+<!-- 			parent_no = #{ parentNo } -->
+<!-- 			where no = #{ no }; -->
+<!-- 		]]> -->
+<!-- 	</update> -->
+	
+<!-- 	<delete id="delete" parameterType="long"> -->
+<!-- 		<![CDATA[ -->
+<!-- 			delete -->
+<!-- 			from product_category -->
+<!-- 			where category_no = #{ value }; -->
+		
+<!-- 			delete -->
+<!-- 			from category -->
+<!-- 			where no = #{ value }; -->
+<!-- 		]]> -->
+<!-- 	</delete> -->
+
+</mapper>
