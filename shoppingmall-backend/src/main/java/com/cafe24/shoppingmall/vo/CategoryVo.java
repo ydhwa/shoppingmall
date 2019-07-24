@@ -12,6 +12,7 @@ public class CategoryVo {
 	private String name;	// 카테고리명
 	private Long productNo;	// 상품번호
 	private Long parentNo;	// 상위 카테고리 번호
+	private Integer level;	// 계층 단계 표시 (depth와 비슷함)
 	
 	public CategoryVo() {}
 	
@@ -39,9 +40,16 @@ public class CategoryVo {
 	public void setParentNo(Long parentNo) {
 		this.parentNo = parentNo;
 	}
-	
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
 	@Override
 	public String toString() {
-		return "Category [no=" + no + ", name=" + name + ", productNo=" + productNo + ", parentNo=" + parentNo + "]";
-	}	
+		return "CategoryVo [no=" + no + ", name=" + name + ", productNo=" + productNo + ", parentNo=" + parentNo
+				+ ", level=" + level + "]";
+	}
 }

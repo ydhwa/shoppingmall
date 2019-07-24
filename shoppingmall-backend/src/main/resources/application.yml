@@ -1,0 +1,49 @@
+server:
+   port: 8888
+   context-path: /v1
+   error:
+      whitelabel:
+         enabled: false
+
+
+spring:
+   profiles:
+      active: developer
+      
+   devtools:
+      livereload:
+         enabled: true
+         
+   http:
+      encoding:
+         charset: UTF-8
+         enabled: true
+         forced: true
+         forced-request: true
+         forced-response: true
+         
+   aop:
+      auto: true
+   aop-proxy-target-class: true
+   
+   datasource:
+      platform: postgres
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://192.168.219.101:5432/shoppingmall
+      username: shoppingmall
+      password: shoppingmall
+   
+   messages:
+      always-use-message-format: true
+      basename: messages/messages_ko
+      encoding: UTF-8
+
+
+mybatis:
+   config-location: classpath:mybatis/configuration.xml
+
+
+logging:
+   config: classpath:logback.xml
+
+      
