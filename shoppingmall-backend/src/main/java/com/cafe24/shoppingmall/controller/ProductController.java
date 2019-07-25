@@ -59,6 +59,11 @@ public class ProductController {
 		List<CategoryVo> categoryList = mapper.convertValue(productMap.get("categoryList"), new TypeReference<List<CategoryVo>>() {});
 		List<ProductImageVo> productImageList = mapper.convertValue(productMap.get("productImageList"), new TypeReference<List<ProductImageVo>>() {});
 		
+		// 필수 사항들(상품, 옵션, 품목)에 대하여 체크한다.
+		if(product == null || productOptionList == null || productOptionItemList == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
+		}
+		
 		if("N".equals(product.getOptionAvailable())) {	// 옵션을 사용하지 않는 경우
 			productOptionList.add(new ProductOptionVo("없음", null));
 			productOptionItemList.add(new ProductOptionItemVo(null, null, "없음", 0, product.getAvailability(), product.getManageStatus(), product.getStockQuantity()));
@@ -67,7 +72,7 @@ public class ProductController {
 			productOptionItemList = mapper.convertValue(productMap.get("productOptionItemList"), new TypeReference<List<ProductOptionItemVo>>() {});
 		}
 		
-		boolean registResult = productService.registProduct(product, productOptionList, productOptionItemList, categoryList, productImageList);
+		Boolean registResult = productService.registProduct(product, productOptionList, productOptionItemList, categoryList, productImageList);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
 

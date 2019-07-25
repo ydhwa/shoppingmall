@@ -55,8 +55,8 @@ public class MemberController {
 		
 		// DuplicateKeyException
 		try {
-			Boolean result = memberService.join(memberVo);
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
+			Boolean registResult = memberService.join(memberVo);
+			return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 		} catch(DuplicateKeyException exception) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("이미 존재하는 아이디로는 회원가입을 할 수 없습니다."));
 		}

@@ -5,7 +5,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.AfterClass;
@@ -25,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.cafe24.shoppingmall.vo.BucketItemVo;
 import com.google.gson.Gson;
 
 /**
@@ -100,53 +103,94 @@ public class BucketControllerTest {
 	
 	
 	@Test
-	public void 기존_장바구니에_들어있던_품목_대체하지_않고_수량을_더하면서_등록_성공() throws Exception {
-		Map<String, Object> productMap = new HashMap<>();
+	public void 회원이_장바구니_등록_성공() throws Exception {
+		Map<String, Object> bucketMap = new HashMap<>();
+		
+		List<BucketItemVo> bucketItemList = new ArrayList<>();
+		bucketItemList.add(new BucketItemVo(1L, 1));
+		
+		bucketMap.put("memberNo", 2L);
+		bucketMap.put("bucketItemList", bucketItemList);
 
-		successAction("post", "", productMap, "", true);
+		successAction("post", "", bucketMap, "", true);
+	}
+	// 식별자를 발급하는 건 프론트엔드 단에서 해야 할 것 같아 제외
+	/*@Test
+	public void 비회원이_장바구니_식별자를_발급받으며_장바구니_등록_성공() throws Exception {
+		Map<String, Object> bucketMap = new HashMap<>();
+		
+		List<BucketItemVo> bucketItemList = new ArrayList<>();
+		bucketItemList.add(new BucketItemVo(1L, 2));
+		
+		bucketMap.put("bucketItemList", bucketItemList);
+		
+		successAction("post", "", bucketMap, "", true);
+	}*/
+	@Test
+	public void 장바구니에_넣은_이력이_있던_비회원이_장바구니_등록_성공() throws Exception {
+		Map<String, Object> bucketMap = new HashMap<>();
+		
+		List<BucketItemVo> bucketItemList = new ArrayList<>();
+		bucketItemList.add(new BucketItemVo(1L, 2));
+		
+		bucketMap.put("identifier", "19072520022353484b4fc3b-115a-43b4-a57b-fdd9e48aa2ef");
+		bucketMap.put("bucketItemList", bucketItemList);
+		
+		successAction("post", "", bucketMap, "", true);
+	}
+	@Test
+	public void 기존_장바구니에_들어있던_품목_대체하지_않고_수량을_더하면서_등록_성공() throws Exception {
+		Map<String, Object> bucketMap = new HashMap<>();
+		
+		List<BucketItemVo> bucketItemList = new ArrayList<>();
+		bucketItemList.add(new BucketItemVo(1L, 1));	// 겹치는 품목
+		bucketItemList.add(new BucketItemVo(2L, 3));	// 겹치지 않는 품목
+		
+		bucketMap.put("memberNo", 1L);
+		bucketMap.put("bucketItemList", bucketItemList);
+		bucketMap.put("all", true);
+		
+		successAction("post", "", bucketMap, "", true);
 	}
 	@Test
 	public void 기존_장바구니에_들어있던_품목_대체하면서_등록_성공() throws Exception {
+		Map<String, Object> bucketMap = new HashMap<>();
 		
-	}
-	@Test
-	public void 회원이_장바구니_등록_성공() throws Exception {
+		List<BucketItemVo> bucketItemList = new ArrayList<>();
+		bucketItemList.add(new BucketItemVo(2L, 1));	// 겹치는 품목
+		bucketItemList.add(new BucketItemVo(3L, 1));	// 겹치지 않는 품목
 		
-	}
-	@Test
-	public void 비회원이_장바구니_식별자를_발급받으며_장바구니_등록_성공() throws Exception {
+		bucketMap.put("identifier", "19072520022353484b4fc3b-115a-43b4-a57b-fdd9e48aa2ef");
+		bucketMap.put("bucketItemList", bucketItemList);
 		
-	}
-	@Test
-	public void 장바구니에_넣은_이력이_있던_비회원이_장바구니_등록_성공() throws Exception {
-		
+		successAction("post", "", bucketMap, "", true);
 	}
 	
-	@Test
-	public void 회원이_장바구니_조회_성공() throws Exception {
-		
-	}
-	@Test
-	public void 비회원이_장바구니_조회_성공() throws Exception {
-		
-	}
-	
-	@Test
-	public void 장바구니의_수량_변경_성공() throws Exception {
-		
-	}
-	@Test
-	public void 장바구니의_옵션_변경에서_추가_선택했을때_성공() throws Exception {
-		
-	}
-	@Test
-	public void 장바구니의_옵션_변경에서_변경_선택했을때_성공() throws Exception {
-		
-	}
-	
-	@Test
-	public void 장바구니에서_물품들_선택하여_삭제_성공() throws Exception {
-		
-	}
+//	@Test
+//	public void 회원이_장바구니_조회_성공() throws Exception {
+//		
+//	}
+//	@Test
+//	public void 비회원이_장바구니_조회_성공() throws Exception {
+//		
+//	}
+//	
+//	@Test
+//	public void 장바구니의_수량_변경_성공() throws Exception {
+//		
+//	}
+//	@Test
+//	public void 장바구니의_옵션_변경에서_추가_선택했을때_성공() throws Exception {
+//		
+//	}
+//	@Test
+//	public void 장바구니의_옵션_변경에서_변경_선택했을때_성공() throws Exception {
+//		
+//	}
+//	
+//	@Test
+//	public void 장바구니에서_물품들_선택하여_삭제_성공() throws Exception {
+//		
+//	}
 	
 }

@@ -14,11 +14,13 @@
 		<typeAlias alias="productoptionvaluevo" type="com.cafe24.shoppingmall.vo.ProductOptionValueVo" />
 		<typeAlias alias="productoptionitemvo" type="com.cafe24.shoppingmall.vo.ProductOptionItemVo" />
 		<typeAlias alias="productimagevo" type="com.cafe24.shoppingmall.vo.ProductImageVo" />
+		<typeAlias alias="bucketitemvo" type="com.cafe24.shoppingmall.vo.BucketItemVo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/member.xml" />
 		<mapper resource="mybatis/mapper/category.xml" />
 		<mapper resource="mybatis/mapper/product.xml" />
 		<mapper resource="mybatis/mapper/productoption.xml" />
+		<mapper resource="mybatis/mapper/bucketitem.xml" />
 	</mappers>
 </configuration>

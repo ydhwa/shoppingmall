@@ -39,12 +39,7 @@ public class ProductService {
 	 * @return 등록에 성공한 상품 정보
 	 */
 	@Transactional
-	public boolean registProduct(ProductVo product, List<ProductOptionVo> productOptionList, List<ProductOptionItemVo> productOptionItemList, List<CategoryVo> categoryList, List<ProductImageVo> productImageList) {
-		// 필수 사항들(상품, 옵션, 품목)에 대하여 우선 체크한다.
-		if(product == null || productOptionList == null || productOptionItemList == null) {
-			return false;
-		}
-		
+	public Boolean registProduct(ProductVo product, List<ProductOptionVo> productOptionList, List<ProductOptionItemVo> productOptionItemList, List<CategoryVo> categoryList, List<ProductImageVo> productImageList) {
 		if(!productDao.insert(product)) {
 			return false;
 		}

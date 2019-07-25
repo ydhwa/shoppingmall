@@ -312,33 +312,30 @@ values(4, 2);
 -- bucket_item
 select * from bucket_item;
 
-/*
-WITH upsert AS (
-	update bucket_item
-	set quantity = quantity + 1
-	where member_no = 1
-	returning *
-)
+-- insert if exist update
 insert into bucket_item(member_no, identifier, product_option_item_no, quantity, reg_date)
-values(1, null, 1, 1, now())
-where not exists (select * from upsert);
-*/
--- member
+values(1, null, 1, 2, now())
+on conflict(member_no, product_option_item_no) do 
+update
+set quantity = bucket_item.quantity + coalesce(bucket_item.quantity, excluded.quantity);
+
 insert into bucket_item(member_no, identifier, product_option_item_no, quantity, reg_date)
 values(1, null, 3, 1, now())
 on conflict(member_no, product_option_item_no) do 
 update
 set quantity = bucket_item.quantity + coalesce(bucket_item.quantity, excluded.quantity);
--- nonmember
+
+
 insert into bucket_item(member_no, identifier, product_option_item_no, quantity, reg_date)
-values(null, 'asdf', 2, 1, now())
+values(null, 'asdf', 2, 4, now())
 on conflict(identifier, product_option_item_no) do 
 update
 set quantity = bucket_item.quantity + coalesce(bucket_item.quantity, excluded.quantity);
 
-
-
-
+-- update identifier => timestamp + UUID
+update bucket_item
+set identifier = '19072520022353484b4fc3b-115a-43b4-a57b-fdd9e48aa2ef'
+where member_no is null;
 
 ------------------------------------------------------------
 -- orders

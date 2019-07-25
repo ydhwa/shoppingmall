@@ -50,7 +50,7 @@ public class OrdersControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/buckets";
+	private static final String DEFAULT_PATH = "/orders";
 	/**
 	 * 성공 동작 테스트
 	 * 
