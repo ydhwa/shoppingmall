@@ -48,9 +48,11 @@ public class CategoryDao {
 
 	// 상품에 카테고리 추가
 	public boolean addProductCategories(List<CategoryVo> categoryList) {
-		int result = sqlSession.insert("category.insertProductCategories", categoryList);
-		System.out.println("** 카테고리 삽입: " + result);
-		return 0 < result;
+		int result = 0;
+		for(CategoryVo categoryVo: categoryList) {
+			result += sqlSession.insert("category.insertProductCategory", categoryVo);
+		}
+		return categoryList.size() == result;
 	}
 
 }

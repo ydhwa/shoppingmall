@@ -23,24 +23,29 @@ public class ProductOptionDao {
 
 	public boolean insertOptions(List<ProductOptionVo> productOptionList) {
 		int result = 0;
+		
 		for(ProductOptionVo productOptionVo: productOptionList) {
 			if(1 == sqlSession.insert("productoption.insertName", productOptionVo)) {
-				for(ProductOptionValueVo productOptionValueVo: productOptionVo.getProductOptionValueList()) {
-					if(1 != sqlSession.insert("productoption.insertValue", productOptionValueVo)) {
-						return false;
+				// 옵션을 사용하지 않는 경우, 디폴트 옵션명은 생기고 옵션값 리스트는 만들어지지 않는다.
+				if(productOptionVo.getProductOptionValueList() != null) {
+					for(ProductOptionValueVo productOptionValueVo: productOptionVo.getProductOptionValueList()) {
+						if(1 != sqlSession.insert("productoption.insertValue", productOptionValueVo)) {
+							return false;
+						}
 					}
 				}
 				result++;
 			}
 		}
-		System.out.println("** 상품옵션 삽입: " + result);
-		return 0 < result;
+		return productOptionList.size() == result;
 	}
 
 	public boolean insertOptionItems(List<ProductOptionItemVo> productOptionItemList) {
-		int result = sqlSession.insert("productoption.insertItems", productOptionItemList);
-		System.out.println("** 품목 삽입: " + result);
-		return 0 < result;
+		int result = 0;
+		for(ProductOptionItemVo productOptionItemVo: productOptionItemList) {
+			result += sqlSession.insert("productoption.insertItem", productOptionItemVo);
+		}
+		return productOptionItemList.size() == result;
 	}
 
 }

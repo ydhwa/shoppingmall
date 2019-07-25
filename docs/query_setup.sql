@@ -1,3 +1,5 @@
+select last_value from seq_product_no;
+
 -- sequence와 새로운 type을 사전에 생성해둬야 한다.
 -- define_sequence_w3-1.sql
 -- define_enum_w4-1.sql

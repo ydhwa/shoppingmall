@@ -112,6 +112,7 @@ public class ProductControllerTest {
 	
 	
 	@Test
+	@Ignore
 	public void 옵션_있는_상품_추가_성공() throws Exception {
 		Map<String, Object> productMap = new HashMap<>();
 		
@@ -140,22 +141,44 @@ public class ProductControllerTest {
 		List<ProductOptionItemVo> productOptionItemList = new ArrayList<>();
 		productOptionItemList.add(new ProductOptionItemVo("1;2", "1;1", "사이즈=L;색상=WHITE", 1000, "Y", ProductManageStatus.STOCK, 500));
 		productOptionItemList.add(new ProductOptionItemVo("1;2", "2;1", "사이즈=XL;색상=WHITE", 1500, "Y", ProductManageStatus.STOCK, 500));
-		
-		List<ProductImageVo> productImageList = new ArrayList<>();
-		productImageList.add(new ProductImageVo("20190724202712345", "jpg", "/images/", ProductImageStatus.SUB));
-		productImageList.add(new ProductImageVo("20190730111111111", "png", "/images/", ProductImageStatus.MAIN));
-		
+
 		List<CategoryVo> categoryList = new ArrayList<>();
 		categoryList.add(new CategoryVo(1L));
 		categoryList.add(new CategoryVo(2L));
 		categoryList.add(new CategoryVo(3L));
 		
+		List<ProductImageVo> productImageList = new ArrayList<>();
+		productImageList.add(new ProductImageVo("20190724202712345", "jpg", "/images/", ProductImageStatus.SUB));
+		productImageList.add(new ProductImageVo("20190730111111111", "png", "/images/", ProductImageStatus.MAIN));
+		
 		productMap.put("product", productVo);
 		productMap.put("productOptionList", productOptionList);
 		productMap.put("productOptionItemList", productOptionItemList);
-		productMap.put("categoryList", productImageList);
-		productMap.put("productImageList", categoryList);
+		productMap.put("categoryList", categoryList);
+		productMap.put("productImageList", productImageList);
 
+		successAction("post", "", productMap, "", true);
+	}
+	
+	@Test
+	public void 옵션_없는_상품_추가_성공() throws Exception {
+		Map<String, Object> productMap = new HashMap<>();
+		
+		ProductVo productVo = new ProductVo();
+		productVo.setName("상품6");
+		productVo.setSupplyPrice(6000);
+		productVo.setSellPrice(60000);
+		productVo.setSummaryDescription("요약설명-6");
+		productVo.setDetailedDescription("상세설명-6");
+		productVo.setWeight(6.0);
+		productVo.setOptionAvailable("N");
+		productVo.setProductDisplayStatus(ProductDisplayStatus.NONE);
+		productVo.setAvailability("Y");
+		productVo.setProductManageStatus(ProductManageStatus.STOCK);
+		productVo.setStockQuantity(600);
+		
+		productMap.put("product", productVo);
+		
 		successAction("post", "", productMap, "", true);
 	}
 	

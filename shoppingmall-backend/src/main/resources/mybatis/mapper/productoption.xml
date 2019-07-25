@@ -24,27 +24,20 @@
 		]]>
 	</insert>
 	
-	<insert id="insertItems" parameterType="java.util.ArrayList">
+	<insert id="insertItem" parameterType="productoptionitemvo">
 		<![CDATA[
 			insert into product_option_item(no, product_no, option_name_keys, option_value_keys, details, additional_amount, availability, manage_status, stock_quantity)
-		]]>
-		<foreach collection="list" item="productoptionitem">
-			<![CDATA[
-				values(
-					nextval('seq_product_option_item_no'),
-					productNo,
-					#{ productoptionitem.optionNameKeys },
-					#{ productoptionitem.optionValueKeys },
-					#{ productoptionitem.details },
-					#{ productoptionitem.additionalAmount },
-					#{ productoptionitem.availability },
-					#{ productoptionitem.manageStatus },
-					#{ productoptionitem.stockQuantity }
-				)
-			]]>
-		</foreach>
-		<![CDATA[
-			;
+			values(
+				nextval('seq_product_option_item_no'),
+				(select last_value from seq_product_no),
+				#{ optionNameKeys },
+				#{ optionValueKeys },
+				#{ details },
+				#{ additionalAmount },
+				#{ availability },
+				'${ manageStatus }',
+				#{ stockQuantity }
+			);
 		]]>
 	</insert>
 

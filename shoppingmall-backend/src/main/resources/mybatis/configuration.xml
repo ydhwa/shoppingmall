@@ -12,6 +12,8 @@
 		<typeAlias alias="productvo" type="com.cafe24.shoppingmall.vo.ProductVo"/>
 		<typeAlias alias="productoptionvo" type="com.cafe24.shoppingmall.vo.ProductOptionVo" />
 		<typeAlias alias="productoptionvaluevo" type="com.cafe24.shoppingmall.vo.ProductOptionValueVo" />
+		<typeAlias alias="productoptionitemvo" type="com.cafe24.shoppingmall.vo.ProductOptionItemVo" />
+		<typeAlias alias="productimagevo" type="com.cafe24.shoppingmall.vo.ProductImageVo" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/member.xml" />

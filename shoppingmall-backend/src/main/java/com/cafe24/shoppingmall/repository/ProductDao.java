@@ -21,14 +21,15 @@ public class ProductDao {
 
 	public boolean insert(ProductVo productVo) {
 		int result = sqlSession.insert("product.insert", productVo);
-		System.out.println("** 상품 삽입: " + result);
 		return 1 == result;
 	}
 
 	public boolean insertImages(List<ProductImageVo> productImageList) {
-		int result = sqlSession.insert("product.insertImages", productImageList);
-		System.out.println("** 상품 이미지 삽입: " + result);
-		return 0 < result;
+		int result = 0;
+		for(ProductImageVo productImageVo: productImageList) {
+			result += sqlSession.insert("product.insertImage", productImageVo);
+		}
+		return productImageList.size() == result;
 	}
 
 }

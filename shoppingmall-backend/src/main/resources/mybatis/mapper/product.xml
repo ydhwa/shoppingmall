@@ -26,22 +26,16 @@
 		]]>
 	</insert>
 	
-	<insert id="insertImages" parameterType="java.util.ArrayList">
+	<insert id="insertImage" parameterType="productimagevo">
 		<![CDATA[
 			insert into product_image(name, extension, path, status, product_no)
-		]]>
-		<foreach collection="list" item="productimage" separator=", ">
-			<![CDATA[
-				values(
-					#{ productimage.name }, 
-					#{ productimage.extension }, 
-					#{ productimage.path }, 
-					#{ productimage.status }, 
-					productNo)
-			]]>
-		</foreach>
-		<![CDATA[
-			;
+			values(
+				#{ name }, 
+				#{ extension }, 
+				#{ path }, 
+				'${ status }', 
+				(select last_value from seq_product_no)
+			);
 		]]>
 	</insert>
 
