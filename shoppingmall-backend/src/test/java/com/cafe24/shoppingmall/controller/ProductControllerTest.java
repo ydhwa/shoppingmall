@@ -159,7 +159,6 @@ public class ProductControllerTest {
 
 		successAction("post", "", productMap, "", true);
 	}
-	
 	@Test
 	public void 옵션_없는_상품_추가_성공() throws Exception {
 		Map<String, Object> productMap = new HashMap<>();
@@ -184,7 +183,7 @@ public class ProductControllerTest {
 	
 	@Test
 	@Ignore
-	public void 상품들_검색결과_조회_성공() throws Exception {
+	public void 상품목록_검색결과_조회_성공() throws Exception {
 		successAction("get", "?name=상품&code=P0000004&offset=1&limit=10", null, ".length()", 1);
 	}
 	

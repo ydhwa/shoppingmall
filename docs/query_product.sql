@@ -6,6 +6,7 @@ select * from product_option_item;
 select * from product_category;
 select * from product_image;
 
+select last_value from seq_product_no;
 
 
 

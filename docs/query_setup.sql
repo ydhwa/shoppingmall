@@ -1,5 +1,3 @@
-select last_value from seq_product_no;
-
 -- sequence와 새로운 type을 사전에 생성해둬야 한다.
 -- define_sequence_w3-1.sql
 -- define_enum_w4-1.sql
@@ -237,7 +235,7 @@ values(
 	nextval('seq_product_option_item_no'),
 	1,
 	'1;2;3',
-	'2;10;12',
+	'2;2;2',
 	'사이즈=M;색상=WHITE;길이=SHORT',
 	1000,
 	'Y',
@@ -250,7 +248,7 @@ values(
 	nextval('seq_product_option_item_no'),
 	1,
 	'1;2;3',
-	'3;9;11',
+	'3;1;1',
 	'사이즈=L;색상=BLACK;길이=LONG',
 	1000,
 	'Y',
@@ -312,6 +310,31 @@ values(4, 2);
 
 ------------------------------------------------------------
 -- bucket_item
+select * from bucket_item;
+
+/*
+WITH upsert AS (
+	update bucket_item
+	set quantity = quantity + 1
+	where member_no = 1
+	returning *
+)
+insert into bucket_item(member_no, identifier, product_option_item_no, quantity, reg_date)
+values(1, null, 1, 1, now())
+where not exists (select * from upsert);
+*/
+-- member
+insert into bucket_item(member_no, identifier, product_option_item_no, quantity, reg_date)
+values(1, null, 3, 1, now())
+on conflict(member_no, product_option_item_no) do 
+update
+set quantity = bucket_item.quantity + coalesce(bucket_item.quantity, excluded.quantity);
+-- nonmember
+insert into bucket_item(member_no, identifier, product_option_item_no, quantity, reg_date)
+values(null, 'asdf', 2, 1, now())
+on conflict(identifier, product_option_item_no) do 
+update
+set quantity = bucket_item.quantity + coalesce(bucket_item.quantity, excluded.quantity);
 
 
 
@@ -319,12 +342,14 @@ values(4, 2);
 
 ------------------------------------------------------------
 -- orders
+select * from orders;
 
 
 
 
 
 -- orders_item
+select * from orders_item;
 
 
 

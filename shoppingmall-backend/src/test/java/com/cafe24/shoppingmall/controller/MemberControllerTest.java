@@ -200,4 +200,34 @@ public class MemberControllerTest {
 
 		failureAction("post", "/login", memberVo);
 	}
+	
+	@Test
+	public void 회원정보_수정_성공() throws Exception {
+		
+	}
+	
+	@Test
+	public void 회원정보_삭제_성공() throws Exception {
+		
+	}
+	
+	@Test
+	public void 회원정보목록_검색결과_조회_성공() throws Exception {
+		
+	}
+	
+	@Test
+	public void 회원정보_상세조회_성공() throws Exception {
+		
+	}
+	
+	@Test
+	public void 특정_회원의_배송지_목록_조회() throws Exception {
+		
+	}
+	
+	@Test
+	public void 배송지_조회() throws Exception {
+		
+	}
 }
