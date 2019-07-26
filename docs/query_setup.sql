@@ -338,15 +338,228 @@ set identifier = '19072520022353484b4fc3b-115a-43b4-a57b-fdd9e48aa2ef'
 where member_no is null;
 
 ------------------------------------------------------------
+
 -- orders
-select * from orders;
-
-
-
-
-
 -- orders_item
+select * from orders;
 select * from orders_item;
+
+insert into orders(no, code, date, memo, status, 
+	orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address,
+	receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address,
+	total_order_account, member_status, member_no, password)
+values(
+	nextval('seq_orders_no'),
+	concat('P', to_char(now(), 'YYMMDD'), '-', lpad(to_hex(currval('seq_orders_no'))::varchar, 4, '0')),
+	now(),
+	'주문1: 안전하게 배송해주세요~',
+	'ORDER_COMPLETE',
+	'주문1-주문자',
+	null,
+	'111-1111-1111',
+	'1@1.com',
+	'11111',
+	'주문1-주문자-기본주소',
+	'주문1-주문자-상세주소',
+	'주문1-수령자',
+	null,
+	'111-1111-1112',
+	'11112',
+	'주문1-수령자-기본주소',
+	'주문1-수령자-상세주소',
+	null,
+	'Y',
+	2,
+	null
+);
+
+insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
+values(
+	1,
+	(select (p.sell_price + poi.additional_amount) * 1
+	 from product p, product_option_item poi
+	 where
+	 	p.no = poi.product_no
+ 	 	and poi.no = 1),
+	(select details
+	 from product_option_item
+	 where no = 1),
+	(select product_no
+	 from product_option_item
+	 where no = 1),
+	currval('seq_orders_no'),
+	1
+);
+insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
+values(
+	1,
+	(select (p.sell_price + poi.additional_amount) * 3
+	 from product p, product_option_item poi
+	 where
+	 	p.no = poi.product_no
+ 	 	and poi.no = 2),
+	(select details
+	 from product_option_item
+	 where no = 2),
+	(select product_no
+	 from product_option_item
+	 where no = 2),
+	currval('seq_orders_no'),
+	3
+);
+insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
+values(
+	1,
+	(select (p.sell_price + poi.additional_amount) * 1
+	 from product p, product_option_item poi
+	 where
+	 	p.no = poi.product_no
+ 	 	and poi.no = 3),
+	(select details
+	 from product_option_item
+	 where no = 3),
+	(select product_no
+	 from product_option_item
+	 where no = 3),
+	currval('seq_orders_no'),
+	1
+);
+update orders
+set total_order_account = (
+	select sum(oi.product_price)
+	from orders_item oi
+	where oi.order_no = currval('seq_orders_no')
+)
+where no = currval('seq_orders_no');
+
+
+-- 2nd order
+insert into orders(no, code, date, memo, status, 
+	orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address,
+	receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address,
+	total_order_account, member_status, member_no, password)
+values(
+	nextval('seq_orders_no'),
+	concat('P', to_char(now(), 'YYMMDD'), '-', lpad(to_hex(currval('seq_orders_no'))::varchar, 4, '0')),
+	now(),
+	'주문2: 마음에 들었으면 좋겠어요!',
+	'ORDER_COMPLETE',
+	'주문2-주문자',
+	null,
+	'222-2222-2222',
+	'2@2.com',
+	'22222',
+	'주문2-주문자-기본주소',
+	'주문2-주문자-상세주소',
+	'주문2-수령자',
+	null,
+	'222-2222-2223',
+	'22223',
+	'주문2-수령자-기본주소',
+	'주문2-수령자-상세주소',
+	null,
+	'Y',
+	null,
+	encode(digest('asdf1234!', 'sha512'), 'hex')
+);
+
+insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
+values(
+	1,
+	(select (p.sell_price + poi.additional_amount) * 1
+	 from product p, product_option_item poi
+	 where
+	 	p.no = poi.product_no
+ 	 	and poi.no = 2),
+	(select details
+	 from product_option_item
+	 where no = 2),
+	(select product_no
+	 from product_option_item
+	 where no = 2),
+	currval('seq_orders_no'),
+	2
+);
+insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
+values(
+	1,
+	(select (p.sell_price + poi.additional_amount) * 1
+	 from product p, product_option_item poi
+	 where
+	 	p.no = poi.product_no
+ 	 	and poi.no = 1),
+	(select details
+	 from product_option_item
+	 where no = 1),
+	(select product_no
+	 from product_option_item
+	 where no = 1	),
+	currval('seq_orders_no'),
+	1
+);
+update orders
+set total_order_account = (
+	select sum(oi.product_price)
+	from orders_item oi
+	where oi.order_no = currval('seq_orders_no')
+)
+where no = currval('seq_orders_no');
+
+
+-- 3rd order
+insert into orders(no, code, date, memo, status, 
+	orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address,
+	receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address,
+	total_order_account, member_status, member_no, password)
+values(
+	nextval('seq_orders_no'),
+	concat('P', to_char(now(), 'YYMMDD'), '-', lpad(to_hex(currval('seq_orders_no'))::varchar, 4, '0')),
+	now(),
+	'주문3: 안전하게 배송해주세요~',
+	'ORDER_COMPLETE',
+	'주문3-주문자',
+	'333-333-3333',
+	'333-3333-3333',
+	'3@3.com',
+	'33333',
+	'주문3-주문자-기본주소',
+	'주문3-주문자-상세주소',
+	'주문3-수령자',
+	'333-333-3334',
+	'333-3333-3334',
+	'33334',
+	'주문3-수령자-기본주소',
+	'주문3-수령자-상세주소',
+	null,
+	'Y',
+	2,
+	null
+);
+
+insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
+values(
+	1,
+	(select (p.sell_price + poi.additional_amount) * 1
+	 from product p, product_option_item poi
+	 where
+	 	p.no = poi.product_no
+ 	 	and poi.no = 1),
+	(select details
+	 from product_option_item
+	 where no = 1),
+	(select product_no
+	 from product_option_item
+	 where no = 1	),
+	currval('seq_orders_no'),
+	1
+);
+update orders
+set total_order_account = (
+	select sum(oi.product_price)
+	from orders_item oi
+	where oi.order_no = currval('seq_orders_no')
+)
+where no = currval('seq_orders_no');
 
 
 

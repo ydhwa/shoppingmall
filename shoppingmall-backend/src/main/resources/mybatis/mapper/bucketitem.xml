@@ -36,6 +36,16 @@
 		</foreach>
 	</insert>
 	
+	<delete id="deleteItems" parameterType="list">
+		<foreach collection="list" item="item">
+			<![CDATA[
+				delete
+				from bucket_item
+				where product_option_item_no = #{ item.productOptionItemNo };
+			]]>
+		</foreach>
+	</delete>
+	
 <!-- 	<insert id="insertProductCategory" parameterType="categoryvo"> -->
 <!-- 		<![CDATA[ -->
 <!-- 			insert into product_category(product_no, category_no) -->

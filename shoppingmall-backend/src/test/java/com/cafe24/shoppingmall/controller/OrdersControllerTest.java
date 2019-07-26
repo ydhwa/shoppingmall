@@ -5,7 +5,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.AfterClass;
@@ -25,6 +27,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.cafe24.shoppingmall.vo.BucketItemVo;
+import com.cafe24.shoppingmall.vo.Enum.OrdersStatus;
+import com.cafe24.shoppingmall.vo.OrdersItemVo;
+import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.google.gson.Gson;
 
 /**
@@ -101,28 +107,65 @@ public class OrdersControllerTest {
 	
 	@Test
 	public void 회원이_주문_성공() throws Exception {
-		Map<String, Object> productMap = new HashMap<>();
+		Map<String, Object> ordersMap = new HashMap<>();
+		
+		OrdersVo ordersVo = new OrdersVo("안전하게 배송해주세요~^^", OrdersStatus.ORDER_COMPLETE,
+					"주문자", "02-000-0000", "010-0000-0000", "orderer@email.com", "00000", "서울특별시 서초구", "테헤란로",
+					"수령자", "033-000-0000", "011-0000-0000", "11111", "강원도 춘천시", "효자동",
+					"Y", 1L, null);
+		List<BucketItemVo> orderItemList = new ArrayList<>();
+		orderItemList.add(new BucketItemVo(1L, 3));
+		orderItemList.add(new BucketItemVo(2L, 2));
+		
+		ordersMap.put("orders", ordersVo);
+		ordersMap.put("ordersItemList", orderItemList);
 
-		successAction("post", "", productMap, "", true);
+		successAction("post", "", ordersMap, "", true);
 	}
 	@Test
 	public void 비회원이_주문_성공() throws Exception {
+		Map<String, Object> ordersMap = new HashMap<>();
 		
+		OrdersVo ordersVo = new OrdersVo("안전하게 배송해주세요~^^", OrdersStatus.ORDER_COMPLETE,
+					"주문자", "02-000-0000", "010-0000-0000", "orderer@email.com", "00000", "서울특별시 서초구", "테헤란로",
+					"수령자", "033-000-0000", "011-0000-0000", "11111", "강원도 춘천시", "효자동",
+					"N", null, "asdf1234!");
+		List<BucketItemVo> orderItemList = new ArrayList<>();
+		orderItemList.add(new BucketItemVo(1L, 3));
+		orderItemList.add(new BucketItemVo(2L, 2));
+		
+		ordersMap.put("orders", ordersVo);
+		ordersMap.put("ordersItemList", orderItemList);
+
+		successAction("post", "", ordersMap, "", true);
+	}
+	@Test
+	public void 구매하는_상품이_없어_주문_실패() throws Exception {
+		Map<String, Object> ordersMap = new HashMap<>();
+		
+		OrdersVo ordersVo = new OrdersVo("안전하게 배송해주세요~^^", OrdersStatus.ORDER_COMPLETE,
+					"주문자", "02-000-0000", "010-0000-0000", "orderer@email.com", "00000", "서울특별시 서초구", "테헤란로",
+					"수령자", "033-000-0000", "011-0000-0000", "11111", "강원도 춘천시", "효자동",
+					"Y", 1L, null);
+		
+		ordersMap.put("orders", ordersVo);
+
+		failureAction("post", "", ordersMap);
 	}
 	
-	@Test
-	public void 주문_검색결과_조회_성공() throws Exception {
-		
-	}
-	@Test
-	public void 주문_상세조회_성공() throws Exception {
-		
-	}
-	
-	@Test
-	public void 주문_수정_성공() throws Exception {
-		
-	}
+//	@Test
+//	public void 주문_검색결과_조회_성공() throws Exception {
+//		
+//	}
+//	@Test
+//	public void 주문_상세조회_성공() throws Exception {
+//		
+//	}
+//	
+//	@Test
+//	public void 주문_수정_성공() throws Exception {
+//		
+//	}
 	
 	// 삭제는 일부러 넣지 않음.
 	

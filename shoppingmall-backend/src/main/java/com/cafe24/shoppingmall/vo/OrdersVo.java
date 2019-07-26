@@ -1,7 +1,5 @@
 package com.cafe24.shoppingmall.vo;
 
-import java.util.List;
-
 import com.cafe24.shoppingmall.vo.Enum.OrdersStatus;
 
 /**
@@ -33,13 +31,38 @@ public class OrdersVo {
 	private String receiverDetailAddress;	// 수령자 상세주소
 	
 	private Integer totalOrderAccount;	// 주문총액(배송비 포함)
+	private String memberStatus;		// 회원여부
 	
 	private Long memberNo;				// (회원용)회원번호
 	private String password;			// (비회원용)주문조회 비밀번호
 	
-	private List<OrdersItemVo> ordersItemList;	// 주문 상품 목록
 
 	public OrdersVo() {}
+	public OrdersVo(String memo, OrdersStatus status, String ordererName, String ordererHomeNumber,
+			String ordererPhoneNumber, String ordererEmail, String ordererPostalCode, String ordererBaseAddress,
+			String ordererDetailAddress, String receiverName, String receiverHomeNumber, String receiverPhoneNumber,
+			String receiverPostalCode, String receiverBaseAddress, String receiverDetailAddress,
+			String memberStatus, Long memberNo, String password) {
+		this.memo = memo;
+		this.status = status;
+		this.ordererName = ordererName;
+		this.ordererHomeNumber = ordererHomeNumber;
+		this.ordererPhoneNumber = ordererPhoneNumber;
+		this.ordererEmail = ordererEmail;
+		this.ordererPostalCode = ordererPostalCode;
+		this.ordererBaseAddress = ordererBaseAddress;
+		this.ordererDetailAddress = ordererDetailAddress;
+		this.receiverName = receiverName;
+		this.receiverHomeNumber = receiverHomeNumber;
+		this.receiverPhoneNumber = receiverPhoneNumber;
+		this.receiverPostalCode = receiverPostalCode;
+		this.receiverBaseAddress = receiverBaseAddress;
+		this.receiverDetailAddress = receiverDetailAddress;
+		this.memberStatus = memberStatus;
+		this.memberNo = memberNo;
+		this.password = password;
+	}
+
 	
 	public Long getNo() {
 		return no;
@@ -155,6 +178,12 @@ public class OrdersVo {
 	public void setTotalOrderAccount(Integer totalOrderAccount) {
 		this.totalOrderAccount = totalOrderAccount;
 	}
+	public String getMemberStatus() {
+		return memberStatus;
+	}
+	public void setMemberStatus(String memberStatus) {
+		this.memberStatus = memberStatus;
+	}
 	public Long getMemberNo() {
 		return memberNo;
 	}
@@ -167,23 +196,17 @@ public class OrdersVo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public List<OrdersItemVo> getOrdersList() {
-		return ordersItemList;
-	}
-	public void setOrdersList(List<OrdersItemVo> ordersItemList) {
-		this.ordersItemList = ordersItemList;
-	}
-	
+
 	@Override
 	public String toString() {
-		return "OrdersVo [no=" + no + ", code=" + code + ", date=" + date + ", memo=" + memo + ", status="
-				+ status + ", ordererName=" + ordererName + ", ordererHomeNumber=" + ordererHomeNumber
-				+ ", ordererPhoneNumber=" + ordererPhoneNumber + ", ordererEmail=" + ordererEmail
-				+ ", ordererPostalCode=" + ordererPostalCode + ", ordererBaseAddress=" + ordererBaseAddress
-				+ ", ordererDetailAddress=" + ordererDetailAddress + ", receiverName=" + receiverName
-				+ ", receiverHomeNumber=" + receiverHomeNumber + ", receiverPhoneNumber=" + receiverPhoneNumber
-				+ ", receiverPostalCode=" + receiverPostalCode + ", receiverBaseAddress=" + receiverBaseAddress
-				+ ", receiverDetailAddress=" + receiverDetailAddress + ", totalOrderAccount=" + totalOrderAccount
-				+ ", memberNo=" + memberNo + ", password=" + password + ", ordersItemList=" + ordersItemList + "]";
+		return "OrdersVo [no=" + no + ", code=" + code + ", date=" + date + ", memo=" + memo + ", status=" + status
+				+ ", ordererName=" + ordererName + ", ordererHomeNumber=" + ordererHomeNumber + ", ordererPhoneNumber="
+				+ ordererPhoneNumber + ", ordererEmail=" + ordererEmail + ", ordererPostalCode=" + ordererPostalCode
+				+ ", ordererBaseAddress=" + ordererBaseAddress + ", ordererDetailAddress=" + ordererDetailAddress
+				+ ", receiverName=" + receiverName + ", receiverHomeNumber=" + receiverHomeNumber
+				+ ", receiverPhoneNumber=" + receiverPhoneNumber + ", receiverPostalCode=" + receiverPostalCode
+				+ ", receiverBaseAddress=" + receiverBaseAddress + ", receiverDetailAddress=" + receiverDetailAddress
+				+ ", totalOrderAccount=" + totalOrderAccount + ", memberStatus=" + memberStatus + ", memberNo="
+				+ memberNo + ", password=" + password + "]";
 	}
 }

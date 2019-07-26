@@ -7,16 +7,21 @@ package com.cafe24.shoppingmall.vo;
  *
  */
 public class OrdersItemVo {
-	private Long no;			// 주문하는 품목 번호
+	private Long no;			// 주문하는 품목번호
 	private Integer quantity;	// 수량
 	
 	private Integer productPrice;	// (기록용) 품목가격
-	private String optionDetails;	// (기록용) 옵션 세부내용
+	private String optionContents;	// (기록용) 옵션 세부내용
+	private Long productNo;			// (기록용) 상품번호
 	
 	private ProductOptionItemVo productOptionItem;	// 품목
 	
 	public OrdersItemVo() {}
-	
+	public OrdersItemVo(Integer quantity, Long productNo) {
+		this.quantity = quantity;
+		this.productNo = productNo;
+	}
+
 	public Long getNo() {
 		return no;
 	}
@@ -35,11 +40,17 @@ public class OrdersItemVo {
 	public void setProductPrice(Integer productPrice) {
 		this.productPrice = productPrice;
 	}
-	public String getOptionDetails() {
-		return optionDetails;
+	public String getOptionContents() {
+		return optionContents;
 	}
-	public void setOptionDetails(String optionDetails) {
-		this.optionDetails = optionDetails;
+	public void setOptionContents(String optionContents) {
+		this.optionContents = optionContents;
+	}
+	public Long getProductNo() {
+		return productNo;
+	}
+	public void setProductNo(Long productNo) {
+		this.productNo = productNo;
 	}
 	public ProductOptionItemVo getProductOptionItem() {
 		return productOptionItem;
@@ -51,6 +62,7 @@ public class OrdersItemVo {
 	@Override
 	public String toString() {
 		return "OrdersItemVo [no=" + no + ", quantity=" + quantity + ", productPrice=" + productPrice
-				+ ", optionDetails=" + optionDetails + ", productOptionItem=" + productOptionItem + "]";
+				+ ", optionContents=" + optionContents + ", productNo=" + productNo + ", productOptionItem="
+				+ productOptionItem + "]";
 	}
 }

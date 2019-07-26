@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orders">
+
+	<insert id="insert" parameterType="ordersvo">
+		<![CDATA[
+			insert into orders(no, code, date, memo, status, 
+				orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address,
+				receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address,
+				total_order_account, member_status, member_no, password)
+			values(
+				nextval('seq_orders_no'),
+				concat('P', to_char(now(), 'YYMMDD'), '-', lpad(to_hex(currval('seq_orders_no'))::varchar, 4, '0')),
+				now(),
+				#{ memo },
+				#{ status },
+				#{ ordererName },
+				#{ ordererHomeNumber },
+				#{ ordererPhoneNumber },
+				#{ ordererEmail },
+				#{ ordererPostalCode },
+				#{ ordererBaseAddress },
+				#{ ordererDetailAddress },
+				#{ receiverName },
+				#{ receiverHomeNumber },
+				#{ receiverPhoneNumber },
+				#{ receiverPostalCode },
+				#{ receiverBaseAddress },
+				#{ receiverDetailAddress },
+				null,
+				#{ memberStatus },
+		]]>
+		<choose>
+			<when test="memberStatus == 'Y'">
+				<![CDATA[
+					#{ memberNo }
+				]]>
+			</when>
+			<when test="memberStatus == 'N">
+				<![CDATA[
+					#{ password }
+				]]>
+			</when>
+		</choose>
+		<![CDATA[
+			);
+		]]>
+	</insert>
+	
+	<insert id="insertItems" parameterType="list">
+		<![CDATA[
+			insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
+		]]>
+		<foreach collection="list" item="item" separator=", " close=";">
+			<![CDATA[
+				values(
+					#{ item.quantity },
+					(select (p.sell_price + poi.additional_amount) * 1
+		 			from product p, product_option_item poi
+		 			where
+		 				p.no = poi.product_no
+	 	 				and poi.no = #{ item.productOptionItemNo }),
+					(select details
+		 			from product_option_item
+		 			where no = #{ item.productOptionItemNo }),
+					(select product_no
+		 			from product_option_item
+		 			where no = #{ item.productOptionItemNo }),
+					currval('seq_orders_no'),
+					#{ item.productOptionItemNo }
+				)
+			]]>
+		</foreach>
+	</insert>
+	
+	<update id="updateSomeDataAfterOrder" parameterType="list">
+		<![CDATA[
+			update orders
+				set total_order_account = (
+				select sum(oi.product_price)
+				from orders_item oi
+				where oi.order_no = currval('seq_orders_no')
+			)
+			where no = currval('seq_orders_no')
+		]]>
+		<foreach collection="list" item="item" separator=";">
+			<![CDATA[
+				update product_option_item
+				set stock_quantity = 
+					case when stock_quantity is not null then
+					stock_quantity - #{ item.quantity };
+				
+				update product
+				set stock_quantity = 
+					case when stock_quantity is not null then
+					stock_quantity - #{ item.quantity };
+			]]>
+		</foreach>
+	</update>
+	
+
+</mapper>
