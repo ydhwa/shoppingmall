@@ -162,7 +162,9 @@
 	
 	<update id="updateStatusToCANCEL" parameterType="long">
 		<![CDATA[
-		
+			update orders
+			set status = 'CANCEL'
+			where no = #{ value };
 		]]>
 	</update>
 	

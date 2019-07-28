@@ -106,7 +106,6 @@ public class OrdersControllerTest {
 	
 	
 	@Test
-	@Ignore
 	public void 회원이_주문_성공() throws Exception {
 		Map<String, Object> ordersMap = new HashMap<>();
 		
@@ -124,7 +123,6 @@ public class OrdersControllerTest {
 		successAction("post", "", ordersMap, "", true);
 	}
 	@Test
-	@Ignore
 	public void 비회원이_주문_성공() throws Exception {
 		Map<String, Object> ordersMap = new HashMap<>();
 		
@@ -142,7 +140,6 @@ public class OrdersControllerTest {
 		successAction("post", "", ordersMap, "", true);
 	}
 	@Test
-	@Ignore
 	public void 구매하는_상품이_없어_주문_실패() throws Exception {
 		Map<String, Object> ordersMap = new HashMap<>();
 		
