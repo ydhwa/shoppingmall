@@ -30,16 +30,6 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(value="", method=RequestMethod.POST)
-	public ResponseEntity<JSONResult> registCategory(@RequestBody CategoryVo categoryVo) {
-		if (categoryVo == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("카테고리 등록에 실패했습니다."));
-		}
-		
-		Boolean registResult = categoryService.registCategory(categoryVo);
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
-	}
-
 	// 전부 조회
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showAllCategories() {
@@ -80,29 +70,5 @@ public class CategoryController {
 		CategoryVo categoryVo = categoryService.getCategory(no.get());
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(categoryVo));
-	}
-
-	// 수정
-	@RequestMapping(value="", method=RequestMethod.PUT)
-	public ResponseEntity<JSONResult> modifyCategory(@RequestBody CategoryVo categoryVo) {
-		if (categoryVo == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("카테고리 수정에 실패했습니다."));
-		}
-		
-		Boolean modifyResult = categoryService.modifyCategory(categoryVo);
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
-	}
-
-	// 삭제
-	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
-	public ResponseEntity<JSONResult> deleteCategory(@PathVariable Optional<Long> no) {
-		// path variable check
-		if (!no.isPresent()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("올바른 데이터가 아닙니다."));
-		}
-
-		Boolean deleteResult = categoryService.deleteCategory(no.get());
-
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
 	}
 }

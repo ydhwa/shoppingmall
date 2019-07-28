@@ -27,9 +27,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author YDH
  *
  */
-@RestController("ordersAPIController")
-@RequestMapping("/orders")
-public class OrdersController {
+@RestController("adminOrdersAPIController")
+@RequestMapping("/admin/orders")
+public class AdminOrdersController {
 	
 	@Autowired
 	private OrdersService ordersService;

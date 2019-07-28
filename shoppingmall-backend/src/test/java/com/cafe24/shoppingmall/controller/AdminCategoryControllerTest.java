@@ -34,7 +34,7 @@ import com.google.gson.Gson;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Transactional
-public class CategoryControllerTest {
+public class AdminCategoryControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
@@ -48,7 +48,7 @@ public class CategoryControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/categories";
+	private static final String DEFAULT_PATH = "/admin/categories";
 	/**
 	 * 성공 동작 테스트
 	 * 
@@ -96,20 +96,26 @@ public class CategoryControllerTest {
 		resultActions.andExpect(status().isBadRequest()).andDo(print());		
 	}
 	
+	
 	@Test
-	public void 계층적으로_카테고리_전부_조회_성공() throws Exception {
-		successAction("get", "", null, ".length()", 5);
+	public void 카테고리_추가_성공() throws Exception {
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setName("카테고리3");
+		
+		successAction("post", "", categoryVo, "", true);
 	}
+	
 	@Test
-	public void 최상위_카테고리들만_조회_성공() throws Exception {
-		successAction("get", "/parents", null, ".length()", 2);
+	public void 카테고리_수정_성공() throws Exception {
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setNo(5L);
+		categoryVo.setName("수정된 카테고리1");
+		
+		successAction("put", "/", categoryVo, "", true);
 	}
+	
 	@Test
-	public void 하위_카테고리들_포함하여_조회_성공() throws Exception {
-		successAction("get", "/" + 1 + "/children", null, ".length()", 4);
-	}
-	@Test
-	public void 특정_카테고리_조회_성공() throws Exception {
-		successAction("get", "/" + 1, null, ".name", "카테고리1");
+	public void 카테고리_삭제_성공() throws Exception {
+		successAction("delete", "/" + 5, null, "", true);
 	}
 }

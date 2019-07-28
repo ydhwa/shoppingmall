@@ -5,6 +5,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,11 +27,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.vo.CategoryVo;
+import com.cafe24.shoppingmall.vo.BucketItemVo;
+import com.cafe24.shoppingmall.vo.Enum.OrdersStatus;
+import com.cafe24.shoppingmall.vo.OrdersItemVo;
+import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.google.gson.Gson;
 
 /**
- * 카테고리 컨트롤러 동작에 대한 테스트
+ * 주문 컨트롤러 동작에 대한 테스트
  * 
  * @author YDH
  *
@@ -34,7 +42,7 @@ import com.google.gson.Gson;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Transactional
-public class CategoryControllerTest {
+public class AdminOrdersControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
@@ -48,7 +56,7 @@ public class CategoryControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/categories";
+	private static final String DEFAULT_PATH = "/orders";
 	/**
 	 * 성공 동작 테스트
 	 * 
@@ -96,20 +104,69 @@ public class CategoryControllerTest {
 		resultActions.andExpect(status().isBadRequest()).andDo(print());		
 	}
 	
+	
 	@Test
-	public void 계층적으로_카테고리_전부_조회_성공() throws Exception {
-		successAction("get", "", null, ".length()", 5);
+	public void 회원이_주문_성공() throws Exception {
+		Map<String, Object> ordersMap = new HashMap<>();
+		
+		OrdersVo ordersVo = new OrdersVo("안전하게 배송해주세요~^^", OrdersStatus.ORDER_COMPLETE,
+					"주문자", "02-000-0000", "010-0000-0000", "orderer@email.com", "00000", "서울특별시 서초구", "테헤란로",
+					"수령자", "033-000-0000", "011-0000-0000", "11111", "강원도 춘천시", "효자동",
+					"Y", 1L, null);
+		List<BucketItemVo> orderItemList = new ArrayList<>();
+		orderItemList.add(new BucketItemVo(1L, 3));
+		orderItemList.add(new BucketItemVo(2L, 2));
+		
+		ordersMap.put("orders", ordersVo);
+		ordersMap.put("ordersItemList", orderItemList);
+
+		successAction("post", "", ordersMap, "", true);
 	}
 	@Test
-	public void 최상위_카테고리들만_조회_성공() throws Exception {
-		successAction("get", "/parents", null, ".length()", 2);
+	public void 비회원이_주문_성공() throws Exception {
+		Map<String, Object> ordersMap = new HashMap<>();
+		
+		OrdersVo ordersVo = new OrdersVo("안전하게 배송해주세요~^^", OrdersStatus.ORDER_COMPLETE,
+					"주문자", "02-000-0000", "010-0000-0000", "orderer@email.com", "00000", "서울특별시 서초구", "테헤란로",
+					"수령자", "033-000-0000", "011-0000-0000", "11111", "강원도 춘천시", "효자동",
+					"N", null, "asdf1234!");
+		List<BucketItemVo> orderItemList = new ArrayList<>();
+		orderItemList.add(new BucketItemVo(1L, 3));
+		orderItemList.add(new BucketItemVo(2L, 2));
+		
+		ordersMap.put("orders", ordersVo);
+		ordersMap.put("ordersItemList", orderItemList);
+
+		successAction("post", "", ordersMap, "", true);
 	}
 	@Test
-	public void 하위_카테고리들_포함하여_조회_성공() throws Exception {
-		successAction("get", "/" + 1 + "/children", null, ".length()", 4);
+	public void 구매하는_상품이_없어_주문_실패() throws Exception {
+		Map<String, Object> ordersMap = new HashMap<>();
+		
+		OrdersVo ordersVo = new OrdersVo("안전하게 배송해주세요~^^", OrdersStatus.ORDER_COMPLETE,
+					"주문자", "02-000-0000", "010-0000-0000", "orderer@email.com", "00000", "서울특별시 서초구", "테헤란로",
+					"수령자", "033-000-0000", "011-0000-0000", "11111", "강원도 춘천시", "효자동",
+					"Y", 1L, null);
+		
+		ordersMap.put("orders", ordersVo);
+
+		failureAction("post", "", ordersMap);
 	}
-	@Test
-	public void 특정_카테고리_조회_성공() throws Exception {
-		successAction("get", "/" + 1, null, ".name", "카테고리1");
-	}
+	
+//	@Test
+//	public void 주문_검색결과_조회_성공() throws Exception {
+//		
+//	}
+//	@Test
+//	public void 주문_상세조회_성공() throws Exception {
+//		
+//	}
+//	
+//	@Test
+//	public void 주문_수정_성공() throws Exception {
+//		
+//	}
+	
+	// 삭제는 일부러 넣지 않음.
+	
 }
