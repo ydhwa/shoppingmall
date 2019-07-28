@@ -96,4 +96,6 @@ where username like concat('%', 'user', '%')
 	and convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '1111', '%')
 	and convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '1111', '%')
 	and convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', 'com', '%')
-offset 0 limit 5;
+offset '0'::integer limit '5'::integer;
+
+select to_char(now(), 'YYYY-MM-DD hh:mm:ss');

@@ -187,10 +187,14 @@ public class BucketControllerTest {
 //	public void 장바구니의_옵션_변경에서_변경_선택했을때_성공() throws Exception {
 //		
 //	}
-//	
-//	@Test
-//	public void 장바구니에서_물품들_선택하여_삭제_성공() throws Exception {
-//		
-//	}
+	
+	@Test
+	public void 장바구니에서_물품들_선택하여_삭제_성공() throws Exception {
+		List<Long> bucketItemNoList = new ArrayList<>();
+		bucketItemNoList.add(1L);
+		bucketItemNoList.add(2L);
+		
+		successAction("delete", "", bucketItemNoList, "", true);
+	}
 	
 }

@@ -34,4 +34,8 @@ public class BucketService {
 		return bucketItemDao.insertBucketItems(bucketMap);
 	}
 
+	public Boolean deleteItems(List<Long> bucketNoList) {
+		return bucketItemDao.deleteItemsByNo(bucketNoList);
+	}
+
 }

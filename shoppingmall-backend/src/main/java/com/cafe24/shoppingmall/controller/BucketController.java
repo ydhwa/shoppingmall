@@ -101,14 +101,16 @@ public class BucketController {
 	}
 	
 	// 삭제
-	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
-	public ResponseEntity<JSONResult> method(@PathVariable("no") Optional<Long> no) {
+	@RequestMapping(value="", method=RequestMethod.DELETE)
+	public ResponseEntity<JSONResult> method(@RequestBody List<Long> bucketNoList) {
 		// path variable check
-		if(!no.isPresent()) {
-			return null;
+		if(bucketNoList == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("장바구니 삭제에 실패했습니다."));
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		Boolean deleteResult = bucketService.deleteItems(bucketNoList);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
 	}
 	
 }
