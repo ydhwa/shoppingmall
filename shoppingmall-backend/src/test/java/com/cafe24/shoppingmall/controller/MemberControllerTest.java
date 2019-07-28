@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,32 +203,26 @@ public class MemberControllerTest {
 	}
 	
 	@Test
+	public void 회원정보_상세조회_성공() throws Exception {
+		successAction("get", "/1", "", ".username", "userA01");
+	}
+	
+	@Test
 	public void 회원정보_수정_성공() throws Exception {
+		MemberVo memberVo = new MemberVo();
+		memberVo.setNo(1L);
+		memberVo.setPassword("asdf1234!");
+		memberVo.setName("수정된회원A");
+		memberVo.setBirthDate("1990-05-05");
+		memberVo.setHomeNumber("000-000-0000");
+		memberVo.setPhoneNumber("000-0000-0000");
+		memberVo.setEmail("userAMod@test.com");
 		
+		successAction("put", "", memberVo, "", true);
 	}
 	
 	@Test
 	public void 회원정보_삭제_성공() throws Exception {
-		
-	}
-	
-	@Test
-	public void 회원정보목록_검색결과_조회_성공() throws Exception {
-		
-	}
-	
-	@Test
-	public void 회원정보_상세조회_성공() throws Exception {
-		
-	}
-	
-	@Test
-	public void 특정_회원의_배송지_목록_조회() throws Exception {
-		
-	}
-	
-	@Test
-	public void 배송지_조회() throws Exception {
-		
+		successAction("delete", "/1", "", "", true);
 	}
 }

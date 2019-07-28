@@ -45,3 +45,54 @@ alter table orders_item rename column option_contents to option_details;
 select * from orders_item;
 
 
+
+-- member.select
+-- membership
+select * from member;
+select
+		no,
+		username,
+		reg_date,
+		convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8')
+from member
+where no = 1
+	and del_status = 'N';
+
+-- admin
+select * from member;
+select
+		no,
+		username,
+		reg_date,
+		convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8'),
+		status,
+		del_status
+from member
+where no = 1;
+
+-- select search list
+select * from member;
+select
+		no,
+		username,
+		reg_date,
+		convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8'),
+		convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8')
+from member
+where username like concat('%', 'user', '%')
+	and reg_date > date('2019-07-21')
+	and convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', 'ȸ', '%')
+	and convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8') like '1980-01-01'
+	and convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '1111', '%')
+	and convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '1111', '%')
+	and convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', 'com', '%');

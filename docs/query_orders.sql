@@ -1,6 +1,7 @@
 -- orders
 select * from orders;
 select * from orders_item;
+select * from product_option_item;
 
 
 -- order code
@@ -68,11 +69,25 @@ where no = currval('seq_orders_no');
 
 
 -- update some data after order
-update orders
-	set total_order_account = (
-								select sum(oi.product_price)
-								from orders_item oi
-								where oi.order_no = 1)
+update product_option_item
+set stock_quantity = 
+	case
+		when stock_quantity is not null then
+			stock_quantity - 1
+	end
 where no = 1;
-
-select * from orders;
+			
+update product
+set stock_quantity = 
+	case
+		when stock_quantity is not null then
+			stock_quantity - 1
+	end
+where no = (
+	select poi.no
+	from product p, product_option_item poi
+	where p.no = poi.product_no
+		and poi.no = 1);
+		
+select * from product;
+select * from product_option_item;

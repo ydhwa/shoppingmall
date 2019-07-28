@@ -8,6 +8,7 @@ package com.cafe24.shoppingmall.vo;
  */
 public class ShippingAddressVo {
 	private Long no;
+	private Long memberNo;
 	private String postalCode;
 	private String baseAddress;
 	private String detailAddress;
@@ -18,6 +19,12 @@ public class ShippingAddressVo {
 	}
 	public void setNo(Long no) {
 		this.no = no;
+	}
+	public Long getMemberNo() {
+		return memberNo;
+	}
+	public void setMemberNo(Long memberNo) {
+		this.memberNo = memberNo;
 	}
 	public String getPostalCode() {
 		return postalCode;
@@ -46,7 +53,8 @@ public class ShippingAddressVo {
 	
 	@Override
 	public String toString() {
-		return "ShippingAddressVo [no=" + no + ", postalCode=" + postalCode + ", baseAddress=" + baseAddress
-				+ ", detailAddress=" + detailAddress + ", description=" + description + "]";
+		return "ShippingAddressVo [no=" + no + ", memberNo=" + memberNo + ", postalCode=" + postalCode
+				+ ", baseAddress=" + baseAddress + ", detailAddress=" + detailAddress + ", description=" + description
+				+ "]";
 	}
 }

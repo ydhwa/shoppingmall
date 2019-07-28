@@ -103,15 +103,33 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 	
-	// 수정
-	@RequestMapping(value="/{no}", method=RequestMethod.PUT)
-	public ResponseEntity<JSONResult> modifyMemberData(@PathVariable("no") Optional<Long> no) {
+	// 상세조회
+	@RequestMapping(value="/{no}", method=RequestMethod.GET)
+	public ResponseEntity<JSONResult> showMember(@PathVariable("no") Optional<Long> no) {
 		// path variable check
 		if(!no.isPresent()) {
-			return null;
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("회원 상세조회에 실패했습니다."));
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		MemberVo memberVo = memberService.showMemberDetails(no.get());
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(memberVo));
+	}
+	
+	// 수정
+	@RequestMapping(value="", method=RequestMethod.PUT)
+	public ResponseEntity<JSONResult> modifyMemberData(@RequestBody @Validated(MemberGroups.Modify.class) MemberVo memberVo, BindingResult bindingResult) {
+		// Validation check
+		if (bindingResult.hasErrors()) {
+			List<ObjectError> errorList = bindingResult.getAllErrors();
+			for (ObjectError error : errorList) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure(error.getDefaultMessage()));
+			}
+		}
+		
+		Boolean modifyResult = memberService.modify(memberVo);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
 	}
 	
 	// 삭제
@@ -119,55 +137,11 @@ public class MemberController {
 	public ResponseEntity<JSONResult> deleteMember(@PathVariable("no") Optional<Long> no) {
 		// path variable check
 		if(!no.isPresent()) {
-			return null;
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("회원 삭제에 실패했습니다."));
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
-	}
-	
-	
-	// 검색결과 조회
-	@RequestMapping(value="", method=RequestMethod.GET)
-	public ResponseEntity<JSONResult> showMembers(
-			@RequestParam(value="field", defaultValue="") String field,
-			@RequestParam(value="keyword", defaultValue="") String keyword,
-			@RequestParam(value="offset", required=true) Integer offset,
-			@RequestParam(value="limit", required=true) Integer limit) {
+		Boolean deleteResult = memberService.delete(no.get());
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
-	}
-	
-	
-	// 상세조회
-	@RequestMapping(value="/{no}", method=RequestMethod.GET)
-	public ResponseEntity<JSONResult> showMember(@PathVariable("no") Optional<Long> no) {
-		// path variable check
-		if(!no.isPresent()) {
-			return null;
-		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
-	}
-	
-	// 배송지 목록 조회
-	@RequestMapping(value="/shipping-addresses/members/{memberno}", method=RequestMethod.GET)
-	public ResponseEntity<JSONResult> showShippingAddressesOfMember(@PathVariable("memberno") Optional<Long> memberNo) {
-		// path variable check
-		if(!memberNo.isPresent()) {
-			return null;
-		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
-	}
-	
-	// 배송지 조회
-	@RequestMapping(value="/shipping-addresses/{no}", method=RequestMethod.GET)
-	public ResponseEntity<JSONResult> showShippingAddress(@PathVariable("no") Optional<Long> no) {
-		// path variable check
-		if(!no.isPresent()) {
-			return null;
-		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
 	}
 }

@@ -43,7 +43,8 @@
 		<![CDATA[
 			select no, username, password, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8')
 			from member
-			where username = #{ value };
+			where username = #{ value }
+				and del_status = 'N';
 		]]>
 	</select>
 
@@ -53,9 +54,55 @@
 			select no, username, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8')
 			from member
 			where
-				username = #{ username } and
-				password = encode(digest(#{ password }, 'sha512'), 'hex');
+				username = #{ username }
+				and password = encode(digest(#{ password }, 'sha512'), 'hex')
+				and del_status = 'N';
 		]]>
 	</select>
-
+	
+	<select id="selectOne" resultType="membervo" parameterType="long">
+		<![CDATA[
+			select
+				no,
+				username,
+				reg_date,
+				convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8'),
+				convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8'),
+				convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8'),
+				convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8'),
+				convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8')
+			from member
+			where no = #{ value }
+				and del_status = 'N';
+		]]>
+	</select>
+	
+	<update id="update" parameterType="membervo">
+		<![CDATA[
+			update member
+			set
+				password = encode(digest('${ password }', 'SHA512'), 'hex'),
+				name = encode(encrypt(convert_to('${ name }', 'utf-8'), 'key', 'AES'), 'hex'),
+				birth_date = encode(encrypt(convert_to('${ birthDate }', 'utf-8'), 'key', 'AES'), 'hex'),
+		]]>
+		<if test="homeNumber != null">
+			<![CDATA[
+				home_number = encode(encrypt(convert_to('${ homeNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
+			]]>
+		</if>
+		<![CDATA[
+				phone_number = encode(encrypt(convert_to('${ phoneNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
+				email = encode(encrypt(convert_to('${ email }', 'utf-8'), 'key', 'AES'), 'hex')
+			where no = #{ no };
+		]]>
+	</update>
+	
+	<update id="updateDelStatus" parameterType="long">
+		<![CDATA[
+			update member
+			set del_status = 'Y'
+			where no = #{ value };
+		]]>
+	</update>
+	
 </mapper>

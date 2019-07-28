@@ -48,7 +48,7 @@ public class AdminMemberControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/members";
+	private static final String DEFAULT_PATH = "/admin/members";
 	/**
 	 * 성공 동작 테스트
 	 * 
@@ -96,121 +96,6 @@ public class AdminMemberControllerTest {
 		resultActions.andExpect(status().isBadRequest()).andDo(print());		
 	}
 	
-
-	@Test
-	public void 회원가입_성공() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userB01");
-		memberVo.setPassword("asdf1234!");
-		memberVo.setName("회원B");
-		memberVo.setBirthDate("1990-01-01");
-		memberVo.setHomeNumber("333-333-3333");
-		memberVo.setPhoneNumber("333-3333-3333");
-		memberVo.setEmail("userB01@test.com");
-		
-		successAction("post", "", memberVo, "", true);
-	}
-	@Test
-	public void 중복된_아이디로_회원가입_실패() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userA01");
-		memberVo.setPassword("asdf1234!");
-		memberVo.setName("회원B");
-		memberVo.setBirthDate("1990-01-01");
-		memberVo.setHomeNumber("333-333-3333");
-		memberVo.setPhoneNumber("333-3333-3333");
-		memberVo.setEmail("userB01@test.com");
-		
-		failureAction("post", "", memberVo);
-	}
-	@Test
-	public void 필수_입력_사항_누락으로_회원가입_실패() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userB01");
-		memberVo.setPassword("asdf1234!");
-		memberVo.setBirthDate("1990-01-01");
-		memberVo.setHomeNumber("333-333-3333");
-		memberVo.setPhoneNumber("333-3333-3333");
-		memberVo.setEmail("userB01@test.com");
-		
-		failureAction("post", "", memberVo);
-	}
-	@Test
-	public void 적절하지_않은_입력으로_회원가입_실패() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userB01");
-		memberVo.setPassword("asdf1!");
-		memberVo.setName("회원B");
-		memberVo.setBirthDate("1990-01-01");
-		memberVo.setHomeNumber("333-333-3333");
-		memberVo.setPhoneNumber("333-3333-3333");
-		memberVo.setEmail("userB01@test.com");
-
-		failureAction("post", "", memberVo);
-	}
-	
-	@Test
-	public void 중복되지_않는_아이디로_아이디_중복체크() throws Exception {
-		String username = "userB02";
-		
-		successAction("get", "/duplicate?username=" + username, null, "", false);
-	}
-	@Test
-	public void 중복되는_아이디로_아이디_중복체크() throws Exception {
-		String username = "userA01";
-
-		successAction("get", "/duplicate?username=" + username, null, "", true);
-	}
-	@Test
-	public void 적절하지_않은_입력으로_아이디_중복체크_실패() throws Exception {
-		String username = "use";
-		
-		failureAction("get", "/duplicate?username=" + username, null);
-	}
-	
-	@Test
-	public void 아이디와_비밀번호를_올바르게_입력하여_로그인_성공() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userA01");
-		memberVo.setPassword("asdf1234!");
-		
-		successAction("post", "/login", memberVo, ".username", memberVo.getUsername());
-	}
-	@Test
-	public void 아이디와_비밀번호가_일치하는_회원이_없어_로그인_실패() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userA01");
-		memberVo.setPassword("asdf1234@");
-		
-		successAction("post", "/login", memberVo, "", null);
-	}
-	@Test
-	public void 아이디나_비밀번호를_입력하지_않아_로그인_실패() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("");
-		memberVo.setPassword("asdf1234!");
-		
-		failureAction("post", "/login", memberVo);
-	}
-	@Test
-	public void 적절하지_않은_입력으로_로그인_실패() throws Exception {
-		MemberVo memberVo = new MemberVo();
-		memberVo.setUsername("userA01");
-		memberVo.setPassword("asdf");
-
-		failureAction("post", "/login", memberVo);
-	}
-	
-	@Test
-	public void 회원정보_수정_성공() throws Exception {
-		
-	}
-	
-	@Test
-	public void 회원정보_삭제_성공() throws Exception {
-		
-	}
-	
 	@Test
 	public void 회원정보목록_검색결과_조회_성공() throws Exception {
 		
@@ -222,12 +107,12 @@ public class AdminMemberControllerTest {
 	}
 	
 	@Test
-	public void 특정_회원의_배송지_목록_조회() throws Exception {
+	public void 회원정보_수정_성공() throws Exception {
 		
 	}
 	
 	@Test
-	public void 배송지_조회() throws Exception {
+	public void 회원정보_삭제_성공() throws Exception {
 		
 	}
 }

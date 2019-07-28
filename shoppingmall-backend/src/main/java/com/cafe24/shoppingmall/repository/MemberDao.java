@@ -32,4 +32,16 @@ public class MemberDao {
 	public MemberVo get(MemberVo memberVo) {
 		return sqlSession.selectOne("member.getByUsernameAndPassword", memberVo);
 	}
+	
+	public MemberVo selectOne(Long no) {
+		return sqlSession.selectOne("member.selectOne", no);
+	}
+
+	public Boolean update(MemberVo memberVo) {
+		return 1 == sqlSession.update("member.update", memberVo);
+	}
+
+	public Boolean delete(Long no) {
+		return 1 == sqlSession.update("member.updateDelStatus", no);
+	}
 }

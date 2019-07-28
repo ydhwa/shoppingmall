@@ -54,5 +54,20 @@ public class MemberService {
 	public MemberVo login(MemberVo memberVo) {
 		return memberDao.get(memberVo);
 	}
+	
+	// 회원 상세정보 열람(회원용)
+	public MemberVo showMemberDetails(Long no) {
+		return memberDao.selectOne(no);
+	}
+
+	// 회원 수정
+	public Boolean modify(MemberVo memberVo) {
+		return memberDao.update(memberVo);
+	}
+	
+	// 회원 삭제
+	public Boolean delete(Long no) {
+		return memberDao.delete(no);
+	}
 
 }

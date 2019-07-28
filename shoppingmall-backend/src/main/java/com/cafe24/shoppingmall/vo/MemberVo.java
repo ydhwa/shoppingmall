@@ -2,6 +2,7 @@ package com.cafe24.shoppingmall.vo;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.cafe24.shoppingmall.validator.ValidPassword;
 import com.cafe24.shoppingmall.validator.ValidPhoneNumber;
@@ -16,24 +17,25 @@ import com.cafe24.shoppingmall.vo.Enum.MemberStatus;
  *
  */
 public class MemberVo {
+	@NotNull(groups={MemberGroups.Modify.class}, message="회원번호는 필수적으로 포함되어야 합니다.")
 	private Long no;				// 회원번호
 	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Login.class}, message="아이디는 필수 입력 항목입니다.")
 	@ValidUsername(groups={MemberGroups.Join.class, MemberGroups.Login.class}) 
 	private String username;		// 아이디
-	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Login.class}, message="비밀번호는 필수 입력 항목입니다.")
-	@ValidPassword(groups={MemberGroups.Join.class, MemberGroups.Login.class})
+	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Login.class, MemberGroups.Modify.class}, message="비밀번호는 필수 입력 항목입니다.")
+	@ValidPassword(groups={MemberGroups.Join.class, MemberGroups.Login.class, MemberGroups.Modify.class})
 	private String password;		// 비밀번호
 	private String regDate;			// 가입일
-	@NotBlank(groups={MemberGroups.Join.class}, message="이름은 필수 입력 항목입니다.")
+	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Modify.class}, message="이름은 필수 입력 항목입니다.")
 	private String name;			// 이름
-	@NotBlank(groups={MemberGroups.Join.class}, message="생년월일은 필수 입력 항목입니다.")
+	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Modify.class}, message="생년월일은 필수 입력 항목입니다.")
 	private String birthDate;		// 생년월일
 	private String homeNumber;		// 유선전화번호
-	@NotBlank(groups={MemberGroups.Join.class}, message="휴대전화번호는 필수 입력 항목입니다.")
-	@ValidPhoneNumber(groups={MemberGroups.Join.class}) 
+	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Modify.class}, message="휴대전화번호는 필수 입력 항목입니다.")
+	@ValidPhoneNumber(groups={MemberGroups.Join.class, MemberGroups.Modify.class}) 
 	private String phoneNumber;		// 휴대전화번호
-	@NotBlank(groups={MemberGroups.Join.class}, message="이메일은 필수 입력 항목입니다.")
-	@Email(groups={MemberGroups.Join.class}, message="이메일 형식이 아닙니다.")
+	@NotBlank(groups={MemberGroups.Join.class, MemberGroups.Modify.class}, message="이메일은 필수 입력 항목입니다.")
+	@Email(groups={MemberGroups.Join.class, MemberGroups.Modify.class}, message="이메일 형식이 아닙니다.")
 	private String email;			// 이메일
 	private MemberStatus status;	// 계정상태
 	private String delStatus;		// 삭제여부(Y/N)
