@@ -41,7 +41,7 @@
 	<select id="getByUsername" resultType="membervo"
 		parameterType="string">
 		<![CDATA[
-			select no, username, password, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8')
+			select no, username, password, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8') as name
 			from member
 			where username = #{ value }
 				and del_status = 'N';
@@ -51,7 +51,7 @@
 	<select id="getByUsernameAndPassword" resultType="membervo"
 		parameterType="membervo">
 		<![CDATA[
-			select no, username, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8')
+			select no, username, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8') as name
 			from member
 			where
 				username = #{ username }
@@ -60,17 +60,17 @@
 		]]>
 	</select>
 	
-	<select id="selectOne" resultType="membervo" parameterType="long">
+	<select id="getOne" resultType="membervo" parameterType="long">
 		<![CDATA[
 			select
 				no,
 				username,
-				reg_date,
-				convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8'),
-				convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8'),
-				convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8'),
-				convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8'),
-				convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8')
+				to_char(reg_date, 'YYYY-MM-DD HH24:mm:ss') as reg_date,
+				convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8') as name,
+				convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8') as birth_date,
+				convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8') as home_number,
+				convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8') as phone_number,
+				convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8') as email
 			from member
 			where no = #{ value }
 				and del_status = 'N';
@@ -102,6 +102,80 @@
 			update member
 			set del_status = 'Y'
 			where no = #{ value };
+		]]>
+	</update>
+	
+	<select id="getOneToAdmin" parameterType="long" resultType="membervo">
+		<![CDATA[
+			select
+				no,
+				username,
+				to_char(reg_date, 'YYYY-MM-DD HH24:mm:ss') as reg_date,
+				convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8') as name,
+				convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8') as birth_date,
+				convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8') as home_number,
+				convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8') as phone_number,
+				convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8') as email,
+				status,
+				del_status
+			from member
+			where no = #{ value };
+		]]>
+	</select>
+	
+	<select id="searchToAdmin" parameterType="map" resultType="membervo">
+		<![CDATA[
+			select
+				no,
+				username,
+				to_char(reg_date, 'YYYY-MM-DD HH24:mm:ss') as reg_date,
+				convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8') as name,
+				convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8') as birth_date,
+				convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8') as phone_number,
+				convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8') as email
+			from member
+			where
+				username like concat('%', '${ username }', '%')
+		]]>
+		<if test="regDate != null">
+			<![CDATA[
+				and to_char(reg_date, 'YYYY-MM-DD HH:mm:ss') > date('${ regDate }')
+			]]>
+		</if>
+		<![CDATA[
+				and convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '${ name }', '%')
+		]]>
+		<if test="birthDate != null">
+			<![CDATA[
+				and convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8') like '${ birthDate }'
+			]]>
+		</if>
+		<if test="homeNumber != null">
+			<![CDATA[
+				and convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '${ homeNumber }', '%')
+			]]>
+		</if>
+		<![CDATA[
+				and convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '${ phoneNumber }', '%')
+				and convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '${ email }', '%')
+			order by no
+			offset '${ offset }'::integer limit '${ limit }'::integer;
+		]]>
+	</select>
+	
+	<update id="updateToAdmin" parameterType="membervo">
+		<![CDATA[
+			update member
+			set
+				password = encode(digest('${ password }', 'SHA512'), 'hex'),
+				name = encode(encrypt(convert_to('${ name }', 'utf-8'), 'key', 'AES'), 'hex'),
+				birth_date = encode(encrypt(convert_to('${ birthDate }', 'utf-8'), 'key', 'AES'), 'hex'),
+				home_number = encode(encrypt(convert_to('${ homeNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
+				phone_number = encode(encrypt(convert_to('${ phoneNumber }', 'utf-8'), 'key', 'AES'), 'hex'),
+				email = encode(encrypt(convert_to('${ email }', 'utf-8'), 'key', 'AES'), 'hex'),
+				status = '${ status.value }',
+				del_status = #{ delStatus }
+			where no = #{ no };
 		]]>
 	</update>
 	

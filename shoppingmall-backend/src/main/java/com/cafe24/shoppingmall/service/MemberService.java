@@ -1,5 +1,9 @@
 package com.cafe24.shoppingmall.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +61,7 @@ public class MemberService {
 	
 	// 회원 상세정보 열람(회원용)
 	public MemberVo showMemberDetails(Long no) {
-		return memberDao.selectOne(no);
+		return memberDao.get(no);
 	}
 
 	// 회원 수정
@@ -69,5 +73,22 @@ public class MemberService {
 	public Boolean delete(Long no) {
 		return memberDao.delete(no);
 	}
+
+	// 회원 상세정보 열람(관리자용)
+	public MemberVo showMemberDetailsToAdmin(Long no) {
+		return memberDao.getToAdmin(no);
+	}
+
+	// 회원목록 검색결과 열람(관리자용)
+	public List<MemberVo> searchMembersToAdmin(HashMap<String, String> paramMap) {
+		return memberDao.searchToAdmin(paramMap);
+	}
+
+	// 회원 수정(관리자용)
+	public Boolean modifyToAdmin(MemberVo memberVo) {
+		return memberDao.updateToAdmin(memberVo);
+	}
+	
+	
 
 }

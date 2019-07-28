@@ -78,7 +78,7 @@ select
 from member
 where no = 1;
 
--- select search list
+-- admin select search list
 select * from member;
 select
 		no,
@@ -95,4 +95,5 @@ where username like concat('%', 'user', '%')
 	and convert_from(decrypt(decode(birth_date, 'hex'), 'key', 'AES'), 'utf-8') like '1980-01-01'
 	and convert_from(decrypt(decode(home_number, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '1111', '%')
 	and convert_from(decrypt(decode(phone_number, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', '1111', '%')
-	and convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', 'com', '%');
+	and convert_from(decrypt(decode(email, 'hex'), 'key', 'AES'), 'utf-8') like concat('%', 'com', '%')
+offset 0 limit 5;

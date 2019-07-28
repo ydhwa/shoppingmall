@@ -98,7 +98,7 @@ public class AdminCategoryControllerTest {
 	
 	
 	@Test
-	public void 카테고리_추가_성공() throws Exception {
+	public void 관리자가_카테고리_추가_성공() throws Exception {
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setName("카테고리3");
 		
@@ -106,7 +106,7 @@ public class AdminCategoryControllerTest {
 	}
 	
 	@Test
-	public void 카테고리_수정_성공() throws Exception {
+	public void 관리자가_카테고리_수정_성공() throws Exception {
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setNo(5L);
 		categoryVo.setName("수정된 카테고리1");
@@ -115,7 +115,7 @@ public class AdminCategoryControllerTest {
 	}
 	
 	@Test
-	public void 카테고리_삭제_성공() throws Exception {
+	public void 관리자가_카테고리_삭제_성공() throws Exception {
 		successAction("delete", "/" + 5, null, "", true);
 	}
 }

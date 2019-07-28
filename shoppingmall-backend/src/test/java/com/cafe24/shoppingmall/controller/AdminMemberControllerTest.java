@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.shoppingmall.vo.MemberVo;
+import com.cafe24.shoppingmall.vo.Enum.MemberStatus;
 import com.google.gson.Gson;
 
 /**
@@ -97,22 +98,28 @@ public class AdminMemberControllerTest {
 	}
 	
 	@Test
-	public void 회원정보목록_검색결과_조회_성공() throws Exception {
-		
+	public void 관리자가_회원정보_상세조회_성공() throws Exception {
+		successAction("get", "/1", "", ".delStatus", "N");
 	}
 	
 	@Test
-	public void 회원정보_상세조회_성공() throws Exception {
-		
+	public void 관리자가_회원정보목록_검색결과_조회_성공() throws Exception {
+		successAction("get", "?offset=0&limit=5&name=회원", "", ".length()", 2);
 	}
 	
 	@Test
-	public void 회원정보_수정_성공() throws Exception {
+	public void 관리자가_회원정보_수정_성공() throws Exception {
+		MemberVo memberVo = new MemberVo();
+		memberVo.setNo(1L);
+		memberVo.setPassword("asdf1234@");
+		memberVo.setName("수정된회원A");
+		memberVo.setBirthDate("1990-01-01");
+		memberVo.setHomeNumber("111-111-1111");
+		memberVo.setPhoneNumber("111-1111-1111");
+		memberVo.setEmail("userA01@test.com");
+		memberVo.setStatus(MemberStatus.DISABLE);
+		memberVo.setDelStatus("N");
 		
-	}
-	
-	@Test
-	public void 회원정보_삭제_성공() throws Exception {
-		
+		successAction("put", "", memberVo, "", true);
 	}
 }

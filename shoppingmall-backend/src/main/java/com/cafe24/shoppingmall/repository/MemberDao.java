@@ -1,5 +1,8 @@
 package com.cafe24.shoppingmall.repository;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
@@ -33,8 +36,8 @@ public class MemberDao {
 		return sqlSession.selectOne("member.getByUsernameAndPassword", memberVo);
 	}
 	
-	public MemberVo selectOne(Long no) {
-		return sqlSession.selectOne("member.selectOne", no);
+	public MemberVo get(Long no) {
+		return sqlSession.selectOne("member.getOne", no);
 	}
 
 	public Boolean update(MemberVo memberVo) {
@@ -43,5 +46,17 @@ public class MemberDao {
 
 	public Boolean delete(Long no) {
 		return 1 == sqlSession.update("member.updateDelStatus", no);
+	}
+
+	public MemberVo getToAdmin(Long no) {
+		return sqlSession.selectOne("member.getOneToAdmin", no);
+	}
+
+	public List<MemberVo> searchToAdmin(HashMap<String, String> paramMap) {
+		return sqlSession.selectList("member.searchToAdmin", paramMap);
+	}
+
+	public Boolean updateToAdmin(MemberVo memberVo) {
+		return 1 == sqlSession.update("member.updateToAdmin", memberVo);
 	}
 }

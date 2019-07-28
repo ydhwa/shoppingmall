@@ -118,7 +118,7 @@ public class MemberController {
 	
 	// 수정
 	@RequestMapping(value="", method=RequestMethod.PUT)
-	public ResponseEntity<JSONResult> modifyMemberData(@RequestBody @Validated(MemberGroups.Modify.class) MemberVo memberVo, BindingResult bindingResult) {
+	public ResponseEntity<JSONResult> modifyMember(@RequestBody @Validated(MemberGroups.Modify.class) MemberVo memberVo, BindingResult bindingResult) {
 		// Validation check
 		if (bindingResult.hasErrors()) {
 			List<ObjectError> errorList = bindingResult.getAllErrors();
