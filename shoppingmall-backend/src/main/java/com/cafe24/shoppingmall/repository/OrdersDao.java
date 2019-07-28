@@ -25,12 +25,23 @@ public class OrdersDao {
 	}
 
 	public Boolean insertItems(List<BucketItemVo> ordersItemList) {
-		return 1 == sqlSession.insert("orders.insertItems", ordersItemList);
+		int result = 0;
+		for(BucketItemVo ordersItemVo: ordersItemList) {
+			result += sqlSession.insert("orders.insertItem", ordersItemVo);
+		}
+		return ordersItemList.size() == result;
 	}
 
 	// 각 물품의 재고 수량을 없애고, 총 결제 금액 업데이트
-	public Boolean updateSomeDataAfterOrder() {
-		return 1 == sqlSession.update("orders.updateSomeDataAfterOrder");
+	public Boolean updateSomeDataAfterOrder(List<BucketItemVo> ordersItemList) {
+		if(1 > sqlSession.update("updateTotalOrderAccount")) {
+			return false;
+		}
+		int result = 0;
+		for(BucketItemVo bucketItemVo: ordersItemList) {
+			result += sqlSession.update("orders.updateStockQuantity", bucketItemVo);
+		}
+		return ordersItemList.size() ==  result;
 	}
 	
 	

@@ -67,4 +67,12 @@ where no = currval('seq_orders_no');
 
 
 
--- 
+-- update some data after order
+update orders
+	set total_order_account = (
+								select sum(oi.product_price)
+								from orders_item oi
+								where oi.order_no = 1)
+where no = 1;
+
+select * from orders;

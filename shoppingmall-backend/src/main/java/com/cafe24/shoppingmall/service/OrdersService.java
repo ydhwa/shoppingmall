@@ -38,12 +38,12 @@ public class OrdersService {
 		if(!ordersDao.insertItems(ordersItemList)) {
 			return false;
 		}
-//		if(!ordersDao.updateSomeDataAfterOrder()) {
-//			return false;
-//		}
-//		if(!bucketItemDao.deleteItems(ordersItemList)) {
-//			return false;
-//		}
+		if(!ordersDao.updateSomeDataAfterOrder(ordersItemList)) {
+			return false;
+		}
+		if(!bucketItemDao.deleteItems(ordersItemList)) {
+			return false;
+		}
 		
 		return true;
 	}

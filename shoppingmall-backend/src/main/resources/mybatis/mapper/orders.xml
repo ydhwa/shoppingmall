@@ -14,7 +14,7 @@
 				concat('P', to_char(now(), 'YYMMDD'), '-', lpad(to_hex(currval('seq_orders_no'))::varchar, 4, '0')),
 				now(),
 				#{ memo },
-				#{ status },
+				'${ status.value }',
 				#{ ordererName },
 				#{ ordererHomeNumber },
 				#{ ordererPhoneNumber },
@@ -32,15 +32,17 @@
 				#{ memberStatus },
 		]]>
 		<choose>
-			<when test="memberStatus == 'Y'">
+			<when test='memberStatus == "Y"'>
 				<![CDATA[
-					#{ memberNo }
+					#{ memberNo },
+					null
 				]]>
 			</when>
-			<when test="memberStatus == 'N">
+			<when test='memberStatus == "N"'>
 				<![CDATA[
-					#{ password }
-				]]>
+ 					null,
+ 					encode(digest('${ password }', 'sha512'), 'hex')
+ 				]]>
 			</when>
 		</choose>
 		<![CDATA[
@@ -48,56 +50,60 @@
 		]]>
 	</insert>
 	
-	<insert id="insertItems" parameterType="list">
+	<insert id="insertItem" parameterType="bucketitemvo">
 		<![CDATA[
 			insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
-		]]>
-		<foreach collection="list" item="item" separator=", " close=";">
-			<![CDATA[
-				values(
-					#{ item.quantity },
-					(select (p.sell_price + poi.additional_amount) * 1
-		 			from product p, product_option_item poi
-		 			where
-		 				p.no = poi.product_no
-	 	 				and poi.no = #{ item.productOptionItemNo }),
-					(select details
-		 			from product_option_item
-		 			where no = #{ item.productOptionItemNo }),
-					(select product_no
-		 			from product_option_item
-		 			where no = #{ item.productOptionItemNo }),
-					currval('seq_orders_no'),
-					#{ item.productOptionItemNo }
-				)
+			values(
+				#{ quantity },
+				(select (p.sell_price + poi.additional_amount) * 1
+		 		from product p, product_option_item poi
+		 		where
+		 			p.no = poi.product_no
+	 	 			and poi.no = #{ productOptionItemNo }),
+				(select details
+		 		from product_option_item
+		 		where no = #{ productOptionItemNo }),
+				(select product_no
+		 		from product_option_item
+		 		where no = #{ productOptionItemNo }),
+				currval('seq_orders_no'),
+				#{ productOptionItemNo }
+			)
 			]]>
-		</foreach>
 	</insert>
 	
-	<update id="updateSomeDataAfterOrder" parameterType="list">
+	<update id="updateTotalOrderAccount">
 		<![CDATA[
 			update orders
 				set total_order_account = (
-				select sum(oi.product_price)
-				from orders_item oi
-				where oi.order_no = currval('seq_orders_no')
-			)
-			where no = currval('seq_orders_no')
+											select sum(oi.product_price)
+											from orders_item oi
+											where oi.order_no = currval('seq_orders_no'))
+			where no = currval('seq_orders_no');
 		]]>
-		<foreach collection="list" item="item" separator=";">
-			<![CDATA[
-				update product_option_item
-				set stock_quantity = 
-					case when stock_quantity is not null then
-					stock_quantity - #{ item.quantity };
-				
-				update product
-				set stock_quantity = 
-					case when stock_quantity is not null then
-					stock_quantity - #{ item.quantity };
-			]]>
-		</foreach>
 	</update>
 	
-
+	<update id="updateStockQuantity" parameterType="bucketitemvo">
+		<![CDATA[
+			update product_option_item
+			set stock_quantity = 
+								case
+									when stock_quantity is not null then
+									stock_quantity - #{ quantity }
+								end
+			where no = #{ productOptionItemNo };
+			
+			update product
+			set stock_quantity = 
+								case
+									when stock_quantity is not null then
+									stock_quantity - #{ quantity }
+								end
+			where no = (
+						select poi.no
+						from product p, product_option_item poi
+						where p.no = poi.product_no
+							and poi.no = #{ productOptionItemNo });
+		]]>
+	</update>
 </mapper>
