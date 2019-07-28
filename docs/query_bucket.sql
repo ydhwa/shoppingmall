@@ -30,3 +30,7 @@ set quantity = excluded.quantity;
 
 -- 만료일자 계산 연습
 select date(now()) + interval '7' day;
+
+
+
+select * from bucket_item;

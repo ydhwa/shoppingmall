@@ -89,5 +89,81 @@ where no = (
 	where p.no = poi.product_no
 		and poi.no = 1);
 		
-select * from product;
-select * from product_option_item;
+
+-- customer order(member)
+select * from orders_item;
+select distinct o.no as orders_no, o.code as orders_code, to_char(o.date, 'YYYY-MM-DD HH24:mm:ss') as orders_date, o.status as orders_status, o.total_order_account as orders_total_order_account,
+	concat(
+		(select p1.name from product p1, orders_item oi1 where p1.no = oi1.product_no and oi1.order_no = o.no order by p1.no limit 1), 
+		' ¿Ü ', 
+		(select count(oi2.no) - 1 from orders o2, orders_item oi2 where o2.no = oi2.order_no and oi2.order_no = o.no), 
+		'°Ç') as details
+from orders o, orders_item oi
+where o.member_no = 2
+	and o.no = oi.order_no
+order by orders_date desc
+offset '0'::integer limit '5'::integer;
+
+select no, code, date, memo, status, orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address, receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address, total_order_account
+from orders
+where no = 1
+	and member_no = 2;
+
+select poi.no as no, 
+	oi.quantity as quantity, 
+	p.no as product_no, 
+	p.code as product_code, 
+	p.name as product_name, 
+	poi.no as product_option_item_no, 
+	poi.details as product_option_item_details,
+	(p.sell_price + poi.additional_amount) * oi.quantity as sell_price
+from orders o, product p, product_option_item poi, orders_item oi
+where o.no = oi.order_no
+	and oi.product_option_item_no = poi.no
+	and poi.product_no = p.no
+	and o.no = 1;
+
+-- customer order(non-member)
+select *
+from orders
+where no = 2
+	and password = encode(digest('asdf1234!', 'sha512'), 'hex');
+
+-- customer update order's status (-> CANCEL)
+update orders
+set status = 'CANCEL'
+where no = 3;
+
+
+-- admin order
+select *
+from orders
+where code like concat('%', '0726','%')
+	and date > date('2019-07-21')
+	and memo like concat('%', '','%')
+	and orderer_name like concat('%', '','%')
+	and orderer_home_number like concat('%', '','%')
+	and orderer_phone_number like concat('%', '','%')
+	and orderer_email like concat('%', '','%')
+	and orderer_postal_code like concat('%', '','%')
+	and orderer_base_address like concat('%', '','%')
+	and orderer_detail_address like concat('%', '','%')
+	and receiver_name like concat('%', '','%')
+	and receiver_home_number like concat('%', '','%')
+	and receiver_phone_number like concat('%', '','%')
+	and receiver_postal_code like concat('%', '','%')
+	and receiver_base_address like concat('%', '','%')
+	and receiver_detail_address like concat('%', '','%')
+	and member_status = 'Y'	
+	and member_no = 2
+order by date desc
+offset '0'::integer limit '5'::integer;
+
+select * 
+from orders 
+where no = 1;
+
+-- admin update order's status (-> SHIPMENT_COMPLEMTE and etc.)
+update orders
+set status = 'SHIPMENT_COMPLETE'
+where no = 3;

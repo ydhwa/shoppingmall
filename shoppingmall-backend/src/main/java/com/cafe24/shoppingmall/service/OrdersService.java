@@ -1,11 +1,15 @@
 package com.cafe24.shoppingmall.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
+import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
 import com.cafe24.shoppingmall.repository.BucketItemDao;
 import com.cafe24.shoppingmall.repository.OrdersDao;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
@@ -46,6 +50,30 @@ public class OrdersService {
 		}
 		
 		return true;
+	}
+
+	public List<OrdersSummaryDto> showOrdersByMemberNo(Long no, String offset, String limit) {
+		Map<String, Object> ordersMap = new HashMap<>();
+		ordersMap.put("no", no);
+		ordersMap.put("offset", offset);
+		ordersMap.put("limit", limit);
+		
+		return ordersDao.getListByMemberNo(ordersMap);
+	}
+
+	public OrdersDetailsDto showOrdersDetails(Long no, OrdersVo ordersVo) {
+		Map<String, Object> ordersMap = new HashMap<>();
+		ordersMap.put("no", no);
+		ordersMap.put("orders", ordersVo);
+		
+		OrdersDetailsDto ordersDto = ordersDao.get(ordersMap);
+		ordersDto.setOrdersItemDtoList(ordersDao.getItemListByOrderNo(ordersDto.getNo()));
+		
+		return ordersDto;
+	}
+
+	public Boolean modifyOrderStatusToCANCEL(Long no) {
+		return ordersDao.modifyStatusToCANCEL(no);
 	}
 
 }

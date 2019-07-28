@@ -106,4 +106,64 @@
 							and poi.no = #{ productOptionItemNo });
 		]]>
 	</update>
+	
+	<select id="getByMemberNo" parameterType="map" resultType="orderssummarydto">
+		<![CDATA[
+			select distinct o.no as orders_no, o.code as orders_code, to_char(o.date, 'YYYY-MM-DD HH24:mm:ss') as orders_date, o.status as orders_status, o.total_order_account as orders_total_order_account,
+				concat(
+				(select p1.name from product p1, orders_item oi1 where p1.no = oi1.product_no and oi1.order_no = o.no order by p1.no limit 1), 
+				' 외 ', 
+				(select count(oi2.no) - 1 from orders o2, orders_item oi2 where o2.no = oi2.order_no and oi2.order_no = o.no), 
+				'건') as details
+			from orders o, orders_item oi
+			where o.member_no = #{ no }
+				and o.no = oi.order_no
+			order by orders_date desc
+			offset '${ offset }'::integer limit '${ limit }'::integer;
+		]]>
+	</select>
+	
+	<select id="get" parameterType="map" resultType="ordersdetailsdto">
+		<![CDATA[
+			select no, code, date, memo, status, orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address, receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address, total_order_account
+			from orders
+			where no = #{ no }
+		]]>
+		<choose>
+			<when test='orders.memberStatus == "Y"'>
+				<![CDATA[
+					and member_no = #{ orders.memberNo };
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					and password = encode(digest('${ orders.password }', 'sha512'), 'hex');
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	<select id="getItems" parameterType="long" resultType="ordersitemdto">
+		<![CDATA[
+			select poi.no as no, 
+				oi.quantity as quantity, 
+				p.no as product_no, 
+				p.code as product_code, 
+				p.name as product_name, 
+				poi.no as product_option_item_no, 
+				poi.details as product_option_item_details,
+				(p.sell_price + poi.additional_amount) * oi.quantity as sell_price
+			from orders o, product p, product_option_item poi, orders_item oi
+			where o.no = oi.order_no
+				and oi.product_option_item_no = poi.no
+				and poi.product_no = p.no
+				and o.no = #{ value };
+		]]>
+	</select>
+	
+	<update id="updateStatusToCANCEL" parameterType="long">
+		<![CDATA[
+		
+		]]>
+	</update>
+	
 </mapper>

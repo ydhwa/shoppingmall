@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.cafe24.shoppingmall.vo.BucketItemVo;
 import com.cafe24.shoppingmall.vo.Enum.OrdersStatus;
-import com.cafe24.shoppingmall.vo.OrdersItemVo;
 import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.google.gson.Gson;
 
@@ -106,6 +106,7 @@ public class OrdersControllerTest {
 	
 	
 	@Test
+	@Ignore
 	public void 회원이_주문_성공() throws Exception {
 		Map<String, Object> ordersMap = new HashMap<>();
 		
@@ -123,6 +124,7 @@ public class OrdersControllerTest {
 		successAction("post", "", ordersMap, "", true);
 	}
 	@Test
+	@Ignore
 	public void 비회원이_주문_성공() throws Exception {
 		Map<String, Object> ordersMap = new HashMap<>();
 		
@@ -140,6 +142,7 @@ public class OrdersControllerTest {
 		successAction("post", "", ordersMap, "", true);
 	}
 	@Test
+	@Ignore
 	public void 구매하는_상품이_없어_주문_실패() throws Exception {
 		Map<String, Object> ordersMap = new HashMap<>();
 		
@@ -153,19 +156,34 @@ public class OrdersControllerTest {
 		failureAction("post", "", ordersMap);
 	}
 	
-//	@Test
-//	public void 주문_검색결과_조회_성공() throws Exception {
-//		
-//	}
-//	@Test
-//	public void 주문_상세조회_성공() throws Exception {
-//		
-//	}
-//	
-//	@Test
-//	public void 주문_수정_성공() throws Exception {
-//		
-//	}
+	@Test
+	public void 특정_회원의_주문_내역_조회_성공() throws Exception {
+		successAction("get", "/members/2?offset=0&limit=5", null, ".length()", 2);
+	}
+	@Test
+	public void 회원이_주문_상세조회_성공() throws Exception {
+		// 회원번호 확인
+		OrdersVo ordersVo = new OrdersVo();
+		ordersVo.setMemberStatus("Y");
+		ordersVo.setMemberNo(2L);
+		
+		successAction("post", "/1", ordersVo, ".ordererName", "주문1-주문자");
+		successAction("post", "/1", ordersVo, ".ordersItemDtoList.length()", 3);
+	}
+	@Test
+	public void 비회원이_주문_상세조회_성공() throws Exception {
+		// 비밀번호 확인
+		OrdersVo ordersVo = new OrdersVo();
+		ordersVo.setMemberStatus("N");
+		ordersVo.setPassword("asdf1234!");
+		
+		successAction("post", "/2", ordersVo, ".ordererName", "주문2-주문자");
+	}
+	
+	@Test
+	public void 주문상태_취소로_수정_성공() throws Exception {
+		successAction("put", "/1", null, "", true);
+	}
 	
 	// 삭제는 일부러 넣지 않음.
 	

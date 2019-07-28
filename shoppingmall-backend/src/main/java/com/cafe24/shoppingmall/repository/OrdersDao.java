@@ -1,6 +1,7 @@
 package com.cafe24.shoppingmall.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -8,6 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
+import com.cafe24.shoppingmall.dto.OrdersItemDto;
+import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
 import com.cafe24.shoppingmall.vo.OrdersVo;
 
@@ -43,6 +47,22 @@ public class OrdersDao {
 		}
 		return ordersItemList.size() ==  result;
 	}
+
+	public List<OrdersSummaryDto> getListByMemberNo(Map<String, Object> ordersMap) {
+		return sqlSession.selectList("orders.getByMemberNo", ordersMap);
+	}
+
+	public OrdersDetailsDto get(Map<String, Object> ordersMap) {
+		return sqlSession.selectOne("orders.get", ordersMap);
+	}
+	public List<OrdersItemDto> getItemListByOrderNo(Long no) {
+		return sqlSession.selectList("orders.getItems", no);
+	}
+
+	public Boolean modifyStatusToCANCEL(Long no) {
+		return 1 == sqlSession.update("orders.updateStatusToCANCEL", no);
+	}
+	
 	
 	
 }

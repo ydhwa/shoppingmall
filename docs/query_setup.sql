@@ -392,7 +392,7 @@ values(
 );
 insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
 values(
-	1,
+	3,
 	(select (p.sell_price + poi.additional_amount) * 3
 	 from product p, product_option_item poi
 	 where
@@ -405,7 +405,7 @@ values(
 	 from product_option_item
 	 where no = 2),
 	currval('seq_orders_no'),
-	3
+	2
 );
 insert into orders_item(quantity, product_price, option_contents, product_no, order_no, product_option_item_no)
 values(
@@ -422,7 +422,7 @@ values(
 	 from product_option_item
 	 where no = 3),
 	currval('seq_orders_no'),
-	1
+	3
 );
 update orders
 set total_order_account = (
