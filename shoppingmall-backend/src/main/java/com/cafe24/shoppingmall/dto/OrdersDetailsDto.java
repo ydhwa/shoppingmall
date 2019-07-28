@@ -25,6 +25,8 @@ public class OrdersDetailsDto {
 	private String receiverDetailAddress;	// 수령자 상세주소
 	
 	private Integer totalOrderAccount;		// 주문총액(배송비 포함)
+	
+	private Long memberNo;
 
 	private List<OrdersItemDto> ordersItemDtoList;	// 주문 상품 리스트
 
@@ -187,6 +189,14 @@ public class OrdersDetailsDto {
 	public void setOrdersItemDtoList(List<OrdersItemDto> ordersItemDtoList) {
 		this.ordersItemDtoList = ordersItemDtoList;
 	}
+	
+	public Long getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(Long memberNo) {
+		this.memberNo = memberNo;
+	}
 
 	@Override
 	public String toString() {
@@ -198,7 +208,7 @@ public class OrdersDetailsDto {
 				+ ", receiverHomeNumber=" + receiverHomeNumber + ", receiverPhoneNumber=" + receiverPhoneNumber
 				+ ", receiverPostalCode=" + receiverPostalCode + ", receiverBaseAddress=" + receiverBaseAddress
 				+ ", receiverDetailAddress=" + receiverDetailAddress + ", totalOrderAccount=" + totalOrderAccount
-				+ ", ordersItemDtoList=" + ordersItemDtoList + "]";
+				+ ", memberNo=" + memberNo + ", ordersItemDtoList=" + ordersItemDtoList + "]";
 	}
 
 }

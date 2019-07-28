@@ -1,5 +1,6 @@
 package com.cafe24.shoppingmall.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +62,18 @@ public class OrdersDao {
 
 	public Boolean modifyStatusToCANCEL(Long no) {
 		return 1 == sqlSession.update("orders.updateStatusToCANCEL", no);
+	}
+
+	public List<OrdersSummaryDto> getListBySearchToAdmin(HashMap<String, String> paramMap) {
+		return sqlSession.selectList("orders.searchToAdmin", paramMap);
+	}
+
+	public OrdersDetailsDto getByNoToAdmin(Long no) {
+		return sqlSession.selectOne("orders.getToAdmin", no);
+	}
+
+	public Boolean modifyStatusToAdmin(OrdersVo ordersVo) {
+		return 1 == sqlSession.update("orders.updateStatusToAdmin", ordersVo);
 	}
 	
 	

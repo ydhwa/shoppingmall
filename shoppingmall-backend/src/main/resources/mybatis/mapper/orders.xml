@@ -168,4 +168,122 @@
 		]]>
 	</update>
 	
+	<select id="searchToAdmin" parameterType="map" resultType="orderssummarydto">
+		<![CDATA[
+			select distinct o.no as orders_no, o.code as orders_code, to_char(o.date, 'YYYY-MM-DD HH24:mm:ss') as orders_date, o.status as orders_status, o.total_order_account as orders_total_order_account,
+				concat(
+				(select p1.name from product p1, orders_item oi1 where p1.no = oi1.product_no and oi1.order_no = o.no order by p1.no limit 1), 
+				' 외 ', 
+				(select count(oi2.no) - 1 from orders o2, orders_item oi2 where o2.no = oi2.order_no and oi2.order_no = o.no), 
+				'건') as details
+			from orders o, orders_item oi
+			where o.no = oi.order_no
+		]]>
+		<if test="memberNo != null">
+			<![CDATA[
+				and o.member_no = #{ memberNo }
+			]]>
+		</if>
+		<if test="code != null">
+			<![CDATA[
+				and o.code like concat('%', '${ code }','%')
+			]]>
+		</if>
+		<if test="date != null">
+			<![CDATA[
+				and o.date > date('${ code }')
+			]]>
+		</if>
+		<if test="memo != null">
+			<![CDATA[
+				and o.memo like concat('%', '${ memo }','%')
+			]]>
+		</if>
+		<if test="orderer_name != null">
+			<![CDATA[
+				and o.orderer_name like concat('%', '${ ordererName }','%')
+			]]>
+		</if>
+		<if test="orderer_home_number != null">
+			<![CDATA[
+				and o.orderer_home_number like concat('%', '${ ordererHomeNumber }','%')
+			]]>
+		</if>
+		<if test="orderer_phone_number != null">
+			<![CDATA[
+				and o.orderer_phone_number like concat('%', '${ ordererPhoneNumber }','%')
+			]]>
+		</if>
+		<if test="orderer_email != null">
+			<![CDATA[
+				and o.orderer_email like concat('%', '${ ordererEmail }','%')
+			]]>
+		</if>
+		<if test="orderer_postal_code != null">
+			<![CDATA[
+				and o.orderer_postal_code like concat('%', '${ ordererPostalCode }','%')
+			]]>
+		</if>
+		<if test="orderer_base_address != null">
+			<![CDATA[
+				and o.orderer_base_address like concat('%', '${ ordererBaseAddress }','%')
+			]]>
+		</if>
+		<if test="orderer_detail_address != null">
+			<![CDATA[
+				and o.orderer_detail_address like concat('%', '${ ordererDetailAddress }','%')
+			]]>
+		</if>
+		<if test="receiver_name != null">
+			<![CDATA[
+				and o.receiver_name like concat('%', '${ receiverName }','%')
+			]]>
+		</if>
+		<if test="receiver_home_number != null">
+			<![CDATA[
+				and o.receiver_home_number like concat('%', '${ receiverHomeNumber }','%')
+			]]>
+		</if>
+		<if test="receiver_phone_number != null">
+			<![CDATA[
+				and o.receiver_phone_number like concat('%', '${ receiverPhoneNumber }','%')
+			]]>
+		</if>
+		<if test="receiver_postal_code != null">
+			<![CDATA[
+				and o.receiver_postal_code like concat('%', '${ receiverPostalCode }','%')
+			]]>
+		</if>
+		<if test="receiver_base_address != null">
+			<![CDATA[
+				and o.receiver_base_address like concat('%', '${ receiverBaseAddress }','%')
+			]]>
+		</if>
+		<if test="receiver_detail_address != null">
+			<![CDATA[
+				and o.receiver_detail_address like concat('%', '${ receiverDetailAddress }','%')
+			]]>
+		</if>
+		<![CDATA[
+			order by orders_date desc
+			offset '${ offset }'::integer limit '${ limit }'::integer;
+		]]>
+	</select>
+	
+	<select id="getToAdmin" parameterType="long" resultType="ordersdetailsdto">
+		<![CDATA[
+			select * 
+			from orders 
+			where no = #{ value };
+		]]>
+	</select>
+	
+	<update id="updateStatusToAdmin" parameterType="ordersvo">
+		<![CDATA[
+			update orders
+			set status = '${ status }'
+			where no = #{ no };
+		]]>
+	</update>
+	
 </mapper>

@@ -112,6 +112,7 @@ public class AdminOrdersControllerTest {
 	@Test
 	public void 관리자가_주문_상세조회_성공() throws Exception {
 		successAction("get", "/1", null, ".ordererName", "주문1-주문자");
+		successAction("get", "/1", null, ".ordersItemDtoList.length()", 3);
 	}
 	
 	@Test

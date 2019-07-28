@@ -159,6 +159,36 @@ where code like concat('%', '0726','%')
 order by date desc
 offset '0'::integer limit '5'::integer;
 
+select * from orders_item;
+select distinct o.no as orders_no, o.code as orders_code, to_char(o.date, 'YYYY-MM-DD HH24:mm:ss') as orders_date, o.status as orders_status, o.total_order_account as orders_total_order_account,
+	concat(
+		(select p1.name from product p1, orders_item oi1 where p1.no = oi1.product_no and oi1.order_no = o.no order by p1.no limit 1), 
+		' ¿Ü ', 
+		(select count(oi2.no) - 1 from orders o2, orders_item oi2 where o2.no = oi2.order_no and oi2.order_no = o.no), 
+		'°Ç') as details
+from orders o, orders_item oi
+where 1 = 1
+	and o.member_no = 2
+	and o.no = oi.order_no
+	and o.code like concat('%', '0726','%')
+	and o.date > date('2019-07-21')
+	and o.memo like concat('%', '','%')
+	and o.orderer_name like concat('%', '','%')
+	and o.orderer_home_number like concat('%', '','%')
+	and o.orderer_phone_number like concat('%', '','%')
+	and o.orderer_email like concat('%', '','%')
+	and o.orderer_postal_code like concat('%', '','%')
+	and o.orderer_base_address like concat('%', '','%')
+	and o.orderer_detail_address like concat('%', '','%')
+	and o.receiver_name like concat('%', '','%')
+	and o.receiver_home_number like concat('%', '','%')
+	and o.receiver_phone_number like concat('%', '','%')
+	and o.receiver_postal_code like concat('%', '','%')
+	and o.receiver_base_address like concat('%', '','%')
+	and o.receiver_detail_address like concat('%', '','%')
+order by orders_date desc
+offset '0'::integer limit '5'::integer;
+
 select * 
 from orders 
 where no = 1;

@@ -76,4 +76,19 @@ public class OrdersService {
 		return ordersDao.modifyStatusToCANCEL(no);
 	}
 
+	public List<OrdersSummaryDto> showOrdersBySearchToAdmin(HashMap<String, String> paramMap) {
+		return ordersDao.getListBySearchToAdmin(paramMap);
+	}
+
+	public OrdersDetailsDto showOrdersDetailsToAdmin(Long no) {
+		OrdersDetailsDto ordersDto = ordersDao.getByNoToAdmin(no);
+		ordersDto.setOrdersItemDtoList(ordersDao.getItemListByOrderNo(ordersDto.getNo()));
+
+		return ordersDto;
+	}
+
+	public Boolean modifyOrderStatusToAdmin(OrdersVo ordersVo) {
+		return ordersDao.modifyStatusToAdmin(ordersVo);
+	}
+
 }
