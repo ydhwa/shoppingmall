@@ -43,21 +43,21 @@ public class ProductDao {
 	public ProductDetailsDto getOneToAdmin(Long no) {
 		return sqlSession.selectOne("product.getToAdmin", no);
 	}
+	
+	public List<ProductImageDto> getImageListByNo(Long no) {
+		return sqlSession.selectList("product.getImageListByNo", no);
+	}
 
 	public boolean update(ProductVo product) {
 		return 1 == sqlSession.update("product.updateToAdmin", product);
-	}
+	} 
 
 	public boolean deleteImages(Long no) {
-		return 0 < sqlSession.delete("product.deleteImages", no);
+		return 0 <= sqlSession.delete("product.deleteImages", no);
 	}
 
 	public boolean updateDelStatus(Long no) {
 		return 1 == sqlSession.update("product.updateDelStatus", no);
-	}
-
-	public List<ProductImageDto> getImageListByNo(Long no) {
-		return sqlSession.selectList("product.getImageListByNo", no);
 	}
 
 }

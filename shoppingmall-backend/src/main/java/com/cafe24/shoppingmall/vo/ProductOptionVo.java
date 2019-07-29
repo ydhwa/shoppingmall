@@ -14,11 +14,17 @@ public class ProductOptionVo {
 	private Long no;		// 옵션명 번호
 	private String name;	// 옵션명
 	private List<ProductOptionValueVo> productOptionValueList;	// 옵션값 리스트
+	private Long productNo;
 	
 	public ProductOptionVo() {}
 	public ProductOptionVo(String name, List<ProductOptionValueVo> productOptionValueList) {
 		this.name = name;
 		this.productOptionValueList = productOptionValueList;
+	}
+	public ProductOptionVo(String name, List<ProductOptionValueVo> productOptionValueList, Long productNo) {
+		this.name = name;
+		this.productOptionValueList = productOptionValueList;
+		this.productNo = productNo;
 	}
 		
 	public Long getNo() {
@@ -39,10 +45,15 @@ public class ProductOptionVo {
 	public void setProductOptionValueList(List<ProductOptionValueVo> productOptionValueList) {
 		this.productOptionValueList = productOptionValueList;
 	}
-	
+	public Long getProductNo() {
+		return productNo;
+	}
+	public void setProductNo(Long productNo) {
+		this.productNo = productNo;
+	}
 	@Override
 	public String toString() {
-		return "ProductOptionNameVo [no=" + no + ", name=" + name + ", productOptionValueList=" + productOptionValueList
-				+ "]";
+		return "ProductOptionVo [no=" + no + ", name=" + name + ", productOptionValueList=" + productOptionValueList
+				+ ", productNo=" + productNo + "]";
 	}
 }

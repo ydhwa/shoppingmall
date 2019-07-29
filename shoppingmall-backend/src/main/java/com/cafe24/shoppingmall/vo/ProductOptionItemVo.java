@@ -29,6 +29,16 @@ public class ProductOptionItemVo {
 		this.manageStatus = manageStatus;
 		this.stockQuantity = stockQuantity;
 	}
+	public ProductOptionItemVo(Long productNo, String optionNameKeys, String optionValueKeys, String details, Integer additionalAmount, String availability, ProductManageStatus manageStatus, Integer stockQuantity) {
+		this.productNo = productNo;
+		this.optionNameKeys = optionNameKeys;
+		this.optionValueKeys = optionValueKeys;
+		this.details = details;
+		this.additionalAmount = additionalAmount;
+		this.availability = availability;
+		this.manageStatus = manageStatus;
+		this.stockQuantity = stockQuantity;
+	}
 
 	public Long getNo() {
 		return no;

@@ -61,7 +61,7 @@ public class CategoryDao {
 	}
 	
 	public boolean deleteProductCategories(Long no) {
-		return false;
+		return 0 <= sqlSession.delete("category.deleteByProductNo", no);
 	}
 
 }

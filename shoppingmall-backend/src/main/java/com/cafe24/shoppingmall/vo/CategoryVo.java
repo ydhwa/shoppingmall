@@ -18,6 +18,10 @@ public class CategoryVo {
 	public CategoryVo(Long no) {
 		this.no = no;
 	}
+	public CategoryVo(Long no, Long productNo) {
+		this.no = no;
+		this.productNo = productNo;
+	}
 
 	public Long getNo() {
 		return no;

@@ -34,7 +34,7 @@ public class BucketItemDao {
 	}
 
 	public boolean deleteItemsByProductNo(Long no) {
-		return 1 == sqlSession.delete("bucketitem.deleteItemsByProductNo", no);
+		return 0 <= sqlSession.delete("bucketitem.deleteItemsByProductNo", no);
 	}
 	
 }

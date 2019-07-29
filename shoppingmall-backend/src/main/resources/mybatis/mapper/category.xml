@@ -14,7 +14,22 @@
 	<insert id="insertProductCategory" parameterType="categoryvo">
 		<![CDATA[
 			insert into product_category(product_no, category_no)
-			values((select last_value from seq_product_no), #{ no });
+			values(
+		]]>
+		<choose>
+			<when test="productNo == null">
+				<![CDATA[
+					(select last_value from seq_product_no),
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					#{ productNo },
+				]]>
+			</otherwise>
+		</choose>
+		<![CDATA[
+			#{ no });
 		]]>
 	</insert>
 	
@@ -100,5 +115,13 @@
 				and pc.product_no = #{ value };
 		]]>
 	</select>
+	
+	<delete id="deleteByProductNo" parameterType="long">
+		<![CDATA[
+			delete
+			from product_category
+			where product_no = #{ value };
+		]]>
+	</delete>
 
 </mapper>

@@ -56,4 +56,14 @@
 		</foreach>
 	</delete>
 	
+	<delete id="deleteItemsByProductNo" parameterType="long">
+		<![CDATA[
+			delete
+			from bucket_item
+			where product_option_item_no in (select poi.no
+											from product_option_item poi
+											where poi.product_no = #{ value });
+		]]>
+	</delete>
+	
 </mapper>

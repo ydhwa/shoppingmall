@@ -11,6 +11,7 @@ import com.cafe24.shoppingmall.dto.ProductDetailsDto;
 import com.cafe24.shoppingmall.dto.ProductSummaryDto;
 import com.cafe24.shoppingmall.repository.BucketItemDao;
 import com.cafe24.shoppingmall.repository.CategoryDao;
+import com.cafe24.shoppingmall.repository.OrdersDao;
 import com.cafe24.shoppingmall.repository.ProductDao;
 import com.cafe24.shoppingmall.repository.ProductOptionDao;
 import com.cafe24.shoppingmall.vo.CategoryVo;
@@ -36,6 +37,8 @@ public class ProductService {
 	private CategoryDao categoryDao;
 	@Autowired
 	private BucketItemDao bucketItemDao;
+	@Autowired
+	private OrdersDao ordersDao;
 	
 	/**
 	 * 상품등록
@@ -95,6 +98,10 @@ public class ProductService {
 		if(!bucketItemDao.deleteItemsByProductNo(product.getNo())) {
 			return false;
 		}
+		// 주문 내역에 담겨 있는 품목번호는 전부 null처리시킨다.
+		if(!ordersDao.updateProductOptionItemNoToNull(product.getNo())) {
+			return false;
+		}
 		if(!productOptionDao.deleteOptionItems(product.getNo())) {
 			return false;
 		}
@@ -102,11 +109,17 @@ public class ProductService {
 			return false;
 		}
 		
-		// 나머지 항목은 없을 수도 있는 item들이므로, 우선 존재 여부를 체크한 후 존재하는 경우에만 삭제 후 삽입 작업을 진행한다.
-		if(categoryList != null && (categoryList.size() > 0 && !categoryDao.deleteProductCategories(product.getNo())) && !categoryDao.addProductCategories(categoryList)) {
+		// 나머지 항목은 없을 수도 있는 item들이므로, 우선 존재 여부를 체크한 후 존재하는 경우에만 삽입 작업을 진행한다.
+		if(!categoryDao.deleteProductCategories(product.getNo())) {
 			return false;
 		}
-		if(productImageList != null && (productImageList.size() > 0 && !productDao.deleteImages(product.getNo())) && !productDao.insertImages(productImageList)) {
+		if(categoryList != null && !categoryDao.addProductCategories(categoryList)) {
+			return false;
+		}
+		if(!productDao.deleteImages(product.getNo())) {
+			return false;
+		}
+		if(productImageList != null && !productDao.insertImages(productImageList)) {
 			return false;
 		}
 

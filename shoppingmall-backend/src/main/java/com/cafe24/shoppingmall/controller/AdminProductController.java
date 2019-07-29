@@ -61,8 +61,8 @@ public class AdminProductController {
 		List<CategoryVo> categoryList = mapper.convertValue(productMap.get("categoryList"), new TypeReference<List<CategoryVo>>() {});
 		List<ProductImageVo> productImageList = mapper.convertValue(productMap.get("productImageList"), new TypeReference<List<ProductImageVo>>() {});
 		
-		// 필수 사항들(상품, 옵션, 품목)에 대하여 체크한다.
-		if(product == null || productOptionList == null || productOptionItemList == null) {
+		// 필수 사항에 대하여 체크한다.
+		if(product == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
 		}
 		
@@ -103,10 +103,11 @@ public class AdminProductController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(product));
 	}
 
+	// 수정
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyProduct(@RequestBody Map<String, Object> productMap) {
 		if (productMap == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 수정에 실패했습니다."));
 		}
 
 		// 변환작업
@@ -117,9 +118,9 @@ public class AdminProductController {
 		List<CategoryVo> categoryList = mapper.convertValue(productMap.get("categoryList"), new TypeReference<List<CategoryVo>>() {});
 		List<ProductImageVo> productImageList = mapper.convertValue(productMap.get("productImageList"), new TypeReference<List<ProductImageVo>>() {});
 		
-		// 필수 사항들(상품, 옵션, 품목)에 대하여 체크한다.
-		if(product == null || productOptionList == null || productOptionItemList == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
+		// 필수 사항에 대하여 체크한다.
+		if(product == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 수정에 실패했습니다."));
 		}
 		
 		if("N".equals(product.getOptionAvailable())) {	// 옵션을 사용하지 않는 경우
@@ -130,8 +131,8 @@ public class AdminProductController {
 			productOptionItemList = mapper.convertValue(productMap.get("productOptionItemList"), new TypeReference<List<ProductOptionItemVo>>() {});
 		}
 		
-		Boolean registResult = productService.modifyProductToAdmin(product, productOptionList, productOptionItemList, categoryList, productImageList);
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
+		Boolean modifyResult = productService.modifyProductToAdmin(product, productOptionList, productOptionItemList, categoryList, productImageList);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
 	}
 
 	// 삭제

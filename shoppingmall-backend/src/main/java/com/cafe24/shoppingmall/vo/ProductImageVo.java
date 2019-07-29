@@ -9,6 +9,7 @@ import com.cafe24.shoppingmall.vo.Enum.ProductImageStatus;
  *
  */
 public class ProductImageVo {
+	private Long productNo;
 	private String name;
 	private String extension;
 	private String path;
@@ -16,13 +17,25 @@ public class ProductImageVo {
 	
 	public ProductImageVo() {}
 	public ProductImageVo(String name, String extension, String path, ProductImageStatus status) {
-		super();
+		this.name = name;
+		this.extension = extension;
+		this.path = path;
+		this.status = status;
+	}
+	public ProductImageVo(Long productNo, String name, String extension, String path, ProductImageStatus status) {
+		this.productNo = productNo;
 		this.name = name;
 		this.extension = extension;
 		this.path = path;
 		this.status = status;
 	}
 
+	public Long getProductNo() {
+		return productNo;
+	}
+	public void setProductNo(Long productNo) {
+		this.productNo = productNo;
+	}
 	public String getName() {
 		return name;
 	}
@@ -47,10 +60,9 @@ public class ProductImageVo {
 	public void setStatus(ProductImageStatus status) {
 		this.status = status;
 	}
-
 	@Override
 	public String toString() {
-		return "ProductImageVo [name=" + name + ", extension=" + extension + ", path=" + path + ", status=" + status
-				+ "]";
+		return "ProductImageVo [productNo=" + productNo + ", name=" + name + ", extension=" + extension + ", path="
+				+ path + ", status=" + status + "]";
 	}
 }

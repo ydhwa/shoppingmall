@@ -75,6 +75,10 @@ public class OrdersDao {
 	public Boolean modifyStatusToAdmin(OrdersVo ordersVo) {
 		return 1 == sqlSession.update("orders.updateStatusToAdmin", ordersVo);
 	}
+
+	public boolean updateProductOptionItemNoToNull(Long no) {
+		return 0 <= sqlSession.update("orders.updateProductOptionItemNoToNull", no);
+	}
 	
 	
 	

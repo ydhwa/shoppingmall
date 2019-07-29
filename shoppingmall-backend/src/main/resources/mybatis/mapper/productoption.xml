@@ -7,8 +7,21 @@
 		<![CDATA[
 			insert into product_option_name(no, product_no, name)
 			values(
-				nextval('seq_product_option_name_no'), 
-				(select last_value from seq_product_no), 
+				nextval('seq_product_option_name_no'),
+		]]>
+		<choose>
+			<when test="productNo == null">
+				<![CDATA[
+					(select last_value from seq_product_no),
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					#{ productNo },
+				]]>
+			</otherwise>
+		</choose>
+		<![CDATA[
 				#{ name }
 			);
 		]]>
@@ -29,7 +42,20 @@
 			insert into product_option_item(no, product_no, option_name_keys, option_value_keys, details, additional_amount, availability, manage_status, stock_quantity)
 			values(
 				nextval('seq_product_option_item_no'),
-				(select last_value from seq_product_no),
+		]]>
+		<choose>
+			<when test="productNo == null">
+				<![CDATA[
+					(select last_value from seq_product_no),
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					#{ productNo },
+				]]>
+			</otherwise>
+		</choose>
+		<![CDATA[
 				#{ optionNameKeys },
 				#{ optionValueKeys },
 				#{ details },
@@ -65,6 +91,27 @@
 		]]>
 	</select>
 
-
+	<delete id="deleteOptions" parameterType="long">
+		<![CDATA[
+			delete
+			from product_option_value
+			where product_option_name_no in (
+								select pon.no 
+								from product_option_name pon 
+								where pon.product_no = #{ value });
+									
+			delete 
+			from product_option_name
+			where product_no = #{ value };
+		]]>
+	</delete>
+	
+	<delete id="deleteOptionItems" parameterType="long">
+		<![CDATA[
+			delete
+			from product_option_item
+			where product_no = #{ value };
+		]]>
+	</delete>
 
 </mapper>

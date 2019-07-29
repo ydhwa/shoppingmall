@@ -33,8 +33,21 @@
 				#{ name }, 
 				#{ extension }, 
 				#{ path }, 
-				'${ status }', 
-				(select last_value from seq_product_no)
+				'${ status }',
+		]]>
+		<choose>
+			<when test="productNo == null">
+				<![CDATA[
+					(select last_value from seq_product_no)
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					#{ productNo }
+				]]>
+			</otherwise>
+		</choose>
+		<![CDATA[
 			);
 		]]>
 	</insert>
@@ -150,5 +163,31 @@
 		]]>
 	</select>
 
+	<update id="updateToAdmin" parameterType="productvo">
+		<![CDATA[
+			update product
+			set
+				name = #{ name },
+				supply_price = #{ supplyPrice },
+				sell_price = #{ sellPrice }, 
+				summary_description = #{ summaryDescription },
+				detailed_description = #{ detailedDescription },
+				weight = #{ weight },
+				option_available = #{ optionAvailable },
+				display_status = '${ displayStatus.value }', 
+				availability = #{ availability }, 
+				manage_status = '${ manageStatus }',
+				stock_quantity = #{ stockQuantity }
+			where no = #{ no };
+		]]>
+	</update>
+	
+	<delete id="deleteImages" parameterType="long">
+		<![CDATA[
+			delete
+			from product_image
+			where product_no = #{ value };
+		]]>
+	</delete>
 
 </mapper>

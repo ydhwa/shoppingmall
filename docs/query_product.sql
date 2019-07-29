@@ -164,8 +164,30 @@ select *
 from product_image
 where product_no = 1;
 
+-----
 
+select * 
+from product_option_value
+where product_option_name_no in (
+								select pon.no 
+								from product_option_name pon 
+								where pon.product_no = 1);
+									
+			select * 
+			from product_option_name
+			where product_no = 1;
 
+select *
+			from bucket_item
+			where product_option_item_no in (select poi.no
+											from product_option_item poi
+											where poi.product_no = 1);
+										
+select *
+from product_option_item poi, product p
+where poi.product_no = p.no
+	and p.no = 1;
+		
 ----------
 
 --- product.update

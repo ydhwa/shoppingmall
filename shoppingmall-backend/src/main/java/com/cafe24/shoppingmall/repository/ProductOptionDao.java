@@ -64,11 +64,11 @@ public class ProductOptionDao {
 	}
 
 	public boolean deleteOptions(Long no) {
-		return false;
+		return 0 < sqlSession.delete("productoption.deleteOptions", no);
 	}
 
 	public boolean deleteOptionItems(Long no) {
-		return false;
+		return 0 < sqlSession.delete("productoption.deleteOptionItems", no);
 	}
 
 }

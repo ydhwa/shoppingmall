@@ -286,4 +286,14 @@
 		]]>
 	</update>
 	
+	<update id="updateProductOptionItemNoToNull" parameterType="long">
+		<![CDATA[
+			update orders_item
+			set product_option_item_no = null
+			where product_option_item_no in (select poi.no
+											from product_option_item poi
+											where poi.product_no = #{ value });
+		]]>
+	</update>
+	
 </mapper>
