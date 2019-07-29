@@ -166,33 +166,39 @@ public class BucketControllerTest {
 		successAction("post", "", bucketMap, "", true);
 	}
 	
-//	@Test
-//	public void 회원이_장바구니_조회_성공() throws Exception {
-//		
-//	}
-//	@Test
-//	public void 비회원이_장바구니_조회_성공() throws Exception {
-//		
-//	}
-//	
-//	@Test
-//	public void 장바구니의_수량_변경_성공() throws Exception {
-//		
-//	}
-//	@Test
-//	public void 장바구니의_옵션_변경에서_추가_선택했을때_성공() throws Exception {
-//		
-//	}
-//	@Test
-//	public void 장바구니의_옵션_변경에서_변경_선택했을때_성공() throws Exception {
-//		
-//	}
+	@Test
+	public void 회원이_장바구니_조회_성공() throws Exception {
+		successAction("get", "/members/1", null, ".length()", 2);
+	}
+	@Test
+	public void 비회원이_장바구니_조회_성공() throws Exception {
+		successAction("get", "/non-members/19072520022353484b4fc3b-115a-43b4-a57b-fdd9e48aa2ef", null, ".length()", 1);
+	}
 	
 	@Test
-	public void 장바구니에서_물품들_선택하여_삭제_성공() throws Exception {
+	public void 장바구니의_수량_변경_성공() throws Exception {
+		BucketItemVo bucketItemVo = new BucketItemVo();
+		bucketItemVo.setMemberNo(1L);
+		bucketItemVo.setProductOptionItemNo(1L);
+		bucketItemVo.setQuantity(2);
+		
+		successAction("put", "", bucketItemVo, "", true);
+	}
+	@Test
+	public void 장바구니의_옵션_변경에서_추가_선택했을때_성공() throws Exception {
+		
+	}
+	@Test
+	public void 장바구니의_옵션_변경에서_변경_선택했을때_성공() throws Exception {
+		
+	}
+	
+	@Test
+	public void 회원이_장바구니에서_물품들_선택하여_삭제_성공() throws Exception {
 		List<Long> bucketItemNoList = new ArrayList<>();
-		bucketItemNoList.add(1L);
-		bucketItemNoList.add(2L);
+		List<BucketItemVo> bucketItemList = new ArrayList<>();
+		bucketItemList.add(new BucketItemVo(1L, 1L));
+		bucketItemList.add(new BucketItemVo(1L, 2L));
 		
 		successAction("delete", "", bucketItemNoList, "", true);
 	}

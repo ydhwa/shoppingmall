@@ -114,8 +114,8 @@ public class OrdersControllerTest {
 					"수령자", "033-000-0000", "011-0000-0000", "11111", "강원도 춘천시", "효자동",
 					"Y", 1L, null);
 		List<BucketItemVo> orderItemList = new ArrayList<>();
-		orderItemList.add(new BucketItemVo(1L, 3));
-		orderItemList.add(new BucketItemVo(2L, 2));
+		orderItemList.add(new BucketItemVo(1L, null, 1L, 3));
+		orderItemList.add(new BucketItemVo(1L, null, 2L, 2));
 		
 		ordersMap.put("orders", ordersVo);
 		ordersMap.put("ordersItemList", orderItemList);
@@ -131,8 +131,8 @@ public class OrdersControllerTest {
 					"수령자", "033-000-0000", "011-0000-0000", "11111", "강원도 춘천시", "효자동",
 					"N", null, "asdf1234!");
 		List<BucketItemVo> orderItemList = new ArrayList<>();
-		orderItemList.add(new BucketItemVo(1L, 3));
-		orderItemList.add(new BucketItemVo(2L, 2));
+		orderItemList.add(new BucketItemVo(null, "19072520022353484b4fc3b-115a-43b4-a57b-fdd9e48aa2ef", 1L, 3));
+		orderItemList.add(new BucketItemVo(null, "19072520022353484b4fc3b-115a-43b4-a57b-fdd9e48aa2ef", 2L, 2));
 		
 		ordersMap.put("orders", ordersVo);
 		ordersMap.put("ordersItemList", orderItemList);

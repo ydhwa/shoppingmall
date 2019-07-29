@@ -51,7 +51,22 @@
 			<![CDATA[
 				delete
 				from bucket_item
-				where product_option_item_no = #{ item };
+				where 
+			]]>
+			<choose>
+				<when test="item.memberNo != null">
+					<![CDATA[
+						member_no = #{ item.memberNo }
+					]]>
+				</when>
+				<otherwise>
+					<![CDATA[
+						identifier = #{ identifier }
+					]]>
+				</otherwise>
+			</choose>
+			<![CDATA[
+				and product_option_item_no = #{ item.productOptionItemNo };
 			]]>
 		</foreach>
 	</delete>

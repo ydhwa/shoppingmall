@@ -194,7 +194,7 @@ where poi.product_no = p.no
 
 
 
-
+select * from bucket_item;
 
 ----------
 

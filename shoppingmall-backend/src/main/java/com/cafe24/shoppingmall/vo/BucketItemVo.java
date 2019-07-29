@@ -13,6 +13,16 @@ public class BucketItemVo {
 	private Integer quantity;	// 수량
 	
 	public BucketItemVo() {}
+	public BucketItemVo(Long memberNo, String identifier, Long productOptionItemNo, Integer quantity) {
+		this.memberNo = memberNo;
+		this.identifier = identifier;
+		this.productOptionItemNo = productOptionItemNo;
+		this.quantity = quantity;
+	}
+	public BucketItemVo(Long memberNo, Long productOptionItemNo) {
+		this.memberNo = memberNo;
+		this.productOptionItemNo = productOptionItemNo;
+	}
 	public BucketItemVo(Long productOptionItemNo, Integer quantity) {
 		this.productOptionItemNo = productOptionItemNo;
 		this.quantity = quantity;
