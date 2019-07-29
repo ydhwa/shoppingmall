@@ -60,4 +60,12 @@ public class ProductDao {
 		return 1 == sqlSession.update("product.updateDelStatus", no);
 	}
 
+	public List<ProductSummaryDto> getSearchList(HashMap<String, String> paramMap) {
+		return sqlSession.selectList("product.search", paramMap);
+	}
+
+	public ProductDetailsDto getOne(Long no) {
+		return sqlSession.selectOne("product.get", no);
+	}
+
 }

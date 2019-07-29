@@ -98,7 +98,7 @@ public class ProductControllerTest {
 
 	@Test
 	public void 상품목록_검색결과_조회_성공() throws Exception {
-		successAction("get", "?name=상품&code=P0000004&offset=0&limit=10", null, ".length()", 1);
+		successAction("get", "?name=상품&offset=0&limit=10", null, ".length()", 2);
 	}
 	
 	@Test

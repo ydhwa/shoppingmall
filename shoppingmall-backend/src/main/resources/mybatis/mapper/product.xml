@@ -52,7 +52,7 @@
 		]]>
 	</insert>
 	
-	<select id="product.searchToAdmin" parameterType="map" resultType="productsummarydto">
+	<select id="searchToAdmin" parameterType="map" resultType="productsummarydto">
 		<![CDATA[
 			select 
 				no, 
@@ -128,7 +128,55 @@
 		</if>
 		<![CDATA[
 			order by del_status, code asc
-			offset '0'::integer limit '5'::integer;
+			offset '${ offset }'::integer limit '${ limit }'::integer;
+		]]>
+	</select>
+	
+	<select id="search" parameterType="map" resultType="productsummarydto">
+		<![CDATA[
+			select 
+				no, 
+				name, 
+				sell_price,
+				summary_description, 
+				display_status, 
+				manage_status,
+				(
+					select array_to_string(array_agg(name), ',')
+					from category c, product_category pc
+					where c.no = pc.no
+						and pc.product_no = p.no) as category_list
+			from product p
+			where del_status = 'N'
+				and availability = 'Y'
+		]]>
+		<if test="no != null">
+			<![CDATA[	
+				and no = #{ no }
+			]]>
+		</if>
+		<if test="name != null">
+			<![CDATA[
+				and name like concat('%', '${ name }', '%')
+			]]>	
+		</if>
+		<if test="displayStatus != null">
+			<![CDATA[
+				and display_status = #{ displayStatus }
+			]]>	
+		</if>
+		<if test="category != null">
+			<![CDATA[
+				and (
+					select array_to_string(array_agg(name), ',')
+					from category c, product_category pc
+					where c.no = pc.no
+						and pc.product_no = p.no) like concat('%', #{ category }, '%')
+			]]>	
+		</if>
+		<![CDATA[
+			order by del_status, code asc
+			offset '${ offset }'::integer limit '${ limit }'::integer;
 		]]>
 	</select>
 	
@@ -152,6 +200,24 @@
 				stock_quantity
 			from product
 			where no = #{ value };
+		]]>
+	</select>
+	
+	<select id="get" parameterType="long" resultType="productdetailsdto">
+		<![CDATA[
+			select 
+				no, 
+				code, 
+				name, 
+				sell_price, 
+				detailed_description,
+				weight,
+				option_available,
+				display_status
+			from product
+			where no = #{ value }
+				and availability = 'Y'
+				and del_status = 'N';
 		]]>
 	</select>
 	

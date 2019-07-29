@@ -28,7 +28,7 @@ import com.cafe24.shoppingmall.vo.ProductVo;
  */
 @Service
 public class ProductService {
-	
+
 	@Autowired
 	private ProductDao productDao;
 	@Autowired
@@ -39,7 +39,7 @@ public class ProductService {
 	private BucketItemDao bucketItemDao;
 	@Autowired
 	private OrdersDao ordersDao;
-	
+
 	/**
 	 * 상품등록
 	 * 
@@ -78,7 +78,7 @@ public class ProductService {
 		product.setOptionItemList(productOptionDao.getItemListByProductNo(no));
 		product.setCategoryList(categoryDao.getListByProductNo(no));
 		product.setProductImageList(productDao.getImageListByNo(no));
-		
+
 		return product;
 	}
 
@@ -93,7 +93,7 @@ public class ProductService {
 		if(!productOptionDao.insertOptions(productOptionList)) {
 			return false;
 		}
-		
+
 		// 옵션 삭제 전, 장바구니에 담겨 있던 품목들은 전부 삭제해야 한다.
 		if(!bucketItemDao.deleteItemsByProductNo(product.getNo())) {
 			return false;
@@ -108,7 +108,7 @@ public class ProductService {
 		if(!productOptionDao.insertOptionItems(productOptionItemList)) {
 			return false;
 		}
-		
+
 		// 나머지 항목은 없을 수도 있는 item들이므로, 우선 존재 여부를 체크한 후 존재하는 경우에만 삽입 작업을 진행한다.
 		if(!categoryDao.deleteProductCategories(product.getNo())) {
 			return false;
@@ -159,6 +159,20 @@ public class ProductService {
 		return true;
 	}
 
-	
+	public List<ProductSummaryDto> searchProducts(HashMap<String, String> paramMap) {
+		return productDao.getSearchList(paramMap);
+	}
+
+	public ProductDetailsDto showProduct(Long no) {
+		ProductDetailsDto product = productDao.getOne(no);
+		product.setOptionList(productOptionDao.getListByProductNo(no));
+		product.setOptionItemList(productOptionDao.getItemListByProductNo(no));
+		product.setCategoryList(categoryDao.getListByProductNo(no));
+		product.setProductImageList(productDao.getImageListByNo(no));
+
+		return product;
+	}
+
+
 
 }
