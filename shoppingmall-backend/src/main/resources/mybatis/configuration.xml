@@ -20,6 +20,13 @@
 		<typeAlias alias="orderssummarydto" type="com.cafe24.shoppingmall.dto.OrdersSummaryDto" />
 		<typeAlias alias="ordersdetailsdto" type="com.cafe24.shoppingmall.dto.OrdersDetailsDto" />
 		<typeAlias alias="ordersitemdto" type="com.cafe24.shoppingmall.dto.OrdersItemDto" />
+		<typeAlias alias="bucketitemdto" type="com.cafe24.shoppingmall.dto.BucketItemDto" />
+		<typeAlias alias="productsummarydto" type="com.cafe24.shoppingmall.dto.ProductSummaryDto" />
+		<typeAlias alias="productdetailsdto" type="com.cafe24.shoppingmall.dto.ProductDetailsDto" />
+		<typeAlias alias="productimagedto" type="com.cafe24.shoppingmall.dto.ProductImageDto" />
+		<typeAlias alias="optiondto" type="com.cafe24.shoppingmall.dto.OptionDto" />
+		<typeAlias alias="optionvaluedto" type="com.cafe24.shoppingmall.dto.OptionValueDto" />
+		<typeAlias alias="optionitemdto" type="com.cafe24.shoppingmall.dto.OptionItemDto" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/member.xml" />

@@ -125,7 +125,7 @@
 	
 	<select id="get" parameterType="map" resultType="ordersdetailsdto">
 		<![CDATA[
-			select no, code, date, memo, status, orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address, receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address, total_order_account
+			select no, code, to_char(date, 'YYYY-MM-DD HH24:mm:ss') as date, memo, status, orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address, receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address, total_order_account
 			from orders
 			where no = #{ no }
 		]]>
@@ -199,67 +199,67 @@
 				and o.memo like concat('%', '${ memo }','%')
 			]]>
 		</if>
-		<if test="orderer_name != null">
+		<if test="ordererName != null">
 			<![CDATA[
 				and o.orderer_name like concat('%', '${ ordererName }','%')
 			]]>
 		</if>
-		<if test="orderer_home_number != null">
+		<if test="ordererHomeNumber != null">
 			<![CDATA[
 				and o.orderer_home_number like concat('%', '${ ordererHomeNumber }','%')
 			]]>
 		</if>
-		<if test="orderer_phone_number != null">
+		<if test="ordererPhoneNumber != null">
 			<![CDATA[
 				and o.orderer_phone_number like concat('%', '${ ordererPhoneNumber }','%')
 			]]>
 		</if>
-		<if test="orderer_email != null">
+		<if test="ordererEmail != null">
 			<![CDATA[
 				and o.orderer_email like concat('%', '${ ordererEmail }','%')
 			]]>
 		</if>
-		<if test="orderer_postal_code != null">
+		<if test="ordererPostalCode != null">
 			<![CDATA[
 				and o.orderer_postal_code like concat('%', '${ ordererPostalCode }','%')
 			]]>
 		</if>
-		<if test="orderer_base_address != null">
+		<if test="ordererBaseAddress != null">
 			<![CDATA[
 				and o.orderer_base_address like concat('%', '${ ordererBaseAddress }','%')
 			]]>
 		</if>
-		<if test="orderer_detail_address != null">
+		<if test="ordererDetailAddress != null">
 			<![CDATA[
 				and o.orderer_detail_address like concat('%', '${ ordererDetailAddress }','%')
 			]]>
 		</if>
-		<if test="receiver_name != null">
+		<if test="receiverName != null">
 			<![CDATA[
 				and o.receiver_name like concat('%', '${ receiverName }','%')
 			]]>
 		</if>
-		<if test="receiver_home_number != null">
+		<if test="receiverHomeNumber != null">
 			<![CDATA[
 				and o.receiver_home_number like concat('%', '${ receiverHomeNumber }','%')
 			]]>
 		</if>
-		<if test="receiver_phone_number != null">
+		<if test="receiverPhoneNumber != null">
 			<![CDATA[
 				and o.receiver_phone_number like concat('%', '${ receiverPhoneNumber }','%')
 			]]>
 		</if>
-		<if test="receiver_postal_code != null">
+		<if test="receiverPostalCode != null">
 			<![CDATA[
 				and o.receiver_postal_code like concat('%', '${ receiverPostalCode }','%')
 			]]>
 		</if>
-		<if test="receiver_base_address != null">
+		<if test="receiverBaseAddress != null">
 			<![CDATA[
 				and o.receiver_base_address like concat('%', '${ receiverBaseAddress }','%')
 			]]>
 		</if>
-		<if test="receiver_detail_address != null">
+		<if test="receiverDetailAddress != null">
 			<![CDATA[
 				and o.receiver_detail_address like concat('%', '${ receiverDetailAddress }','%')
 			]]>

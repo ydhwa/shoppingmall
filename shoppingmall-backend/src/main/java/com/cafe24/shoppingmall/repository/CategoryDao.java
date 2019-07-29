@@ -55,4 +55,9 @@ public class CategoryDao {
 		return categoryList.size() == result;
 	}
 
+	public boolean deleteProductCategories(Long no) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

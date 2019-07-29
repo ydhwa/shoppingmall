@@ -48,4 +48,14 @@ public class ProductOptionDao {
 		return productOptionItemList.size() == result;
 	}
 
+	public boolean deleteOptions(Long no) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean deleteOptionItems(Long no) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

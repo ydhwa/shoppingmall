@@ -12,7 +12,6 @@ import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,7 @@ public class AdminProductControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/products";
+	private static final String DEFAULT_PATH = "/admin/products";
 	/**
 	 * 성공 동작 테스트
 	 * 
@@ -112,8 +111,7 @@ public class AdminProductControllerTest {
 	
 	
 	@Test
-	@Ignore
-	public void 옵션_있는_상품_추가_성공() throws Exception {
+	public void 관리자가_옵션_있는_상품_추가_성공() throws Exception {
 		Map<String, Object> productMap = new HashMap<>();
 		
 		ProductVo productVo = new ProductVo();
@@ -160,7 +158,7 @@ public class AdminProductControllerTest {
 		successAction("post", "", productMap, "", true);
 	}
 	@Test
-	public void 옵션_없는_상품_추가_성공() throws Exception {
+	public void 관리자가_옵션_없는_상품_추가_성공() throws Exception {
 		Map<String, Object> productMap = new HashMap<>();
 		
 		ProductVo productVo = new ProductVo();
@@ -182,28 +180,24 @@ public class AdminProductControllerTest {
 	}
 	
 	@Test
-	@Ignore
-	public void 상품목록_검색결과_조회_성공() throws Exception {
+	public void 관리자가_상품목록_검색결과_조회_성공() throws Exception {
 		successAction("get", "?name=상품&code=P0000004&offset=0&limit=10", null, ".length()", 1);
 	}
 	
 	@Test
-	@Ignore
-	public void 상품_상세조회_성공() throws Exception {
+	public void 관리자가_상품_상세조회_성공() throws Exception {
 		successAction("get", "/" + 1L, null, ".name", "상품1");
 	}
 	
 	@Test
-	@Ignore
-	public void 상품_수정_성공() throws Exception {
+	public void 관리자가_상품_수정_성공() throws Exception {
 		ProductVo productVo = new ProductVo();
 
 		successAction("post", "", productVo, "", true);
 	}
 	
 	@Test
-	@Ignore
-	public void 상품_삭제_성공() throws Exception {
+	public void 관리자가_상품_삭제_성공() throws Exception {
 		successAction("delete", "/" + 3L, null, "", true);
 	}
 }

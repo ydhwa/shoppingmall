@@ -38,82 +38,86 @@
 			);
 		]]>
 	</insert>
+	
+	<select id="product.searchToAdmin" parameterType="map" resultType="productsummarydto">
+		<![CDATA[
+			select 
+				no, 
+				code, 
+				name, 
+				sell_price, 
+				to_char(reg_date, 'YYYY-MM-DD HH24:mm:ss') as reg_date, 
+				del_status, 
+				display_status, 
+				availability, 
+				manage_status,
+				(
+					select array_to_string(array_agg(name), ',')
+					from category c, product_category pc
+					where c.no = pc.no
+						and pc.product_no = p.no) as category_list
+			from product p
+			where 1 = 1
+		]]>
+		<if test="no != null">
+			<![CDATA[	
+				and no = #{ no }
+			]]>
+		</if>
+		<if test="code != null">
+			<![CDATA[
+				and code like concat('%', '${ code }', '%')
+			]]>	
+		</if>
+		<if test="name != null">
+			<![CDATA[
+				and name like concat('%', '${ name }', '%')
+			]]>	
+		</if>
+		<if test="sellPrice != null">
+			<![CDATA[
+				and sell_price > #{ sellPrice }
+			]]>	
+		</if>
+		<if test="regDate != null">
+			<![CDATA[
+				and reg_date > #{ regDate }
+			]]>	
+		</if>
+		<if test="delStatus != null">
+			<![CDATA[
+				and del_status = #{ delStatus }
+			]]>	
+		</if>
+		<if test="displayStatus != null">
+			<![CDATA[
+				and display_status = #{ displayStatus }
+			]]>	
+		</if>
+		<if test="availability != null">
+			<![CDATA[
+				and availability = #{ availability }
+			]]>	
+		</if>
+		<if test="manageStatus != null">
+			<![CDATA[
+				and manage_status = #{ manageStatus }
+			]]>	
+		</if>
+		<if test="category != null">
+			<![CDATA[
+				and (
+					select array_to_string(array_agg(name), ',')
+					from category c, product_category pc
+					where c.no = pc.no
+						and pc.product_no = p.no) like concat('%', #{ category }, '%')
+			]]>	
+		</if>
+		<![CDATA[
+			order by del_status, code asc
+			offset '0'::integer limit '5'::integer;
+		]]>
+	</select>
 
-
-
-	
-<!-- 	<select id="getAll" resultType="map"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			with recursive sub_category(no, name, parent_no, level, path, cycle) as ( -->
-<!-- 				select c.no, c.name, c.parent_no, 0, array[c.no], false -->
-<!-- 				from category c -->
-<!-- 				where parent_no is null -->
-	
-<!-- 				union all -->
-	
-<!-- 				select c.no, c.name, c.parent_no, level + 1, path || c.no, c.no = any(path) -->
-<!-- 				from category c, sub_category sb -->
-<!-- 				where c.parent_no = sb.no and not cycle	 -->
-<!-- 			) -->
-<!-- 			select no, parent_no, name, level, path -->
-<!-- 			from sub_category -->
-<!-- 			order by path; -->
-<!-- 		]]> -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="getAllParents" resultType="map"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			select * -->
-<!-- 			from category -->
-<!-- 			where parent_no is null -->
-<!-- 			order by no asc; -->
-<!-- 		]]> -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="getChildren" parameterType="long" resultType="map"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			with recursive sub_category as ( -->
-<!-- 				select * -->
-<!-- 				from category -->
-<!-- 				where no = #{ value } -->
-	
-<!-- 				union all -->
-	
-<!-- 				select c.* -->
-<!-- 				from category as c -->
-<!-- 				join sub_category as sc -->
-<!-- 				on (c.parent_no = sc.no) -->
-<!-- 			) -->
-<!-- 			select * from sub_category order by no; -->
-<!-- 		]]> -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="get" parameterType="long" resultType="categoryvo"> -->
-<!-- 		select * -->
-<!-- 		from category -->
-<!-- 		where no = #{ value }; -->
-<!-- 	</select> -->
-	
-<!-- 	<update id="update" parameterType="categoryvo"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			update category -->
-<!-- 			set -->
-<!-- 			name = #{ name }, -->
-<!-- 			parent_no = #{ parentNo } -->
-<!-- 			where no = #{ no }; -->
-<!-- 		]]> -->
-<!-- 	</update> -->
-	
-<!-- 	<delete id="delete" parameterType="long"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			delete -->
-<!-- 			from product_category -->
-<!-- 			where category_no = #{ value }; -->
-		
-<!-- 			delete -->
-<!-- 			from category -->
-<!-- 			where no = #{ value }; -->
-<!-- 		]]> -->
-<!-- 	</delete> -->
 
 </mapper>

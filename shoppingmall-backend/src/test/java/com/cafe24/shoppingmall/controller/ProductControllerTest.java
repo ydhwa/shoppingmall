@@ -5,14 +5,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +22,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.vo.CategoryVo;
-import com.cafe24.shoppingmall.vo.Enum.ProductDisplayStatus;
-import com.cafe24.shoppingmall.vo.Enum.ProductImageStatus;
-import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
-import com.cafe24.shoppingmall.vo.ProductImageVo;
-import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
-import com.cafe24.shoppingmall.vo.ProductOptionValueVo;
-import com.cafe24.shoppingmall.vo.ProductOptionVo;
-import com.cafe24.shoppingmall.vo.ProductVo;
 import com.google.gson.Gson;
 
 /**
@@ -112,13 +97,11 @@ public class ProductControllerTest {
 	
 
 	@Test
-	@Ignore
 	public void 상품목록_검색결과_조회_성공() throws Exception {
 		successAction("get", "?name=상품&code=P0000004&offset=0&limit=10", null, ".length()", 1);
 	}
 	
 	@Test
-	@Ignore
 	public void 상품_상세조회_성공() throws Exception {
 		successAction("get", "/" + 1L, null, ".name", "상품1");
 	}

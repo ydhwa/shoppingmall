@@ -59,9 +59,10 @@ public class ProductController {
 		map.put("offset", offset);
 		map.put("limit", limit);
 
-		List<ProductVo> productVoList = productService.searchProducts(map);
+//		List<ProductVo> productVoList = productService.searchProducts(map);
 
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productVoList));
+//		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productVoList));
+		return null;
 	}
 
 	// 상세조회
@@ -72,33 +73,9 @@ public class ProductController {
 			return null;
 		}
 
-		ProductVo productVo = productService.getProduct(no.get());
+//		ProductVo productVo = productService.getProduct(no.get());
 
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productVo));
-	}
-
-	// 수정
-	@RequestMapping(value="", method=RequestMethod.PUT)
-	public ResponseEntity<JSONResult> modifyProduct(@RequestBody ProductVo productVo) {
-		if (productVo == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 수정에 실패했습니다."));
-		}
-
-		Boolean modifyResult = productService.modifyProduct(productVo);
-
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
-	}
-
-	// 삭제
-	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
-	public ResponseEntity<JSONResult> deleteProduct(@PathVariable Optional<Long> no) {
-		// path variable check
-		if (!no.isPresent()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 삭제에 실패했습니다."));
-		}
-		
-		Boolean deleteResult = productService.deleteProduct(no.get());
-
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
+//		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productVo));
+		return null;
 	}
 }

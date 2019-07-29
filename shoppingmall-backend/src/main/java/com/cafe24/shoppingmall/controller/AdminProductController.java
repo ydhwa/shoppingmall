@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
+import com.cafe24.shoppingmall.dto.ProductDetailsDto;
+import com.cafe24.shoppingmall.dto.ProductSummaryDto;
 import com.cafe24.shoppingmall.service.ProductService;
 import com.cafe24.shoppingmall.vo.CategoryVo;
 import com.cafe24.shoppingmall.vo.ProductImageVo;
@@ -78,27 +80,14 @@ public class AdminProductController {
 
 	// 검색결과 조회
 	@RequestMapping(value="", method=RequestMethod.GET)
-	public ResponseEntity<JSONResult> showProductsSearchResult(
-			@RequestParam(value="no") Long no,
-			@RequestParam(value="code") String code,
-			@RequestParam(value="name") String name,
-			@RequestParam(value="categoryno") Long categoryNo,
-			@RequestParam(value="displaystatus") String displayStatus,
-			@RequestParam(value="offset", required=true) Integer offset,
-			@RequestParam(value="limit", required=true) Integer limit) {
+	public ResponseEntity<JSONResult> showProductsSearchResult(@RequestParam HashMap<String, String> paramMap) {
+		if (paramMap == null || !paramMap.containsKey("offset") || !paramMap.containsKey("limit")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 검색에 실패했습니다."));
+		}
 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("no", no);
-		map.put("code", code);
-		map.put("name", name);
-		map.put("categoryno", categoryNo);
-		map.put("displaystatus", displayStatus);
-		map.put("offset", offset);
-		map.put("limit", limit);
+		List<ProductSummaryDto> productList = productService.searchProductsToAdmin(paramMap);
 
-		List<ProductVo> productVoList = productService.searchProducts(map);
-
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productVoList));
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productList));
 	}
 
 	// 상세조회
@@ -106,24 +95,43 @@ public class AdminProductController {
 	public ResponseEntity<JSONResult> showProductDetails(@PathVariable Optional<Long> no) {
 		// path variable check
 		if (!no.isPresent()) {
-			return null;
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 상세 조회에 실패했습니다."));
 		}
 
-		ProductVo productVo = productService.getProduct(no.get());
+		ProductDetailsDto product = productService.showProductToAdmin(no.get());
 
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productVo));
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(product));
 	}
 
-	// 수정
 	@RequestMapping(value="", method=RequestMethod.PUT)
-	public ResponseEntity<JSONResult> modifyProduct(@RequestBody ProductVo productVo) {
-		if (productVo == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 수정에 실패했습니다."));
+	public ResponseEntity<JSONResult> modifyProduct(@RequestBody Map<String, Object> productMap) {
+		if (productMap == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
 		}
 
-		Boolean modifyResult = productService.modifyProduct(productVo);
-
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
+		// 변환작업
+		ObjectMapper mapper = new ObjectMapper();
+		ProductVo product = mapper.convertValue(productMap.get("product"), ProductVo.class);
+		List<ProductOptionVo> productOptionList = new ArrayList<>();
+		List<ProductOptionItemVo> productOptionItemList = new ArrayList<>();
+		List<CategoryVo> categoryList = mapper.convertValue(productMap.get("categoryList"), new TypeReference<List<CategoryVo>>() {});
+		List<ProductImageVo> productImageList = mapper.convertValue(productMap.get("productImageList"), new TypeReference<List<ProductImageVo>>() {});
+		
+		// 필수 사항들(상품, 옵션, 품목)에 대하여 체크한다.
+		if(product == null || productOptionList == null || productOptionItemList == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
+		}
+		
+		if("N".equals(product.getOptionAvailable())) {	// 옵션을 사용하지 않는 경우
+			productOptionList.add(new ProductOptionVo("없음", null));
+			productOptionItemList.add(new ProductOptionItemVo(null, null, "없음", 0, product.getAvailability(), product.getManageStatus(), product.getStockQuantity()));
+		} else {	// 옵션을 사용하는 경우
+			productOptionList = mapper.convertValue(productMap.get("productOptionList"), new TypeReference<List<ProductOptionVo>>() {});
+			productOptionItemList = mapper.convertValue(productMap.get("productOptionItemList"), new TypeReference<List<ProductOptionItemVo>>() {});
+		}
+		
+		Boolean registResult = productService.modifyProductToAdmin(product, productOptionList, productOptionItemList, categoryList, productImageList);
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
 
 	// 삭제
@@ -134,7 +142,7 @@ public class AdminProductController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 삭제에 실패했습니다."));
 		}
 		
-		Boolean deleteResult = productService.deleteProduct(no.get());
+		Boolean deleteResult = productService.deleteProductToAdmin(no.get());
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
 	}

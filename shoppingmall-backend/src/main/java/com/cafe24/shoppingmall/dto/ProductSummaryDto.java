@@ -1,7 +1,5 @@
 package com.cafe24.shoppingmall.dto;
 
-import java.util.List;
-
 import com.cafe24.shoppingmall.vo.Enum.ProductDisplayStatus;
 import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
 
@@ -15,7 +13,7 @@ public class ProductSummaryDto {
 	private ProductDisplayStatus displayStatus;	// 진열상태
 	private String availability;				// 판매여부(Y/N)
 	private ProductManageStatus manageStatus;	// 관리상태
-	private List<CategoryDto> categoryList;		// 카테고리 리스트
+	private String categoryList;				// 카테고리 리스트(문자열화시킴)
 	public Long getNo() {
 		return no;
 	}
@@ -70,10 +68,10 @@ public class ProductSummaryDto {
 	public void setManageStatus(ProductManageStatus manageStatus) {
 		this.manageStatus = manageStatus;
 	}
-	public List<CategoryDto> getCategoryList() {
+	public String getCategoryList() {
 		return categoryList;
 	}
-	public void setCategoryList(List<CategoryDto> categoryList) {
+	public void setCategoryList(String categoryList) {
 		this.categoryList = categoryList;
 	}
 	@Override

@@ -32,5 +32,9 @@ public class BucketItemDao {
 	public Boolean deleteItemsByNo(List<Long> bucketNoList) {
 		return 1 == sqlSession.delete("bucketitem.deleteItemsByNoList", bucketNoList);
 	}
+
+	public boolean deleteItemsByProductNo(Long no) {
+		return 1 == sqlSession.delete("bucketitem.deleteItemsByProductNo", no);
+	}
 	
 }
