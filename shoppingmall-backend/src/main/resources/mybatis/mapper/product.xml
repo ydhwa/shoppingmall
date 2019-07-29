@@ -189,5 +189,13 @@
 			where product_no = #{ value };
 		]]>
 	</delete>
+	
+	<update id="updateDelStatus" parameterType="long">
+		<![CDATA[
+			update product
+			set del_status = 'Y'
+			where no = #{ value };
+		]]>
+	</update>
 
 </mapper>

@@ -240,6 +240,6 @@ public class AdminProductControllerTest {
 	
 	@Test
 	public void 관리자가_상품_삭제_성공() throws Exception {
-		successAction("delete", "/" + 3L, null, "", true);
+		successAction("delete", "/" + 1L, null, "", true);
 	}
 }

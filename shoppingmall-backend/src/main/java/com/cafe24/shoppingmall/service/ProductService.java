@@ -132,7 +132,16 @@ public class ProductService {
 		if(!categoryDao.deleteProductCategories(no)) {
 			return false;
 		}
+		if(!productDao.deleteImages(no)) {
+			return false;
+		}
+		if(!categoryDao.deleteProductCategories(no)) {
+			return false;
+		}
 		if(!bucketItemDao.deleteItemsByProductNo(no)) {
+			return false;
+		}
+		if(!ordersDao.updateProductOptionItemNoToNull(no)) {
 			return false;
 		}
 		if(!productOptionDao.deleteOptions(no)) {
