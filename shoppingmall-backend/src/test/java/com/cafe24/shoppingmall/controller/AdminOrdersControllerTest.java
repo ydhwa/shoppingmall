@@ -5,11 +5,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.vo.BucketItemVo;
 import com.cafe24.shoppingmall.vo.Enum.OrdersStatus;
-import com.cafe24.shoppingmall.vo.OrdersItemVo;
 import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.google.gson.Gson;
 

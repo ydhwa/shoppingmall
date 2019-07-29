@@ -39,43 +39,6 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	/**
-	 * 상품을 등록한다.
-	 * 
-	 * @param productVo 등록할 상품
-	 * @return 등록된 상품정보
-	 */
-	@RequestMapping(value="", method=RequestMethod.POST)
-	public ResponseEntity<JSONResult> registProduct(@RequestBody Map<String, Object> productMap) {
-		if (productMap == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
-		}
-
-		// 변환작업
-		ObjectMapper mapper = new ObjectMapper();
-		ProductVo product = mapper.convertValue(productMap.get("product"), ProductVo.class);
-		List<ProductOptionVo> productOptionList = new ArrayList<>();
-		List<ProductOptionItemVo> productOptionItemList = new ArrayList<>();
-		List<CategoryVo> categoryList = mapper.convertValue(productMap.get("categoryList"), new TypeReference<List<CategoryVo>>() {});
-		List<ProductImageVo> productImageList = mapper.convertValue(productMap.get("productImageList"), new TypeReference<List<ProductImageVo>>() {});
-		
-		// 필수 사항들(상품, 옵션, 품목)에 대하여 체크한다.
-		if(product == null || productOptionList == null || productOptionItemList == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 등록에 실패했습니다."));
-		}
-		
-		if("N".equals(product.getOptionAvailable())) {	// 옵션을 사용하지 않는 경우
-			productOptionList.add(new ProductOptionVo("없음", null));
-			productOptionItemList.add(new ProductOptionItemVo(null, null, "없음", 0, product.getAvailability(), product.getManageStatus(), product.getStockQuantity()));
-		} else {	// 옵션을 사용하는 경우
-			productOptionList = mapper.convertValue(productMap.get("productOptionList"), new TypeReference<List<ProductOptionVo>>() {});
-			productOptionItemList = mapper.convertValue(productMap.get("productOptionItemList"), new TypeReference<List<ProductOptionItemVo>>() {});
-		}
-		
-		Boolean registResult = productService.registProduct(product, productOptionList, productOptionItemList, categoryList, productImageList);
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
-	}
-
 	// 검색결과 조회
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showProductsSearchResult(

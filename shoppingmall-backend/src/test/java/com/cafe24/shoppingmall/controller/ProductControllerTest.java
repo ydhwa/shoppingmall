@@ -110,100 +110,16 @@ public class ProductControllerTest {
 		resultActions.andExpect(status().isBadRequest()).andDo(print());		
 	}
 	
-	
-	@Test
-	@Ignore
-	public void 옵션_있는_상품_추가_성공() throws Exception {
-		Map<String, Object> productMap = new HashMap<>();
-		
-		ProductVo productVo = new ProductVo();
-		productVo.setName("상품5");
-		productVo.setSupplyPrice(5000);
-		productVo.setSellPrice(50000);
-		productVo.setSummaryDescription("요약설명-5");
-		productVo.setDetailedDescription("상세설명-5");
-		productVo.setWeight(5.55);
-		productVo.setOptionAvailable("Y");
-		productVo.setProductDisplayStatus(ProductDisplayStatus.MAIN);
-		productVo.setAvailability("Y");
-		productVo.setProductManageStatus(ProductManageStatus.STOCK);
-		productVo.setStockQuantity(500);
-		
-		List<ProductOptionVo> productOptionList = new ArrayList<>();
-		List<ProductOptionValueVo> productOptionValueList1 = new ArrayList<>();
-		productOptionValueList1.add(new ProductOptionValueVo("L"));
-		productOptionValueList1.add(new ProductOptionValueVo("XL"));
-		List<ProductOptionValueVo> productOptionValueList2 = new ArrayList<>();
-		productOptionValueList2.add(new ProductOptionValueVo("WHITE"));
-		productOptionList.add(new ProductOptionVo("사이즈", productOptionValueList1));
-		productOptionList.add(new ProductOptionVo("색상", productOptionValueList2));
 
-		List<ProductOptionItemVo> productOptionItemList = new ArrayList<>();
-		productOptionItemList.add(new ProductOptionItemVo("1;2", "1;1", "사이즈=L;색상=WHITE", 1000, "Y", ProductManageStatus.STOCK, 500));
-		productOptionItemList.add(new ProductOptionItemVo("1;2", "2;1", "사이즈=XL;색상=WHITE", 1500, "Y", ProductManageStatus.STOCK, 500));
-
-		List<CategoryVo> categoryList = new ArrayList<>();
-		categoryList.add(new CategoryVo(1L));
-		categoryList.add(new CategoryVo(2L));
-		categoryList.add(new CategoryVo(3L));
-		
-		List<ProductImageVo> productImageList = new ArrayList<>();
-		productImageList.add(new ProductImageVo("20190724202712345", "jpg", "/images/", ProductImageStatus.SUB));
-		productImageList.add(new ProductImageVo("20190730111111111", "png", "/images/", ProductImageStatus.MAIN));
-		
-		productMap.put("product", productVo);
-		productMap.put("productOptionList", productOptionList);
-		productMap.put("productOptionItemList", productOptionItemList);
-		productMap.put("categoryList", categoryList);
-		productMap.put("productImageList", productImageList);
-
-		successAction("post", "", productMap, "", true);
-	}
-	@Test
-	public void 옵션_없는_상품_추가_성공() throws Exception {
-		Map<String, Object> productMap = new HashMap<>();
-		
-		ProductVo productVo = new ProductVo();
-		productVo.setName("상품6");
-		productVo.setSupplyPrice(6000);
-		productVo.setSellPrice(60000);
-		productVo.setSummaryDescription("요약설명-6");
-		productVo.setDetailedDescription("상세설명-6");
-		productVo.setWeight(6.0);
-		productVo.setOptionAvailable("N");
-		productVo.setProductDisplayStatus(ProductDisplayStatus.NONE);
-		productVo.setAvailability("Y");
-		productVo.setProductManageStatus(ProductManageStatus.STOCK);
-		productVo.setStockQuantity(600);
-		
-		productMap.put("product", productVo);
-		
-		successAction("post", "", productMap, "", true);
-	}
-	
 	@Test
 	@Ignore
 	public void 상품목록_검색결과_조회_성공() throws Exception {
-		successAction("get", "?name=상품&code=P0000004&offset=1&limit=10", null, ".length()", 1);
+		successAction("get", "?name=상품&code=P0000004&offset=0&limit=10", null, ".length()", 1);
 	}
 	
 	@Test
 	@Ignore
 	public void 상품_상세조회_성공() throws Exception {
 		successAction("get", "/" + 1L, null, ".name", "상품1");
-	}
-	
-	@Test
-	@Ignore
-	public void 상품_수정_성공() throws Exception {
-		ProductVo productVo = new ProductVo();
-
-		successAction("post", "", productVo, "", true);
-	}
-	
-	@Test
-	@Ignore
-	public void 상품_삭제_성공() throws Exception {
-		successAction("delete", "/" + 3L, null, "", true);
 	}
 }
