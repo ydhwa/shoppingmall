@@ -118,6 +118,37 @@
 			offset '0'::integer limit '5'::integer;
 		]]>
 	</select>
+	
+	<select id="getToAdmin" parameterType="long" resultType="productdetailsdto">
+		<![CDATA[
+			select 
+				no, 
+				code, 
+				name, 
+				supply_price,
+				sell_price, 
+				summary_description,
+				detailed_description,
+				to_char(reg_date, 'YYYY-MM-DD HH24:mm:ss') as reg_date, 
+				weight,
+				option_available,
+				del_status, 
+				display_status, 
+				availability, 
+				manage_status,
+				stock_quantity
+			from product
+			where no = #{ value };
+		]]>
+	</select>
+	
+	<select id="getImageListByNo" parameterType="long" resultType="productimagedto">
+		<![CDATA[
+			select *
+			from product_image
+			where product_no = #{ value };
+		]]>
+	</select>
 
 
 </mapper>

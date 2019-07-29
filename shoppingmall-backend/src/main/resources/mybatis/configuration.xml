@@ -27,6 +27,7 @@
 		<typeAlias alias="optiondto" type="com.cafe24.shoppingmall.dto.OptionDto" />
 		<typeAlias alias="optionvaluedto" type="com.cafe24.shoppingmall.dto.OptionValueDto" />
 		<typeAlias alias="optionitemdto" type="com.cafe24.shoppingmall.dto.OptionItemDto" />
+		<typeAlias alias="categorydto" type="com.cafe24.shoppingmall.dto.CategoryDto" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/member.xml" />

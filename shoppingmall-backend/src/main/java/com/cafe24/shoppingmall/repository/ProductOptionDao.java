@@ -8,6 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.shoppingmall.dto.OptionDto;
+import com.cafe24.shoppingmall.dto.OptionItemDto;
 import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 import com.cafe24.shoppingmall.vo.ProductOptionValueVo;
 import com.cafe24.shoppingmall.vo.ProductOptionVo;
@@ -48,13 +50,24 @@ public class ProductOptionDao {
 		return productOptionItemList.size() == result;
 	}
 
+	public List<OptionDto> getListByProductNo(Long no) {
+		List<OptionDto> productOptionList =  sqlSession.selectList("productoption.getListByProductNo", no);
+		for(OptionDto option: productOptionList) {
+			option.setProductOptionValueList(sqlSession.selectList("productoption.getValueListByOptionNameNo", option.getNo()));
+		}
+		
+		return productOptionList;
+	}
+	
+	public List<OptionItemDto> getItemListByProductNo(Long no) {
+		return sqlSession.selectList("productoption.getItemListByProductNo", no);
+	}
+
 	public boolean deleteOptions(Long no) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean deleteOptionItems(Long no) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

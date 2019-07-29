@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.shoppingmall.dto.CategoryDto;
 import com.cafe24.shoppingmall.vo.CategoryVo;
 
 @Repository
@@ -55,8 +56,11 @@ public class CategoryDao {
 		return categoryList.size() == result;
 	}
 
+	public List<CategoryDto> getListByProductNo(Long no) {
+		return sqlSession.selectList("category.getListByProductNo", no);
+	}
+	
 	public boolean deleteProductCategories(Long no) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

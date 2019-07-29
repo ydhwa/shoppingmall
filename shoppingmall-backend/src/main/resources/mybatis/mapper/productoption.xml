@@ -41,90 +41,30 @@
 		]]>
 	</insert>
 
+	<select id="getListByProductNo" parameterType="long" resultType="optiondto">
+		<![CDATA[
+			select *
+			from product_option_name
+			where product_no = #{ value };
+		]]>
+	</select>
+	
+	<select id="getValueListByOptionNameNo" parameterType="long" resultType="optionvaluedto">
+		<![CDATA[
+			select *
+			from product_option_value
+			where product_option_name_no = #{ value };
+		]]>
+	</select>
+	
+	<select id="getItemListByProductNo" parameterType="long" resultType="optionitemdto">
+		<![CDATA[
+			select *
+			from product_option_item
+			where product_no = #{ value };
+		]]>
+	</select>
 
 
-
-
-<!-- 	<insert id="insert" parameterType="categoryvo"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			insert  -->
-<!-- 			into category(no, name, parent_no) -->
-<!-- 			values(nextval('seq_category_no'), #{ name }, #{ parentNo }); -->
-<!-- 		]]> -->
-<!-- 	</insert> -->
-	
-<!-- 	<select id="getAll" resultType="map"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			with recursive sub_category(no, name, parent_no, level, path, cycle) as ( -->
-<!-- 				select c.no, c.name, c.parent_no, 0, array[c.no], false -->
-<!-- 				from category c -->
-<!-- 				where parent_no is null -->
-	
-<!-- 				union all -->
-	
-<!-- 				select c.no, c.name, c.parent_no, level + 1, path || c.no, c.no = any(path) -->
-<!-- 				from category c, sub_category sb -->
-<!-- 				where c.parent_no = sb.no and not cycle	 -->
-<!-- 			) -->
-<!-- 			select no, parent_no, name, level, path -->
-<!-- 			from sub_category -->
-<!-- 			order by path; -->
-<!-- 		]]> -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="getAllParents" resultType="map"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			select * -->
-<!-- 			from category -->
-<!-- 			where parent_no is null -->
-<!-- 			order by no asc; -->
-<!-- 		]]> -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="getChildren" parameterType="long" resultType="map"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			with recursive sub_category as ( -->
-<!-- 				select * -->
-<!-- 				from category -->
-<!-- 				where no = #{ value } -->
-	
-<!-- 				union all -->
-	
-<!-- 				select c.* -->
-<!-- 				from category as c -->
-<!-- 				join sub_category as sc -->
-<!-- 				on (c.parent_no = sc.no) -->
-<!-- 			) -->
-<!-- 			select * from sub_category order by no; -->
-<!-- 		]]> -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="get" parameterType="long" resultType="categoryvo"> -->
-<!-- 		select * -->
-<!-- 		from category -->
-<!-- 		where no = #{ value }; -->
-<!-- 	</select> -->
-	
-<!-- 	<update id="update" parameterType="categoryvo"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			update category -->
-<!-- 			set -->
-<!-- 			name = #{ name }, -->
-<!-- 			parent_no = #{ parentNo } -->
-<!-- 			where no = #{ no }; -->
-<!-- 		]]> -->
-<!-- 	</update> -->
-	
-<!-- 	<delete id="delete" parameterType="long"> -->
-<!-- 		<![CDATA[ -->
-<!-- 			delete -->
-<!-- 			from product_category -->
-<!-- 			where category_no = #{ value }; -->
-		
-<!-- 			delete -->
-<!-- 			from category -->
-<!-- 			where no = #{ value }; -->
-<!-- 		]]> -->
-<!-- 	</delete> -->
 
 </mapper>

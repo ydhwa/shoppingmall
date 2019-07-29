@@ -70,7 +70,13 @@ public class ProductService {
 	}
 
 	public ProductDetailsDto showProductToAdmin(Long no) {
-		return productDao.getOneToAdmin(no);
+		ProductDetailsDto product = productDao.getOneToAdmin(no);
+		product.setOptionList(productOptionDao.getListByProductNo(no));
+		product.setOptionItemList(productOptionDao.getItemListByProductNo(no));
+		product.setCategoryList(categoryDao.getListByProductNo(no));
+		product.setProductImageList(productDao.getImageListByNo(no));
+		
+		return product;
 	}
 
 	public Boolean modifyProductToAdmin(ProductVo product, List<ProductOptionVo> productOptionList, List<ProductOptionItemVo> productOptionItemList, List<CategoryVo> categoryList, List<ProductImageVo> productImageList) {

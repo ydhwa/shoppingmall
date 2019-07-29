@@ -91,5 +91,14 @@
 			where no = #{ value };
 		]]>
 	</delete>
+	
+	<select id="getListByProductNo" parameterType="long" resultType="categorydto">
+		<![CDATA[
+			select *
+			from category c, product_category pc
+			where c.no = pc.category_no
+				and pc.product_no = #{ value };
+		]]>
+	</select>
 
 </mapper>

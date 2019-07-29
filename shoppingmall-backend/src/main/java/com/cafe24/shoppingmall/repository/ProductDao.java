@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cafe24.shoppingmall.dto.ProductDetailsDto;
+import com.cafe24.shoppingmall.dto.ProductImageDto;
 import com.cafe24.shoppingmall.dto.ProductSummaryDto;
 import com.cafe24.shoppingmall.vo.ProductImageVo;
 import com.cafe24.shoppingmall.vo.ProductVo;
@@ -53,6 +54,10 @@ public class ProductDao {
 
 	public boolean updateDelStatus(Long no) {
 		return 1 == sqlSession.update("product.updateDelStatus", no);
+	}
+
+	public List<ProductImageDto> getImageListByNo(Long no) {
+		return sqlSession.selectList("product.getImageListByNo", no);
 	}
 
 }
