@@ -21,12 +21,18 @@ import com.cafe24.shoppingmall.dto.ProductDetailsDto;
 import com.cafe24.shoppingmall.dto.ProductSummaryDto;
 import com.cafe24.shoppingmall.service.ProductService;
 import com.cafe24.shoppingmall.vo.CategoryVo;
+import com.cafe24.shoppingmall.vo.MemberVo;
 import com.cafe24.shoppingmall.vo.ProductImageVo;
 import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 import com.cafe24.shoppingmall.vo.ProductOptionVo;
 import com.cafe24.shoppingmall.vo.ProductVo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 상품에 대한 API 컨트롤러
@@ -36,17 +42,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @RestController("adminProductAPIController")
 @RequestMapping("/api/admin/products")
+@Api(value="/api/admin/products", description="관리자 상품 컨트롤러", consumes="application/json")
 public class AdminProductController {
 
 	@Autowired
 	private ProductService productService;
 
-	/**
-	 * 상품을 등록한다.
-	 * 
-	 * @param productVo 등록할 상품
-	 * @return 등록된 상품정보
-	 */
+	@ApiOperation(value="상품 등록")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="productMap", value="등록할 상품 정보", dataType="Map")
+	})
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<JSONResult> registProduct(@RequestBody Map<String, Object> productMap) {
 		if (productMap == null) {
@@ -75,10 +80,15 @@ public class AdminProductController {
 		}
 		
 		Boolean registResult = productService.registProduct(product, productOptionList, productOptionItemList, categoryList, productImageList);
+		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
 
-	// 검색결과 조회
+	// swagger로는 테스트 할 수 없다.
+	@ApiOperation(value="상품 검색목록 조회", response=ProductSummaryDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="paramMap", value="검색조건", dataType="string", paramType="query")
+	})
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showProductsSearchResult(@RequestParam HashMap<String, String> paramMap) {
 		if (paramMap == null || !paramMap.containsKey("offset") || !paramMap.containsKey("limit")) {
@@ -90,7 +100,10 @@ public class AdminProductController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productList));
 	}
 
-	// 상세조회
+	@ApiOperation(value="상품 상세조회", response=ProductDetailsDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="조회할 상품 번호", dataType="Long", paramType="path")
+	})
 	@RequestMapping(value="/{no}", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showProductDetails(@PathVariable Optional<Long> no) {
 		// path variable check
@@ -103,7 +116,10 @@ public class AdminProductController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(product));
 	}
 
-	// 수정
+	@ApiOperation(value="상품 수정")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="productMap", value="수정할 상품 정보", dataType="Map", paramType="body")
+	})
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyProduct(@RequestBody Map<String, Object> productMap) {
 		if (productMap == null) {
@@ -135,7 +151,10 @@ public class AdminProductController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
 	}
 
-	// 삭제
+	@ApiOperation(value="상품 삭제")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="삭제할 상품 번호", dataType="Long", paramType="path")
+	})
 	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteProduct(@PathVariable Optional<Long> no) {
 		// path variable check

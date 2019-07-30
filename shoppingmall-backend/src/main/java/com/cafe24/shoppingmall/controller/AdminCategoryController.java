@@ -15,20 +15,23 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.CategoryService;
 import com.cafe24.shoppingmall.vo.CategoryVo;
 
-/**
- * 관리자 카테고리에 대한 API 컨트롤러
- * 
- * @author YDH
- *
- */
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @RestController("adminCategoryAPIController")
 @RequestMapping("/api/admin/categories")
+@Api(value="/api/admin/categories", description="관리자 카테고리 컨트롤러", consumes="application/json")
 public class AdminCategoryController {
 
 	@Autowired
 	private CategoryService categoryService;
 
-	// 등록
+	@ApiOperation(value="카테고리 등록")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="categoryVo", value="등록할 카테고리 정보", dataType="CategoryVo")
+	})
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<JSONResult> registCategory(@RequestBody CategoryVo categoryVo) {
 		if (categoryVo == null) {
@@ -39,7 +42,10 @@ public class AdminCategoryController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
 
-	// 수정
+	@ApiOperation(value="카테고리 수정")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="categoryVo", value="수정할 카테고리 정보", dataType="CategoryVo")
+	})
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyCategory(@RequestBody CategoryVo categoryVo) {
 		if (categoryVo == null) {
@@ -50,7 +56,10 @@ public class AdminCategoryController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
 	}
 
-	// 삭제
+	@ApiOperation(value="카테고리 삭제")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="삭제할 카테고리 번호", dataType="Long", paramType="path")
+	})
 	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteCategory(@PathVariable Optional<Long> no) {
 		// path variable check

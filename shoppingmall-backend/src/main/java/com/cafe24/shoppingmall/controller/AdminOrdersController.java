@@ -18,22 +18,27 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
 import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
 import com.cafe24.shoppingmall.service.OrdersService;
+import com.cafe24.shoppingmall.vo.MemberVo;
 import com.cafe24.shoppingmall.vo.OrdersVo;
 
-/**
- * 주문에 대한 API 컨트롤러
- * 
- * @author YDH
- *
- */
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @RestController("adminOrdersAPIController")
 @RequestMapping("/api/admin/orders")
+@Api(value="/api/admin/orders", description="관리자 주문 컨트롤러", consumes="application/json")
 public class AdminOrdersController {
 	
 	@Autowired
 	private OrdersService ordersService;
 	
-	// 검색 결과 조회
+	// swagger로는 테스트 할 수 없다.
+	@ApiOperation(value="주문 검색목록 조회", response=OrdersSummaryDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="paramMap", value="검색조건", dataType="string", paramType="query")
+	})
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showOrdersSearchResultToAdmin(@RequestParam HashMap<String, String> paramMap) {
 		if (paramMap == null || !paramMap.containsKey("offset") || !paramMap.containsKey("limit")) {
@@ -45,7 +50,10 @@ public class AdminOrdersController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(ordersList));
 	}
 	
-	// 상세조회
+	@ApiOperation(value="주문 상세조회", response=OrdersDetailsDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="조회할 주문 번호", dataType="Long", paramType="path")
+	})
 	@RequestMapping(value="/{no}", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showOrderDetailsToAdmin(@PathVariable Optional<Long> no) {
 		// path variable check
@@ -57,7 +65,11 @@ public class AdminOrdersController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(orderResult));	}
 	
-	// 수정(주문 상태 수정만 가능)
+	// 주문 상태 수정만 가능
+	@ApiOperation(value="주문 상태 수정")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="ordersVo", value="수정할 주문 정보", dataType="OrdersVo", paramType="body")
+	})
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyOrderStatusToAdmin(@RequestBody OrdersVo ordersVo) {
 		// path variable check

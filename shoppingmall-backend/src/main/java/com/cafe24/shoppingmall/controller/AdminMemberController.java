@@ -18,20 +18,23 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.MemberService;
 import com.cafe24.shoppingmall.vo.MemberVo;
 
-/**
- * 회원 정보에 대한 API 컨트롤러
- * 
- * @author YDH
- *
- */
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @RestController("adminMemberAPIController")
 @RequestMapping("/api/admin/members")
+@Api(value="/api/admin/members", description="관리자 회원 컨트롤러", consumes="application/json")
 public class AdminMemberController {
 
 	@Autowired
 	private MemberService memberService;
 	
-	// 상세조회
+	@ApiOperation(value="회원 상세조회", response=MemberVo.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="조회할 회원 번호", dataType="Long", paramType="path")
+	})
 	@RequestMapping(value="/{no}", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showMember(@PathVariable("no") Optional<Long> no) {
 		// path variable check
@@ -44,7 +47,11 @@ public class AdminMemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(memberVo));
 	}
 	
-	// 검색결과 조회
+	// swagger로는 테스트 할 수 없다.
+	@ApiOperation(value="회원 검색목록 조회", response=MemberVo.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="paramMap", value="검색조건", dataType="string", paramType="query")
+	})
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showMembers(@RequestParam HashMap<String, String> paramMap) {
 		if(!paramMap.containsKey("offset") || !paramMap.containsKey("limit")) {
@@ -69,7 +76,10 @@ public class AdminMemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(memberList));
 	}
 
-	// 수정
+	@ApiOperation(value="회원 수정")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="memberVo", value="수정할 회원 정보", dataType="MemberVo", paramType="body")
+	})
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyMemberToAdmin(@RequestBody MemberVo memberVo) {
 		// 별도의 validation check를 걸지는 않음. 필요하다면 추후에 수정하지 않을까?

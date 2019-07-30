@@ -39,7 +39,7 @@ import com.cafe24.shoppingmall.vo.ProductVo;
 import com.google.gson.Gson;
 
 /**
- * 상품 컨트롤러 동작에 대한 테스트
+ * 관리자 상품 컨트롤러 테스트
  * 
  * @author YDH
  *
