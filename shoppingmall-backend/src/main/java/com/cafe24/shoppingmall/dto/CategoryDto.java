@@ -1,11 +1,19 @@
 package com.cafe24.shoppingmall.dto;
 
+/**
+ * 카테고리 정보를 보여줄 DTO
+ * 
+ * @author YDH
+ *
+ */
 public class CategoryDto {
 	private Long no;		// 카테고리 번호
 	private String name;	// 카테고리명
 	private Long productNo;	// 상품번호
 	private Long parentNo;	// 상위 카테고리 번호
 	private Integer level;	// 계층 단계 표시 (depth와 비슷함)
+	
+	public CategoryDto() {}
 	
 	public Long getNo() {
 		return no;
@@ -37,6 +45,7 @@ public class CategoryDto {
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
+	
 	@Override
 	public String toString() {
 		return "CategoryDto [no=" + no + ", name=" + name + ", productNo=" + productNo + ", parentNo=" + parentNo

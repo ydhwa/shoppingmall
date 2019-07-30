@@ -3,7 +3,7 @@ package com.cafe24.shoppingmall.vo;
 import com.cafe24.shoppingmall.vo.Enum.OrdersStatus;
 
 /**
- * 주문, 주문조회/관리 시 사용하는 주문 VO
+ * 주문에 대한 VO
  * 
  * @author YDH
  *
@@ -35,7 +35,6 @@ public class OrdersVo {
 	
 	private Long memberNo;				// (회원용)회원번호
 	private String password;			// (비회원용)주문조회 비밀번호
-	
 
 	public OrdersVo() {}
 	public OrdersVo(String memo, OrdersStatus status, String ordererName, String ordererHomeNumber,
@@ -62,7 +61,6 @@ public class OrdersVo {
 		this.memberNo = memberNo;
 		this.password = password;
 	}
-
 	
 	public Long getNo() {
 		return no;

@@ -1,18 +1,18 @@
 package com.cafe24.shoppingmall.vo;
 
 /**
- * 회원 배송지 관리를 위한 배송지 VO
+ * (회원용)배송지에 대한 VO
  * 
  * @author YDH
  *
  */
 public class ShippingAddressVo {
-	private Long no;
-	private Long memberNo;
-	private String postalCode;
-	private String baseAddress;
-	private String detailAddress;
-	private String description;
+	private Long no;				// 번호
+	private Long memberNo;			// 회원번호
+	private String postalCode;		// 우편번호
+	private String baseAddress;		// 기본주소
+	private String detailAddress;	// 상세주소
+	private String description;		// 배송지에 대한 설명
 	
 	public Long getNo() {
 		return no;

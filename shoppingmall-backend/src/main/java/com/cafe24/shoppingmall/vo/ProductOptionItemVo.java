@@ -3,7 +3,7 @@ package com.cafe24.shoppingmall.vo;
 import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
 
 /**
- * 옵션에 따른 상품들에 대한 VO
+ * 옵션에 따른 품목들에 대한 VO
  * 
  * @author YDH
  *

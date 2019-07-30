@@ -7,10 +7,10 @@ package com.cafe24.shoppingmall.vo;
  *
  */
 public class BucketItemVo {
-	private Long memberNo;		// 회원번호
-	private String identifier;	// 장바구니 식별자(비회원용)
+	private Long memberNo;				// 회원번호
+	private String identifier;			// 장바구니 식별자(비회원용)
 	private Long productOptionItemNo;	// 품목번호
-	private Integer quantity;	// 수량
+	private Integer quantity;			// 수량
 	
 	public BucketItemVo() {}
 	public BucketItemVo(Long memberNo, String identifier, Long productOptionItemNo, Integer quantity) {

@@ -1,17 +1,25 @@
 package com.cafe24.shoppingmall.dto;
 
+/**
+ * 장바구니에 담긴 상품 정보를 보여줄 DTO
+ * 
+ * @author YDH
+ *
+ */
 public class BucketItemDto {
-	private Integer sellPrice;
-	private Integer quantity;
+	private Integer sellPrice;				// 판매가
+	private Integer quantity;				// 수량
 	
-	private Long productNo;
-	private String productName;
+	private Long productNo;					// 상품번호
+	private String productName;				// 상품명
 
-	private Long productOptionItemNo;
-	private String productOptionDetails;
+	private Long productOptionItemNo;		// 품목번호
+	private String productOptionDetails;	// 품목상세
 	
-	private Long memberNo;
-	private String identifier;
+	private Long memberNo;					// (식별용) 회원번호
+	private String identifier;				// (식별용) 식별자
+	
+	public BucketItemDto() {}
 	
 	public Long getProductOptionItemNo() {
 		return productOptionItemNo;
@@ -61,6 +69,7 @@ public class BucketItemDto {
 	public void setProductOptionDetails(String productOptionDetails) {
 		this.productOptionDetails = productOptionDetails;
 	}
+	
 	@Override
 	public String toString() {
 		return "BucketItemDto [sellPrice=" + sellPrice + ", quantity=" + quantity + ", productNo=" + productNo

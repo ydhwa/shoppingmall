@@ -1,12 +1,21 @@
 package com.cafe24.shoppingmall.dto;
 
+/**
+ * 주문 검색 결과 정보를 보여줄 DTO
+ * 
+ * @author YDH
+ *
+ */
 public class OrdersSummaryDto {
-	private Long ordersNo;
-	private String ordersCode;
-	private String ordersDate;
-	private String ordersStatus;
-	private Integer ordersTotalOrderAccount;
-	private String details;
+	private Long ordersNo;						// 주문번호
+	private String ordersCode;					// 주문코드
+	private String ordersDate;					// 주문일자
+	private String ordersStatus;				// 주문상태
+	private Integer ordersTotalOrderAccount;	// 총 주문금액
+	private String details;						// "[상품명] 외 N건"
+	
+	public OrdersSummaryDto() {}
+	
 	public Long getOrdersNo() {
 		return ordersNo;
 	}
@@ -43,6 +52,7 @@ public class OrdersSummaryDto {
 	public void setDetails(String details) {
 		this.details = details;
 	}
+	
 	@Override
 	public String toString() {
 		return "OrdersSummaryDto [ordersNo=" + ordersNo + ", ordersCode=" + ordersCode + ", ordersDate=" + ordersDate

@@ -5,6 +5,12 @@ import java.util.List;
 import com.cafe24.shoppingmall.vo.Enum.ProductDisplayStatus;
 import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
 
+/**
+ * 상품 상세 정보를 보여줄 DTO
+ * 
+ * @author YDH
+ *
+ */
 public class ProductDetailsDto {
 	private Long no;							// 상품번호
 	private String code;						// 상품코드
@@ -22,10 +28,13 @@ public class ProductDetailsDto {
 	private ProductManageStatus manageStatus;	// 관리상태
 	private Integer stockQuantity;				// 재고수량
 	
-	private List<OptionDto> optionList;
-	private List<OptionItemDto> optionItemList;
-	private List<CategoryDto> categoryList;
-	private List<ProductImageDto> productImageList;
+	private List<OptionDto> optionList;					// 옵션 리스트
+	private List<OptionItemDto> optionItemList;			// 품목 리스트
+	private List<CategoryDto> categoryList;				// 카테고리 리스트
+	private List<ProductImageDto> productImageList;		// 상품 이미지 리스트
+	
+	public ProductDetailsDto() {}
+	
 	public Long getNo() {
 		return no;
 	}
@@ -140,6 +149,7 @@ public class ProductDetailsDto {
 	public void setProductImageList(List<ProductImageDto> productImageList) {
 		this.productImageList = productImageList;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProductDetailsDto [no=" + no + ", code=" + code + ", name=" + name + ", supplyPrice=" + supplyPrice

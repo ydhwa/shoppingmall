@@ -1,5 +1,11 @@
 package com.cafe24.shoppingmall.dto;
 
+/**
+ * JSON으로 정형화된 성공/실패 데이터를 주고받기 위한 클래스
+ * 
+ * @author YDH
+ *
+ */
 public class JSONResult {
 	private String result;	// success, fail
 	private String message;	// if fail, set

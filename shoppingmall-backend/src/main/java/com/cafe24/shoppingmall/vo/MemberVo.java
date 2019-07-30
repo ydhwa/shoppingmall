@@ -11,7 +11,7 @@ import com.cafe24.shoppingmall.validator.groups.MemberGroups;
 import com.cafe24.shoppingmall.vo.Enum.MemberStatus;
 
 /**
- * 고객관리 시 사용하는 회원 VO
+ * 회원에 대한 VO
  * 
  * @author YDH
  *

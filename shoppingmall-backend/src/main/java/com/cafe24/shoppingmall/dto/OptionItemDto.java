@@ -2,14 +2,22 @@ package com.cafe24.shoppingmall.dto;
 
 import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
 
+/**
+ * 상품의 옵션들이 조합된 상품 품목을 보여줄 DTO
+ * 
+ * @author YDH
+ *
+ */
 public class OptionItemDto {
-	private Long no;					// 품목번호
-	private Long productNo;				// 상품번호
-	private String details;				// 옵션 세부내용
-	private Integer additionalAmount;	// 추가금액
-	private String availability;		// 판매여부(Y/N)
+	private Long no;							// 품목번호
+	private Long productNo;						// 상품번호
+	private String details;						// 옵션 세부내용
+	private Integer additionalAmount;			// 추가금액
+	private String availability;				// 판매여부(Y/N)
 	private ProductManageStatus manageStatus;	// 관리상태
-	private Integer stockQuantity;		// 재고수량
+	private Integer stockQuantity;				// 재고수량
+	
+	public OptionItemDto() {}
 	
 	public Long getNo() {
 		return no;
@@ -53,6 +61,7 @@ public class OptionItemDto {
 	public void setStockQuantity(Integer stockQuantity) {
 		this.stockQuantity = stockQuantity;
 	}
+	
 	@Override
 	public String toString() {
 		return "OptionItemDto [no=" + no + ", productNo=" + productNo + ", details=" + details + ", additionalAmount="

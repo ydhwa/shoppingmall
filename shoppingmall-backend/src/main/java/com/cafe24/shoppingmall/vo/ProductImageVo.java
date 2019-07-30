@@ -3,17 +3,17 @@ package com.cafe24.shoppingmall.vo;
 import com.cafe24.shoppingmall.vo.Enum.ProductImageStatus;
 
 /**
- * 상품 이미지 등록/보이기 시 사용하는 상품 이미지 VO
+ * 상품 이미지에 대한 VO
  * 
  * @author YDH
  *
  */
 public class ProductImageVo {
-	private Long productNo;
-	private String name;
-	private String extension;
-	private String path;
-	private ProductImageStatus status;
+	private Long productNo;				// 상품번호
+	private String name;				// 파일명
+	private String extension;			// 확장자명
+	private String path;				// 저장경로
+	private ProductImageStatus status;	// 상품 이미지 상태(메인, 서브, ...)
 	
 	public ProductImageVo() {}
 	public ProductImageVo(String name, String extension, String path, ProductImageStatus status) {
@@ -60,6 +60,7 @@ public class ProductImageVo {
 	public void setStatus(ProductImageStatus status) {
 		this.status = status;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProductImageVo [productNo=" + productNo + ", name=" + name + ", extension=" + extension + ", path="

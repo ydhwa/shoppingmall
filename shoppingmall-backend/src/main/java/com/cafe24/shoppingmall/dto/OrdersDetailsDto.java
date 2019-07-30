@@ -2,6 +2,12 @@ package com.cafe24.shoppingmall.dto;
 
 import java.util.List;
 
+/**
+ * 주문 상세 정보를 보여줄 DTO
+ * 
+ * @author YDH
+ *
+ */
 public class OrdersDetailsDto {
 	private Long no;					// 주문번호
 	private String code;				// 주문코드
@@ -26,178 +32,139 @@ public class OrdersDetailsDto {
 	
 	private Integer totalOrderAccount;		// 주문총액(배송비 포함)
 	
-	private Long memberNo;
+	private Long memberNo;					// 회원번호
 
 	private List<OrdersItemDto> ordersItemDtoList;	// 주문 상품 리스트
+	
+	public OrdersDetailsDto() {}
 
 	public Long getNo() {
 		return no;
 	}
-
 	public void setNo(Long no) {
 		this.no = no;
 	}
-
 	public String getCode() {
 		return code;
 	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
-
 	public String getDate() {
 		return date;
 	}
-
 	public void setDate(String date) {
 		this.date = date;
 	}
-
 	public String getMemo() {
 		return memo;
 	}
-
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 	public String getOrdererName() {
 		return ordererName;
 	}
-
 	public void setOrdererName(String ordererName) {
 		this.ordererName = ordererName;
 	}
-
 	public String getOrdererHomeNumber() {
 		return ordererHomeNumber;
 	}
-
 	public void setOrdererHomeNumber(String ordererHomeNumber) {
 		this.ordererHomeNumber = ordererHomeNumber;
 	}
-
 	public String getOrdererPhoneNumber() {
 		return ordererPhoneNumber;
 	}
-
 	public void setOrdererPhoneNumber(String ordererPhoneNumber) {
 		this.ordererPhoneNumber = ordererPhoneNumber;
 	}
-
 	public String getOrdererEmail() {
 		return ordererEmail;
 	}
-
 	public void setOrdererEmail(String ordererEmail) {
 		this.ordererEmail = ordererEmail;
 	}
-
 	public String getOrdererPostalCode() {
 		return ordererPostalCode;
 	}
-
 	public void setOrdererPostalCode(String ordererPostalCode) {
 		this.ordererPostalCode = ordererPostalCode;
 	}
-
 	public String getOrdererBaseAddress() {
 		return ordererBaseAddress;
 	}
-
 	public void setOrdererBaseAddress(String ordererBaseAddress) {
 		this.ordererBaseAddress = ordererBaseAddress;
 	}
-
 	public String getOrdererDetailAddress() {
 		return ordererDetailAddress;
 	}
-
 	public void setOrdererDetailAddress(String ordererDetailAddress) {
 		this.ordererDetailAddress = ordererDetailAddress;
 	}
-
 	public String getReceiverName() {
 		return receiverName;
 	}
-
 	public void setReceiverName(String receiverName) {
 		this.receiverName = receiverName;
 	}
-
 	public String getReceiverHomeNumber() {
 		return receiverHomeNumber;
 	}
-
 	public void setReceiverHomeNumber(String receiverHomeNumber) {
 		this.receiverHomeNumber = receiverHomeNumber;
 	}
-
 	public String getReceiverPhoneNumber() {
 		return receiverPhoneNumber;
 	}
-
 	public void setReceiverPhoneNumber(String receiverPhoneNumber) {
 		this.receiverPhoneNumber = receiverPhoneNumber;
 	}
-
 	public String getReceiverPostalCode() {
 		return receiverPostalCode;
 	}
-
 	public void setReceiverPostalCode(String receiverPostalCode) {
 		this.receiverPostalCode = receiverPostalCode;
 	}
-
 	public String getReceiverBaseAddress() {
 		return receiverBaseAddress;
 	}
-
 	public void setReceiverBaseAddress(String receiverBaseAddress) {
 		this.receiverBaseAddress = receiverBaseAddress;
 	}
-
 	public String getReceiverDetailAddress() {
 		return receiverDetailAddress;
 	}
-
 	public void setReceiverDetailAddress(String receiverDetailAddress) {
 		this.receiverDetailAddress = receiverDetailAddress;
 	}
-
 	public Integer getTotalOrderAccount() {
 		return totalOrderAccount;
 	}
-
 	public void setTotalOrderAccount(Integer totalOrderAccount) {
 		this.totalOrderAccount = totalOrderAccount;
 	}
-
 	public List<OrdersItemDto> getOrdersItemDtoList() {
 		return ordersItemDtoList;
 	}
-
 	public void setOrdersItemDtoList(List<OrdersItemDto> ordersItemDtoList) {
 		this.ordersItemDtoList = ordersItemDtoList;
 	}
-	
 	public Long getMemberNo() {
 		return memberNo;
 	}
-
 	public void setMemberNo(Long memberNo) {
 		this.memberNo = memberNo;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "OrdersDetailsDto [no=" + no + ", code=" + code + ", date=" + date + ", memo=" + memo + ", status="
@@ -210,5 +177,4 @@ public class OrdersDetailsDto {
 				+ ", receiverDetailAddress=" + receiverDetailAddress + ", totalOrderAccount=" + totalOrderAccount
 				+ ", memberNo=" + memberNo + ", ordersItemDtoList=" + ordersItemDtoList + "]";
 	}
-
 }

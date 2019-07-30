@@ -2,6 +2,7 @@ package com.cafe24.shoppingmall.vo;
 
 /**
  * Enum 클래스 모음
+ * 
  * @author YDH
  *
  */

@@ -7,6 +7,12 @@ import javax.validation.ConstraintValidatorContext;
 
 import com.cafe24.shoppingmall.validator.ValidPassword;
 
+/**
+ * 비밀번호 유효성 검사 Validator
+ * 
+ * @author YDH
+ *
+ */
 public class PasswordPatternValidator implements ConstraintValidator<ValidPassword, String> {
 	private Pattern pattern = Pattern.compile("(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,20}");
 

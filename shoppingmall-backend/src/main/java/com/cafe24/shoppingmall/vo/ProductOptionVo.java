@@ -14,7 +14,7 @@ public class ProductOptionVo {
 	private Long no;		// 옵션명 번호
 	private String name;	// 옵션명
 	private List<ProductOptionValueVo> productOptionValueList;	// 옵션값 리스트
-	private Long productNo;
+	private Long productNo;	// 상품번호
 	
 	public ProductOptionVo() {}
 	public ProductOptionVo(String name, List<ProductOptionValueVo> productOptionValueList) {
@@ -51,6 +51,7 @@ public class ProductOptionVo {
 	public void setProductNo(Long productNo) {
 		this.productNo = productNo;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProductOptionVo [no=" + no + ", name=" + name + ", productOptionValueList=" + productOptionValueList

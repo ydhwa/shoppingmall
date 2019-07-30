@@ -7,6 +7,12 @@ import javax.validation.ConstraintValidatorContext;
 
 import com.cafe24.shoppingmall.validator.ValidPhoneNumber;
 
+/**
+ * 휴대전화번호 유효성 검사 Validator
+ * 
+ * @author YDH
+ *
+ */
 public class PhoneNumberPatternValidator implements ConstraintValidator<ValidPhoneNumber, String> {
 	private Pattern pattern = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 

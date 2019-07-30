@@ -3,6 +3,12 @@ package com.cafe24.shoppingmall.dto;
 import com.cafe24.shoppingmall.vo.Enum.ProductDisplayStatus;
 import com.cafe24.shoppingmall.vo.Enum.ProductManageStatus;
 
+/**
+ * 상품 검색결과를 보여줄 DTO
+ * 
+ * @author YDH
+ *
+ */
 public class ProductSummaryDto {
 	private Long no;							// 상품번호
 	private String code;						// 상품코드
@@ -14,6 +20,9 @@ public class ProductSummaryDto {
 	private String availability;				// 판매여부(Y/N)
 	private ProductManageStatus manageStatus;	// 관리상태
 	private String categoryList;				// 카테고리 리스트(문자열화시킴)
+	
+	public ProductSummaryDto() {}
+	
 	public Long getNo() {
 		return no;
 	}
@@ -74,6 +83,7 @@ public class ProductSummaryDto {
 	public void setCategoryList(String categoryList) {
 		this.categoryList = categoryList;
 	}
+	
 	@Override
 	public String toString() {
 		return "ProductSummaryDto [no=" + no + ", code=" + code + ", name=" + name + ", sellPrice=" + sellPrice

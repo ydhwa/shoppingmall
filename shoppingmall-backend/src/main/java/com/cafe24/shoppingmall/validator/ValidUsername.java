@@ -11,6 +11,12 @@ import javax.validation.Payload;
 
 import com.cafe24.shoppingmall.validator.constraints.UsernamePatternValidator;
 
+/**
+ * 아이디 유효성 검사 어노테이션 인터페이스
+ * 
+ * @author YDH
+ *
+ */
 @Constraint(validatedBy = UsernamePatternValidator.class)
 @Retention(RUNTIME)
 @Target(FIELD)

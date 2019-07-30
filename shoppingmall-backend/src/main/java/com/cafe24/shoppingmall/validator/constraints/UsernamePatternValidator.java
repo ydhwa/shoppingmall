@@ -7,6 +7,12 @@ import javax.validation.ConstraintValidatorContext;
 
 import com.cafe24.shoppingmall.validator.ValidUsername;
 
+/**
+ * 아이디 유효성 검사 Validator
+ * 
+ * @author YDH
+ *
+ */
 public class UsernamePatternValidator implements ConstraintValidator<ValidUsername, String> {
 	private Pattern pattern = Pattern.compile("[A-Za-z0-9_]{4,12}");
 
