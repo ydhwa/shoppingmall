@@ -13,7 +13,8 @@
 - PostgreSQL
    - (CentOS 6.9)
    - Version - 10.2
-   - pgcrypto
+   - extension
+      - pgcrypto
 
 ## 내용
 - week1: 사용자 시나리오 작성 및 데이터베이스 설계
@@ -24,7 +25,7 @@
 
 -----
 
-![swagger](https://github.com/ydhwa/cafe24-project/blob/master/week2/img/3-1-swagger.PNG)
+![Swagger](https://github.com/ydhwa/cafe24-project/blob/master/week3-5/swagger-summary.PNG?raw=true)
 
 ### docs/
 - EXERD, queries
