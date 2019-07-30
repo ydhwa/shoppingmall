@@ -19,26 +19,30 @@ import com.cafe24.shoppingmall.dto.BucketItemDto;
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.BucketService;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
+import com.cafe24.shoppingmall.vo.MemberVo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * 장바구니에 대한 API 컨트롤러
- * 
- * @author YDH
- *
- */
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @RestController("bucketAPIController")
 @RequestMapping("/api/buckets")
+@Api(value="/api/buckets", description="장바구니 컨트롤러", consumes="application/json")
 public class BucketController {
 
 	@Autowired
 	private BucketService bucketService;
 	
-	// 장바구니 담기
+	@ApiOperation(value="장바구니 담기")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="bucketMap", value="담을 상품 정보", dataType="Map")
+	})
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<JSONResult> putItemsInBucket(@RequestBody Map<String, Object> bucketMap) {
-		// all이 null이 아니라면 담을 때 동일한 품목이 있다면 기존 수량과 합침
+		// all이 null이 아니고, 담을 때 동일한 품목이 있다면 기존 수량과 합침
 		if(bucketMap == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("장바구니 추가에 실패했습니다."));
 		}
@@ -67,7 +71,10 @@ public class BucketController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
 	
-	// 회원의 장바구니 조회
+	@ApiOperation(value="회원의 장바구니 조회", response=BucketItemDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="memberNo", value="장바구니를 조회할 회원 번호", dataType="Long", paramType="path")
+	})
 	@RequestMapping(value="/members/{memberno}", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showMemberBuckets(@PathVariable("memberno") Optional<Long> memberNo) {
 		// path variable check
@@ -80,7 +87,10 @@ public class BucketController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(bucketItemList));
 	}
 	
-	// 비회원의 장바구니 조회
+	@ApiOperation(value="비회원의 장바구니 조회", response=BucketItemDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="identifier", value="장바구니를 조회할 비회원 식별자", dataType="string", paramType="path")
+	})
 	@RequestMapping(value="/non-members/{identifier}", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showNonMemberBuckets(@PathVariable("identifier") Optional<String> identifier) {
 		// path variable check
@@ -93,7 +103,10 @@ public class BucketController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(bucketItemList));
 	}
 	
-	// 수량 수정
+	@ApiOperation(value="장바구니 수량 수정")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="bucketItemVo", value="수정할 장바구니 정보(수량)", dataType="BucketItemVo", paramType="body")
+	})
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyQuantityOfBucketItem(@RequestBody BucketItemVo bucketItemVo) {
 		// path variable check
@@ -106,7 +119,10 @@ public class BucketController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyQuantityResult));
 	}
 	
-	// 삭제
+	@ApiOperation(value="장바구니 물품들 삭제")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="bucketNoList", value="삭제할 장바구니 물품 정보 리스트", dataType="List", paramType="body")
+	})
 	@RequestMapping(value="", method=RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> method(@RequestBody List<BucketItemVo> bucketNoList) {
 		// path variable check

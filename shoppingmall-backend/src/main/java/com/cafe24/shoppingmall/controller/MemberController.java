@@ -18,10 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
+import com.cafe24.shoppingmall.dto.ProductDetailsDto;
 import com.cafe24.shoppingmall.service.MemberService;
 import com.cafe24.shoppingmall.validator.constraints.UsernamePatternValidator;
 import com.cafe24.shoppingmall.validator.groups.MemberGroups;
 import com.cafe24.shoppingmall.vo.MemberVo;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 회원 정보에 대한 API 컨트롤러
@@ -31,18 +37,16 @@ import com.cafe24.shoppingmall.vo.MemberVo;
  */
 @RestController("memberAPIController")
 @RequestMapping("/api/members")
+@Api(value="/api/members", description="회원 컨트롤러", consumes="application/json")
 public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
 
-	/**
-	 * 회원가입
-	 * 
-	 * @param memberVo 회원가입 할 정보가 담겨 있는 회원 정보 객체
-	 * @param bindingResult 유효성 검사 결과
-	 * @return 회원가입 성공여부(true/false)
-	 */
+	@ApiOperation(value="회원가입")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="memberVo", value="가입할 회원 정보", dataType="MemberVo")
+	})
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<JSONResult> join(@RequestBody @Validated(MemberGroups.Join.class) MemberVo memberVo, BindingResult bindingResult) {
 		// Validation check
@@ -62,12 +66,10 @@ public class MemberController {
 		}
 	}
 
-	/**
-	 * 유저네임(=아이디) 중복검사
-	 * 
-	 * @param username 중복검사 할 아이디
-	 * @return 중복여부(true(duplicated)/false(unique))
-	 */
+	@ApiOperation(value="아이디 중복 검사")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="username", value="중복검사할 아이디", dataType="string", paramType="query")
+	})
 	@RequestMapping(value="/duplicate", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> checkUsername(@RequestParam("username") String username) {
 		// Validation check
@@ -81,13 +83,10 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 
-	/**
-	 * 로그인
-	 * 
-	 * @param memberVo 로그인 할 최소한의 정보가 담겨 있는 회원 정보 객체
-	 * @param bindingResult 유효성 검사 결과
-	 * @return 로그인에 성공한 회원의 정보
-	 */
+	@ApiOperation(value="로그인")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="memberVo", value="로그인을 시도할 회원 정보", dataType="MemberVo")
+	})
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public ResponseEntity<JSONResult> login(@RequestBody @Validated(MemberGroups.Login.class) MemberVo memberVo, BindingResult bindingResult) {
 		// Validation check
@@ -103,7 +102,10 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(result));
 	}
 	
-	// 상세조회
+	@ApiOperation(value="회원 상세조회", response=ProductDetailsDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="조회할 회원 번호", dataType="Long", paramType="path")
+	})
 	@RequestMapping(value="/{no}", method=RequestMethod.GET)
 	public ResponseEntity<JSONResult> showMember(@PathVariable("no") Optional<Long> no) {
 		// path variable check
@@ -116,7 +118,10 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(memberVo));
 	}
 	
-	// 수정
+	@ApiOperation(value="회원 정보 수정")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="memberVo", value="수정할 회원 정보", dataType="MemberVo", paramType="body")
+	})
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyMember(@RequestBody @Validated(MemberGroups.Modify.class) MemberVo memberVo, BindingResult bindingResult) {
 		// Validation check
@@ -132,7 +137,10 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyResult));
 	}
 	
-	// 삭제
+	@ApiOperation(value="회원 정보 삭제")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="삭제할 회원 번호", dataType="Long", paramType="path")
+	})
 	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)
 	public ResponseEntity<JSONResult> deleteMember(@PathVariable("no") Optional<Long> no) {
 		// path variable check

@@ -22,11 +22,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.cafe24.shoppingmall.vo.CategoryVo;
 import com.google.gson.Gson;
 
 /**
- * 카테고리 컨트롤러 동작에 대한 테스트
+ * 카테고리 컨트롤러 테스트
  * 
  * @author YDH
  *

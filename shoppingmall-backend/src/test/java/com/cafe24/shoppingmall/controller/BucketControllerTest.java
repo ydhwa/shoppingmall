@@ -31,7 +31,7 @@ import com.cafe24.shoppingmall.vo.BucketItemVo;
 import com.google.gson.Gson;
 
 /**
- * 장바구니 컨트롤러 동작에 대한 테스트
+ * 장바구니 컨트롤러 테스트
  * 
  * @author YDH
  *

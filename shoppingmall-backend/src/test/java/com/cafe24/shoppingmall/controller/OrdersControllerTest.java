@@ -12,7 +12,6 @@ import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.google.gson.Gson;
 
 /**
- * 주문 컨트롤러 동작에 대한 테스트
+ * 주문 컨트롤러 테스트
  * 
  * @author YDH
  *

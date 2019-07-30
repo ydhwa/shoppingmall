@@ -26,7 +26,7 @@ import com.cafe24.shoppingmall.vo.MemberVo;
 import com.google.gson.Gson;
 
 /**
- * 회원 컨트롤러 동작에 대한 테스트
+ * 회원 컨트롤러 테스트
  * 
  * @author YDH
  *

@@ -17,26 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
 import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
+import com.cafe24.shoppingmall.dto.ProductDetailsDto;
 import com.cafe24.shoppingmall.service.OrdersService;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
 import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * 주문에 대한 API 컨트롤러
- * 
- * @author YDH
- *
- */
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @RestController("ordersAPIController")
 @RequestMapping("/api/orders")
+@Api(value="/api/orders", description="주문 컨트롤러", consumes="application/json")
 public class OrdersController {
 
 	@Autowired
 	private OrdersService ordersService;
 
-	// 주문 등록
+	@ApiOperation(value="주문 등록")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="ordersMap", value="등록할 주문 정보", dataType="Map")
+	})
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> registOrder(@RequestBody Map<String, Object> ordersMap) {
 		if (ordersMap == null) {
@@ -62,7 +66,12 @@ public class OrdersController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
 
-	// 주문 내역 조회
+	@ApiOperation(value="회원의 주문 내역 조회", response=OrdersSummaryDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="memberNo", value="주문 내역을 조회할 회원 번호", dataType="Long", paramType="path"),
+		@ApiImplicitParam(name="offset", value="주문 내역 조회 시작점", dataType="string", paramType="query"),
+		@ApiImplicitParam(name="limit", value="주문 내역 조회 끝점", dataType="string", paramType="query")
+	})
 	@RequestMapping(value = "/members/{memberNo}", method = RequestMethod.GET)
 	public ResponseEntity<JSONResult> showOrdersSearchResult(
 			@PathVariable Optional<Long> memberNo, 
@@ -78,7 +87,12 @@ public class OrdersController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(ordersList));
 	}
 
-	// 상세조회. 비회원이 인증해야 해서 POST로 변경
+	// 비회원이 인증해야 해서 POST로 지정
+	@ApiOperation(value="주문 상세 조회", response=ProductDetailsDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="조회할 주문 번호", dataType="Long", paramType="path"),
+		@ApiImplicitParam(name="ordersVo", value="조회에 사용할 인증 수단", dataType="OrdersVo", paramType="body")
+	})
 	@RequestMapping(value = "/{no}", method = RequestMethod.POST)
 	public ResponseEntity<JSONResult> showOrderDetails(@PathVariable Optional<Long> no, @RequestBody OrdersVo ordersVo) {
 		// path variable check
@@ -91,7 +105,11 @@ public class OrdersController {
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(orderResult));
 	}
 
-	// 수정(주문 상태 -> 취소로 변경 가능)
+	// 주문 상태 -> 취소로 변경
+	@ApiOperation(value="주문 취소")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="no", value="취소할 주문 번호", dataType="Long", paramType="path"),
+	})
 	@RequestMapping(value = "/{no}", method = RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyOrderStatusToCANCEL(@PathVariable Optional<Long> no) {
 		// path variable check

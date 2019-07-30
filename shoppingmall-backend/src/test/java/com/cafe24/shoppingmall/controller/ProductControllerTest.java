@@ -25,7 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.google.gson.Gson;
 
 /**
- * 상품 컨트롤러 동작에 대한 테스트
+ * 상품 컨트롤러 테스트
  * 
  * @author YDH
  *

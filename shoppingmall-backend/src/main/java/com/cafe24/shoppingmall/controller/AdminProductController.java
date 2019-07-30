@@ -34,12 +34,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-/**
- * 상품에 대한 API 컨트롤러
- * 
- * @author YDH
- *
- */
 @RestController("adminProductAPIController")
 @RequestMapping("/api/admin/products")
 @Api(value="/api/admin/products", description="관리자 상품 컨트롤러", consumes="application/json")
