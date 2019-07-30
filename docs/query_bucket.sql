@@ -34,3 +34,20 @@ select date(now()) + interval '7' day;
 
 
 select * from bucket_item;
+
+
+-- 장바구니 조회 쿼리
+select
+	bi.quantity as quantity,
+	(bi.quantity * (p.sell_price + poi.additional_amount)) as sell_price,
+	p.no as product_no,
+	p.name as product_name,
+	poi.no as product_option_item_no,
+	poi.details as product_option_details,
+	bi.member_no as member_no,
+	bi.identifier as identifier
+from bucket_item bi, product_option_item poi, product p
+where bi.product_option_item_no = poi.no
+	and p.no = poi.no
+	and bi.member_no = 1
+order by p.no asc;

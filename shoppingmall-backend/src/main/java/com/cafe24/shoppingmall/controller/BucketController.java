@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cafe24.shoppingmall.dto.BucketItemDto;
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.BucketService;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
@@ -72,10 +72,12 @@ public class BucketController {
 	public ResponseEntity<JSONResult> showMemberBuckets(@PathVariable("memberno") Optional<Long> memberNo) {
 		// path variable check
 		if(!memberNo.isPresent()) {
-			return null;
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("장바구니 조회에 실패했습니다."));
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		List<BucketItemDto> bucketItemList = bucketService.showBucketItemList(memberNo.get(), null);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(bucketItemList));
 	}
 	
 	// 비회원의 장바구니 조회
@@ -83,21 +85,25 @@ public class BucketController {
 	public ResponseEntity<JSONResult> showNonMemberBuckets(@PathVariable("identifier") Optional<String> identifier) {
 		// path variable check
 		if(!identifier.isPresent()) {
-			return null;
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("장바구니 조회에 실패했습니다."));
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		List<BucketItemDto> bucketItemList = bucketService.showBucketItemList(null, identifier.get());
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(bucketItemList));
 	}
 	
 	// 수량 수정
-	@RequestMapping(value="/{no}", method=RequestMethod.PUT)
-	public ResponseEntity<JSONResult> modifyQuantityOfBucketItem(@PathVariable("no") Optional<Long> no, @RequestParam(value="quantity", required=true) Integer quantity) {
+	@RequestMapping(value="", method=RequestMethod.PUT)
+	public ResponseEntity<JSONResult> modifyQuantityOfBucketItem(@RequestBody BucketItemVo bucketItemVo) {
 		// path variable check
-		if(!no.isPresent()) {
-			return null;
+		if(bucketItemVo == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("장바구니 수정에 실패했습니다."));
 		}
 		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(null));
+		Boolean modifyQuantityResult = bucketService.modifyQuantity(bucketItemVo);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(modifyQuantityResult));
 	}
 	
 	// 삭제

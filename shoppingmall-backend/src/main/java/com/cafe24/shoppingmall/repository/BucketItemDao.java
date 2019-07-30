@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.shoppingmall.dto.BucketItemDto;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
 
 @Repository
@@ -36,5 +37,16 @@ public class BucketItemDao {
 	public boolean deleteItemsByProductNo(Long no) {
 		return 0 <= sqlSession.delete("bucketitem.deleteItemsByProductNo", no);
 	}
-	
+
+	public List<BucketItemDto> getList(Long memberNo, String identifier) {
+		if(memberNo != null) {
+			return sqlSession.selectList("bucketitem.getListByMemberNo", memberNo);
+		} else {
+			return sqlSession.selectList("bucketitem.getListByIdentifier", identifier);
+		}
+	}
+
+	public Boolean updateQuantity(BucketItemVo bucketItemVo) {
+		return 1 == sqlSession.update("bucketitem.updateQuantity", bucketItemVo);
+	}
 }

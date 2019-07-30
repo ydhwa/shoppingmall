@@ -81,4 +81,62 @@
 		]]>
 	</delete>
 	
+	<select id="getListByMemberNo" parameterType="long" resultType="bucketitemdto">
+		<![CDATA[
+			select
+				bi.quantity as quantity,
+				(bi.quantity * (p.sell_price + poi.additional_amount)) as sell_price,
+				p.no as product_no,
+				p.name as product_name,
+				poi.no as product_option_item_no,
+				poi.details as product_option_details,
+				bi.member_no as member_no,
+				bi.identifier as identifier
+			from bucket_item bi, product_option_item poi, product p
+			where bi.product_option_item_no = poi.no
+				and p.no = poi.no
+				and bi.member_no = #{ value }
+			order by p.no asc;
+		]]>
+	</select>
+	
+	<select id="getListByIdentifier" parameterType="string" resultType="bucketitemdto">
+		<![CDATA[
+			select
+				bi.quantity as quantity,
+				(bi.quantity * (p.sell_price + poi.additional_amount)) as sell_price,
+				p.no as product_no,
+				p.name as product_name,
+				poi.no as product_option_item_no,
+				poi.details as product_option_details,
+				bi.member_no as member_no,
+				bi.identifier as identifier
+			from bucket_item bi, product_option_item poi, product p
+			where bi.product_option_item_no = poi.no
+				and p.no = poi.no
+				and bi.identifier = #{ value }
+			order by p.no asc;
+		]]>
+	</select>
+	
+	<update id="updateQuantity" parameterType="bucketitemvo">
+		<![CDATA[
+			update bucket_item
+			set quantity = #{ quantity }
+			where product_option_item_no = #{ productOptionItemNo }
+		]]>
+		<choose>
+			<when test="memberNo != null">
+				<![CDATA[
+					and member_no = #{ memberNo };
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					and identifier = #{ identifier };
+				]]>
+			</otherwise>
+		</choose>
+	</update>
+	
 </mapper>

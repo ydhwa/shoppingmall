@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.shoppingmall.dto.BucketItemDto;
 import com.cafe24.shoppingmall.repository.BucketItemDao;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
 
@@ -36,6 +37,14 @@ public class BucketService {
 
 	public Boolean deleteItems(List<BucketItemVo> bucketNoList) {
 		return bucketItemDao.deleteItemsByNo(bucketNoList);
+	}
+
+	public List<BucketItemDto> showBucketItemList(Long memberNo, String identifier) {
+		return bucketItemDao.getList(memberNo, identifier);
+	}
+
+	public Boolean modifyQuantity(BucketItemVo bucketItemVo) {
+		return bucketItemDao.updateQuantity(bucketItemVo);
 	}
 
 }
