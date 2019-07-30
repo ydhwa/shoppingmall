@@ -24,12 +24,7 @@ public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
 	
-	/**
-	 * 회원가입
-	 * 
-	 * @param memberVo 회원가입 할 고객의 회원 정보
-	 * @return 회원가입 성공여부
-	 */
+	// 회원가입
 	@Transactional
 	public Boolean join(MemberVo memberVo) {
 		// 남은 데이터 등록(회원번호, 등록일은 데이터베이스 단에서 처리)
@@ -39,22 +34,13 @@ public class MemberService {
 		return memberDao.insert(memberVo) && memberDao.insertAuthority();
 	}
 	
-	/**
-	 * 유저네임(아이디) 중복 체크
-	 * 
-	 * @param memberVo 아이디만 담겨 있는 회원 정보
-	 * @return 중복 아이디 존재 여부(true/false)
-	 */
+	// 유저네임(아이디) 중복 체크
 	public Boolean checkUsernameDuplication(String username) {
+		// 중복 아이디가 존재하면 true, 존재하지 않으면 false를 반환한다.
 		return memberDao.get(username) != null;
 	}
 	
-	/**
-	 * 로그인
-	 * 
-	 * @param memberVo username과 password 가 담겨 있는 회원 정보
-	 * @return 로그인에 성공한 회원의 간략한 정보(번호, 아이디, 이름) 
-	 */
+	// 로그인
 	public MemberVo login(MemberVo memberVo) {
 		return memberDao.get(memberVo);
 	}
@@ -64,12 +50,12 @@ public class MemberService {
 		return memberDao.get(no);
 	}
 
-	// 회원 수정
+	// 회원 수정(회원용)
 	public Boolean modify(MemberVo memberVo) {
 		return memberDao.update(memberVo);
 	}
 	
-	// 회원 삭제
+	// 회원 삭제(회원용)
 	public Boolean delete(Long no) {
 		return memberDao.delete(no);
 	}
@@ -88,7 +74,4 @@ public class MemberService {
 	public Boolean modifyToAdmin(MemberVo memberVo) {
 		return memberDao.updateToAdmin(memberVo);
 	}
-	
-	
-
 }
