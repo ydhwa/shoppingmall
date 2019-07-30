@@ -49,7 +49,7 @@ public class AdminOrdersControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/admin/orders";
+	private static final String DEFAULT_PATH = "/api/admin/orders";
 	/**
 	 * 성공 동작 테스트
 	 * 

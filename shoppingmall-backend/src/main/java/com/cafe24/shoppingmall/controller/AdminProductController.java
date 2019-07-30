@@ -35,7 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 @RestController("adminProductAPIController")
-@RequestMapping("/admin/products")
+@RequestMapping("/api/admin/products")
 public class AdminProductController {
 
 	@Autowired

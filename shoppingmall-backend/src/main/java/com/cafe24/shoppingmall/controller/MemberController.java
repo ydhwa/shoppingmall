@@ -30,7 +30,7 @@ import com.cafe24.shoppingmall.vo.MemberVo;
  *
  */
 @RestController("memberAPIController")
-@RequestMapping("/members")
+@RequestMapping("/api/members")
 public class MemberController {
 
 	@Autowired

@@ -65,16 +65,4 @@ public class WebConfig implements WebMvcConfigurer {
 				.apis(RequestHandlerSelectors.basePackage("com.cafe24.shoppingmall.controller"))
 				.paths(PathSelectors.any()).build();
 	}
-	
-	/*
-	 * MessageSource
-	 */
-//	@Bean
-//	public MessageSource messageSource() {
-//		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//		messageSource.setBasename("messages/messages_ko");
-//		messageSource.setDefaultEncoding("UTF-8");
-//		
-//		return messageSource;
-//	}
 }

@@ -27,7 +27,7 @@ import com.cafe24.shoppingmall.vo.OrdersVo;
  *
  */
 @RestController("adminOrdersAPIController")
-@RequestMapping("/admin/orders")
+@RequestMapping("/api/admin/orders")
 public class AdminOrdersController {
 	
 	@Autowired

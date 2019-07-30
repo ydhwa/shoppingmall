@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 @RestController("bucketAPIController")
-@RequestMapping("/buckets")
+@RequestMapping("/api/buckets")
 public class BucketController {
 
 	@Autowired

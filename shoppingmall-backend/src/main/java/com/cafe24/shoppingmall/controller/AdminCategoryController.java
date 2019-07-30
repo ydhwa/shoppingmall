@@ -1,6 +1,5 @@
 package com.cafe24.shoppingmall.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
@@ -18,13 +16,13 @@ import com.cafe24.shoppingmall.service.CategoryService;
 import com.cafe24.shoppingmall.vo.CategoryVo;
 
 /**
- * 카테고리에 대한 API 컨트롤러
+ * 관리자 카테고리에 대한 API 컨트롤러
  * 
  * @author YDH
  *
  */
 @RestController("adminCategoryAPIController")
-@RequestMapping("/admin/categories")
+@RequestMapping("/api/admin/categories")
 public class AdminCategoryController {
 
 	@Autowired

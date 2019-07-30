@@ -24,7 +24,7 @@ import com.cafe24.shoppingmall.vo.CategoryVo;
  *
  */
 @RestController("categoryAPIController")
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 public class CategoryController {
 
 	@Autowired

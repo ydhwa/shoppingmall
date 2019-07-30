@@ -26,7 +26,7 @@ import com.cafe24.shoppingmall.service.ProductService;
  *
  */
 @RestController("productAPIController")
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
 	@Autowired

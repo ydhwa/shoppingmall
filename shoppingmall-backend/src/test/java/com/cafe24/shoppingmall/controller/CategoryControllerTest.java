@@ -48,7 +48,7 @@ public class CategoryControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/categories";
+	private static final String DEFAULT_PATH = "/api/categories";
 	/**
 	 * 성공 동작 테스트
 	 * 

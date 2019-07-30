@@ -53,7 +53,7 @@ public class BucketControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/buckets";
+	private static final String DEFAULT_PATH = "/api/buckets";
 	/**
 	 * 성공 동작 테스트
 	 * 

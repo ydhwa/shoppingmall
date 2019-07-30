@@ -49,7 +49,7 @@ public class AdminMemberControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/admin/members";
+	private static final String DEFAULT_PATH = "/api/admin/members";
 	/**
 	 * 성공 동작 테스트
 	 * 

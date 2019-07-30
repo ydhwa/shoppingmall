@@ -47,7 +47,7 @@ public class ProductControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/products";
+	private static final String DEFAULT_PATH = "/api/products";
 	/**
 	 * 성공 동작 테스트
 	 * 

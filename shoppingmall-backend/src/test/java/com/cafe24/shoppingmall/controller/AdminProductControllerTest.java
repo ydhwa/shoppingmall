@@ -61,7 +61,7 @@ public class AdminProductControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/admin/products";
+	private static final String DEFAULT_PATH = "/api/admin/products";
 	/**
 	 * 성공 동작 테스트
 	 * 

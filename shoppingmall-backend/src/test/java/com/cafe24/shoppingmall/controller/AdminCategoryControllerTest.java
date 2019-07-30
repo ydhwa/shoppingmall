@@ -26,7 +26,7 @@ import com.cafe24.shoppingmall.vo.CategoryVo;
 import com.google.gson.Gson;
 
 /**
- * 카테고리 컨트롤러 동작에 대한 테스트
+ * 관리자 카테고리 컨트롤러 테스트
  * 
  * @author YDH
  *
@@ -48,7 +48,7 @@ public class AdminCategoryControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/admin/categories";
+	private static final String DEFAULT_PATH = "/api/admin/categories";
 	/**
 	 * 성공 동작 테스트
 	 * 

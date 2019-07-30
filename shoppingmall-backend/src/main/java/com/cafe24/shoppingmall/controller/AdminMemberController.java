@@ -25,7 +25,7 @@ import com.cafe24.shoppingmall.vo.MemberVo;
  *
  */
 @RestController("adminMemberAPIController")
-@RequestMapping("/admin/members")
+@RequestMapping("/api/admin/members")
 public class AdminMemberController {
 
 	@Autowired

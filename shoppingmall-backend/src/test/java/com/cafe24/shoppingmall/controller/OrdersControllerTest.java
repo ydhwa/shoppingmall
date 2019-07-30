@@ -56,7 +56,7 @@ public class OrdersControllerTest {
 	public static void cleanUp() {}
 	
 	
-	private static final String DEFAULT_PATH = "/orders";
+	private static final String DEFAULT_PATH = "/api/orders";
 	/**
 	 * 성공 동작 테스트
 	 * 
