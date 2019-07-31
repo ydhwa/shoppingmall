@@ -89,6 +89,7 @@ public class ProductService {
 	// 상품 수정
 	@Transactional
 	public Boolean modifyProductToAdmin(ProductVo product, List<ProductOptionVo> productOptionList, List<ProductOptionItemVo> productOptionItemList, List<CategoryVo> categoryList, List<ProductImageVo> productImageList) {
+		// 상품 정보 수정
 		if(!productDao.update(product)) {
 			return false;
 		}
@@ -100,7 +101,7 @@ public class ProductService {
 			return false;
 		}
 
-		// 옵션 삭제 전, 장바구니에 담겨 있던 품목들은 전부 삭제해야 한다.
+		// 품목 삭제 전, 장바구니에 담겨 있던 품목들은 전부 삭제해야 한다.
 		if(!bucketItemDao.deleteItemsByProductNo(product.getNo())) {
 			return false;
 		}
