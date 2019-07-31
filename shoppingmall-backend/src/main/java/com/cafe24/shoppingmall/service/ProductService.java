@@ -109,11 +109,11 @@ public class ProductService {
 		if(!ordersDao.updateProductOptionItemNoToNull(product.getNo())) {
 			return false;
 		}
-		// 기존 옵션 삭제
+		// 기존 옵션 품목 삭제
 		if(!productOptionDao.deleteOptionItems(product.getNo())) {
 			return false;
 		}
-		// 새로운 옵션 추가
+		// 새로운 옵션 품목 추가
 		if(!productOptionDao.insertOptionItems(productOptionItemList)) {
 			return false;
 		}
