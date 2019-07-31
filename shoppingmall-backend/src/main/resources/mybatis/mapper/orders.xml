@@ -191,7 +191,7 @@
 		</if>
 		<if test="date != null">
 			<![CDATA[
-				and o.date > date('${ code }')
+				and o.date >= date('${ code }')
 			]]>
 		</if>
 		<if test="memo != null">

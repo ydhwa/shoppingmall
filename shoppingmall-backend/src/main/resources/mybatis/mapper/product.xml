@@ -94,7 +94,7 @@
 		</if>
 		<if test="regDate != null">
 			<![CDATA[
-				and reg_date > #{ regDate }
+				and reg_date >= #{ regDate }
 			]]>	
 		</if>
 		<if test="delStatus != null">

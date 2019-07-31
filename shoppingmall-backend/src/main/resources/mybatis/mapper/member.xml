@@ -139,7 +139,7 @@
 		]]>
 		<if test="regDate != null">
 			<![CDATA[
-				and to_char(reg_date, 'YYYY-MM-DD HH:mm:ss') > date('${ regDate }')
+				and to_char(reg_date, 'YYYY-MM-DD HH:mm:ss') >= date('${ regDate }')
 			]]>
 		</if>
 		<![CDATA[
