@@ -21,7 +21,6 @@ import com.cafe24.shoppingmall.dto.ProductDetailsDto;
 import com.cafe24.shoppingmall.dto.ProductSummaryDto;
 import com.cafe24.shoppingmall.service.ProductService;
 import com.cafe24.shoppingmall.vo.CategoryVo;
-import com.cafe24.shoppingmall.vo.MemberVo;
 import com.cafe24.shoppingmall.vo.ProductImageVo;
 import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 import com.cafe24.shoppingmall.vo.ProductOptionVo;

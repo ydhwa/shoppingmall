@@ -18,7 +18,6 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
 import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
 import com.cafe24.shoppingmall.service.OrdersService;
-import com.cafe24.shoppingmall.vo.MemberVo;
 import com.cafe24.shoppingmall.vo.OrdersVo;
 
 import io.swagger.annotations.Api;

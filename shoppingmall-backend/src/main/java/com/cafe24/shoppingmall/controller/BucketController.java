@@ -19,7 +19,6 @@ import com.cafe24.shoppingmall.dto.BucketItemDto;
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.service.BucketService;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
-import com.cafe24.shoppingmall.vo.MemberVo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
