@@ -89,7 +89,7 @@
 		</if>
 		<if test="sellPrice != null">
 			<![CDATA[
-				and sell_price > #{ sellPrice }
+				and sell_price >= #{ sellPrice }
 			]]>	
 		</if>
 		<if test="regDate != null">
