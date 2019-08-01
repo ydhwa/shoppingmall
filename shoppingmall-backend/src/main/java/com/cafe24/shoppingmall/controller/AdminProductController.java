@@ -128,7 +128,7 @@ public class AdminProductController {
 		List<ProductImageVo> productImageList = mapper.convertValue(productMap.get("productImageList"), new TypeReference<List<ProductImageVo>>() {});
 		
 		// 필수 사항에 대하여 체크한다.
-		if(product == null) {
+		if(product == null || product.getNo() == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("상품 정보 수정에 실패했습니다."));
 		}
 		
