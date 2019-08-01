@@ -109,7 +109,7 @@ public class BucketController {
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyQuantityOfBucketItem(@RequestBody BucketItemVo bucketItemVo) {
 		// path variable check
-		if(bucketItemVo == null) {
+		if(bucketItemVo == null || (bucketItemVo.getIdentifier() == null && bucketItemVo.getMemberNo() == null) || bucketItemVo.getProductOptionItemNo() == null || bucketItemVo.getQuantity() == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("장바구니 수정에 실패했습니다."));
 		}
 		
