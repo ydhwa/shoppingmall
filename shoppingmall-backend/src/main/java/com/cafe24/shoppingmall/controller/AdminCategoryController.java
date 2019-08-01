@@ -48,7 +48,7 @@ public class AdminCategoryController {
 	})
 	@RequestMapping(value="", method=RequestMethod.PUT)
 	public ResponseEntity<JSONResult> modifyCategory(@RequestBody CategoryVo categoryVo) {
-		if (categoryVo == null) {
+		if (categoryVo == null || categoryVo.getNo() == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("카테고리 수정에 실패했습니다."));
 		}
 		
