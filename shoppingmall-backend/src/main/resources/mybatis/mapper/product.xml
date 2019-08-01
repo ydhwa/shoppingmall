@@ -102,6 +102,11 @@
 				and del_status = #{ delStatus }
 			]]>	
 		</if>
+		<if test="delStatus == null">
+			<![CDATA[
+				and del_status = 'N'
+			]]>	
+		</if>
 		<if test="displayStatus != null">
 			<![CDATA[
 				and display_status = #{ displayStatus }
