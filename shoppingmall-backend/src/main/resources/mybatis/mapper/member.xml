@@ -38,13 +38,21 @@
 	</insert>
 
 	<!-- Spring security 적용 대비하여 password 포함한 정보 가져오도록 함 -->	
-	<select id="getByUsername" resultType="membervo"
+	<select id="getByUsername" resultType="memberdto"
 		parameterType="string">
 		<![CDATA[
 			select no, username, password, convert_from(decrypt(decode(name, 'hex'), 'key', 'AES'), 'utf-8') as name
 			from member
 			where username = #{ value }
 				and del_status = 'N';
+		]]>
+	</select>
+	
+	<select id="getAuthoritiesByUsername" resultType="string" parameterType="long">
+		<![CDATA[
+			select role
+			from authority
+			where member_no = #{ value };
 		]]>
 	</select>
 

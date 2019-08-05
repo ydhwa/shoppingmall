@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
+import com.cafe24.shoppingmall.dto.MemberDto;
 import com.cafe24.shoppingmall.dto.ProductDetailsDto;
 import com.cafe24.shoppingmall.service.MemberService;
 import com.cafe24.shoppingmall.validator.constraints.UsernamePatternValidator;
@@ -151,5 +152,21 @@ public class MemberController {
 		Boolean deleteResult = memberService.delete(no.get());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
+	}
+	
+	@ApiOperation(value="아이디로 간단한 회원 정보 꺼내오기(Spring Security)")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="username", value="조회할 회원 아이디", dataType="String", paramType="path")
+	})
+	@RequestMapping(value="/security/{username}", method=RequestMethod.GET)
+	public ResponseEntity<JSONResult> showMemberByUsername(@PathVariable("username") Optional<String> username) {
+		// path variable check
+		if(!username.isPresent()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("회원 정보를 얻어오는 데 실패했습니다."));
+		}
+		
+		MemberDto memberDto = memberService.getByUsername(username.get());
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(memberDto));
 	}
 }

@@ -224,4 +224,9 @@ public class MemberControllerTest {
 	public void 회원정보_삭제_성공() throws Exception {
 		successAction("delete", "/1", "", "", true);
 	}
+	
+	@Test
+	public void 아이디로_회원정보_얻어오기_성공() throws Exception {
+		successAction("get", "/security/userA01", "", ".username", "userA01");
+	}
 }

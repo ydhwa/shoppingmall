@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.shoppingmall.dto.MemberDto;
 import com.cafe24.shoppingmall.vo.MemberVo;
 
 /**
@@ -37,8 +38,8 @@ public class MemberDao {
 
 	// 회원 아이디로 조회
 	// 아이디 중복 검사 시 사용한다.
-	public MemberVo get(String username) {
-		return sqlSession.selectOne("member.getByUsername", username);
+	public Boolean getIsDuplicatedUsername(String username) {
+		return null != sqlSession.selectOne("member.getByUsername", username);
 	}
 	
 	// 회원 아이디와 비밀번호로 조회
@@ -77,5 +78,13 @@ public class MemberDao {
 	// 관리자가 회원 정보 수정(회원이 변경할 수 없는 정보까지 변경할 수 있다.)
 	public Boolean updateToAdmin(MemberVo memberVo) {
 		return 1 == sqlSession.update("member.updateToAdmin", memberVo);
+	}
+	
+	// Spring Security에 사용될 메소드
+	public MemberDto getByUsername(String username) {
+		MemberDto memberDto = sqlSession.selectOne("member.getByUsername", username);
+		memberDto.setAuthorities(sqlSession.selectList("member.getAuthoritiesByUsername", memberDto.getNo()).toArray());
+		
+		return memberDto;
 	}
 }

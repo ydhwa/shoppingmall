@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.shoppingmall.dto.MemberDto;
 import com.cafe24.shoppingmall.repository.MemberDao;
 import com.cafe24.shoppingmall.vo.Enum.MemberStatus;
 import com.cafe24.shoppingmall.vo.MemberVo;
@@ -36,7 +37,7 @@ public class MemberService {
 	// 유저네임(아이디) 중복 체크
 	public Boolean checkUsernameDuplication(String username) {
 		// 중복 아이디가 존재하면 true, 존재하지 않으면 false를 반환한다.
-		return memberDao.get(username) != null;
+		return memberDao.getIsDuplicatedUsername(username);
 	}
 	
 	// 로그인
@@ -72,5 +73,10 @@ public class MemberService {
 	// 회원 수정(관리자용)
 	public Boolean modifyToAdmin(MemberVo memberVo) {
 		return memberDao.updateToAdmin(memberVo);
+	}
+	
+	// Spring Security에서 사용할 서비스. username으로 간단한 회원 정보 가져오기
+	public MemberDto getByUsername(String username) {
+		return memberDao.getByUsername(username);
 	}
 }
