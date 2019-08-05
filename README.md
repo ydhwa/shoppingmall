@@ -22,6 +22,7 @@
 - week3: API 개발 - shoppingmall-backend
 - week4: API 개발 - shoppingmall-backend
 - week5: API 개발 및 문서 작성 - shoppingmall-backend
+- week6: UI 개발 - shoppingmall-frontend
 
 -----
 

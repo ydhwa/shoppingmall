@@ -33,5 +33,6 @@
 
 	<modules>
 		<module>shoppingmall-backend</module>
+		<module>shoppingmall-frontend</module>
 	</modules>
 </project>
