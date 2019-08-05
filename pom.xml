@@ -8,6 +8,11 @@
 	<packaging>pom</packaging>
 	<name>cafe24-shoppingmall-project</name>
 
+	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+
 	<!-- deploy(server) -->
 	<build>
 		<finalName>{$artifactId}</finalName>
