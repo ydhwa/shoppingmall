@@ -35,7 +35,7 @@ public class OAuth2ClientConfig {
 	@Bean
 	public OAuth2RestTemplate oauth2RestTemplate() {
 		
-	    OAuth2RestTemplate restTemplate = new OAuth2RestTemplate( resourceDetails(), new DefaultOAuth2ClientContext() );
+	    OAuth2RestTemplate restTemplate = new OAuth2RestTemplate(resourceDetails(), new DefaultOAuth2ClientContext());
 	    
         restTemplate.setMessageConverters(Arrays.asList(new MappingJackson2HttpMessageConverter()));
         System.out.println("access token: " + restTemplate.getAccessToken());
