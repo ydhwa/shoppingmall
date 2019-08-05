@@ -1,4 +1,4 @@
-package com.cafe24.shoppingmall.security;
+package com.cafe24.shoppingmall.dto;
 
 import java.util.Arrays;
 
@@ -7,7 +7,7 @@ public class MemberDto {
 	private String username;
 	private String password;
 	private String name;
-	private String[] role;
+	private String[] authorities;
 
 	public Long getNo() {
 		return no;
@@ -33,16 +33,16 @@ public class MemberDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String[] getRole() {
-		return role;
+	public String[] getAuthorities() {
+		return authorities;
 	}
 	public void setRole(String[] role) {
-		this.role = role;
+		this.authorities = role;
 	}
 
 	@Override
 	public String toString() {
 		return "MemberDto [no=" + no + ", username=" + username + ", password=" + password + ", name=" + name
-				+ ", role=" + Arrays.toString(role) + "]";
+				+ ", authorities=" + Arrays.toString(authorities) + "]";
 	}
 }

@@ -28,7 +28,7 @@
             <p id="profile-name" class="profile-name-card"></p>
             <form method="post" action="login" class="form-signin" name="loginForm">
                 <span id="reauth-email" class="reauth-email"></span>
-                <input type="email" id="inputEmail" class="form-control" placeholder="이메일" name="username" required autofocus>
+                <input type="text" id="inputUsername" class="form-control" placeholder="아이디" name="username" required autofocus>
                 <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" name="password" required>
                 <div id="remember" class="checkbox">
                     <label>

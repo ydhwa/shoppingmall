@@ -21,8 +21,9 @@ public class OAuth2ClientConfig {
         ClientCredentialsResourceDetails resourceDetails = new ClientCredentialsResourceDetails();
         
         // 어떤 식으로 토큰을 받을지 설정
-        resourceDetails.setAccessTokenUri("http://localhost:8888/v1/oauth/token");
+        resourceDetails.setAccessTokenUri("http://localhost:8888/oauth/token");
 	    resourceDetails.setClientId("shoppingmall");
+	    resourceDetails.setId("shoppingmall_api");
 	    resourceDetails.setClientSecret("1234");
         resourceDetails.setGrantType("client_credentials");
         resourceDetails.setScope(Arrays.asList("write", "read"));
