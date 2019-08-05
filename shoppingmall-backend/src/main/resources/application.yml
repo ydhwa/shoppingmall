@@ -46,4 +46,9 @@ mybatis:
 logging:
    config: classpath:logback.xml
 
+
+security:
+   user:
+      name: test
+      password: 5678
       
