@@ -18,10 +18,15 @@
 	<style type="text/css">
 		/* 꽉차게! */
 		html, body {
+			width: 100%;
 			height: 93.6%;
 		}
 		.container {
+			width: 100%;
 			min-height: 100%;
+		}
+		table {
+			font-size: 0.9em;
 		}
 	</style>
 </head>
@@ -41,6 +46,7 @@
 
 			<div class="col-lg-9">
 			
+				<div class="table-responsive"> <!-- Not working -->
 				<table class="table table-striped" style="margin-top: 5%;">
 					<thead style="text-align: center;">
 						<tr>
@@ -55,18 +61,21 @@
 					</thead>
 					
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>userA01</td>
-							<td>2019.08.06</td>
-							<td>회원1</td>
-							<td>1970.01.01</td>
-							<td>010-0000-0000</td>
-							<td>email@email.com</td>
-						</tr>
+						<c:forEach var="user" items="${ users }">
+							<tr>
+								<td><c:out value="${ user.no }" /></td>
+								<td><c:out value="${ user.username }" /></td>
+								<td><c:out value="${ user.regDate }" /></td>
+								<td><c:out value="${ user.name }" /></td>
+								<td><c:out value="${ user.birthDate }" /></td>
+								<td><c:out value="${ user.phoneNumber }" /></td>
+								<td><c:out value="${ user.email }" /></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
-			
+				</div>
+				
 			</div>
 			<!-- /.col-lg-9 -->
 			
