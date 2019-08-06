@@ -47,35 +47,11 @@ public class ResourceOwnerAuthenticationFilter extends UsernamePasswordAuthentic
 		}
 
 		username = username.trim();
-		password = getSha512(password);
 
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
 
 		setDetails(request, authRequest);
 
 		return this.getAuthenticationManager().authenticate(authRequest);
-	}
-
-	// SHA-512로 암호화
-	private static String getSha512(String pwd) {
-		StringBuilder sb = new StringBuilder("");
-
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-512");
-			md.reset();
-			byte[] bytes = md.digest(pwd.getBytes("UTF-8"));
-
-			for(int i = 0; i < bytes.length; i++) {
-				String hexString = Integer.toHexString(bytes[i] & 0xff);
-				while(hexString.length() < 2) {
-					hexString = "0" + hexString;
-				}
-				sb.append(hexString);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-
-		return sb.toString();
 	}
 }

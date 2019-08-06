@@ -21,6 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
+		
 		String endpoint = "http://localhost:8888/api/members/security/" + username;
 		JSONResultMember jsonResult = restTemplate.getForObject(endpoint, JSONResultMember.class);
 		

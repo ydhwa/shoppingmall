@@ -26,7 +26,7 @@
  		<div class="card card-container">
         	<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form method="post" action="login" class="form-signin" name="loginForm">
+            <form method="post" action="${ pageContext.servletContext.contextPath }/user/auth" class="form-signin" name="loginForm">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="text" id="inputUsername" class="form-control" placeholder="아이디" name="username" required autofocus>
                 <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" name="password" required>
@@ -40,6 +40,10 @@
             <a href="javascript:loginForm.submit();" class="forgot-password">
                 비밀번호를 잊으셨습니까?
             </a>
+
+			<c:if test="${ param.result == 'fail' }">
+				<p style="margin-top: 10px; color: red; font-size: 0.75em;">로그인을 실패했습니다.</p>
+			</c:if>
         </div>
         <!-- /.card-container -->
 	</div>

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping( "/user"  )
 public class UserController {
 	
-	@RequestMapping(method={RequestMethod.GET, RequestMethod.POST}, value="/login" )
+	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login() {
 		return "user/login";
 	}
