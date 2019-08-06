@@ -51,9 +51,4 @@ public class MainController {
 			return false;
 		}
 	}
-	
-	@RequestMapping(value={"/admin", "/admin/main"}, method=RequestMethod.GET)
-	public String adminMain() {
-		return "admin/main/index";
-	}
 }
