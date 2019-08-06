@@ -34,7 +34,7 @@ public class MainController {
 		}
 		int offset = Integer.parseInt(paramMap.get("offset"));
 		
-		List<ProductSummary> productList = productService.getAllProducts(offset, PRODUCT_PER_PAGE, paramMap);
+		List<ProductSummary> productList = productService.getProductList(offset, PRODUCT_PER_PAGE, paramMap);
 		List<Category> categoryList = categoryService.getAllCategories();
 		
 		model.addAttribute("products", productList);

@@ -51,25 +51,33 @@
 					<thead style="text-align: center;">
 						<tr>
 							<th>번호</th>
-							<th>아이디</th>
-							<th>가입일</th>
-							<th>이름</th>
-							<th>생년월일</th>
-							<th>휴대전화번호</th>
-							<th>이메일</th>
+							<th>코드</th>
+							<th>상품명</th>
+							<th>판매가</th>
+							<th>요약설명</th>
+							<th>등록일</th>
+							<th>삭제여부</th>
+							<th>진열상태</th>
+							<th>판매여부</th>
+							<th>관리상태</th>
+							<th>카테고리</th>
 						</tr>
 					</thead>
 					
 					<tbody>
-						<c:forEach var="user" items="${ users }">
+						<c:forEach var="product" items="${ products }">
 							<tr>
-								<td><c:out value="${ user.no }" /></td>
-								<td><c:out value="${ user.username }" /></td>
-								<td><c:out value="${ user.regDate }" /></td>
-								<td><c:out value="${ user.name }" /></td>
-								<td><c:out value="${ user.birthDate }" /></td>
-								<td><c:out value="${ user.phoneNumber }" /></td>
-								<td><c:out value="${ user.email }" /></td>
+								<td><c:out value="${ product.no }" /></td>
+								<td><c:out value="${ product.code }" /></td>
+								<td><c:out value="${ product.name }" /></td>
+								<td><c:out value="${ product.sellPrice }" /></td>
+								<td><c:out value="${ product.summaryDescription }" /></td>
+								<td><c:out value="${ product.regDate }" /></td>
+								<td><c:out value="${ product.delStatus }" /></td>
+								<td><c:out value="${ product.displayStatus }" /></td>
+								<td><c:out value="${ product.availability }" /></td>
+								<td><c:out value="${ product.manageStatus }" /></td>
+								<td><c:out value="${ product.categoryList }" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>

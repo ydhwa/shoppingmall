@@ -133,7 +133,7 @@
 			]]>	
 		</if>
 		<![CDATA[
-			order by del_status, availability, code asc
+			order by del_status, code asc, availability desc
 			offset '${ offset }'::integer limit '${ limit }'::integer;
 		]]>
 	</select>

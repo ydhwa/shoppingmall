@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.dto.User;
+import com.cafe24.shoppingmall.service.ProductService;
 import com.cafe24.shoppingmall.service.UserService;
 
 @Controller
@@ -19,6 +21,8 @@ public class AdminController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ProductService productService;
 	
 	private static final int PRODUCT_PER_PAGE = 10;
 
@@ -52,7 +56,18 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/product", method=RequestMethod.GET)
-	public String adminProductList() {
+	public String adminProductList(Model model, @RequestParam HashMap<String, String> paramMap) {
+		if(!paramMap.containsKey("offset")) {
+			paramMap.put("offset", "0");
+		} else if(!isInteger(paramMap.get("offset"))) {
+			paramMap.replace("offset", "0");
+		}
+		int offset = Integer.parseInt(paramMap.get("offset"));
+		
+		List<ProductSummary> productList = productService.getProductListAsAdmin(offset, PRODUCT_PER_PAGE, paramMap);
+		
+		model.addAttribute("products", productList);
+		
 		return "admin/product/list";
 	}
 	
