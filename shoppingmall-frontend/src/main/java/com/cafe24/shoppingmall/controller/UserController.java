@@ -12,4 +12,9 @@ public class UserController {
 	public String login() {
 		return "user/login";
 	}
+	
+	@RequestMapping(value="/join", method=RequestMethod.GET)
+	public String join() {
+		return "user/join";
+	}
 }

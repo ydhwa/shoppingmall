@@ -34,8 +34,6 @@
 
  	<div class="container">
  		<div class="card card-container">
-        	<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-            <p id="profile-name" class="profile-name-card"></p>
             <form method="post" action="${ pageContext.servletContext.contextPath }/user/auth" class="form-signin" name="loginForm">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="text" id="inputUsername" class="form-control" placeholder="아이디" name="username" required autofocus>

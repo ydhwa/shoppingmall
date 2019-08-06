@@ -16,7 +16,7 @@ import com.cafe24.shoppingmall.service.CategoryService;
 import com.cafe24.shoppingmall.service.ProductService;
 
 @Controller
-public class MainController {
+public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
@@ -25,8 +25,8 @@ public class MainController {
 	
 	private static final int PRODUCT_PER_PAGE = 6;
 	
-	@RequestMapping(value={"", "/main"}, method=RequestMethod.GET)
-	public String main(Model model, @RequestParam HashMap<String, String> paramMap) {
+	@RequestMapping(value={"/admin/product", "/admin/product/list"}, method=RequestMethod.GET)
+	public String productList(Model model, @RequestParam HashMap<String, String> paramMap) {
 		
 		if(!paramMap.containsKey("offset")) {
 			paramMap.put("offset", "0");
@@ -50,10 +50,5 @@ public class MainController {
 		} catch(Exception e) {
 			return false;
 		}
-	}
-	
-	@RequestMapping(value={"/admin", "/admin/main"}, method=RequestMethod.GET)
-	public String adminMain() {
-		return "admin/main/index";
 	}
 }

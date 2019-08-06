@@ -18,13 +18,23 @@
 				</sec:authorize>
 				
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<li class="nav-item">
-						<a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/main">쇼핑몰관리</a>
-					</li>
+					<c:choose>
+						<c:when test="${ param.active == 'admin' }">
+							<li class="nav-item active">
+								<a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/main">쇼핑몰관리<span class="sr-only">(current)</span></a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="nav-item">
+								<a class="nav-link" href="${pageContext.servletContext.contextPath }/admin/main">쇼핑몰관리</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+					
 				</sec:authorize>
 			
 				<c:choose>
-					<c:when test="${ param.active == 'login' || param.active == 'join' || param.active == 'modify' || param.active == 'bucket' }">
+					<c:when test="${ param.active == 'login' || param.active == 'join' || param.active == 'modify' || param.active == 'bucket' || param.active == 'admin' }">
 						<li class="nav-item">
 							<a class="nav-link" href="${pageContext.servletContext.contextPath }">홈</a>
 						</li>
