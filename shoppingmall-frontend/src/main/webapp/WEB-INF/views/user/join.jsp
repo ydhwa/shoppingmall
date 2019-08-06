@@ -23,37 +23,78 @@
 		.container {
 			min-height: 100%;
 		}
+		table {
+			font-size: 0.85em;
+		}
+		th {
+			min-width: 100px;
+		}
+		input {
+			max-width: 200px;
+		}
 	</style>
 </head>
 <body>
 	<!-- Navigation -->
 	<c:import url='/WEB-INF/views/includes/navigation.jsp'>
-		<c:param name="active" value="login" />
+		<c:param name="active" value="join" />
 	</c:import>
 	<!-- /.Navigation -->
 
  	<div class="container">
- 		<div class="card card-container">
-        	<form method="post" action="${ pageContext.servletContext.contextPath }/user/join" class="form-signin" name="loginForm">
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="text" id="inputUsername" class="form-control" placeholder="아이디" name="username" required autofocus>
-                <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" name="password" required>
-                <div id="remember" class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> 자동 로그인
-                    </label>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">로그인</button>
-            </form><!-- /form -->
-            <a href="javascript:loginForm.submit();" class="forgot-password">
-                비밀번호를 잊으셨습니까?
-            </a>
+		<div class="card card-container">
+			<h4 class="card-title">회원가입</h4>
+			<form method="post" action="${ pageContext.servletContext.contextPath }/user/join" class="form-join" name="joinForm">
+				<table class="table">
+					<tr>
+						<th>아이디</th>
+						<td>
+							<input type="text" id="inputUsername" class="form-control form-control-sm" pattern="[A-Za-z0-9_]{4,12}" placeholder="아이디" name="username" required autofocus>
+						</td>
+					</tr>
+					<tr>
+						<th>비밀번호</th>
+						<td>
+							<input type="password" id="inputPassword" class="form-control form-control-sm" pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}" placeholder="비밀번호" name="password" required>
+						</td>
+					</tr>
+					<tr>
+						<th>이름</th>
+						<td>
+							<input type="text" id="inputName" class="form-control form-control-sm" placeholder="이름" name="name" required>
+						</td>
+					</tr>
+					<tr>
+						<th>생년월일</th>
+						<td>
+							<input type="date" id="inputBirthDate" class="form-control form-control-sm" placeholder="YYYY-MM-DD" name="birthdate" required>
+						</td>
+					</tr>
+					<tr>
+						<th>유선<br>전화번호</th>
+						<td>
+							<input type="tel" id="inputHomeNumber" class="form-control form-control-sm" pattern="\d{2,3}-\d{3,4}-\d{4}" name="homenumber">
+						</td>
+					</tr>
+					<tr>
+						<th>휴대<br>전화번호</th>
+						<td>
+							<input type="tel" id="inputPhoneNumber" class="form-control form-control-sm" pattern="\d{3}-\d{4}-\d{4}" name="phonenumber" required>
+						</td>
+					</tr>
+					<tr>
+						<th>이메일</th>
+						<td>
+							<input type="email" id="inputEmail" class="form-control form-control-sm" name="email" required>
+						</td>
+					</tr>
+				</table>
+				<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">가입하기</button>
+			</form>
+			<!-- /form -->
+		</div>
 
-			<c:if test="${ param.result == 'fail' }">
-				<p style="margin-top: 10px; color: red; font-size: 0.75em;">로그인을 실패했습니다.</p>
-			</c:if>
-        </div>
-        <!-- /.card-container -->
+		<!-- /.card-container -->
 	</div>
 	<!-- /.container -->
 
