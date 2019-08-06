@@ -1,10 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -29,67 +26,39 @@
 	</style>
 </head>
 <body>
-   <!-- Navigation -->
-   <c:import url='/WEB-INF/views/includes/navigation.jsp'>
-      <c:param name="active" value="join" />
-   </c:import>
-   <!-- /.Navigation -->
-   
-   <div id="container">
-      <div class="card card-container">
-            <form:form modelAttribute="memberVo" id="join-form" name="joinForm" method="post" action="${pageContext.servletContext.contextPath }/user/join" >
-               <label class="block-label" for="id">아이디</label>
-               <input type="button" id="check-button" value="체크" class="btn btn-light">
-               <img style="display:none" id="check-image" src="${pageContext.servletContext.contextPath }/assets/images/check.png" />
-               <p style="font-weight:bold; color:#f00; text-align:left; padding:0; margin:0 ">
-                  <form:errors path="id" />
-               </p>
-               
-               <form:input path="username" id="username" class="form-control"/>
-               
-               <label class="block-label">패스워드</label>
-               <form:password path="password" id="password" class="form-control"/>
-               
-               <label class="block-label" for="name">이름</label>
-               <input id="name" name="name" type="text" value="" class="form-control">
-               <spring:hasBindErrors name="memberVo">
-                   <c:if test="${errors.hasFieldErrors('name') }">
-                     <p style="font-weight:bold; color:red; text-align:left; padding:0">
-                           <spring:message 
-                             code="${errors.getFieldError( 'name' ).codes[0] }"                  
-                             text="${errors.getFieldError( 'name' ).defaultMessage }" />
-                       </p> 
-                  </c:if>
-               </spring:hasBindErrors>
-               
-               <label class="block-label" for="phone">전화번호</label>
-               <form:input path="phone" id="phone" class="form-control"/>
-               
-               <label class="block-label" for="email">이메일</label>
-               <form:input path="email" id="email" class="form-control"/>
-            
-               
-               <label class="block-label" for="birth">생일</label>
-               <form:input path="birth" id="birth" class="form-control"/>
-               
-               <fieldset>
-                  <label class="block-label" for="gender">성별</label><br>
-                  <label>여</label> <form:radiobutton path="gender" value="female" checked="checked" />
-                  <label>남</label> <form:radiobutton path="gender" value="male" />
-               </fieldset>
-               
-               <fieldset>
-                  <legend>약관동의</legend>
-                  <!-- form:checkbox path="agreeProv" value="y"/-->
-                  <input id="agree-prov" type="checkbox" name="agreeProv" value="y">
-                  <label>서비스 약관에 동의합니다.</label>
-               </fieldset>
-               
-               <input type="submit" value="가입하기" class="btn btn-lg btn-primary btn-block btn-join">
-               
-            </form:form>
-      </div>
-   </div>
-   <c:import url="/WEB-INF/views/includes/footer.jsp" />
+	<!-- Navigation -->
+	<c:import url='/WEB-INF/views/includes/navigation.jsp'>
+		<c:param name="active" value="login" />
+	</c:import>
+	<!-- /.Navigation -->
+
+ 	<div class="container">
+ 		<div class="card card-container">
+        	<form method="post" action="${ pageContext.servletContext.contextPath }/user/join" class="form-signin" name="loginForm">
+                <span id="reauth-email" class="reauth-email"></span>
+                <input type="text" id="inputUsername" class="form-control" placeholder="아이디" name="username" required autofocus>
+                <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" name="password" required>
+                <div id="remember" class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> 자동 로그인
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">로그인</button>
+            </form><!-- /form -->
+            <a href="javascript:loginForm.submit();" class="forgot-password">
+                비밀번호를 잊으셨습니까?
+            </a>
+
+			<c:if test="${ param.result == 'fail' }">
+				<p style="margin-top: 10px; color: red; font-size: 0.75em;">로그인을 실패했습니다.</p>
+			</c:if>
+        </div>
+        <!-- /.card-container -->
+	</div>
+	<!-- /.container -->
+
+	<!-- Footer -->
+	<c:import url='/WEB-INF/views/includes/footer.jsp' />
+	<!-- /.Footer -->
 </body>
 </html>
