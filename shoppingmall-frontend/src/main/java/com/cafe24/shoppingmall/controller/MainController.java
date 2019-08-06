@@ -25,15 +25,30 @@ public class MainController {
 	
 	private static final int PRODUCT_PER_PAGE = 6;
 	
-	@RequestMapping(value={"/", "/main"}, method=RequestMethod.GET)
+	@RequestMapping(value={"", "/main"}, method=RequestMethod.GET)
 	public String main(Model model, @RequestParam HashMap<String, String> paramMap) {
 		
-		List<ProductSummary> productList = productService.getAllProducts(0, PRODUCT_PER_PAGE, paramMap);
+		if(!paramMap.containsKey("offset")) {
+			paramMap.put("offset", "0");
+		} else if(!isInteger(paramMap.get("offset"))) {
+			paramMap.replace("offset", "0");
+		}
+		int offset = Integer.parseInt(paramMap.get("offset"));
+		
+		List<ProductSummary> productList = productService.getAllProducts(offset, PRODUCT_PER_PAGE, paramMap);
 		List<Category> categoryList = categoryService.getAllCategories();
 		
 		model.addAttribute("products", productList);
 		model.addAttribute("categories", categoryList);
 		
 		return "main/index";
+	}
+	private boolean isInteger(String str) {
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
 	}
 }
