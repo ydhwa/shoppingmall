@@ -35,20 +35,8 @@
 	<div class="container">
 		<div class="row">
 
-			<div class="col-lg-3">
-				<a href="${pageContext.servletContext.contextPath }/admin" style="color: black; text-decoration: none;"><h1 class="my-4" style="letter-spacing: 3px; font-family: consolas; text-transform: uppercase; text-align: center;">admin</h1></a>
-				<div class="list-group">
-					<a href="${ pageContext.servletContext.contextPath }/admin/user" class="list-group-item">
-						회원관리
-					</a>
-					<a href="${ pageContext.servletContext.contextPath }/admin/product" class="list-group-item">
-						상품관리
-					</a>
-					<a href="${ pageContext.servletContext.contextPath }/admin/bucket" class="list-group-item">
-						장바구니관리
-					</a>
-				</div>
-			</div>
+			<c:import url='/WEB-INF/views/admin/includes/menu.jsp' />
+
 			<!-- /.col-lg-3 -->
 
 			<div class="col-lg-9">
