@@ -185,6 +185,11 @@ public class AdminProductControllerTest {
 	}
 	
 	@Test
+	public void 관리자가_카테고리_번호_사용하여_상품목록_검색결과_조회_성공() throws Exception {
+		successAction("get", "?offset=0&limit=10&categoryNo=2", null, ".length()", 2);
+	}
+	
+	@Test
 	public void 관리자가_상품_상세조회_성공() throws Exception {
 		successAction("get", "/" + 1L, null, ".name", "상품1");
 	}

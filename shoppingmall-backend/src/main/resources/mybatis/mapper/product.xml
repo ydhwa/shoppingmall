@@ -123,17 +123,17 @@
 				and manage_status = #{ manageStatus }
 			]]>	
 		</if>
-		<if test="category != null">
+		<if test="categoryNo != null">
 			<![CDATA[
-				and (
-					select array_to_string(array_agg(name), ',')
+				and ${ categoryNo } in (
+					select c.no
 					from category c, product_category pc
-					where c.no = pc.no
-						and pc.product_no = p.no) like concat('%', #{ category }, '%')
+					where c.no = pc.category_no
+						and pc.product_no = p.no)
 			]]>	
 		</if>
 		<![CDATA[
-			order by del_status, code asc
+			order by del_status, availability, code asc
 			offset '${ offset }'::integer limit '${ limit }'::integer;
 		]]>
 	</select>
@@ -171,17 +171,17 @@
 				and display_status = #{ displayStatus }
 			]]>	
 		</if>
-		<if test="category != null">
+		<if test="categoryNo != null">
 			<![CDATA[
-				and (
-					select array_to_string(array_agg(name), ',')
+				and ${ categoryNo } in (
+					select c.no
 					from category c, product_category pc
-					where c.no = pc.no
-						and pc.product_no = p.no) like concat('%', #{ category }, '%')
+					where c.no = pc.category_no
+						and pc.product_no = p.no)
 			]]>	
 		</if>
 		<![CDATA[
-			order by del_status, code asc
+			order by code asc
 			offset '${ offset }'::integer limit '${ limit }'::integer;
 		]]>
 	</select>
