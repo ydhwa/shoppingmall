@@ -206,39 +206,5 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
-		
-		<!-- okhttp3 -->
-		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
-			<version>3.14.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp-urlconnection -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp-urlconnection</artifactId>
-			<version>3.14.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp-ws -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp-ws</artifactId>
-			<version>3.4.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp-testing-support -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp-testing-support</artifactId>
-			<version>3.14.2</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>logging-interceptor</artifactId>
-			<version>3.14.2</version>
-		</dependency>
-
 	</dependencies>
 </project>

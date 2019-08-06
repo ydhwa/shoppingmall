@@ -2,7 +2,7 @@ package com.cafe24.shoppingmall.dto;
 
 import java.util.Arrays;
 
-public class MemberDto {
+public class Member {
 	private Long no;
 	private String username;
 	private String password;

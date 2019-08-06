@@ -40,7 +40,7 @@ public class OAuthControllerTest {
 	@Autowired
 	private FilterChainProxy springSecurityFilterChain;
 
-	private String accessToken; // = "07d59760-3bb8-4a4e-9f3e-451ea6a9861d";
+	private String accessToken; // = "092e9503-d06b-487c-917b-5847771b2958";
 
 	@Before
 	public void setUp() throws Exception {

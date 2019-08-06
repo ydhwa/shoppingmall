@@ -43,7 +43,6 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 			}
 		}
 		
-		
     	if( accept == null || accept.matches( ".*application/json.*" ) == false ) {
     		request.getSession(true).setAttribute("loginNow", true);
             getRedirectStrategy().sendRedirect( request, response, "/" );
