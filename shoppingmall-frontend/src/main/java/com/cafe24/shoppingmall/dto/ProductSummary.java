@@ -6,7 +6,7 @@ package com.cafe24.shoppingmall.dto;
  * @author YDH
  *
  */
-public class ProductSummaryDto {
+public class ProductSummary {
 	private Long no;							// 상품번호
 	private String code;						// 상품코드
 	private String name;						// 상품명
@@ -19,7 +19,7 @@ public class ProductSummaryDto {
 	private String manageStatus;				// 관리상태
 	private String categoryList;				// 카테고리 리스트(문자열화시킴)
 	
-	public ProductSummaryDto() {}
+	public ProductSummary() {}
 	
 	public Long getNo() {
 		return no;
