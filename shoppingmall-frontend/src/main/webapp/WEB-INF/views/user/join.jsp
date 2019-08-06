@@ -67,19 +67,19 @@
 					<tr>
 						<th>생년월일</th>
 						<td>
-							<input type="date" id="inputBirthDate" class="form-control form-control-sm" placeholder="YYYY-MM-DD" name="birthdate" required>
+							<input type="date" id="inputBirthDate" class="form-control form-control-sm" placeholder="YYYY-MM-DD" name="birthDate" required>
 						</td>
 					</tr>
 					<tr>
 						<th>유선<br>전화번호</th>
 						<td>
-							<input type="tel" id="inputHomeNumber" class="form-control form-control-sm" pattern="\d{2,3}-\d{3,4}-\d{4}" name="homenumber">
+							<input type="tel" id="inputHomeNumber" class="form-control form-control-sm" pattern="\d{2,3}-\d{3,4}-\d{4}" name="homeNumber">
 						</td>
 					</tr>
 					<tr>
 						<th>휴대<br>전화번호</th>
 						<td>
-							<input type="tel" id="inputPhoneNumber" class="form-control form-control-sm" pattern="\d{3}-\d{4}-\d{4}" name="phonenumber" required>
+							<input type="tel" id="inputPhoneNumber" class="form-control form-control-sm" pattern="\d{3}-\d{4}-\d{4}" name="phoneNumber" required>
 						</td>
 					</tr>
 					<tr>
