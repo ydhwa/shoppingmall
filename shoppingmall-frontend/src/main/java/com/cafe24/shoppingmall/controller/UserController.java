@@ -14,7 +14,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String joinform() {
 		return "user/join";
+	}
+	
+	@RequestMapping(value="/join", method=RequestMethod.POST)
+	public String join() {
+		return "user/joinsuccess";
 	}
 }

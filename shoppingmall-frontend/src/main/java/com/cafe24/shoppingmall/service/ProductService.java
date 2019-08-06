@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.dto.JSONResult;
+import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 
 @Service
@@ -17,7 +18,6 @@ public class ProductService {
 	private OAuth2RestTemplate restTemplate;
 
 	public List<ProductSummary> getAllProducts(int startIndex, int productPerPage, HashMap<String, String> paramMap) {
-		
 		String endpoint = String.format("http://localhost:8888/api/products?offset=%d&limit=%d", startIndex, productPerPage);
 		
 		// 여러 검색 조건이 있지만 일단 categoryNo만 검색 조건을 만든다.
@@ -29,7 +29,17 @@ public class ProductService {
 		
 		return result.getData();
 	}
+	
+	public ProductDetails getProductByNo(Long no) {
+		String endpoint = "http://localhost:8888/api/products/" + no;
+		JSONResultProduct result = restTemplate.getForObject(endpoint, JSONResultProduct.class);
+		
+		return result.getData();
+	}
 
+	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
+	}
+	private static class JSONResultProduct extends JSONResult<ProductDetails> {
 	}
 }
