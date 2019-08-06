@@ -125,7 +125,7 @@
 		</if>
 		<if test="categoryNo != null">
 			<![CDATA[
-				and ${ categoryNo } in (
+				and #{ categoryNo }::integer in (
 					select c.no
 					from category c, product_category pc
 					where c.no = pc.category_no
@@ -173,7 +173,7 @@
 		</if>
 		<if test="categoryNo != null">
 			<![CDATA[
-				and ${ categoryNo } in (
+				and #{ categoryNo }::integer in (
 					select c.no
 					from category c, product_category pc
 					where c.no = pc.category_no

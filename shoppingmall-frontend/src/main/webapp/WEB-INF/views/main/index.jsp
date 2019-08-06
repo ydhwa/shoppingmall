@@ -39,7 +39,7 @@
 				<h1 class="my-4" style="letter-spacing: 3px; font-family: consolas; text-transform: uppercase; text-align: center;">Shopping<br>Mall</h1>
 				<div class="list-group">
 					<c:forEach var="category" items="${ categories }">
-						<a href="#" class="list-group-item" style="padding-left: ${ category.level * 15 + 20 }px;">
+						<a href="${ pageContext.servletContext.contextPath }?categoryNo=${ category.no }" class="list-group-item" style="padding-left: ${ category.level * 15 + 20 }px;">
 							<c:if test="${ category.level > 0 }">
 								<img src="">
 							</c:if>

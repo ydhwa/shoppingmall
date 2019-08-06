@@ -1,5 +1,6 @@
 package com.cafe24.shoppingmall.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.shoppingmall.dto.Category;
 import com.cafe24.shoppingmall.dto.ProductSummary;
@@ -24,9 +26,9 @@ public class MainController {
 	private static final int PRODUCT_PER_PAGE = 6;
 	
 	@RequestMapping(value={"/", "/main"}, method=RequestMethod.GET)
-	public String main(Model model) {
+	public String main(Model model, @RequestParam HashMap<String, String> paramMap) {
 		
-		List<ProductSummary> productList = productService.getAllProducts(0, PRODUCT_PER_PAGE);
+		List<ProductSummary> productList = productService.getAllProducts(0, PRODUCT_PER_PAGE, paramMap);
 		List<Category> categoryList = categoryService.getAllCategories();
 		
 		model.addAttribute("products", productList);
