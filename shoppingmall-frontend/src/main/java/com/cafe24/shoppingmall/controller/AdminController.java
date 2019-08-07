@@ -2,14 +2,18 @@ package com.cafe24.shoppingmall.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.dto.User;
 import com.cafe24.shoppingmall.service.ProductService;
@@ -72,13 +76,21 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/product/regist", method=RequestMethod.GET)
-	public String adminProductRegist() {
+	public String adminProductRegistForm() {
 		return "admin/product/regist";
 	}
-	@RequestMapping(value="/product/regist", method=RequestMethod.POST)
-	public String adminProductResist() {
+	
+	@ResponseBody
+	@RequestMapping(value="/product/regist", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public JSONResult2 adminProductRegist(Map<String, String> paramMap) {
 		// 상품 등록에 성공했습니다.
 		// 버튼) 상품 더 등록하기 / 상품 목록 보기
-		return "admin/product/regist-success";
+		if(paramMap == null) {
+			return JSONResult2.fail("product's information is null");
+		} else {
+			Boolean result = productService.registProduct(paramMap);
+			
+			return JSONResult2.success(result);
+		}
 	}
 }

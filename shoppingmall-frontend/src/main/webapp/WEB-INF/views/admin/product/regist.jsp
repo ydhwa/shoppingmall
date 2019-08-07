@@ -52,6 +52,36 @@
 	</style>
 	
 	<script>
+	
+		$(function() {
+			var product = null;
+			var productOptionList = null;
+			var productOptionItemList = null;
+			var categoryList = null;
+			var productImageList = null;
+			
+			$('#final-submit').click(function() {
+				var paramMap =  {'product': product,
+						'productOptionList': productOptionList,
+						'productOptionItemList': productOptionItemList,
+						'categoryList': categoryList,
+						'productImageList': productImageList};
+				
+				$.ajax({
+					url: '${ pageContext.servletContext.contextPath }/admin/product/regist',
+					type: 'post',
+// 					contentType: 'application/json',
+					dataType: 'json',
+					data: paramMap,
+					success: function(response) {
+						console.log(response);
+					},
+					error: function(jqXHR, status, e) {
+						console.error('[ERROR] ' + status + ': ' + e);
+					}
+				});
+			});
+		});
 	</script>
 </head>
 <body>
@@ -212,10 +242,10 @@
 								</tr>
 								<tr class="optionTemplate">
 									<td>
-										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 색상">
+										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 색상" required>
 									</td>
 									<td>
-										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 네이비">
+										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 네이비" required>
 									</td>
 									<td>
 										<button type="button" class="btn btn-outline-secondary btn-sm">
@@ -289,7 +319,7 @@
 				
 				<br><hr><br>
 				
-				<button type="button" class="btn btn-primary btn-lg btn-block">상품등록</button>
+				<button type="button" id="final-submit" class="btn btn-primary btn-lg btn-block">상품등록</button>
 			</div>
 			<!-- /.col-lg-9 -->
 		</div>

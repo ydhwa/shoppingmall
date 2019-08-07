@@ -30,8 +30,6 @@ public class UserController {
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String join(MemberVo memberVo) {
-		System.out.println(memberVo);
-		
 		if(memberVo == null || !userService.join(memberVo)) {
 			return "user/join";
 		} else {

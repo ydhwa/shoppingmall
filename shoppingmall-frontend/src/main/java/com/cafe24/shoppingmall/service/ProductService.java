@@ -2,6 +2,7 @@ package com.cafe24.shoppingmall.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -46,10 +47,20 @@ public class ProductService {
 		
 		return result.getData();
 	}
+	
+	public Boolean registProduct(Map<String, String> paramMap) {
+		String endpoint = "http://localhost:8888/api/admin/products";
+		
+		JSONResultProductRegist result = restTemplate.getForObject(endpoint, JSONResultProductRegist.class); 
+		
+		return result.getData();
+	}
 
 	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
 	}
 	private static class JSONResultProduct extends JSONResult<ProductDetails> {
+	}
+	private static class JSONResultProductRegist extends JSONResult<Boolean> {
 	}
 }
