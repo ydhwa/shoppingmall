@@ -14,6 +14,7 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-homepage.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<script src="${ pageContext.servletContext.contextPath }/assets/js/jquery/jquery.min.js"></script>
 	
 	<style type="text/css">
@@ -189,6 +190,78 @@
 							</div>
 						</td>
 					</tr>
+					
+					<tr>
+						<th>옵션설정</th>
+						<td>
+							<table class="table" style="margin: 0;">
+								<tr>
+									<th>옵션명</th>
+									<th>옵션값</th>
+									<th></th>
+								</tr>
+								<tr class="optionTemplate">
+									<td>
+										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 색상">
+									</td>
+									<td>
+										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 네이비">
+									</td>
+									<td>
+										<button type="button" class="btn btn-outline-secondary btn-sm">
+											<i class="fas fa-plus"></i>
+										</button>
+										<button type="button" class="btn btn-outline-secondary btn-sm">
+											<i class="fas fa-minus"></i>
+										</button>
+									</td>
+								</tr>
+							</table>
+							
+							<br>
+							<div style="text-align: right;">
+								<button type="button" class="btn btn-secondary btn-sm">
+									옵션품목 만들기
+								</button>
+								<button type="button" class="btn btn-outline-secondary btn-sm">
+									품목정보 초기화
+								</button>
+							</div>
+							<br>
+							
+							<table class="table">
+								<tr>
+									<th>옵션 (품목코드)</th>
+									<th>추가금액</th>
+									<th>재고관리</th>
+									<th>재고수량</th>
+									<th>삭제</th>
+								</tr>
+								<tr class="optionItemTemplate">
+									<td>
+									</td>
+									<td>
+										<input type="number" id="optionItemAdditionalAmount" class="form-control form-control-sm" value="0" style="max-width: 90px;">
+									</td>
+									<td>
+										<select class="form-control form-control-sm">
+											<option value="">재고수량 관리 안함</option>
+											<option value="">재고수량 소진 시 품절 표시함</option>
+										</select>
+									</td>
+									<td>
+										<input type="number" id="optionItemStockQuantity" class="form-control form-control-sm" value="0" style="max-width: 90px;">
+									</td>
+									<td>
+										<button type="button" class="btn btn-outline-secondary btn-sm">
+											<i class="fas fa-trash-alt"></i>
+										</button>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					
 					<tr>
 						<th style="max-width: 35px !important;">재고관리</th>
 						<td>

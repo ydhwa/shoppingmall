@@ -14,6 +14,7 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-homepage.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	
 	<style type="text/css">
 		/* 꽉차게! */
@@ -73,7 +74,7 @@
 										<td><c:out value="${ option.name }" /></td>
 										<td>
 											<select name="optionValue${ optionStatus.count }">
-											<option>=== 옵션을 선택하세요 ===</option>
+												<option>=== 옵션을 선택하세요 ===</option>
 												<c:forEach var="optionValue" items="${ option.productOptionValueList }" varStatus="optionValueStatus">
 													<option value="${ optionValueStatus.count }"><c:out value="${ optionValue.value }" /></option>
 												</c:forEach>
@@ -85,7 +86,7 @@
 								<tr>
 									<td colspan="2" style="text-align: center;">
 										<button type="button" style="font-size: 0.9em; border: 1px solid #dadada; margin: auto; width: 47%;" class="btn btn-light"><br>바로 구매하기<br><br></button>
-										<button type="button" style="font-size: 0.9em; border: 1px solid #dadada; margin: auto; width: 47%;" class="btn btn-dark"><br>장바구니에 담기<br><br></button>
+										<button type="button" style="font-size: 0.9em; border: 1px solid #dadada; margin: auto; width: 47%;" class="btn btn-dark"><br><i class="fas fa-cart-plus"></i>&nbsp;장바구니에 담기<br><br></button>
 									</td>
 								</tr>
 							</tbody>
