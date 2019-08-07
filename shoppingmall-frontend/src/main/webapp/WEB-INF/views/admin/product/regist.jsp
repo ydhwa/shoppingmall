@@ -116,8 +116,19 @@
 			};
 			categoryList.push(category);
 			
-			var selectedCategory = '<li>' + name + '</li>';
+			var selectedCategory = '<li class="list-group-item">' + name + '&nbsp;&nbsp;<i onclick="deleteCategory(' + no + ', this)" class="fas fa-trash-alt"></i></li>';
 			$('#selectedCategoryList').append(selectedCategory);
+		}
+		// 선택했던 카테고리 삭제 시 동작
+		function deleteCategory(no, obj) {
+			const categoryToFind = categoryList.find(function(category) {return category.no === no});
+			const index = categoryList.indexOf(categoryToFind);
+			if(index > -1) categoryList.splice(index, 1);
+			
+			remove_entry($(obj).parent());
+		}
+		function remove_entry(entry) {
+			entry.remove();
 		}
 	</script>
 </head>
@@ -253,8 +264,8 @@
 									</div>
 								</div>
 								<div class="col-sm-6">
-									등록된 카테고리 리스트
-									<ul id="selectedCategoryList">
+									<h5>등록된 카테고리 리스트</h5>
+									<ul id="selectedCategoryList" class="list-group">
 									</ul>
 								</div>
 							</div>
