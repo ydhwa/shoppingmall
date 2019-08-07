@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cafe24.shoppingmall.dto.Category;
 import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.dto.User;
+import com.cafe24.shoppingmall.service.CategoryService;
 import com.cafe24.shoppingmall.service.ProductService;
 import com.cafe24.shoppingmall.service.UserService;
 
@@ -27,6 +29,8 @@ public class AdminController {
 	private UserService userService;
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private CategoryService categoryService;
 	
 	private static final int PRODUCT_PER_PAGE = 10;
 
@@ -76,7 +80,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/product/regist", method=RequestMethod.GET)
-	public String adminProductRegistForm() {
+	public String adminProductRegistForm(Model model) {
+		List<Category> categoryList = categoryService.getAllCategories();
+		model.addAttribute("categories", categoryList);
+		
 		return "admin/product/regist";
 	}
 	

@@ -52,6 +52,10 @@
 	</style>
 	
 	<script>
+		var productOptionList = new Array();
+		var productOptionItemList = new Array();
+		var categoryList = new Array();
+		var productImageList = new Array();
 	
 		$(function() {
 			$('#final-submit').click(function() {
@@ -78,10 +82,6 @@
 						availability: $(":input:radio[name=availability]:checked").val(),
 						manageStatus: $(":input:radio[name=manageStatus]:checked").val()
 				};
-				var productOptionList = new Array();
-				var productOptionItemList = new Array();
-				var categoryList = new Array();
-				var productImageList = new Array();
 				
 				var paramMap =  {'product': product,
 						'productOptionList': productOptionList,
@@ -108,6 +108,17 @@
 				});
 			});
 		});
+		
+		// 카테고리 선택 시 동작
+		function addCategory(no, name) {
+			var category = {
+				'no': no
+			};
+			categoryList.push(category);
+			
+			var selectedCategory = '<li>' + name + '</li>';
+			$('#selectedCategoryList').append(selectedCategory);
+		}
 	</script>
 </head>
 <body>
@@ -229,11 +240,22 @@
 						<td>
 							<div class="row">
 								<div class="col-sm-6">
-									(선택할 카테고리들이 잔뜩 뽑힐 예정)
-									
+									<div class="list-group">
+										<c:forEach var="category" items="${ categories }">
+											<a onclick="addCategory(${ category.no }, '${ category.name }');"
+												class="list-group-item"
+												style="cursor: pointer; padding-left: ${ category.level * 15 + 20 }px;">
+												<c:if test="${ category.level > 0 }">
+													<img src="">
+												</c:if> <c:out value="${ category.name }" />
+											</a>
+										</c:forEach>
+									</div>
 								</div>
 								<div class="col-sm-6">
-									등록할 카테고리 목록이 나올 예정
+									등록된 카테고리 리스트
+									<ul id="selectedCategoryList">
+									</ul>
 								</div>
 							</div>
 						</td>

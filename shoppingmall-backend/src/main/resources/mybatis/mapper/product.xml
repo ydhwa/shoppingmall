@@ -68,7 +68,7 @@
 				(
 					select array_to_string(array_agg(name), ',')
 					from category c, product_category pc
-					where c.no = pc.no
+					where c.no = pc.category_no
 						and pc.product_no = p.no) as category_list
 			from product p
 			where 1 = 1
@@ -150,7 +150,7 @@
 				(
 					select array_to_string(array_agg(name), ',')
 					from category c, product_category pc
-					where c.no = pc.no
+					where c.no = pc.category_no
 						and pc.product_no = p.no) as category_list
 			from product p
 			where del_status = 'N'
