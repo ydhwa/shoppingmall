@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -75,7 +76,7 @@
 								<td><c:out value="${ product.no }" /></td>
 								<td><c:out value="${ product.code }" /></td>
 								<td><c:out value="${ product.name }" /></td>
-								<td><c:out value="${ product.sellPrice }" /></td>
+								<td><fmt:formatNumber value="${ product.sellPrice }" pattern="#,###" /></td>
 								<td><c:out value="${ product.summaryDescription }" /></td>
 								<td><c:out value="${ product.regDate }" /></td>
 								<td><c:out value="${ product.delStatus }" /></td>

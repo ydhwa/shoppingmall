@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -62,7 +63,7 @@
 							<tbody>
 								<tr>
 									<th>판매가</th>
-									<th><c:out value="${ product.sellPrice }" />원</th>
+									<th><fmt:formatNumber value="${ product.sellPrice }" pattern="#,###" />원</th>
 								</tr>
 								<tr>
 									<td>상품코드</td>
