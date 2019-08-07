@@ -58,6 +58,21 @@
 		var productImageList = new Array();
 	
 		$(function() {
+			// 몇 가지 입력 폼들 비활성화 시킴
+			$('#optionSettings').hide();
+			
+			// 옵션 추가 박스 활성화
+			$('input:radio[name=optionAvailable]').click(function() {
+				if($('input[name=optionAvailable]:checked').val() == 'Y') {
+					$('#optionSettings').show();
+				} else if($('input[name=optionAvailable]:checked').val() == 'N') {
+					$('#optionSettings').hide();
+	        	}
+			});
+			
+			
+			
+			// 상품 등록 시 동작
 			$('#final-submit').click(function() {
 				// required 검증
 				if($('#inputProductName').val() == '') {
@@ -99,7 +114,7 @@
 					dataType: 'json',
 					data: JSON.stringify(paramMap),
 					contentType: 'application/json',
-			        success: function(response) {
+			       	success: function(response) {
 						console.log(response);
 					},
 					error: function(jqXHR, status, e) {
@@ -290,7 +305,7 @@
 						</td>
 					</tr>
 					
-					<tr>
+					<tr id="optionSettings">
 						<th>옵션설정</th>
 						<td>
 							<table class="table" style="margin: 0;">
@@ -304,7 +319,7 @@
 										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 색상" required>
 									</td>
 									<td>
-										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 네이비" required>
+										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 네이비;블랙;화이트" required>
 									</td>
 									<td>
 										<button type="button" class="btn btn-outline-secondary btn-sm">
