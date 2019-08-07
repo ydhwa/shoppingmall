@@ -6,7 +6,7 @@
 					<a href="${ pageContext.servletContext.contextPath }/admin/user/list" class="list-group-item list-group-item-dark">
 						회원목록
 					</a>
-					<a href="${ pageContext.servletContext.contextPath }/admin/product" class="list-group-item list-group-item-dark">
+					<a href="${ pageContext.servletContext.contextPath }/admin/product/list" class="list-group-item list-group-item-dark">
 						상품목록
 					</a>
 					<a href="${ pageContext.servletContext.contextPath }/admin/product/regist" class="list-group-item list-group-item-dark">
