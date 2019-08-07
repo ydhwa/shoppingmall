@@ -5,12 +5,15 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.service.UserService;
 import com.cafe24.shoppingmall.vo.MemberVo;
 
 @Controller
-@RequestMapping( "/user"  )
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -40,4 +43,12 @@ public class UserController {
 	public String joinSuccess() {
 		return "user/joinsuccess";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checkusername", method=RequestMethod.GET)
+	public JSONResult2 checkUsername(@RequestParam(value="username", required=true, defaultValue="") String username) {
+		Boolean exist = userService.existUsername(username);
+		return JSONResult2.success(exist);
+	}
+	
 }

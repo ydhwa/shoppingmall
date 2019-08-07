@@ -19,7 +19,7 @@ public class UserService {
 
 	public Boolean join(MemberVo memberVo) {
 		String endpoint = "http://localhost:8888/api/members";
-		JSONResultJoin result = restTemplate.postForObject(endpoint, memberVo, JSONResultJoin.class);
+		JSONResultBoolean result = restTemplate.postForObject(endpoint, memberVo, JSONResultBoolean.class);
 		
 		return result.getData();
 	}
@@ -34,7 +34,14 @@ public class UserService {
 		return result.getData();
 	}
 	
-	private static class JSONResultJoin extends JSONResult<Boolean> {
+	public Boolean existUsername(String username) {
+		String endpoint = "http://localhost:8888/api/members/duplicate?username=" + username;
+		JSONResultBoolean result = restTemplate.getForObject(endpoint, JSONResultBoolean.class);
+		
+		return result.getData();
+	}
+	
+	private static class JSONResultBoolean extends JSONResult<Boolean> {
 	}
 	private static class JSONResultUserList extends JSONResult<List<User>> {
 	}
