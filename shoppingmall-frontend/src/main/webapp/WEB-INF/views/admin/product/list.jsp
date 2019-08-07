@@ -26,7 +26,12 @@
 			min-height: 100%;
 		}
 		table {
+			margin-top: 5%;
 			font-size: 0.9em;
+		}
+		th, td {
+			overflow: hidden;
+			white-space: nowrap;
 		}
 	</style>
 </head>
@@ -47,7 +52,7 @@
 			<div class="col-lg-9">
 			
 				<div class="table-responsive"> <!-- Not working -->
-				<table class="table table-striped" style="margin-top: 5%;">
+				<table class="table table-striped">
 					<thead style="text-align: center;">
 						<tr>
 							<th>번호</th>
