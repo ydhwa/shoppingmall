@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,16 +81,12 @@ public class AdminController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/product/regist", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public JSONResult2 adminProductRegist(Map<String, String> paramMap) {
+	@RequestMapping(value="/product/regist", method=RequestMethod.POST)
+	public JSONResult2 adminProductRegist(@RequestBody Map<String, Object> paramMap) {
 		// 상품 등록에 성공했습니다.
 		// 버튼) 상품 더 등록하기 / 상품 목록 보기
-		if(paramMap == null) {
-			return JSONResult2.fail("product's information is null");
-		} else {
-			Boolean result = productService.registProduct(paramMap);
-			
-			return JSONResult2.success(result);
-		}
+		Boolean result = productService.registProduct(paramMap);
+		
+		return JSONResult2.success(result);
 	}
 }

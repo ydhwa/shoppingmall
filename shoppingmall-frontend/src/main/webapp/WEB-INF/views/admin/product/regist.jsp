@@ -54,26 +54,52 @@
 	<script>
 	
 		$(function() {
-			var product = null;
-			var productOptionList = null;
-			var productOptionItemList = null;
-			var categoryList = null;
-			var productImageList = null;
-			
 			$('#final-submit').click(function() {
+				// required 검증
+				if($('#inputProductName').val() == '') {
+					$('#inputProductName').focus();
+					return;
+				}
+				if($('#inputSellPrice').val() == '') {
+					$('#inputSellPrice').focus();
+					return;
+				}
+				
+				// 값들 Object에 셋팅
+				var product = {
+						name: $('#inputProductName').val(),
+						supplyPrice: $('#inputSupplyPrice').val(),
+						sellPrice: $('#inputSellPrice').val(),
+						summaryDescription: $('#inputSummaryDescription').val(),
+						detailedDescription: getDetailedDescription(),
+						weight: $('#inputWeight').val(),
+						optionAvailable: $(":input:radio[name=optionAvailable]:checked").val(),
+						displayStatus: $(":input:radio[name=displayStatus]:checked").val(),
+						availability: $(":input:radio[name=availability]:checked").val(),
+						manageStatus: $(":input:radio[name=manageStatus]:checked").val()
+				};
+				var productOptionList = new Array();
+				var productOptionItemList = new Array();
+				var categoryList = new Array();
+				var productImageList = new Array();
+				
 				var paramMap =  {'product': product,
 						'productOptionList': productOptionList,
 						'productOptionItemList': productOptionItemList,
 						'categoryList': categoryList,
 						'productImageList': productImageList};
 				
+				console.log(JSON.stringify(paramMap));
+				
+				
+				// 상품 등록 Ajax
 				$.ajax({
 					url: '${ pageContext.servletContext.contextPath }/admin/product/regist',
 					type: 'post',
-// 					contentType: 'application/json',
 					dataType: 'json',
-					data: paramMap,
-					success: function(response) {
+					data: JSON.stringify(paramMap),
+					contentType: 'application/json',
+			        success: function(response) {
 						console.log(response);
 					},
 					error: function(jqXHR, status, e) {
@@ -124,7 +150,7 @@
 					<tr>
 						<th>상품 요약설명</th>
 						<td>
-							<input type="text" id="inputName" class="form-control form-control-sm" name="summaryDescription" required>
+							<input type="text" id="inputSummaryDescription" class="form-control form-control-sm" name="summaryDescription" required>
 						</td>
 					</tr>
 					<tr>
@@ -142,17 +168,12 @@
 		fCreator: "createSEditor2"
 	});
 	
-	/* 편집 내용 서버로 전송 */
-	// 저장을 위한 액션 시 submitContents 호출된다고 하자.
-	function submitContents(elClickedObj) {
+	// 스마트에디터 안의 값 얻기
+	function getDetailedDescription() {
 		// 에디터 내용이 textarea에 적용됨
 		oEditors.getById["inputDetailedDescription"].exec("UPDATE_CONTENTS_FIELD", []);
 		
-		// 에디터의 내용에 대한 값 검증은 document.getElementById("contents").value를 이용하여 처리한다.
-		
-		try {
-			elClickedObj.form.submit();
-		} catch(e) {}		
+		return $('#inputDetailedDescription').val();
 	}
 </script>
 					</tr>
@@ -207,8 +228,13 @@
 						<th>상품분류</th>
 						<td>
 							<div class="row">
-								<div class="col-sm-6">선택할 카테고리들이 잔뜩 뽑힐 예정</div>
-								<div class="col-sm-6">등록할 카테고리 목록이 나올 예정</div>
+								<div class="col-sm-6">
+									(선택할 카테고리들이 잔뜩 뽑힐 예정)
+									
+								</div>
+								<div class="col-sm-6">
+									등록할 카테고리 목록이 나올 예정
+								</div>
 							</div>
 						</td>
 					</tr>

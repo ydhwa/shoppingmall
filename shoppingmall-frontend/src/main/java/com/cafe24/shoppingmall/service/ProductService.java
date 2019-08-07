@@ -48,10 +48,9 @@ public class ProductService {
 		return result.getData();
 	}
 	
-	public Boolean registProduct(Map<String, String> paramMap) {
+	public Boolean registProduct(Map<String, Object> paramMap) {
 		String endpoint = "http://localhost:8888/api/admin/products";
-		
-		JSONResultProductRegist result = restTemplate.getForObject(endpoint, JSONResultProductRegist.class); 
+		JSONResultProductRegist result = restTemplate.postForObject(endpoint, paramMap, JSONResultProductRegist.class); 
 		
 		return result.getData();
 	}
