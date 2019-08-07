@@ -50,6 +50,9 @@
 			font-weight: bolder;
 		}
 	</style>
+	
+	<script>
+	</script>
 </head>
 <body>
 	<!-- Navigation -->
@@ -143,15 +146,15 @@
 					<tr>
 						<th>진열상태</th>
 						<td>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputDisplayStatusMain" name="displayStatus" value="MAIN">
 								<label class="custom-control-label" for="inputDisplayStatusMain">메인 진열</label>
 							</div>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputDisplayStatusEvent" name="displayStatus" value="EVENT">
 								<label class="custom-control-label" for="inputDisplayStatusEvent">이벤트 진열</label>
 							</div>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputDisplayStatusNone" name="displayStatus" value="NONE" checked>
 								<label class="custom-control-label" for="inputDisplayStatusNone">해당 사항 없음</label>
 							</div>
@@ -160,11 +163,11 @@
 					<tr>
 						<th>판매상태</th>
 						<td>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputAvailabilityY" name="availability" value="Y">
 								<label class="custom-control-label" for="inputAvailabilityY">판매함</label>
 							</div>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputAvailabilityN" name="availability" value="N" checked>
 								<label class="custom-control-label" for="inputAvailabilityN">판매안함</label>
 							</div>
@@ -187,11 +190,11 @@
 					<tr>
 						<th style="max-width: 35px !important;">상품옵션</th>
 						<td>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputOptionAvailableY" name="optionAvailable" value="Y">
 								<label class="custom-control-label" for="inputOptionAvailableY">사용함</label>
 							</div>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputOptionAvailableN" name="optionAvailable" value="N" checked>
 								<label class="custom-control-label" for="inputOptionAvailableN">사용안함</label>
 							</div>
@@ -272,11 +275,11 @@
 					<tr>
 						<th style="max-width: 35px !important;">재고관리</th>
 						<td>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputManageStatusStock" name="manageStatus" value="STOCK">
 								<label class="custom-control-label" for="inputManageStatusStock">사용함</label>
 							</div>
-							<div class="custom-control custom-radio">
+							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputManageStatusNonStock" name="manageStatus" value="NON_STOCK" checked>
 								<label class="custom-control-label" for="inputManageStatusNonStock">사용안함</label>
 							</div>
