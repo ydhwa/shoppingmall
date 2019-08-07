@@ -17,6 +17,10 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<script src="${ pageContext.servletContext.contextPath }/assets/js/jquery/jquery.min.js"></script>
 	
+	<!-- HTML Editor -->
+	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+	
+	
 	<style type="text/css">
 		/* 꽉차게! */
 		html, body {
@@ -62,7 +66,7 @@
 			<!-- /.col-lg-3 -->
 
 			<div class="col-lg-9">
-				<h3 style="margin: 5% 0;">회원목록</h3>
+				<h3 style="margin: 5% 0;">상품등록</h3>
 			
 				<table class="table">
 					<caption>기본 정보</caption>
@@ -92,29 +96,32 @@
 					</tr>
 					<tr>
 						<th height="400">상품 상세설명</th>
-						<td>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-  </head>
-  <body>
-    <div id="summernote"></div>
-    <script>
-      $('#summernote').summernote({
-        tabsize: 2,
-        height: 350
-      });
-    </script>
-  </body>
-</html>
-						</td>
+							<td>
+								<textarea id="inputDetailedDescription" name="detailedDescription" style="height: 350px;"></textarea>
+							</td>
+<!-- Smart Editor -->	
+<script type="text/javascript">
+	var oEditors = [];
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef: oEditors,
+		elPlaceHolder: "inputDetailedDescription",
+		sSkinURI: "${ pageContext.servletContext.contextPath }/resources/smarteditor/SmartEditor2Skin.html",
+		fCreator: "createSEditor2"
+	});
+	
+	/* 편집 내용 서버로 전송 */
+	// 저장을 위한 액션 시 submitContents 호출된다고 하자.
+	function submitContents(elClickedObj) {
+		// 에디터 내용이 textarea에 적용됨
+		oEditors.getById["inputDetailedDescription"].exec("UPDATE_CONTENTS_FIELD", []);
+		
+		// 에디터의 내용에 대한 값 검증은 document.getElementById("contents").value를 이용하여 처리한다.
+		
+		try {
+			elClickedObj.form.submit();
+		} catch(e) {}		
+	}
+</script>
 					</tr>
 					<tr>
 						<th>이미지</th>

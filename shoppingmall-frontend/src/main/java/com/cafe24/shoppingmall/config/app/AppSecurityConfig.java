@@ -38,6 +38,12 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// AuthorizedURL(Basic ACL)
 		http
+			// HTML 에디터 적용하기 위함
+			.headers()
+			.frameOptions()
+			.disable()
+		
+			.and()
 			.authorizeRequests()
 			// 인증이 되었을 경우
 			.antMatchers("/user/modify/**", "/user/logout", "/user/view/**", "/user/orders/**").authenticated()
