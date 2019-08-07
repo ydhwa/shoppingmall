@@ -32,19 +32,23 @@
 		<c:param name="active" value="shopping" />
 	</c:import>
 	<!-- /.Navigation -->
-	
+
 	<div class="container">
 		<div class="row">
 
 			<div class="col-lg-3">
-				<a href="${pageContext.servletContext.contextPath }" style="color: black; text-decoration: none;"><h1 class="my-4" style="letter-spacing: 3px; font-family: consolas; text-transform: uppercase; text-align: center;">Shopping<br>Mall</h1></a>
+				<a href="${pageContext.servletContext.contextPath }"
+					style="color: black; text-decoration: none;"><h1 class="my-4"
+						style="letter-spacing: 3px; font-family: consolas; text-transform: uppercase; text-align: center;">
+						Shopping<br>Mall
+					</h1></a>
 				<div class="list-group">
 					<c:forEach var="category" items="${ categories }">
-						<a href="${ pageContext.servletContext.contextPath }/main?categoryNo=${ category.no }" class="list-group-item" style="padding-left: ${ category.level * 15 + 20 }px;">
-							<c:if test="${ category.level > 0 }">
+						<a href="list?categoryNo=${ category.no }" class="list-group-item"
+							style="padding-left: ${ category.level * 15 + 20 }px;"> <c:if
+								test="${ category.level > 0 }">
 								<img src="">
-							</c:if>
-							<c:out value="${ category.name }" />
+							</c:if> <c:out value="${ category.name }" />
 						</a>
 					</c:forEach>
 				</div>
@@ -90,26 +94,54 @@
 					<c:forEach var="product" items="${ products }">
 						<div class="col-lg-4 col-md-6 mb-4">
 							<div class="card h-100">
-								<a href="${ pageContext.servletContext.contextPath }/product/${ product.no }"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+								<a
+									href="${ pageContext.servletContext.contextPath }/product/${ product.no }"><img
+									class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
 								<div class="card-body">
 									<h4 class="card-title">
-										<a href="${ pageContext.servletContext.contextPath }/product/${ product.no }"><c:out value="${ product.name }" /></a>
+										<a
+											href="${ pageContext.servletContext.contextPath }/product/${ product.no }"><c:out
+												value="${ product.name }" /></a>
 									</h4>
-									<h5><fmt:formatNumber value="${ product.sellPrice }" pattern="#,###" />원</h5>
-									<p class="card-text"><c:out value="${ product.summaryDescription }" /></p>
+									<h5>
+										<fmt:formatNumber value="${ product.sellPrice }"
+											pattern="#,###" />
+										원
+									</h5>
+									<p class="card-text">
+										<c:out value="${ product.summaryDescription }" />
+									</p>
 								</div>
-<!-- 								<div class="card-footer"> -->
-<!-- 									<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small> -->
-<!-- 								</div> -->
+								<!-- 								<div class="card-footer"> -->
+								<!-- 									<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small> -->
+								<!-- 								</div> -->
 							</div>
 						</div>
 					</c:forEach>
-
 				</div>
 				<!-- /.row -->
+
+				<!-- pagination -->
+				<div class="d-flex">
+					<div class="mx-auto">
+						<ul class="pagination justify-content-center">
+							<li class="page-item"><a class="page-link" href="#"
+								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+							</a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#"
+								aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
+									class="sr-only">Next</span>
+							</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 			<!-- /.col-lg-9 -->
-			
+
 		</div>
 		<!-- /.row -->
 	</div>

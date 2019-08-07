@@ -25,7 +25,7 @@ public class MainController {
 	
 	private static final int PRODUCT_PER_PAGE = 6;
 	
-	@RequestMapping(value={"", "/main"}, method=RequestMethod.GET)
+	@RequestMapping(value={"", "/list"}, method=RequestMethod.GET)
 	public String main(Model model, @RequestParam HashMap<String, String> paramMap) {
 		if(!paramMap.containsKey("offset")) {
 			paramMap.put("offset", "0");

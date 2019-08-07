@@ -31,7 +31,7 @@ public class AdminController {
 		return "admin/main/index";
 	}
 	
-	@RequestMapping(value="/user", method=RequestMethod.GET)
+	@RequestMapping(value="/user/list", method=RequestMethod.GET)
 	public String adminUserList(Model model, @RequestParam HashMap<String, String> paramMap) {
 		if(!paramMap.containsKey("offset")) {
 			paramMap.put("offset", "0");
@@ -55,7 +55,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(value="/product", method=RequestMethod.GET)
+	@RequestMapping(value="/product/list", method=RequestMethod.GET)
 	public String adminProductList(Model model, @RequestParam HashMap<String, String> paramMap) {
 		if(!paramMap.containsKey("offset")) {
 			paramMap.put("offset", "0");

@@ -27,7 +27,7 @@ public class ProductController {
 	@RequestMapping(value="/{no}", method=RequestMethod.GET)
 	public String productDetails(Model model, @PathVariable("no") Optional<Long> no) {
 		if(!no.isPresent()) {
-			return "redirect:/main";
+			return "redirect:/list";
 		}
 		
 		ProductDetails product = productService.getProductByNo(no.get());
