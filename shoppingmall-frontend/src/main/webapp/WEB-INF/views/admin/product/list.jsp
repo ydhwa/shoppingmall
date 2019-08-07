@@ -26,7 +26,6 @@
 			min-height: 100%;
 		}
 		table {
-			margin-top: 5%;
 			font-size: 0.9em;
 		}
 		th, td {
@@ -50,6 +49,7 @@
 			<!-- /.col-lg-3 -->
 
 			<div class="col-lg-9">
+				<h3 style="margin: 5% 0;">상품목록</h3>
 			
 				<div class="table-responsive"> <!-- Not working -->
 				<table class="table table-striped">
