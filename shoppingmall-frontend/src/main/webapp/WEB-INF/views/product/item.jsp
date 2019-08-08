@@ -23,7 +23,7 @@
 			height: 93.5%;
 		}
 		.container {
-			min-height: 100%;
+			min-height: 95%;
 		}
 	</style>
 </head>
@@ -36,7 +36,7 @@
 
 	<!-- Page Content -->
 	<div class="container">
-		<div class="row">
+		<div class="row" style="margin-bottom: 5%;">
 
 			<div class="col-lg-3">
 				<a href="${pageContext.servletContext.contextPath }" style="color: black; text-decoration: none;"><h1 class="my-4" style="letter-spacing: 3px; font-family: consolas; text-transform: uppercase; text-align: center;">Shopping<br>Mall</h1></a>
@@ -95,7 +95,7 @@
 						
 						<hr>
 						<p class="card-text" style="font-size: 0.8em;">
-							<c:out value="${ product.detailedDescription }" />
+							${ product.detailedDescription }
 						</p>
 <!-- 						<span class="text-warning">&#9733; &#9733; &#9733; &#9733; -->
 <!-- 							&#9734;</span> 4.0 stars -->

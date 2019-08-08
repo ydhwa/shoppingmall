@@ -19,7 +19,7 @@
 	<style type="text/css">
 		/* 꽉차게! */
 		html, body {
-			height: 93.5%;
+			height: 95%;
 		}
 		.container {
 			min-height: 100%;
