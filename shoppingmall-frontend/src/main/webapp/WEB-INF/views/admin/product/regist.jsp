@@ -413,7 +413,38 @@
 					<tr>
 						<th>이미지</th>
 						<td>
-							시간 관계상 구현하지 않음
+						<div class="row">
+						<div class="col-sm-9">
+<form action="/action_page.php">
+	<div class="custom-file mb-3">
+		<input type="file" class="custom-file-input" id="customFile" name="filename">
+		<label class="custom-file-label" for="customFile">Choose file</label>
+	</div>
+</form>
+
+<script type="text/javascript">
+	function readURL(input) {
+    	if (input.files && input.files[0]) {
+        	var reader = new FileReader();
+        	reader.onload = function(e) {
+            	$('#customImage').attr('src', e.target.result);
+        	}
+        	reader.readAsDataURL(input.files[0]);
+    	}
+	}
+	$(document).ready(function() {
+		$('#customFile').change(function() {
+			var fileName = $(this).val().split("\\").pop();
+			 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+			readURL(this);
+		});
+	});
+</script>
+							</div>
+								<div class="col-sm-3">
+									<img id="customImage" alt="" src="${pageContext.servletContext.contextPath }/assets/images/default.png" width="100" height="100">
+								</div>
+							</div>
 						</td>
 					</tr>
 					<tr>
