@@ -8,7 +8,7 @@ server:
 
 spring:
    profiles:
-      active: developer
+      active: test
       
    devtools:
       livereload:
@@ -29,7 +29,7 @@ spring:
    datasource:
       platform: postgres
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://192.168.219.101:5432/shoppingmall_2
+      url: jdbc:postgresql://192.168.219.101:5432/shoppingmall
       username: shoppingmall
       password: shoppingmall
    
