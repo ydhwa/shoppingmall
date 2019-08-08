@@ -32,7 +32,7 @@ public class AdminController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	private static final int PRODUCT_PER_PAGE = 10;
+	private static final int PRODUCT_PER_PAGE = 1000000;
 
 	@RequestMapping(value={"", "/main"}, method=RequestMethod.GET)
 	public String adminMain() {

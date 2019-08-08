@@ -23,7 +23,7 @@ public class MainController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	private static final int PRODUCT_PER_PAGE = 6;
+	private static final int PRODUCT_PER_PAGE = 6000000;
 	
 	@RequestMapping(value={"", "/list"}, method=RequestMethod.GET)
 	public String main(Model model, @RequestParam HashMap<String, String> paramMap) {

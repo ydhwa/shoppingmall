@@ -107,6 +107,12 @@
 						availability: $(":input:radio[name=availability]:checked").val(),
 						manageStatus: $(":input:radio[name=manageStatus]:checked").val()
 				};
+				// 품목 추가하지 못했던 나머지 항목 추가
+				$('.optionItemTemplate').each(function(index, item) {
+					productOptionItemList[index].additionalAmount = $(item).children('td').eq(1).children().eq(0).val();
+					productOptionItemList[index].manageStatus = $(item).children('td').eq(2).children().eq(0).val();
+					productOptionItemList[index].stockQuantity = $(item).children('td').eq(3).children().eq(0).val();
+				});
 				
 				var paramMap =  {'product': product,
 						'productOptionList': productOptionList,
@@ -115,8 +121,8 @@
 						'productImageList': productImageList};
 				
 				console.log(JSON.stringify(paramMap));
-				
-				
+
+
 				// 상품 등록 Ajax
 				$.ajax({
 					url: '${ pageContext.servletContext.contextPath }/admin/product/regist',
