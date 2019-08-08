@@ -161,7 +161,7 @@
 			var optionForm =
 				'<tr class="optionTemplate">' +
 					'<td>' +
-						'<input type="text" class="form-control form-control-sm" placeholder="예시) 색상" required>' +
+						'<input type="text" class="optionName class="form-control form-control-sm" placeholder="예시) 색상" required>' +
 					'</td>' + 
 					'<td class="optionValueFormWrapper">' + 
 						'<input type="text" onkeypress="return optionValueEvent(this, event);" class="form-control form-control-sm" placeholder="예시) 네이비;블랙;화이트" required>' + 
@@ -178,7 +178,7 @@
 			
 			$('.optionTemplate').parent().append(optionForm);
 		}
-		// 옵션 삭제 시 동작(옵션 항목이 하나면 )
+		// 옵션 삭제 시 동작
 		function deleteOptionForm(obj) {
 			$(obj).parent().parent().remove();
 		}
@@ -196,8 +196,145 @@
 				}
 			}
 		}
-
 		
+		// 옵션 리스트 생성
+		function makeOptions() {
+			// 옵션 품목 생성 위한 리스트
+			var optionListOfListForItemList = new Array();
+			var valueIndexListOfListForItemList = new Array();
+			var optionNameKeys = '';
+			
+			$('.optionTemplate').each(function(index, item) {
+				var optionName = $(item).children().eq(0).children('.optionName').eq(0).val();
+				var optionValues = $(item).children().eq(1).children('span');
+				
+				// 비어있는 값 체크
+				if(optionName == '' || optionValues.length == 0) {
+					alert('옵션명과 옵션값은 필수로 입력해야 합니다.');
+					return ;
+				}
+				
+				var productOptionValueList = new Array();
+				
+				// 옵션 품목 생성 위한 리스트2
+				var optionListForItemList = new Array();
+				var valueIndexListForItemList = new Array();
+				$(optionValues).each(function(index1, item1) {
+					var optionValue = $(item1).text();
+					var productOptionValue = {
+						'value': optionValue
+					};
+					productOptionValueList.push(productOptionValue);
+					
+					// 옵션 품목 생성 위한 객체 생성 후 리스트2에 넣음
+					var optionForItemList = optionName + '=' + optionValue;
+					optionListForItemList.push(optionForItemList);
+					valueIndexListForItemList.push(index1 + 1);
+				});
+				
+				var productOption = {
+					'name': optionName,
+					'productOptionValueList': productOptionValueList
+				};
+				
+				// 옵션 리스트에 넣어둠
+				productOptionList.push(productOption);
+				
+				// 옵션 품목 생성 위한 리스트에도 추가
+				optionListOfListForItemList.push(optionListForItemList);
+				valueIndexListOfListForItemList.push(valueIndexListForItemList);
+				optionNameKeys += (index + 1) + ';';
+			});
+			
+			// 옵션 품목에 들어갈 항목 생성
+			var allOptionItemList = allPossibleCases(optionListOfListForItemList);
+			var allValueIndexItemList = allPossibleCases(valueIndexListOfListForItemList);
+			// 옵션 품목 생성
+			makeOptionItems(allOptionItemList, allValueIndexItemList, optionNameKeys.substr(0, optionNameKeys.length - 1));
+
+			// 동적으로 옵션 품목들 추가
+			appendOptionItems();
+		}
+		// 옵션 품목 생성
+		function makeOptionItems(optionDetailsList, optionValueKeyList, optionNameKey) {
+			productOptionItemList = [];
+			for(var i = 0; i < optionDetailsList.length; i++) {
+				var productOptionItem = {
+					'details': optionDetailsList[i],
+					'optionNameKeys': optionNameKey,
+					'optionValueKeys': optionValueKeyList[i],
+					'availability': 'Y'
+				};
+				productOptionItemList.push(productOptionItem);
+			}
+		}
+		// 동적으로 옵션 품목들 추가
+		function appendOptionItems() {
+			productOptionItemList.forEach(function(item, index, array) {
+				var template = 
+					'<tr class="optionItemTemplate">' +
+						'<td>'+ item.details + '</td>' +
+						'<td>' + 
+							'<input type="number" class="optionItemAdditionalAmount form-control form-control-sm" value="0" style="max-width: 90px;">' +
+						'</td>' + 
+						'<td>' + 
+							'<select name="optionItemManageStatus" class="form-control form-control-sm" onchange="selectEvent(this);">' + 
+								'<option value="NON_STOCK">재고수량 관리 안함</option>' + 
+								'<option value="STOCK">재고수량 소진 시 품절 표시함</option>' + 
+							'</select>' + 
+						'</td>' + 
+						'<td class="itemStock">' + 
+							'<input type="number" class="optionItemStockQuantity form-control form-control-sm" value="0" style="max-width: 90px;">' + 
+						'</td>' + 
+						'<td>' + 
+							'<button type="button" onclick=\'deleteOptionItem("' + item.details + '", this)\' class="btn btn-outline-secondary btn-sm">' + 
+								'<i class="fas fa-trash-alt"></i>' + 
+							'</button>' + 
+						'</td>' + 
+					'</tr>';
+				$('#optionItemTable').append(template);
+			});
+			
+			$('.optionItemStockQuantity').hide();		// default: NON_STOCK
+		}
+		// 옵션 품목 -> select box 선택 시 동작
+		function selectEvent(obj) {
+			var value = $(obj).val();
+			
+			if(value == 'STOCK') {
+				$(obj).parent().parent().children('.itemStock').eq(0).children('.optionItemStockQuantity').eq(0).show();
+			} else {
+				// 'NON_STOCK'
+				$(obj).parent().parent().children('.itemStock').eq(0).children('.optionItemStockQuantity').eq(0).hide();
+			}
+		}
+		// 옵션 품목 삭제(리스트에서도 삭제하고, HTML element도 삭제함)
+		function deleteOptionItem(details, obj) {
+			const optionItemToFind = productOptionItemList.find(function(optionItem) {return optionItem.details === details});
+			const index = productOptionItemList.indexOf(optionItemToFind);
+			if(index > -1) productOptionItemList.splice(index, 1);
+			
+			remove_entry($(obj).parent().parent());
+		}
+		
+		// 옵션 품목 조합
+		function allPossibleCases(arr) {
+			if (arr.length === 0) {
+				return [];
+			} else if (arr.length ===1) {
+				return arr[0];
+			}
+			else {
+				var result = [];
+				var allCasesOfRest = allPossibleCases(arr.slice(1));  // recur with the rest of array
+				for (var c in allCasesOfRest) {
+					for (var i = 0; i < arr[0].length; i++) {
+						result.push(arr[0][i] + ';' + allCasesOfRest[c]);
+					}
+				}
+				return result;
+			}
+		}
 	</script>
 </head>
 <body>
@@ -364,12 +501,12 @@
 							<table class="table" style="margin: 0;">
 								<tr>
 									<th>옵션명</th>
-									<th>옵션값</th>
+									<th>옵션값&nbsp;&nbsp;(Enter를 누르거나 ;로 각 옵션값을 구분할 수 있습니다.)</th>
 									<th></th>
 								</tr>
 								<tr class="optionTemplate">
 									<td>
-										<input type="text" class="form-control form-control-sm" placeholder="예시) 색상" required>
+										<input type="text" class="optionName form-control form-control-sm" placeholder="예시) 색상" required>
 									</td>
 									<td class="optionValueFormWrapper">
 										<input type="text" onkeypress="return optionValueEvent(this, event);" class="form-control form-control-sm" placeholder="예시) 네이비;블랙;화이트" required>
@@ -384,7 +521,7 @@
 							
 							<br>
 							<div style="text-align: right;">
-								<button type="button" class="btn btn-secondary btn-sm">
+								<button type="button" class="btn btn-secondary btn-sm" onclick="makeOptions();">
 									옵션품목 만들기
 								</button>
 								<button type="button" class="btn btn-outline-secondary btn-sm">
@@ -393,34 +530,13 @@
 							</div>
 							<br>
 							
-							<table class="table">
+							<table class="table" id="optionItemTable">
 								<tr>
 									<th>옵션 (품목코드)</th>
 									<th>추가금액</th>
 									<th>재고관리</th>
 									<th>재고수량</th>
 									<th>삭제</th>
-								</tr>
-								<tr class="optionItemTemplate">
-									<td>
-									</td>
-									<td>
-										<input type="number" id="optionItemAdditionalAmount" class="form-control form-control-sm" value="0" style="max-width: 90px;">
-									</td>
-									<td>
-										<select class="form-control form-control-sm">
-											<option value="">재고수량 관리 안함</option>
-											<option value="">재고수량 소진 시 품절 표시함</option>
-										</select>
-									</td>
-									<td>
-										<input type="number" id="optionItemStockQuantity" class="form-control form-control-sm" value="0" style="max-width: 90px;">
-									</td>
-									<td>
-										<button type="button" class="btn btn-outline-secondary btn-sm">
-											<i class="fas fa-trash-alt"></i>
-										</button>
-									</td>
 								</tr>
 							</table>
 						</td>
