@@ -96,4 +96,9 @@ public class AdminController {
 		
 		return JSONResult2.success(result);
 	}
+	
+	@RequestMapping(value="/product/regist-success", method=RequestMethod.GET)
+	public String adminProductRegistSuccess() {
+		return "admin/product/regist-success";
+	}
 }

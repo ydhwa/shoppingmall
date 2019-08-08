@@ -115,7 +115,7 @@
 					data: JSON.stringify(paramMap),
 					contentType: 'application/json',
 			       	success: function(response) {
-						console.log(response);
+						window.location.href = '${ pageContext.servletContext.contextPath }/admin/product/regist-success';
 					},
 					error: function(jqXHR, status, e) {
 						console.error('[ERROR] ' + status + ': ' + e);

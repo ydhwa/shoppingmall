@@ -32,12 +32,22 @@
 	</c:import>
 	<!-- /.Navigation -->
 
- 	<div class="container">
-		<div class="card card-container">
-			<h5 class="card-title" style="text-align: center">상품 등록에 성공했습니다!</h5>
-			<button class="btn btn-lg btn-primary btn-block btn-signin" type="button" onclick="location.href='${ pageContext.servletContext.contextPath }/admin/product/regist'">상품 더 등록하기</button>
-			<button class="btn btn-lg btn-primary btn-block btn-signin" type="button" onclick="location.href='${ pageContext.servletContext.contextPath }/admin/product/list'">상품 목록 보기</button>
-			<!-- /form -->
+	<div class="container">
+		<div class="row">
+			<c:import url='/WEB-INF/views/admin/includes/menu.jsp' />
+
+			<div class="col-lg-9" style="margin: 10% 0;">
+				<div class="card card-container">
+					<h5 class="card-title" style="text-align: center">상품 등록에 성공했습니다!</h5>
+					<button class="btn btn-lg btn-primary btn-block btn-signin" type="button" onclick="location.href='${ pageContext.servletContext.contextPath }/admin/product/regist'">
+						상품 더 등록하기
+					</button>
+					<button class="btn btn-lg btn-primary btn-block btn-signin" type="button" onclick="location.href='${ pageContext.servletContext.contextPath }/admin/product/list'">
+						상품 목록 보기
+					</button>
+					<!-- /form -->
+				</div>
+			</div>
 		</div>
 
 		<!-- /.card-container -->
