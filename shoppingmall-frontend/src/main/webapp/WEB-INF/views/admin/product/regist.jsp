@@ -415,7 +415,7 @@
 						<td>
 						<div class="row">
 						<div class="col-sm-9">
-<form action="/action_page.php">
+<form enctype="multipart/form-data">
 	<div class="custom-file mb-3">
 		<input type="file" class="custom-file-input" id="customFile" name="filename">
 		<label class="custom-file-label" for="customFile">Choose file</label>
@@ -431,12 +431,41 @@
         	}
         	reader.readAsDataURL(input.files[0]);
     	}
+    	
+    	return reader;
 	}
 	$(document).ready(function() {
 		$('#customFile').change(function() {
 			var fileName = $(this).val().split("\\").pop();
-			 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-			readURL(this);
+			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+			var reader = readURL(this);
+			
+			var base64Img = reader.result.substr(reader.result.indexOf(",")+1);
+			
+			// 이미지 업로드
+			$.ajax({
+				url: '${pageContext.servletContext.contextPath}/admin/file/upload',
+				type: 'post',
+				contentType: 'application/json',
+				dataType: 'json',
+				data: JSON.stringify({
+					'status': 'MAIN',
+					'path': '',
+					'extension': fileName.substring(fileName.lastIndexOf('.') + 1),
+					'base64EncodingData' : base64Img
+				}),
+				success: function(response) {
+					console.log(response);
+				
+					if("success" != response.result) {
+						alert(response.message);
+						return;
+					}
+				},
+				error: function (request, status, error) {
+					alert("서버와의 통신에 문제가 발생하였습니다.");
+				}
+			});
 		});
 	});
 </script>
