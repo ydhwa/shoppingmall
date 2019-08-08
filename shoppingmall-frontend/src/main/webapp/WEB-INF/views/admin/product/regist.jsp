@@ -60,16 +60,26 @@
 		$(function() {
 			// 몇 가지 입력 폼들 비활성화 시킴
 			$('#optionSettings').hide();
+			$('#stockForm').hide();
 			
-			// 옵션 추가 박스 활성화
+			// 옵션 설정 박스 활성화
 			$('input:radio[name=optionAvailable]').click(function() {
 				if($('input[name=optionAvailable]:checked').val() == 'Y') {
 					$('#optionSettings').show();
+					$('#stockManageStatusForm').hide();
 				} else if($('input[name=optionAvailable]:checked').val() == 'N') {
 					$('#optionSettings').hide();
+					$('#stockManageStatusForm').show();
 	        	}
 			});
-			
+			// 재고 설정 박스 활성화(옵션 설정 비활성화 시 확인할 수 있음)
+			$('input:radio[name=manageStatus]').click(function() {
+				if($('input[name=manageStatus]:checked').val() == 'STOCK') {
+					$('#stockForm').show();
+				} else if($('input[name=manageStatus]:checked').val() == 'NON_STOCK') {
+					$('#stockForm').hide();
+	        	}
+			});
 			
 			
 			// 상품 등록 시 동작
@@ -145,6 +155,49 @@
 		function remove_entry(entry) {
 			entry.remove();
 		}
+		
+		// 옵션 추가 시 동작
+		function addOptionForm() {
+			var optionForm =
+				'<tr class="optionTemplate">' +
+					'<td>' +
+						'<input type="text" class="form-control form-control-sm" placeholder="예시) 색상" required>' +
+					'</td>' + 
+					'<td class="optionValueFormWrapper">' + 
+						'<input type="text" onkeypress="return optionValueEvent(this, event);" class="form-control form-control-sm" placeholder="예시) 네이비;블랙;화이트" required>' + 
+					'</td>' + 
+					'<td>' + 
+						'<button type="button" class="btn btn-outline-secondary btn-sm" onclick="addOptionForm();">' + 
+							'<i class="fas fa-plus"></i>' + 
+						'</button>' + 
+						'<button type="button" class="btn btn-outline-secondary btn-sm" onclick="deleteOptionForm(this);">' + 
+							'<i class="fas fa-minus"></i>' + 
+						'</button>' + 
+					'</td>' + 
+				'</tr>';
+			
+			$('.optionTemplate').parent().append(optionForm);
+		}
+		// 옵션 삭제 시 동작(옵션 항목이 하나면 )
+		function deleteOptionForm(obj) {
+			$(obj).parent().parent().remove();
+		}
+		// 옵션값 추가 시 동작(;나 Enter 누르면 기존 입력했던 값이 옵션값으로 추가됨)
+		function optionValueEvent(obj, event) {
+			if(event.keyCode == 59 || event.keyCode == 13) {
+				if($(obj).val() == '') {
+					return ;
+				} else {
+					event.preventDefault();
+					var optionValue = '<span>' + $(obj).val() + '</span>&nbsp;';
+					$(obj).parent().append(optionValue);
+					$(obj).val('');
+					$(obj).focus();
+				}
+			}
+		}
+
+		
 	</script>
 </head>
 <body>
@@ -316,17 +369,14 @@
 								</tr>
 								<tr class="optionTemplate">
 									<td>
-										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 색상" required>
+										<input type="text" class="form-control form-control-sm" placeholder="예시) 색상" required>
+									</td>
+									<td class="optionValueFormWrapper">
+										<input type="text" onkeypress="return optionValueEvent(this, event);" class="form-control form-control-sm" placeholder="예시) 네이비;블랙;화이트" required>
 									</td>
 									<td>
-										<input type="text" id="optionName1" class="form-control form-control-sm" placeholder="예시) 네이비;블랙;화이트" required>
-									</td>
-									<td>
-										<button type="button" class="btn btn-outline-secondary btn-sm">
+										<button type="button" class="btn btn-outline-secondary btn-sm" onclick="addOptionForm();">
 											<i class="fas fa-plus"></i>
-										</button>
-										<button type="button" class="btn btn-outline-secondary btn-sm">
-											<i class="fas fa-minus"></i>
 										</button>
 									</td>
 								</tr>
@@ -376,7 +426,7 @@
 						</td>
 					</tr>
 					
-					<tr>
+					<tr id="stockManageStatusForm">
 						<th style="max-width: 35px !important;">재고관리</th>
 						<td>
 							<div class="custom-control custom-radio custom-control-inline">
@@ -386,6 +436,9 @@
 							<div class="custom-control custom-radio custom-control-inline">
 								<input type="radio" class="custom-control-input" id="inputManageStatusNonStock" name="manageStatus" value="NON_STOCK" checked>
 								<label class="custom-control-label" for="inputManageStatusNonStock">사용안함</label>
+							</div>
+							<div id="stockForm" class="col-xs-2" style="padding-top: 3%;">
+								<input style="width: 200px;" type="number" id="inputStockQuantity" class="form-control form-control-sm" name="stockQuantity" value="0">
 							</div>
 						</td>
 					</tr>
