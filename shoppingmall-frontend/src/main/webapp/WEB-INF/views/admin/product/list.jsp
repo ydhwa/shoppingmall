@@ -75,7 +75,7 @@
 							<tr>
 								<td><c:out value="${ product.no }" /></td>
 								<td><c:out value="${ product.code }" /></td>
-								<td><c:out value="${ product.name }" /></td>
+								<td><a href="${pageContext.servletContext.contextPath }/admin/product/${ product.no }"><c:out value="${ product.name }" /></a></td>
 								<td><fmt:formatNumber value="${ product.sellPrice }" pattern="#,###" /></td>
 								<td><c:out value="${ product.summaryDescription }" /></td>
 								<td><c:out value="${ product.regDate }" /></td>

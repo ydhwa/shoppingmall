@@ -54,6 +54,13 @@ public class ProductService {
 		
 		return result.getData();
 	}
+	
+	public ProductDetails getProductByNoAsAdmin(Long no) {
+		String endpoint = "http://localhost:8888/api/admin/products/" + no;
+		JSONResultProduct result = restTemplate.getForObject(endpoint, JSONResultProduct.class);
+		
+		return result.getData();
+	}
 
 	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {

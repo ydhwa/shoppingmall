@@ -3,10 +3,12 @@ package com.cafe24.shoppingmall.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.shoppingmall.dto.Category;
 import com.cafe24.shoppingmall.dto.JSONResult2;
+import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.dto.User;
 import com.cafe24.shoppingmall.service.CategoryService;
@@ -101,5 +104,16 @@ public class AdminController {
 	@RequestMapping(value="/product/regist-success", method=RequestMethod.GET)
 	public String adminProductRegistSuccess() {
 		return "admin/product/regist-success";
+	}
+	
+	@RequestMapping(value="/product/{no}", method=RequestMethod.GET)
+	public String productDetails(Model model, @PathVariable("no") Optional<Long> no) {
+		if(!no.isPresent()) {
+			return "redirect:/admin";
+		}
+		ProductDetails product = productService.getProductByNoAsAdmin(no.get());
+		model.addAttribute("product", product);
+
+		return "admin/product/item";
 	}
 }
