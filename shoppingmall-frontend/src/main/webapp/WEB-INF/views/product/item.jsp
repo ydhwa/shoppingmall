@@ -56,30 +56,46 @@
 					dataType: 'json',
 					success: function(response) {
 						if(response.data != null) {
-							var additionalAmount = response.data.additionalAmount + ${ product.sellPrice };
-							var html =
-								'<tr>' + 
-									'<td>' + 
-										'<span style="font-weight: bold;">${ product.name }</span><br><span style="color: #787878; font-size: 0.9em;">' +
-										response.data.details.replace(';', '/') + 
-									'</span></td>' + 
-									'<td>' + 
-										'<input type="number" value="1">' + 
-										'<i class="far fa-trash-alt"></i>' + 
-									'</td>' + 
-									'<td>' + 
-										additionalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 
-									'원</td>' + 
-								'</tr>';
-							$('#selectedItems').append(html);
+							var duplicate = false;
 							
-							// 장바구니 후보에 담기
-							var item = {
-								'memberNo': <sec:authentication property="principal.name"/>,
-								'productOptionItemNo': data.productOptionItemNo,
-							};
-							bucketList.push();
+							var index = -1;
+							if(bucketList.length > 0) {
+								index = findIndex(response.data.no);
+							}
 							
+							if(index < 0) {
+								var additionalAmount = response.data.additionalAmount + ${ product.sellPrice };
+								var html =
+									'<tr>' + 
+										'<td>' + 
+											'<span style="font-weight: bold;">${ product.name }</span><br><span style="color: #787878; font-size: 0.9em;">' +
+											response.data.details.replace(';', '/') + 
+										'</span></td>' + 
+										'<td>' + 
+											'<input type="number" class="quantity form-control form-control-sm" value="1" min="1" onChange="renewalQuantity(this, ' + response.data.no + ');">' +
+										'</td>' +
+										'<td>' + 
+											'<i onclick="deleteItem(' + response.data.no + ')" class="far fa-trash-alt"></i>' + 
+										'</td>' + 
+										'<td>' + 
+											additionalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 
+										'원</td>' + 
+									'</tr>';
+								$('#selectedItems').append(html);
+							
+								// 장바구니 후보에 담기
+								var item = {
+									'productOptionItemNo': response.data.no,
+									'price': additionalAmount
+								};
+								bucketList.push(item);
+							} else {
+								$('.quantity').eq(index).val(parseInt($('.quantity').eq(index).val()) + 1);
+								bucketList[index].quantity += 1;
+								
+								// 수량 및 가격 갱신
+								renewalQuantity($('.quantity').eq(index), bucketList[index].productOptionItemNo);
+							}
 						} else {
 							alert('상품이 없습니다.');
 							$('.selectbox').each(function(index, item) {
@@ -97,6 +113,39 @@
 				});
 			});
 		});
+		
+		function deleteItem(no) {
+			var index = findIndex(no);
+			
+			bucketList.splice(index, 1);
+			$('#selectedItems').children('tr').eq(index).remove();
+		}
+		// 해당 번호에 맞는 인덱스 가져오기
+		function findIndex(no) {
+			for(var i = 0; i < bucketList.length; i++) {
+				if(bucketList[i].productOptionItemNo == no) {
+					return i;
+				}
+			}
+			return -1;
+		}
+		// 수량 변동에 따른 가격 갱신
+		function renewalQuantity(obj, no) {
+			var amount = bucketList[findIndex(no)].price * $(obj).val();
+			$(obj).parent().parent().children().eq(3).text(amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원');
+		}
+		
+		// 장바구니 담기 동작
+		function addBucketList() {
+			// 총 수량 갱신
+			for(var i = 0; i < bucketList.length; i++) {
+				bucketList[i].quantity = parseInt($('.quantity').eq(i).val());
+			}
+			
+			$.ajax({
+				
+			});
+		}
 		
 	</script>
 </head>
@@ -168,7 +217,7 @@
 								<tr>
 									<td colspan="2" style="text-align: center;">
 										<button type="button" style="font-size: 0.9em; border: 1px solid #dadada; margin: auto; width: 47%;" class="btn btn-light"><br>바로 구매하기<br><br></button>
-										<button type="button" style="font-size: 0.9em; border: 1px solid #dadada; margin: auto; width: 47%;" class="btn btn-dark"><br><i class="fas fa-cart-plus"></i>&nbsp;장바구니에 담기<br><br></button>
+										<button type="button" onclick="addBucketList()" style="font-size: 0.9em; border: 1px solid #dadada; margin: auto; width: 47%;" class="btn btn-dark"><br><i class="fas fa-cart-plus"></i>&nbsp;장바구니에 담기<br><br></button>
 									</td>
 								</tr>
 							</tbody>
