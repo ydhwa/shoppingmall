@@ -58,107 +58,55 @@
 			<div class="col-lg-9">
 
 				<div class="card mt-4">
-					<img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
 					<div class="card-body">
 						<h3 class="card-title"><c:out value="${ product.name }" /></h3>
 						<table class="table table-borderless" style="font-size: 0.8em;">
 							<tbody>
 								<tr>
-									<th><input type="checkbox" class="form-control"></th>
+									<th></th>
 									<th>상품정보</th>
 									<th>판매가</th>
 									<th>수량</th>
 									<th>합계</th>
-									<th>
-										선택
-										<button type="button" class="btn btn-sm">주문하기</button>
-										<button type="button" class="btn btn-sm">삭제</button>
-									</th>
+									<th>선택</th>
 								</tr>
 							
 								<!-- 여기에 forEach문으로 장바구니 내의 물품들을 뽑아내야 한다. -->
-								<c:forEach var="item" items="${ bucketItemList }" varStatus="index">
+								<c:forEach var="item" items="${ bucketList }" varStatus="index">
 									<tr>
 										<td>
+											<input type="checkbox" class="custom-control custom-checkbox">
 										</td>
 										<td>
+											<span style="font-weight: bold;">
+												<c:out value="${ item.productName }" />
+											</span><br>
+											<span style="font-size: 0.9em; color: #787878;">
+												[옵션: <c:out value="${ fn:replace(item.productOptionDetails, ';', '/') }" />]
+											</span>
 										</td>
 										<td>
+											<fmt:formatNumber value="${ item.sellPrice }" pattern="#,###" />원
 										</td>
 										<td>
+											<c:out value="${ item.quantity }" />
 										</td>
 										<td>
-											<button type="button" class="btn btn-sm">주문하기</button>
-											<button type="button" class="btn btn-sm">삭제</button>
+											<fmt:formatNumber value="${ item.sellPrice * item.quantity }" pattern="#,###" />원
+										</td>
+										<td>
+											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-dark">주문하기</button><br>
+											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-light"><i class="fas fa-trash-alt"></i>&nbsp;삭제</button>
 										</td>
 									</tr>
 								</c:forEach>
-								
-								<tr>
-									<th>판매가</th>
-									<th><fmt:formatNumber value="${ product.sellPrice }" pattern="#,###" />원</th>
-								</tr>
-								<tr>
-									<td>상품코드</td>
-									<td><c:out value="${ product.code }" /></td>
-								</tr>
-								
-								<c:forEach var="option" items="${ product.optionList }" varStatus="optionStatus">
-									<tr style="border-top: 1px solid #dfdfdf;">
-										<td><c:out value="${ option.name }" /></td>
-										<td>
-											<select class="selectbox" name="optionValue${ optionStatus.count }">
-												<option value="0">=== 옵션을 선택하세요 ===</option>
-												<c:forEach var="optionValue" items="${ option.productOptionValueList }" varStatus="optionValueStatus">
-													<option value="${ optionValueStatus.count }"><c:out value="${ optionValue.value }" /></option>
-												</c:forEach>
-											</select>
-										</td>
-									</tr>
-								</c:forEach>
-								
-								<tr>
-									<td colspan="2">
-										<table id="selectedItems">
-											
-										</table>
-									</td>									
-								</tr>
-								
-								<tr>
-									<td colspan="2" style="text-align: center;">
-										<button type="button" style="font-size: 0.9em; border: 1px solid #dadada; margin: auto; width: 47%;" class="btn btn-light"><br>바로 구매하기<br><br></button>
-										<button type="button" onclick="addBucketList()" style="font-size: 0.9em; border: 1px solid #dadada; margin: auto; width: 47%;" class="btn btn-dark"><br><i class="fas fa-cart-plus"></i>&nbsp;장바구니에 담기<br><br></button>
-									</td>
-								</tr>
 							</tbody>
 						</table>
 						
-						<hr>
-						<p class="card-text" style="font-size: 0.8em;">
-							${ product.detailedDescription }
-						</p>
-<!-- 						<span class="text-warning">&#9733; &#9733; &#9733; &#9733; -->
-<!-- 							&#9734;</span> 4.0 stars -->
+
 					</div>
 				</div>
-				<!-- /.card -->
 
-<!-- 				<div class="card card-outline-secondary my-4"> -->
-<!-- 					<div class="card-header">Product Reviews</div> -->
-<!-- 					<div class="card-body"> -->
-<!-- 						<p> -->
-<!-- 							Lorem ipsum dolor sit amet, consectetur adipisicing elit. -->
-<!-- 							Omnis et enim aperiam inventore, similique necessitatibus neque -->
-<!-- 							non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. -->
-<!-- 							Sequi mollitia, necessitatibus quae sint natus. -->
-<!-- 						</p> -->
-<!-- 						<small class="text-muted">Posted by Anonymous on 3/1/17</small> -->
-<!-- 						<hr> -->
-<!-- 						<a href="#" class="btn btn-success">Leave a Review</a> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-				<!-- /.card -->
 
 			</div>
 			<!-- /.col-lg-9 -->

@@ -154,13 +154,12 @@
 					'productOptionItemNo': bucketList[i].productOptionItemNo,
 					'quantity': bucketList[i].quantity
 				};
-				console.log(bucketItem);
 				newBucketList.push(bucketItem);
 			}
 			paramMap.bucketItemList = newBucketList;
 			
 			$.ajax({
-				url: '${ pageContext.servletContext.contextPath }/product/bucket',
+				url: '${ pageContext.servletContext.contextPath }/bucket',
 				type: 'post',
 				dataType: 'json',
 				data: JSON.stringify(paramMap),
@@ -186,7 +185,7 @@
 		<c:param name="active" value="shopping" />
 	</c:import>
 	<!-- /.Navigation -->
-
+	
 	<!-- Page Content -->
 	<div class="container">
 		<div class="row" style="margin-bottom: 5%;">

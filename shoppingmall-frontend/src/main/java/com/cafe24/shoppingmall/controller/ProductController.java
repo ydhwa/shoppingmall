@@ -3,7 +3,6 @@ package com.cafe24.shoppingmall.controller;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +40,7 @@ public class ProductController {
 	
 	@RequestMapping(value="/{no}", method=RequestMethod.GET)
 	public String productDetails(Principal principal,
-			@CookieValue(value="identifier", required = false) String identifier,
+			@CookieValue(value="identifier", required=false) String identifier,
 			HttpServletResponse response,
 			Model model, @PathVariable("no") Optional<Long> no) {
 		if(!no.isPresent()) {
@@ -64,6 +62,7 @@ public class ProductController {
 			if(identifier == null) {
 				Cookie cookie = new Cookie("identifier", identifierStr);
 				cookie.setMaxAge(14 * 24 * 60 * 60);	// 유효기간 14일
+				cookie.setPath("/shoppingmall-frontend");
 				identifier = cookie.getValue();
 				response.addCookie(cookie);
 			}
@@ -87,14 +86,5 @@ public class ProductController {
 		
 		ProductOptionItemVo productOptionItem = productService.getProductItem(paramMap);
 		return JSONResult2.success(productOptionItem);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/bucket", method=RequestMethod.POST)
-	public JSONResult2 registBucket(@RequestBody Map<String, Object> bucketList) {
-		System.out.println(bucketList);
-		Boolean result = productService.registBucket(bucketList);
-		
-		return JSONResult2.success(result);
 	}
 }

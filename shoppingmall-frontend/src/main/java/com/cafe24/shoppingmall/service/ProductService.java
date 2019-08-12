@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 
+import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
@@ -71,13 +72,26 @@ public class ProductService {
 		return result.getData();
 	}
 	
+	// 장바구니 등록
 	public Boolean registBucket(Map<String, Object> bucketMap) {
 		String endpoint = "http://localhost:8888/api/buckets";
 		JSONResultRegist result = restTemplate.postForObject(endpoint, bucketMap, JSONResultRegist.class); 
 		
 		return result.getData();
 	}
-
+	// 장바구니 조회
+	public List<BucketItem> getMemberBucketList(Long memberNo) {
+		String endpoint = "http://localhost:8888/api/buckets/members/" + memberNo;
+		JSONResultBucketList result = restTemplate.getForObject(endpoint, JSONResultBucketList.class);
+		
+		return result.getData();
+	}
+	public List<BucketItem> getNonMemberBucketList(String identifier) {
+		String endpoint = "http://localhost:8888/api/buckets/non-members/" + identifier;
+		JSONResultBucketList result = restTemplate.getForObject(endpoint, JSONResultBucketList.class);
+		
+		return result.getData();
+	}
 	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
 	}
@@ -86,5 +100,7 @@ public class ProductService {
 	private static class JSONResultRegist extends JSONResult<Boolean> {
 	}
 	private static class JSONResultProductOptoinItem extends JSONResult<ProductOptionItemVo> {
+	}
+	private static class JSONResultBucketList extends JSONResult<List<BucketItem>> {
 	}
 }
