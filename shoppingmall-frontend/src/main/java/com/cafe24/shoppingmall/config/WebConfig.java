@@ -5,11 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
+import com.cafe24.shoppingmall.config.web.FileUploadConfig;
 import com.cafe24.shoppingmall.config.web.MVCConfig;
 
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan({"com.cafe24.shoppingmall.controller", "com.cafe24.shoppingmall.exception"})
-@Import({ MVCConfig.class })
+@Import({ MVCConfig.class, FileUploadConfig.class })
 public class WebConfig {
 }
