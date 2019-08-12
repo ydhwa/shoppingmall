@@ -3,6 +3,7 @@ package com.cafe24.shoppingmall.controller;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,8 +78,8 @@ public class ProductController {
         return uuid.toString();
 	}
 	
-	@RequestMapping(value="/optionitem", method=RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value="/optionitem", method=RequestMethod.GET)
 	public JSONResult2 productItem(@RequestParam HashMap<String, String> paramMap) {
 		if(!paramMap.containsKey("productNo") || !paramMap.containsKey("optionValueKeys")) {
 			return JSONResult2.fail("상품을 찾을 수 없습니다.");
@@ -85,5 +87,14 @@ public class ProductController {
 		
 		ProductOptionItemVo productOptionItem = productService.getProductItem(paramMap);
 		return JSONResult2.success(productOptionItem);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/bucket", method=RequestMethod.POST)
+	public JSONResult2 registBucket(@RequestBody Map<String, Object> bucketList) {
+		System.out.println(bucketList);
+		Boolean result = productService.registBucket(bucketList);
+		
+		return JSONResult2.success(result);
 	}
 }

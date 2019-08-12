@@ -7,7 +7,7 @@
 		<foreach collection="bucketItemList" item="item">
 			<![CDATA[
 				insert into bucket_item(member_no, identifier, product_option_item_no, quantity, reg_date)
-				values(#{ memberNo }, #{ item.identifier }, #{ item.productOptionItemNo }, #{ item.quantity }, now())
+				values(#{ memberNo }, #{ identifier }, #{ item.productOptionItemNo }, #{ item.quantity }, now())
 			]]>
 			<choose>
 				<when test="memberNo == null">

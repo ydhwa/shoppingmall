@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
+import com.cafe24.shoppingmall.vo.BucketItemVo;
 import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 
 @Service
@@ -51,7 +52,7 @@ public class ProductService {
 	
 	public Boolean registProduct(Map<String, Object> paramMap) {
 		String endpoint = "http://localhost:8888/api/admin/products";
-		JSONResultProductRegist result = restTemplate.postForObject(endpoint, paramMap, JSONResultProductRegist.class); 
+		JSONResultRegist result = restTemplate.postForObject(endpoint, paramMap, JSONResultRegist.class); 
 		
 		return result.getData();
 	}
@@ -69,13 +70,20 @@ public class ProductService {
 		
 		return result.getData();
 	}
+	
+	public Boolean registBucket(Map<String, Object> bucketMap) {
+		String endpoint = "http://localhost:8888/api/buckets";
+		JSONResultRegist result = restTemplate.postForObject(endpoint, bucketMap, JSONResultRegist.class); 
+		
+		return result.getData();
+	}
 
 	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
 	}
 	private static class JSONResultProduct extends JSONResult<ProductDetails> {
 	}
-	private static class JSONResultProductRegist extends JSONResult<Boolean> {
+	private static class JSONResultRegist extends JSONResult<Boolean> {
 	}
 	private static class JSONResultProductOptoinItem extends JSONResult<ProductOptionItemVo> {
 	}

@@ -142,8 +142,39 @@
 				bucketList[i].quantity = parseInt($('.quantity').eq(i).val());
 			}
 			
+			// 파라미터 넣기
+			var paramMap = new Object();
+			paramMap.memberNo = '${ memberNo }' == '' ? null : '${ memberNo }';
+			paramMap.identifier = '${ identifier }' == '' ? null : '${ identifier }';
+			var newBucketList = new Array();
+			
+			// price 속성값 제외하기(for mapping)
+			for(var i = 0; i < bucketList.length; i++) {
+				var bucketItem = {
+					'productOptionItemNo': bucketList[i].productOptionItemNo,
+					'quantity': bucketList[i].quantity
+				};
+				console.log(bucketItem);
+				newBucketList.push(bucketItem);
+			}
+			paramMap.bucketItemList = newBucketList;
+			
 			$.ajax({
-				
+				url: '${ pageContext.servletContext.contextPath }/product/bucket',
+				type: 'post',
+				dataType: 'json',
+				data: JSON.stringify(paramMap),
+				contentType: 'application/json',
+		       	success: function(response) {
+		       		if(response.data == true) {
+		       			alert('장바구니에 성공적으로 담겼습니다!');
+		       		} else {
+		       			alert('담기 실패!');
+		       		}
+				},
+				error: function(jqXHR, status, e) {
+					console.error('[ERROR] ' + status + ': ' + e);
+				}
 			});
 		}
 		
