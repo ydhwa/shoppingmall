@@ -85,9 +85,4 @@ public class ProductDao {
 	public ProductDetailsDto getOne(Long no) {
 		return sqlSession.selectOne("product.get", no);
 	}
-	
-	// 상품 번호와 value key들로 조회
-	public ProductOptionItemVo getOneItem(Map<String, String> paramMap) {
-		return sqlSession.selectOne("productoption.getItem", paramMap);
-	}
 }

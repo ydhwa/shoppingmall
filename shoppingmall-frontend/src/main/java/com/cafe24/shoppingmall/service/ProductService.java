@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
+import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 
 @Service
 public class ProductService {
@@ -61,6 +62,13 @@ public class ProductService {
 		
 		return result.getData();
 	}
+	
+	public ProductOptionItemVo getProductItem(HashMap<String, String> paramMap) {
+		String endpoint = String.format("http://localhost:8888/api/products/items?productNo=%s&optionValueKeys=%s", paramMap.get("productNo"), paramMap.get("optionValueKeys"));
+		JSONResultProductOptoinItem result = restTemplate.getForObject(endpoint, JSONResultProductOptoinItem.class);
+		
+		return result.getData();
+	}
 
 	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
@@ -68,5 +76,7 @@ public class ProductService {
 	private static class JSONResultProduct extends JSONResult<ProductDetails> {
 	}
 	private static class JSONResultProductRegist extends JSONResult<Boolean> {
+	}
+	private static class JSONResultProductOptoinItem extends JSONResult<ProductOptionItemVo> {
 	}
 }

@@ -192,6 +192,6 @@ public class ProductService {
 	}
 
 	public ProductOptionItemVo showProductItem(Map<String, String> paramMap) {
-		return productDao.getOneItem(paramMap);
+		return productOptionDao.getOneItem(paramMap);
 	}
 }

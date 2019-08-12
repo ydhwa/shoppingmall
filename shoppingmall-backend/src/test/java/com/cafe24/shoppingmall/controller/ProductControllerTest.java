@@ -105,4 +105,10 @@ public class ProductControllerTest {
 	public void 상품_상세조회_성공() throws Exception {
 		successAction("get", "/" + 1L, null, ".name", "상품1");
 	}
+	
+	@Test
+	public void 품목_조회_성공() throws Exception {
+		// 원래 optionValueKeys에는 인덱스 정보가 들어가야 하지만, 테스트 데이터는 번호 값을 넣었으므로 이런 값을 할당함
+		successAction("get", "/items?productNo=1&optionValueKeys=3;9;11", null, ".details", "사이즈=L;색상=BLACK;길이=LONG");
+	}
 }

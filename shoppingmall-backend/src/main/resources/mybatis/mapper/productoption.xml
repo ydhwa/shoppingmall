@@ -118,7 +118,7 @@
 		<![CDATA[
 			select *
 			from product_option_item
-			where product_no = #{ productNo }
+			where product_no = '${ productNo }'
 				and option_value_keys = #{ optionValueKeys };
 		]]>
 	</select>

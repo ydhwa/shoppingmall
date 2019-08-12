@@ -16,6 +16,7 @@
 	<!-- Custom styles for this template -->
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-homepage.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	<script src="${ pageContext.servletContext.contextPath }/assets/js/jquery/jquery.min.js"></script>
 	
 	<style type="text/css">
 		/* 꽉차게! */
@@ -26,6 +27,78 @@
 			min-height: 95%;
 		}
 	</style>
+	
+	<script type="text/javascript">
+		var bucketList = new Array();
+	
+		$(function() {
+			$('.selectbox').change(function() {
+				var optionValueKeys = '';
+				var fullChange = true;
+				$('.selectbox').each(function(index, item) {
+					var optionValueKey = $(item).val();
+					if(optionValueKey == 0) {
+						fullChange = false;
+						return ;
+					}
+					optionValueKeys += optionValueKey + ';';
+				});
+				
+				if(!fullChange) {	// 모든 항목을 선택하지 않았으면 아예 다음 작업이 실행되지 않도록 함
+					return ;
+				}
+				
+				optionValueKeys = optionValueKeys.substr(0, optionValueKeys.length - 1);
+				
+				$.ajax({
+					url: '${ pageContext.servletContext.contextPath }/product/optionitem?productNo=${ product.no }&optionValueKeys=' + optionValueKeys,
+					type: 'get',
+					dataType: 'json',
+					success: function(response) {
+						if(response.data != null) {
+							var additionalAmount = response.data.additionalAmount + ${ product.sellPrice };
+							var html =
+								'<tr>' + 
+									'<td>' + 
+										'<span style="font-weight: bold;">${ product.name }</span><br><span style="color: #787878; font-size: 0.9em;">' +
+										response.data.details.replace(';', '/') + 
+									'</span></td>' + 
+									'<td>' + 
+										'<input type="number" value="1">' + 
+										'<i class="far fa-trash-alt"></i>' + 
+									'</td>' + 
+									'<td>' + 
+										additionalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + 
+									'원</td>' + 
+								'</tr>';
+							$('#selectedItems').append(html);
+							
+							// 장바구니 후보에 담기
+							var item = {
+								'memberNo': <sec:authentication property="principal.name"/>,
+								'productOptionItemNo': data.productOptionItemNo,
+							};
+							bucketList.push();
+							
+						} else {
+							alert('상품이 없습니다.');
+							$('.selectbox').each(function(index, item) {
+								$(item).val(0);
+							});
+							return false;
+						}
+						$('.selectbox').each(function(index, item) {
+							$(item).val(0);
+						});
+					},
+					error: function(jqXHR, status, e) {
+						console.error('[ERROR] ' + status + ': ' + e);
+					}
+				});
+			});
+		});
+		
+	</script>
 </head>
 <body>
 	<!-- Navigation -->
@@ -74,8 +147,8 @@
 									<tr style="border-top: 1px solid #dfdfdf;">
 										<td><c:out value="${ option.name }" /></td>
 										<td>
-											<select name="optionValue${ optionStatus.count }">
-												<option>=== 옵션을 선택하세요 ===</option>
+											<select class="selectbox" name="optionValue${ optionStatus.count }">
+												<option value="0">=== 옵션을 선택하세요 ===</option>
 												<c:forEach var="optionValue" items="${ option.productOptionValueList }" varStatus="optionValueStatus">
 													<option value="${ optionValueStatus.count }"><c:out value="${ optionValue.value }" /></option>
 												</c:forEach>
@@ -83,6 +156,14 @@
 										</td>
 									</tr>
 								</c:forEach>
+								
+								<tr>
+									<td colspan="2">
+										<table id="selectedItems">
+											
+										</table>
+									</td>									
+								</tr>
 								
 								<tr>
 									<td colspan="2" style="text-align: center;">

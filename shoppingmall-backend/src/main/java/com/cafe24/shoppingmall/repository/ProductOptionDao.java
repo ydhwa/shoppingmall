@@ -1,6 +1,7 @@
 package com.cafe24.shoppingmall.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -83,5 +84,10 @@ public class ProductOptionDao {
 	// 상품 수정 및 상품 삭제 시 사용됨
 	public boolean deleteOptionItems(Long productNo) {
 		return 0 < sqlSession.delete("productoption.deleteOptionItems", productNo);
+	}
+	
+	// 상품 번호와 value key들로 조회
+	public ProductOptionItemVo getOneItem(Map<String, String> paramMap) {
+		return sqlSession.selectOne("productoption.getItem", paramMap);
 	}
 }
