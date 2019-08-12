@@ -2,6 +2,7 @@ package com.cafe24.shoppingmall.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -188,5 +189,9 @@ public class ProductService {
 		product.setProductImageList(productDao.getImageListByNo(no));
 
 		return product;
+	}
+
+	public ProductOptionItemVo showProductItem(Map<String, String> paramMap) {
+		return productDao.getOneItem(paramMap);
 	}
 }

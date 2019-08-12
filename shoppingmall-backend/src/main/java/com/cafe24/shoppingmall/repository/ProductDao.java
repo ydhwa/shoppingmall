@@ -2,6 +2,7 @@ package com.cafe24.shoppingmall.repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -13,6 +14,7 @@ import com.cafe24.shoppingmall.dto.ProductDetailsDto;
 import com.cafe24.shoppingmall.dto.ProductImageDto;
 import com.cafe24.shoppingmall.dto.ProductSummaryDto;
 import com.cafe24.shoppingmall.vo.ProductImageVo;
+import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 import com.cafe24.shoppingmall.vo.ProductVo;
 
 /**
@@ -82,5 +84,10 @@ public class ProductDao {
 	// 고객이 상품 번호로 조회
 	public ProductDetailsDto getOne(Long no) {
 		return sqlSession.selectOne("product.get", no);
+	}
+	
+	// 상품 번호와 value key들로 조회
+	public ProductOptionItemVo getOneItem(Map<String, String> paramMap) {
+		return sqlSession.selectOne("productoption.getItem", paramMap);
 	}
 }

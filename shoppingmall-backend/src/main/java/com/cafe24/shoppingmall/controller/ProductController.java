@@ -17,6 +17,7 @@ import com.cafe24.shoppingmall.dto.JSONResult;
 import com.cafe24.shoppingmall.dto.ProductDetailsDto;
 import com.cafe24.shoppingmall.dto.ProductSummaryDto;
 import com.cafe24.shoppingmall.service.ProductService;
+import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -67,5 +68,23 @@ public class ProductController {
 		ProductDetailsDto product = productService.showProduct(no.get());
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(product));
+	}
+	
+	// 품목 조회(장바구니, 주문 등에 필요)
+	@ApiOperation(value="품목 조회", response=ProductDetailsDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="productNo", value="해당하는 상품 번호", dataType="string", paramType="query"),
+		@ApiImplicitParam(name="optionValueKeys", value="해당하는 품목의 옵션값 인덱스들", dataType="string", paramType="query")
+	})
+	@RequestMapping(value = "/items", method = RequestMethod.GET)
+	public ResponseEntity<JSONResult> showProductItem(@RequestParam HashMap<String, String> paramMap) {
+		// path variable check
+		if (!paramMap.containsKey("productNo") || !paramMap.containsKey("optionValueKeys")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("품목 조회에 실패했습니다."));
+		}
+
+		ProductOptionItemVo productItem = productService.showProductItem(paramMap);
+
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(productItem));
 	}
 }

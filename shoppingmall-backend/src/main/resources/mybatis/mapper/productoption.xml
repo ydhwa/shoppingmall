@@ -113,5 +113,14 @@
 			where product_no = #{ value };
 		]]>
 	</delete>
+	
+	<select id="getItem" parameterType="map" resultType="productoptionitemvo">
+		<![CDATA[
+			select *
+			from product_option_item
+			where product_no = #{ productNo }
+				and option_value_keys = #{ optionValueKeys };
+		]]>
+	</select>
 
 </mapper>
