@@ -23,6 +23,10 @@
 - week4: API 개발 - shoppingmall-backend
 - week5: API 개발 및 문서 작성 - shoppingmall-backend
 - week6: UI 개발 - shoppingmall-frontend
+- week7: 기능 개선
+
+## 사용 API & plugin
+- [file uploader](https://github.com/danielm/uploader)
 
 -----
 

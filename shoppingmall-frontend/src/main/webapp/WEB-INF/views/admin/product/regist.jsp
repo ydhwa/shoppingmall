@@ -16,7 +16,8 @@
 	<link href="${pageContext.servletContext.contextPath }/assets/css/shop-homepage.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<script src="${ pageContext.servletContext.contextPath }/assets/js/jquery/jquery.min.js"></script>
-	
+	<!-- dm-uploader(css) -->
+	<link href="${pageContext.servletContext.contextPath }/assets/css/jquery.dm-uploader.min.css" rel="stylesheet">
 	<!-- HTML Editor -->
 	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 	
@@ -413,67 +414,167 @@
 					<tr>
 						<th>이미지</th>
 						<td>
-						<div class="row">
-						<div class="col-sm-9">
-<form enctype="multipart/form-data">
-	<div class="custom-file mb-3">
-		<input type="file" class="custom-file-input" id="customFile" name="filename">
-		<label class="custom-file-label" for="customFile">Choose file</label>
+<div class="row">
+	<div class="col-md-6 col-sm-12">
+		<form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">
+		<!-- /uploader -->
+		<div id="drag-and-drop-zone" class="dm-uploader p-5">
+			<h5 class="text-center">Drag &amp; drop files here</h5>
+<!-- 			<div class="btn btn-primary btn-block mb-5"> -->
+<!-- 				<span>Open the file Browser</span> -->
+<!-- 				<input type="file" id="click-zone" title='Click to add Files' /> -->
+<!-- 			</div> -->
+		</div>
+		</form>
+		
+		<button type="button" onclick="uploadFile(); return false;" class="btn btn-block btn-primary btn-md">파일 업로드</button>
 	</div>
-</form>
 
+	<div class="col-md-6 col-sm-12">
+		<!-- /file list -->
+		<div class="card h-100">
+			<div class="card-header">파일 리스트</div>
+			<ul class="list-unstyled p-2 d-flex flex-column col" id="files">
+<!-- 				<li class="text-muted text-center empty">No files uploaded.</li> -->
+			</ul>
+		</div>
+	</div>
+</div>
 <script type="text/javascript">
-	function readURL(input) {
-    	if (input.files && input.files[0]) {
-        	var reader = new FileReader();
-        	reader.onload = function(e) {
-            	$('#customImage').attr('src', e.target.result);
-        	}
-        	reader.readAsDataURL(input.files[0]);
-    	}
-    	
-    	return reader;
+	var fileIndex = 0;
+	var totalFileSize = 0;
+	var fileList = new Array();
+	var fileSizeList = new Array();
+	var uploadSize = 50;
+	var maxUploadSize = 500;
+	
+	$(function() {
+		fileDropDown();
+	});
+	
+	function fileDropDown() {
+		var dropzone = $('#drag-and-drop-zone');
+		
+		dropzone.on('dragenter', function(e) {
+			e.stopPropagation();
+			e.preventDefault();
+			dropzone.css('background-color', '#e3f2fc');
+		});
+		dropzone.on('dragleave',function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			dropzone.css('background-color','#FFFFFF');
+		});
+		dropzone.on('dragover',function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			dropzone.css('background-color','#E3F2FC');
+		});
+		dropzone.on('drop',function(e){
+			e.preventDefault();
+			dropzone.css('background-color','#FFFFFF');
+			var files = e.originalEvent.dataTransfer.files;
+			if(files != null) {
+				if(files.length < 1) {
+					alert("폴더 업로드 불가");
+					return;
+				}
+				selectFile(files);
+			} else {
+				alert("ERROR");
+			}
+		});
 	}
-	$(document).ready(function() {
-		$('#customFile').change(function() {
-			var fileName = $(this).val().split("\\").pop();
-			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-			var reader = readURL(this);
-			
-			var base64Img = reader.result.substr(reader.result.indexOf(",")+1);
-			
-			// 이미지 업로드
-			$.ajax({
-				url: '${pageContext.servletContext.contextPath}/admin/file/upload',
-				type: 'post',
-				contentType: 'application/json',
-				dataType: 'json',
-				data: JSON.stringify({
-					'status': 'MAIN',
-					'path': '',
-					'extension': fileName.substring(fileName.lastIndexOf('.') + 1),
-					'base64EncodingData' : base64Img
-				}),
-				success: function(response) {
-					console.log(response);
+	
+	function selectFile(files) {
+		console.log(files);
+		if(files != null) {
+			for(var i = 0; i < files.length; i++) {
+				var fileFullName = files[i].name;
+				var fileIndex = fileFullName.lastIndexOf('.');
+				var fileName = fileFullName.substr(0, fileIndex);
+				var ext = fileFullName.substr(fileIndex + 1);
+				var fileSize = files[i].size / 1024 / 1024;
 				
-					if("success" != response.result) {
-						alert(response.message);
-						return;
+                if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml']) >= 0) {
+					alert('등록 불가 확장자');
+					break;
+                } else if(fileSize > uploadSize) {
+                	alert('용량 초과\n업로드 가능 용량: ' +  uploadSize + ' MB');
+                	break;
+                } else {
+                	totalFileSize += fileSize;
+                	fileList[fileIndex] = files[i];
+                	fileSizeList[fileIndex] = fileSize;
+                	addFileList(fileIndex, fileFullName, fileSize);
+                	fileIndex++;
+                }
+			}
+		} else {
+			alert('ERROR');
+		}
+	}
+	
+	function addFileList(fIndex, fileName, fileSize) {
+		var html = '' + 
+			'<li class="text-muted text-center empty" id="fileItem_' + fIndex + '">' +
+				fileName + 
+				'<button type="button" class="btn btn-sm" onclick="deleteFile(' + fIndex + '); return false;">' +
+					'<i class="fas fa-trash-alt"></i>' +
+				'</button>' +  
+			'</li>';
+		$('#files').append(html);
+	}
+	
+	function deleteFile(fIndex) {
+		totalFileSize -= fileSizeList[fIndex];
+		delete fileList[fIndex];
+		delete fileSizeList[fIndex];
+		$('#fileItem_' + fIndex).remove();
+	}
+	
+	function uploadFile() {
+		var uploadFileList = Object.keys(fileList);
+		
+		if(uploadFileList.length == 0) {
+			return ;
+		}
+		
+		if(totalFileSize > maxUploadSize) {
+			alert('업로드 허용 용량 초과');
+			return ;
+		}
+		
+		if(confirm('이미지를 등록하시겠습니까?')) {
+			var form = $('#uploadForm')[0];
+			var formData = new FormData(form);
+			
+			for(var i = 0; i < uploadFileList.length; i++) {
+				formData.append('files', fileList[uploadFileList[i]]);
+			}
+			
+			$.ajax({
+				url: '',
+				data: formData,
+				type: 'post',
+				enctype: 'multipart/form-data',
+				processData: false,
+				contentType: false,
+				dataType: 'json',
+				cache: false,
+				success: function(result) {
+					if(result.data.length> 0) {
+						alert('성공');
+					} else {
+						alert('실패');
 					}
-				},
-				error: function (request, status, error) {
-					alert("서버와의 통신에 문제가 발생하였습니다.");
 				}
 			});
-		});
-	});
+		}
+	}
+
 </script>
-							</div>
-								<div class="col-sm-3">
-									<img id="customImage" alt="" src="${pageContext.servletContext.contextPath }/assets/images/default.png" width="100" height="100">
-								</div>
-							</div>
+
 						</td>
 					</tr>
 					<tr>
