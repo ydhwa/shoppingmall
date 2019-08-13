@@ -296,4 +296,12 @@
 		]]>
 	</update>
 	
+	<select id="getRecentCode" resultType="string">
+		<![CDATA[
+			select code
+			from orders
+			where no = currval('seq_orders_no');
+		]]>
+	</select>
+	
 </mapper>

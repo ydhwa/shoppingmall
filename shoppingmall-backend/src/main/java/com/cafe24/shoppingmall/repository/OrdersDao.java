@@ -44,7 +44,7 @@ public class OrdersDao {
 	}
 	// 각 물품의 재고 수량을 없애고, 총 결제 금액 업데이트
 	public Boolean updateSomeDataAfterOrder(List<BucketItemVo> ordersItemList) {
-		if(1 > sqlSession.update("updateTotalOrderAccount")) {
+		if(1 > sqlSession.update("orders.updateTotalOrderAccount")) {
 			return false;
 		}
 		int result = 0;
@@ -92,5 +92,10 @@ public class OrdersDao {
 	// 상품 삭제 동작 시 실행된다.
 	public boolean updateProductOptionItemNoToNull(Long no) {
 		return 0 <= sqlSession.update("orders.updateProductOptionItemNoToNull", no);
+	}
+	
+	// 방금 주문한 주문의 주문 코드를 뽑는다.
+	public String getRecentCode() {
+		return sqlSession.selectOne("orders.getRecentCode");
 	}
 }

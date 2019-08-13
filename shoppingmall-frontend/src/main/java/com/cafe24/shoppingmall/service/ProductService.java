@@ -129,9 +129,9 @@ public class ProductService {
 	}
 	
 	// 주문 등록
-	public Boolean registOrder(Map<String, Object> paramMap) {
+	public String registOrder(Map<String, Object> paramMap) {
 		String endpoint = "http://localhost:8888/api/orders";
-		JSONResultBoolean result = restTemplate.postForObject(endpoint, paramMap, JSONResultBoolean.class); 
+		JSONResultString result = restTemplate.postForObject(endpoint, paramMap, JSONResultString.class); 
 		
 		return result.getData();
 	}
@@ -147,5 +147,7 @@ public class ProductService {
 	private static class JSONResultBucketList extends JSONResult<List<BucketItem>> {
 	}
 	private static class JSONResultInteger extends JSONResult<Integer> {
+	}
+	private static class JSONResultString extends JSONResult<String> {
 	}
 }

@@ -32,7 +32,7 @@
 	<script type="text/javascript">
 		var bucketList = new Array();
 		var selectedBucketList = new Array();
-		
+	
 		$(function() {
 			// 수량 변경 시
 			$('.quantity').change(function() {
@@ -100,10 +100,14 @@
 					var quantity = bucketList[index].quantity;
 					
 					var bucketItemVo = {
-							'memberNo': memberNo,
-							'identifier': identifier,
-							'quantity': quantity,
-							'productOptionItemNo': productOptionItemNo
+						'sellPrice': bucketList[index].sellPrice,
+						'quantity': quantity,
+						'productNo': bucketList[index].productNo,
+						'productName': bucketList[index].productName,
+						'productOptionItemNo': bucketList[index].productOptionItemNo,
+						'productOptionDetails': bucketList[index].productOptionDetails,
+						'memberNo': memberNo,
+						'identifier': identifier
 					}
 					selectedBucketList.push(bucketItemVo);
 				} else {
@@ -142,6 +146,7 @@
 					
 			var hiddenField = document.createElement('input');
 			hiddenField.name = 'listStr';
+			hiddenField.type = 'hidden';
 			hiddenField.value = JSON.stringify(list);
 			form.appendChild(hiddenField);
 					

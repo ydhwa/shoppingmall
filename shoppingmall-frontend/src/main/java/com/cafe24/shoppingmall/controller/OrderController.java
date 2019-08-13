@@ -41,11 +41,15 @@ public class OrderController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="", method=RequestMethod.POST)
+	@RequestMapping(value="/regist", method=RequestMethod.POST)
 	public JSONResult2 registOrder(@RequestBody Map<String, Object> paramMap) {
-		Boolean result = productService.registOrder(paramMap);
+		String result = productService.registOrder(paramMap);
 		
-		return JSONResult2.success(result);
+		if(result != null) {
+			return JSONResult2.success(result);
+		} else {
+			return JSONResult2.fail("주문 실패");
+		}
 	}
 	
 	@RequestMapping(value="/result", method=RequestMethod.GET)

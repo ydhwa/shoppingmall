@@ -31,28 +31,30 @@ public class OrdersService {
 
 	// 주문 등록
 	@Transactional
-	public Boolean registOrder(OrdersVo orders, List<BucketItemVo> ordersItemList) {
+	public String registOrder(OrdersVo orders, List<BucketItemVo> ordersItemList) {
 		// (주문 시 주문 대상 물품이 이미 장바구니에 담겨 있다고 가정한다.) 프로세스는 다음과 같다.
 		
 		// 1. 주문을 등록한다.
 		if(!ordersDao.insert(orders)) {
-			return false;
+			return null;
 		}
 		// 2. 주문 품목에 선택했던 물건들을 추가한다.
 		if(!ordersDao.insertItems(ordersItemList)) {
-			return false;
+			return null;
 		}
 		// 3. 주문했던 물품들의 재고를 주문한 만큼 없앤다.
 		// 총 주문금액을 1의 주문 정보에 반영한다. (주문 화면에서 보여주는 것을 별도의 쿼리를 이용하여 보여줘야 할 것이다.)
 		if(!ordersDao.updateSomeDataAfterOrder(ordersItemList)) {
-			return false;
+			return null;
 		}
 		// 4. 주문한 물품들을 장바구니에서 없앤다.
 		if(!bucketItemDao.deleteItems(ordersItemList)) {
-			return false;
+			return null;
 		}
 		
-		return true;
+		// 5. 방금 주문한 것의 주문번호를 뽑는다.
+		String code = ordersDao.getRecentCode();
+		return code;
 	}
 
 	// 회원의 주문 목록 조회

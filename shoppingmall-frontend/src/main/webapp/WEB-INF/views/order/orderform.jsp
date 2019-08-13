@@ -45,77 +45,90 @@
 	<script type="text/javascript">
 		var bucketList = new Array();
 		
-		$('#buy').click(function() {
-			var ordersItemList = new Array();
-			for(var i = 0; i < bucketList.length; i++) {
-				var ordersItem = {
-					'memberNo': bucketList[i].memberNo,
-					'identifier': bucketList[i].identifier,
-					'productOptionItemNo': bucketList[i].productOptionItemNo,
-					'quantity': bucketList[i].quantity
+		$(function() {
+			$('#buy').click(function() {
+				var ordersItemList = new Array();
+				for(var i = 0; i < bucketList.length; i++) {
+					var ordersItem = {
+						'memberNo': bucketList[i].memberNo,
+						'identifier': bucketList[i].identifier,
+						'productOptionItemNo': bucketList[i].productOptionItemNo,
+						'quantity': bucketList[i].quantity
+					}
+					ordersItemList.push(ordersItem);
 				}
-				ordersItemList.push(ordersItem);
-			}
-			var orders = new Object();
-			
-			orders.ordererName = $('#ordererName').val();
-			orders.ordererPostalCode = $('#ordererPostalCode').val();
-			orders.ordererBaseAddress = $('#ordererBaseAddress').val();
-			orders.ordererDetailAddress = $('#ordererDetailAddress').val();
-			orders.ordererHomeNumber = $('#ordererHomeNumber1').val() + '-' + $('#ordererHomeNumber2').val() + '-' + $('#ordererHomeNumber3').val();
-			orders.ordererPhoneNumber = $('#ordererPhoneNumber1').val() + '-' + $('#ordererPhoneNumber2').val() + '-' + $('#ordererPhoneNumber3').val();
-			orders.ordererEmail = $('#ordererEmail1').val() + '@' + $('#ordererEmail2').val();
-			orders.memberNo = bucketList[0].memberNo;
-			orders.password = $('#password').val();
+				var orders = new Object();
 				
-			orders.receiverName = $('#receiverName').val();
-			orders.receiverPostalCode = $('#receiverPostalCode').val();
-			orders.receiverBaseAddress = $('#receiverBaseAddress').val();
-			orders.receiverDetailAddress = $('#receiverDetailAddress').val();
-			orders.receiverHomeNumber = $('#receiverHomeNumber1').val() + '-' + $('#receiverHomeNumber2').val() + '-' + $('#receiverHomeNumber3').val();
-			orders.receiverPhoneNumber = $('#receiverPhoneNumber1').val() + '-' + $('#receiverPhoneNumber2').val() + '-' + $('#receiverPhoneNumber3').val();
+				orders.ordererName = $('#ordererName').val();
+				orders.ordererPostalCode = $('#ordererPostalCode').val();
+				orders.ordererBaseAddress = $('#ordererBaseAddress').val();
+				orders.ordererDetailAddress = $('#ordererDetailAddress').val();
+				orders.ordererHomeNumber = $('#ordererHomeNumber1').val() + '-' + $('#ordererHomeNumber2').val() + '-' + $('#ordererHomeNumber3').val();
+				orders.ordererPhoneNumber = $('#ordererPhoneNumber1').val() + '-' + $('#ordererPhoneNumber2').val() + '-' + $('#ordererPhoneNumber3').val();
+				orders.ordererEmail = $('#ordererEmail1').val() + '@' + $('#ordererEmail2').val();
+				orders.memberNo = bucketList[0].memberNo == '' ? 0 : bucketList[0].memberNo;
+				orders.password = $('#password').val();
+				orders.memberStatus = orders.memberNo == 0 ? 'N' : 'Y';
+				orders.status = 'ORDER_COMPLETE';
+					
+				orders.receiverName = $('#receiverName').val();
+				orders.receiverPostalCode = $('#receiverPostalCode').val();
+				orders.receiverBaseAddress = $('#receiverBaseAddress').val();
+				orders.receiverDetailAddress = $('#receiverDetailAddress').val();
+				orders.receiverHomeNumber = $('#receiverHomeNumber1').val() + '-' + $('#receiverHomeNumber2').val() + '-' + $('#receiverHomeNumber3').val();
+				orders.receiverPhoneNumber = $('#receiverPhoneNumber1').val() + '-' + $('#receiverPhoneNumber2').val() + '-' + $('#receiverPhoneNumber3').val();
+					
+				orders.memo = $('#memo').val();
 				
-			orders.memo = $('#memo').val();
-			
-			// 간단하게 필수 사항 체크
-			if(
-				orders.ordererName == '' ||
-				orders.ordererPostalCode == '' ||
-				orders.ordererBaseAddress == '' ||
-				orders.ordererDetailAddress == '' ||
-				orders.ordererPhoneNumber == '' ||
-				orders.ordererEmail == '' ||
-				orders.ordererPhoneNumber == '' ||
-				(orders.memberNo == 0 && orders.password == '' && orders.password != $('#passwordCheck').val()) ||
-				orders.receiverName == '' ||
-				orders.receiverPostalCode == '' ||
-				orders.receiverBaseAddress == '' ||
-				orders.receiverDetailAddress == '' ||
-				orders.receiverPhoneNumber == '' ||
-				orders.receiverEmail == '' ||
-				orders.receiverPhoneNumber == '' ) {
-				return ;
-			}
-			
-			var ordersMap = {
-				'ordersItemList': ordersMap.push(ordersItemList),
-				'orders': ordersMap.push(orders)
-			}
-			
-			$.ajax({
-				url: '${ pageContext.servletContext.contextPath }/order',
-				type: 'post',
-				dataType: 'json',
-				data: JSON.stringify(ordersMap),
-				contentType: 'application/json',
-		       	success: function(response) {
-		       		// 가장 최근에 주문한 주문 목록이 보여야 하는데...
-				},
-				error: function(jqXHR, status, e) {
-					console.error('[ERROR] ' + status + ': ' + e);
+				// 간단하게 필수 사항 체크
+				if(
+					orders.ordererName == '' ||
+					orders.ordererPostalCode == '' ||
+					orders.ordererBaseAddress == '' ||
+					orders.ordererDetailAddress == '' ||
+					orders.ordererPhoneNumber == '--' ||
+					orders.ordererEmail == '' ||
+					orders.ordererPhoneNumber == '--' ||
+					(orders.memberNo == 0 && orders.password == '' && orders.password != $('#passwordCheck').val()) ||
+					orders.receiverName == '' ||
+					orders.receiverPostalCode == '' ||
+					orders.receiverBaseAddress == '' ||
+					orders.receiverDetailAddress == '' ||
+					orders.receiverPhoneNumber == '') {
+					alert('필수 입력 사항을 전부 입력해주세요!');
+					return ;
 				}
+				
+				var ordersMap = {
+					'ordersItemList': ordersItemList,
+					'orders': orders
+				}
+				
+				$.ajax({
+					url: '${ pageContext.servletContext.contextPath }/order/regist',
+					type: 'post',
+					dataType: 'json',
+					data: JSON.stringify(ordersMap),
+					contentType: 'application/json',
+			       	success: function(response) {
+			       		$('.orderform').empty();
+			       		
+			       		var html = 
+			       			'<div>' + 
+			       			'<h1>성공적으로 주문하였습니다.</h1>' + 
+			       			'<h3>주문 코드는 "' + response.data + '" 입니다.</h3>' + 
+			       			'<h3 style="color: red;">비회원 주문의 경우, 주문 내역 확인을 위해 비밀번호와 함께 필수로 기억하고 계셔야 합니다. 분실 시 책임지지 않습니다.</h3>' + 
+			       			'<a href="${ pageContext.servletContext.contextPath }">메인화면으로 돌아가기</a>' + 
+			       			'</div>';
+			       			
+			       		$('.orderform').append(html);
+					},
+					error: function(jqXHR, status, e) {
+						console.error('[ERROR] ' + status + ': ' + e);
+					}
+				});
 			});
-		});
+		})
 		
 	</script>
 
@@ -145,7 +158,7 @@
 			</div>
 			<!-- /.col-lg-3 -->
 
-			<div class="col-lg-9">
+			<div class="col-lg-9 orderform">
 
 				<div class="card mt-4">
 					<div class="card-body">
@@ -211,6 +224,7 @@
 						
 						<hr>
 						
+						<form class="form-inline">
 						<table class="table table-bordered">
 							<caption>주문 정보</caption>
 							<tbody>
@@ -229,8 +243,8 @@
 										<input type="text" class="form-control form-control-sm" name="ordererPostalCode" id="ordererPostalCode">
 										<button type="button" class="btn btn-sm btn-light">
 											우편번호
-										</button>
-										<input type="text" class="form-control form-control-sm" name="ordererBaseAddress" id="ordererBaseAddress">기본주소
+										</button><br>
+										<input type="text" class="form-control form-control-sm" name="ordererBaseAddress" id="ordererBaseAddress">기본주소<br>
 										<input type="text" class="form-control form-control-sm" name="ordererDetailAddress" id="ordererDetailAddress">나머지주소
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -311,8 +325,8 @@
 										<input type="text" class="form-control form-control-sm" name="receiverPostalCode" id="receiverPostalCode">
 										<button type="button" class="btn btn-sm btn-light">
 											우편번호
-										</button>
-										<input type="text" class="form-control form-control-sm" name="receiverBaseAddress" id="receiverBaseAddress">기본주소
+										</button><br>
+										<input type="text" class="form-control form-control-sm" name="receiverBaseAddress" id="receiverBaseAddress">기본주소<br>
 										<input type="text" class="form-control form-control-sm" name="receiverDetailAddress" id="receiverDetailAddress">나머지주소
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -349,7 +363,7 @@
 								</tr>
 							</tbody>
 						</table>
-						
+						</form>
 						<hr>
 						
 						<table class="table">

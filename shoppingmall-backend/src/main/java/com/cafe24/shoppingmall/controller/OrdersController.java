@@ -62,7 +62,7 @@ public class OrdersController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("주문 등록에 실패했습니다."));
 		}
 
-		Boolean registResult = ordersService.registOrder(orders, ordersItemList);
+		String registResult = ordersService.registOrder(orders, ordersItemList);
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(registResult));
 	}
 
