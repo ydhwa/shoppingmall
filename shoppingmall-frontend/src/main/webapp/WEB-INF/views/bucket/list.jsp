@@ -79,7 +79,7 @@
 										</td>
 										<td>
 											<span style="font-weight: bold;">
-												<c:out value="${ item.productName }" />
+												<a href="${ pageContext.servletContext.contextPath }/product/${ item.productNo }"><c:out value="${ item.productName }" /></a>
 											</span><br>
 											<span style="font-size: 0.9em; color: #787878;">
 												[옵션: <c:out value="${ fn:replace(item.productOptionDetails, ';', '/') }" />]
@@ -94,12 +94,48 @@
 										<td>
 											<fmt:formatNumber value="${ item.sellPrice * item.quantity }" pattern="#,###" />원
 										</td>
-										<td>
+										<td class="text-center">
 											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-dark">주문하기</button><br>
 											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-light"><i class="fas fa-trash-alt"></i>&nbsp;삭제</button>
 										</td>
 									</tr>
 								</c:forEach>
+								
+								<tr>
+									<td colspan="6" class="text-right" style="padding-right: 5%;">
+										<h6>총 상품금액: 
+											<span style="color: #AF4848;">
+												<fmt:formatNumber value="${ item.sellPrice * item.quantity }" pattern="#,###" />원
+											</span>
+										</h6>
+									</td>
+								</tr>
+								
+								<tr>
+									<td colspan="5" style="font-size: 0.9em;">
+										선택상품을&nbsp;
+										<button type="button" style="font-size: 0.9em;" class="btn btn-sm btn-light">
+											<i class="fas fa-trash-alt"></i>&nbsp;삭제
+										</button>
+									</td>
+									<td colspan="1" style="font-size: 0.9em;">
+										<button type="button" style="font-size: 0.9em;" class="btn btn-sm btn-light">
+											<i class="fas fa-trash-alt"></i>&nbsp;장바구니 비우기
+										</button>
+									</td>
+								</tr>
+								
+								<tr>
+									<td colspan="6" class="text-center">
+										<button type="button" class="btn btn-sm btn-dark" style="font-size: 0.9em;">
+											&nbsp;&nbsp;&nbsp;전체상품주문&nbsp;&nbsp;&nbsp;
+										</button>
+										<button type="button" class="btn btn-sm btn-secondary" style="font-size: 0.9em;">
+											&nbsp;&nbsp;&nbsp;선택상품주문&nbsp;&nbsp;&nbsp;
+										</button>
+									</td>
+								</tr>								
+								
 							</tbody>
 						</table>
 						

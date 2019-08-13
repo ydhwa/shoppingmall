@@ -166,7 +166,9 @@
 				contentType: 'application/json',
 		       	success: function(response) {
 		       		if(response.data == true) {
-		       			alert('장바구니에 성공적으로 담겼습니다!');
+		       			if(confirm('선택한 상품이 장바구니에 담겼습니다.\n장바구니를 확인하시겠습니까?')) {
+		       				window.location.href = '${ pageContext.servletContext.contextPath }/bucket';
+		       			}
 		       		} else {
 		       			alert('담기 실패!');
 		       		}
