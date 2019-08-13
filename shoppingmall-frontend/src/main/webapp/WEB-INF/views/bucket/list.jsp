@@ -29,8 +29,41 @@
 	</style>
 	
 	<script type="text/javascript">
+		var bucketList = new Array();
+		
 		$(function() {
+			// 수량 변경 시
 			$('.quantity').change(function() {
+				var index = $(this).parent().children().eq(0).val();
+				var memberNo = bucketList[index].memberNo;
+				var identifier = bucketList[index].identifier;
+				var quantity = $(this).val();
+				var productOptionItemNo = bucketList[index].productOptionItemNo;
+				
+				var bucketItemVo = {
+					'memberNo': memberNo,
+					'identifier': identifier,
+					'quantity': quantity,
+					'productOptionItemNo': productOptionItemNo
+				}
+				
+				// 장바구니 수량 수정 후 refresh
+				$.ajax({
+					url: '${ pageContext.servletContext.contextPath }/bucket',
+					type: 'put',
+					dataType: 'json',
+					data: JSON.stringify(bucketItemVo),
+					contentType: 'application/json',
+		       		success: function(response) {
+		       			if(response.data == true) {
+			       			location.reload();
+		       			}
+			       		return ;
+					},
+					error: function(jqXHR, status, e) {
+						console.error('[ERROR] ' + status + ': ' + e);
+					}
+				});
 			});
 		});
 	</script>
@@ -79,7 +112,7 @@
 								</tr>
 							
 								<!-- 여기에 forEach문으로 장바구니 내의 물품들을 뽑아내야 한다. -->
-								<c:forEach var="item" items="${ bucketList }" varStatus="index">
+								<c:forEach var="item" items="${ bucketList }" varStatus="status">
 									<tr>
 										<td>
 											<input type="checkbox" class="custom-control custom-checkbox">
@@ -96,6 +129,7 @@
 											<fmt:formatNumber value="${ item.sellPrice }" pattern="#,###" />원
 										</td>
 										<td style="max-width: 100px;">
+											<input type="hidden" value="${ status.index }">
 											<input type="number" class="form-control form-control-sm quantity" value="${ item.quantity }" min="1">
 										</td>
 										<td>
@@ -106,6 +140,19 @@
 											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-light"><i class="fas fa-trash-alt"></i>&nbsp;삭제</button>
 										</td>
 									</tr>
+									
+									<script>
+										var bucketItem = {
+											'sellPrice': '${ item.sellPrice }',
+											'quantity': '${ item.quantity }',
+											'productNo': '${ item.productNo }',
+											'productOptionItemNo': '${ item.productOptionItemNo }',
+											'productOptionDetails': '${ item.productOptionDetails }',
+											'memberNo': '${ item.memberNo }',
+											'identifier': '${ item.identifier }'
+										};
+										bucketList.push(bucketItem);
+									</script>
 								</c:forEach>
 								
 								<tr>

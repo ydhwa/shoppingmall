@@ -124,19 +124,8 @@
 			update bucket_item
 			set quantity = #{ quantity }
 			where product_option_item_no = #{ productOptionItemNo }
+				and (member_no = '${ memberNo }' or identifier = '${ identifier }');
 		]]>
-		<choose>
-			<when test="memberNo != null">
-				<![CDATA[
-					and member_no = #{ memberNo };
-				]]>
-			</when>
-			<otherwise>
-				<![CDATA[
-					and identifier = #{ identifier };
-				]]>
-			</otherwise>
-		</choose>
 	</update>
 	
 	<select id="getTotalPrice" parameterType="map" resultType="integer">

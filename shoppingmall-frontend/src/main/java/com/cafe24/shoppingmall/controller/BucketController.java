@@ -17,6 +17,7 @@ import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.service.ProductService;
 import com.cafe24.shoppingmall.service.UserService;
+import com.cafe24.shoppingmall.vo.BucketItemVo;
 
 @Controller
 @RequestMapping("/bucket")
@@ -58,5 +59,20 @@ public class BucketController {
 		model.addAttribute("totalPrice", totalPrice);
 		
 		return "/bucket/list";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="", method=RequestMethod.PUT)
+	public JSONResult2 modifyBucketItemQuantity(@RequestBody BucketItemVo bucketItemVo) {
+		if(bucketItemVo.getMemberNo() == null) {
+			bucketItemVo.setMemberNo(0L);
+		}
+		if(bucketItemVo.getIdentifier() == null) {
+			bucketItemVo.setIdentifier("111111111");
+		}
+		
+		Boolean result = productService.modifyBucket(bucketItemVo);
+		
+		return JSONResult2.success(result);
 	}
 }

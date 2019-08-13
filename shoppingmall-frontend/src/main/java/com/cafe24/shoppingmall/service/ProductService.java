@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult;
+import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
@@ -53,7 +57,7 @@ public class ProductService {
 	
 	public Boolean registProduct(Map<String, Object> paramMap) {
 		String endpoint = "http://localhost:8888/api/admin/products";
-		JSONResultRegist result = restTemplate.postForObject(endpoint, paramMap, JSONResultRegist.class); 
+		JSONResultBoolean result = restTemplate.postForObject(endpoint, paramMap, JSONResultBoolean.class); 
 		
 		return result.getData();
 	}
@@ -75,7 +79,7 @@ public class ProductService {
 	// 장바구니 등록
 	public Boolean registBucket(Map<String, Object> bucketMap) {
 		String endpoint = "http://localhost:8888/api/buckets";
-		JSONResultRegist result = restTemplate.postForObject(endpoint, bucketMap, JSONResultRegist.class); 
+		JSONResultBoolean result = restTemplate.postForObject(endpoint, bucketMap, JSONResultBoolean.class); 
 		
 		return result.getData();
 	}
@@ -92,7 +96,7 @@ public class ProductService {
 		
 		return result.getData();
 	}
-	
+	// 장바구니에 담긴 물품들의 총 금액 조회
 	public Integer getBucketToalPrice(Long memberNo, String identifier) {
 		String endpoint = "http://localhost:8888/api/buckets/price?";
 		if(memberNo != null) {
@@ -104,12 +108,21 @@ public class ProductService {
 
 		return result.getData();
 	}
+	// 장바구니 수량 수정
+	public Boolean modifyBucket(BucketItemVo bucketItemVo) {
+		String endpoint = "http://localhost:8888/api/buckets";
+		
+		HttpEntity<BucketItemVo> requestEntity = new HttpEntity<>(bucketItemVo);
+		ResponseEntity<JSONResultBoolean> responseEntity = restTemplate.exchange(endpoint, HttpMethod.PUT, requestEntity, JSONResultBoolean.class);
+		
+		return responseEntity.getBody().getData();
+	}
 	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
 	}
 	private static class JSONResultProduct extends JSONResult<ProductDetails> {
 	}
-	private static class JSONResultRegist extends JSONResult<Boolean> {
+	private static class JSONResultBoolean extends JSONResult<Boolean> {
 	}
 	private static class JSONResultProductOptoinItem extends JSONResult<ProductOptionItemVo> {
 	}
