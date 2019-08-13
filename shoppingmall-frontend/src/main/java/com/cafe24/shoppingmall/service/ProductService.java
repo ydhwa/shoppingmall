@@ -128,6 +128,14 @@ public class ProductService {
 		return responseEntity.getBody().getData();
 	}
 	
+	// 주문 등록
+	public Boolean registOrder(Map<String, Object> paramMap) {
+		String endpoint = "http://localhost:8888/api/orders";
+		JSONResultBoolean result = restTemplate.postForObject(endpoint, paramMap, JSONResultBoolean.class); 
+		
+		return result.getData();
+	}
+	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
 	}
 	private static class JSONResultProduct extends JSONResult<ProductDetails> {

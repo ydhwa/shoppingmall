@@ -45,6 +45,77 @@
 	<script type="text/javascript">
 		var bucketList = new Array();
 		
+		$('#buy').click(function() {
+			var ordersItemList = new Array();
+			for(var i = 0; i < bucketList.length; i++) {
+				var ordersItem = {
+					'memberNo': bucketList[i].memberNo,
+					'identifier': bucketList[i].identifier,
+					'productOptionItemNo': bucketList[i].productOptionItemNo,
+					'quantity': bucketList[i].quantity
+				}
+				ordersItemList.push(ordersItem);
+			}
+			var orders = new Object();
+			
+			orders.ordererName = $('#ordererName').val();
+			orders.ordererPostalCode = $('#ordererPostalCode').val();
+			orders.ordererBaseAddress = $('#ordererBaseAddress').val();
+			orders.ordererDetailAddress = $('#ordererDetailAddress').val();
+			orders.ordererHomeNumber = $('#ordererHomeNumber1').val() + '-' + $('#ordererHomeNumber2').val() + '-' + $('#ordererHomeNumber3').val();
+			orders.ordererPhoneNumber = $('#ordererPhoneNumber1').val() + '-' + $('#ordererPhoneNumber2').val() + '-' + $('#ordererPhoneNumber3').val();
+			orders.ordererEmail = $('#ordererEmail1').val() + '@' + $('#ordererEmail2').val();
+			orders.memberNo = bucketList[0].memberNo;
+			orders.password = $('#password').val();
+				
+			orders.receiverName = $('#receiverName').val();
+			orders.receiverPostalCode = $('#receiverPostalCode').val();
+			orders.receiverBaseAddress = $('#receiverBaseAddress').val();
+			orders.receiverDetailAddress = $('#receiverDetailAddress').val();
+			orders.receiverHomeNumber = $('#receiverHomeNumber1').val() + '-' + $('#receiverHomeNumber2').val() + '-' + $('#receiverHomeNumber3').val();
+			orders.receiverPhoneNumber = $('#receiverPhoneNumber1').val() + '-' + $('#receiverPhoneNumber2').val() + '-' + $('#receiverPhoneNumber3').val();
+				
+			orders.memo = $('#memo').val();
+			
+			// 간단하게 필수 사항 체크
+			if(
+				orders.ordererName == '' ||
+				orders.ordererPostalCode == '' ||
+				orders.ordererBaseAddress == '' ||
+				orders.ordererDetailAddress == '' ||
+				orders.ordererPhoneNumber == '' ||
+				orders.ordererEmail == '' ||
+				orders.ordererPhoneNumber == '' ||
+				(orders.memberNo == 0 && orders.password == '' && orders.password != $('#passwordCheck').val()) ||
+				orders.receiverName == '' ||
+				orders.receiverPostalCode == '' ||
+				orders.receiverBaseAddress == '' ||
+				orders.receiverDetailAddress == '' ||
+				orders.receiverPhoneNumber == '' ||
+				orders.receiverEmail == '' ||
+				orders.receiverPhoneNumber == '' ) {
+				return ;
+			}
+			
+			var ordersMap = {
+				'ordersItemList': ordersMap.push(ordersItemList),
+				'orders': ordersMap.push(orders)
+			}
+			
+			$.ajax({
+				url: '${ pageContext.servletContext.contextPath }/order',
+				type: 'post',
+				dataType: 'json',
+				data: JSON.stringify(ordersMap),
+				contentType: 'application/json',
+		       	success: function(response) {
+		       		// 가장 최근에 주문한 주문 목록이 보여야 하는데...
+				},
+				error: function(jqXHR, status, e) {
+					console.error('[ERROR] ' + status + ': ' + e);
+				}
+			});
+		});
 		
 	</script>
 
@@ -149,18 +220,18 @@
 								<tr>
 									<th style="width: 150px;">주문하시는 분<span class="required">&nbsp;*</span></th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="ordererName">
+										<input type="text" class="form-control form-control-sm" name="ordererName" id="ordererName">
 									</td>
 								</tr>
 								<tr>
 									<th>주소<span class="required">&nbsp;*</span></th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="ordererPostalCode">
+										<input type="text" class="form-control form-control-sm" name="ordererPostalCode" id="ordererPostalCode">
 										<button type="button" class="btn btn-sm btn-light">
 											우편번호
 										</button>
-										<input type="text" class="form-control form-control-sm" name="ordererBaseAddress">기본주소
-										<input type="text" class="form-control form-control-sm" name="ordererDetailAddress">나머지주소
+										<input type="text" class="form-control form-control-sm" name="ordererBaseAddress" id="ordererBaseAddress">기본주소
+										<input type="text" class="form-control form-control-sm" name="ordererDetailAddress" id="ordererDetailAddress">나머지주소
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
     new daum.Postcode({
@@ -175,37 +246,37 @@
 								<tr>
 									<th>일반전화</th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber1">-
-										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber2">-
-										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber3">
+										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber1" id="ordererHomeNumber1">-
+										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber2" id="ordererHomeNumber2">-
+										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber3" id="ordererHomeNumber3">
 									</td>
 								</tr>
 								<tr>
 									<th>휴대전화<span class="required">&nbsp;*</span></th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber1">-
-										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber2">-
-										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber3">
+										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber1" id="ordererPhoneNumber1">-
+										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber2" id="ordererPhoneNumber2">-
+										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber3" id="ordererPhoneNumber3">
 									</td>
 								</tr>
 								<tr>
 									<th>이메일<span class="required">&nbsp;*</span></th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="ordererEmail1">@
-										<input type="text" class="form-control form-control-sm" name="ordererEmail2">
+										<input type="text" class="form-control form-control-sm" name="ordererEmail1" id="ordererEmail1">@
+										<input type="text" class="form-control form-control-sm" name="ordererEmail2" id="ordererEmail2">
 									</td>
 								</tr>
 								<sec:authorize access="!isAuthenticated()">
 									<tr>
 										<th>주문조회 비밀번호<span class="required">&nbsp;*</span></th>
 										<td>
-											<input type="password" class="form-control form-control-sm" name="password">
+											<input type="password" class="form-control form-control-sm" name="password" id="password">
 										</td>
 									</tr>
 									<tr>
 										<th>주문조회 비밀번호<br>확인<span class="required">&nbsp;*</span></th>
 										<td>
-											<input type="password" class="form-control form-control-sm" name="passwordCheck">
+											<input type="password" class="form-control form-control-sm" name="passwordCheck" id="passwordCheck">
 										</td>
 									</tr>
 								</sec:authorize>
@@ -231,18 +302,18 @@
 								<tr>
 									<th>받으시는 분<span class="required">&nbsp;*</span></th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="receiverName">
+										<input type="text" class="form-control form-control-sm" name="receiverName" id="receiverName">
 									</td>
 								</tr>
 								<tr>
 									<th>주소<span class="required">&nbsp;*</span></th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="receiverPostalCode">
+										<input type="text" class="form-control form-control-sm" name="receiverPostalCode" id="receiverPostalCode">
 										<button type="button" class="btn btn-sm btn-light">
 											우편번호
 										</button>
-										<input type="text" class="form-control form-control-sm" name="receiverBaseAddress">기본주소
-										<input type="text" class="form-control form-control-sm" name="receiverDetailAddress">나머지주소
+										<input type="text" class="form-control form-control-sm" name="receiverBaseAddress" id="receiverBaseAddress">기본주소
+										<input type="text" class="form-control form-control-sm" name="receiverDetailAddress" id="receiverDetailAddress">나머지주소
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
     new daum.Postcode({
@@ -257,23 +328,23 @@
 								<tr>
 									<th>일반전화</th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber1">-
-										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber2">-
-										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber3">
+										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber1" id="receiverHomeNumber1">-
+										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber2" id="receiverHomeNumber2">-
+										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber3" id="receiverHomeNumber3">
 									</td>
 								</tr>
 								<tr>
 									<th>휴대전화<span class="required">&nbsp;*</span></th>
 									<td>
-										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber1">-
-										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber2">-
-										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber3">
+										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber1" id="receiverPhoneNumber1">-
+										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber2" id="receiverPhoneNumber2">-
+										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber3" id="receiverPhoneNumber3">
 									</td>
 								</tr>
 								<tr>
 									<th>배송메시지</th>
 									<td>
-										<textarea rows="5" class="form-control" name="memo"></textarea>
+										<textarea rows="5" class="form-control" name="memo" id="memo"></textarea>
 									</td>
 								</tr>
 							</tbody>
@@ -309,7 +380,7 @@
 									<b style="font-size: 2em;">
 										<fmt:formatNumber value="${ totalPrice }" pattern="#,###" />
 									</b>원<br>
-									<button type="button" class="btn btn-sm btn-dark btn-block" style="font-size: 0.9em;">
+									<button type="button" class="btn btn-sm btn-dark btn-block" id="buy" style="font-size: 0.9em;">
 										<br>결제하기<br><br>
 									</button>
 									
