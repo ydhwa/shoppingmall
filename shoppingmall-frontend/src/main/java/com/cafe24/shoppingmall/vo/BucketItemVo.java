@@ -2,11 +2,12 @@ package com.cafe24.shoppingmall.vo;
 
 /**
  * 장바구니에 담기는 품목에 대한 VO
- * 
+ *
  * @author YDH
  *
  */
 public class BucketItemVo {
+	
 	private Long memberNo;				// 회원번호
 	private String identifier;			// 장바구니 식별자(비회원용)
 	private Long productOptionItemNo;	// 품목번호

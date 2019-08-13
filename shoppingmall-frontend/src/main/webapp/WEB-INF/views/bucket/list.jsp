@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -135,24 +136,17 @@
 		
 		// 리스트에 담겨 있는 것 주문
 		function listOrder(list) {
-			console.log(list);
-			
-			// requestbody로 선택된 상품들을 보내고, 주문 페이지로 리다이렉트 시킨다.
-			/*
-			$.ajax({
-				url: '${ pageContext.servletContext.contextPath }/order',
-				type: 'post',
-				dataType: 'text',
-				data: JSON.stringify(list),
-				contentType: 'application/json',
-		       	success: function(response) {
-       				window.location.href = '${ pageContext.servletContext.contextPath }/order';
-				},
-				error: function(jqXHR, status, e) {
-					console.error('[ERROR] ' + status + ': ' + e);
-				}
-			});
-			*/
+			var form = document.createElement('form');
+			form.method = 'get';
+			form.action = '${ pageContext.servletContext.contextPath }/order';
+					
+			var hiddenField = document.createElement('input');
+			hiddenField.name = 'listStr';
+			hiddenField.value = JSON.stringify(list);
+			form.appendChild(hiddenField);
+					
+			document.body.appendChild(form);
+			form.submit();
 		}
 		
 		// 리스트에 담겨 있는 것 삭제
@@ -254,6 +248,7 @@
 											'sellPrice': '${ item.sellPrice }',
 											'quantity': '${ item.quantity }',
 											'productNo': '${ item.productNo }',
+											'productName': '${ item.productName }',
 											'productOptionItemNo': '${ item.productOptionItemNo }',
 											'productOptionDetails': '${ item.productOptionDetails }',
 											'memberNo': '${ item.memberNo }',

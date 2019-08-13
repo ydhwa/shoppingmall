@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -26,109 +28,24 @@
 		.container {
 			min-height: 95%;
 		}
+		caption {
+			caption-side: top !important;
+			color: black !important;
+			font-size: 1.5em;
+			font-weight: bolder;
+		}
+		table {
+			font-size: 0.8em;
+		}
+		.required {
+			color: red;
+		}
 	</style>
 	
 	<script type="text/javascript">
 		var bucketList = new Array();
-		var selectedBucketList = new Array();
 		
-		$(function() {
-			// 수량 변경 시
-			$('.quantity').change(function() {
-				var index = $(this).parent().parent().children().eq(0).val();
-				var memberNo = bucketList[index].memberNo;
-				var identifier = bucketList[index].identifier;
-				var quantity = $(this).val();
-				var productOptionItemNo = bucketList[index].productOptionItemNo;
-				
-				var bucketItemVo = {
-					'memberNo': memberNo,
-					'identifier': identifier,
-					'quantity': quantity,
-					'productOptionItemNo': productOptionItemNo
-				}
-				
-				// 장바구니 수량 수정 후 refresh
-				$.ajax({
-					url: '${ pageContext.servletContext.contextPath }/bucket',
-					type: 'put',
-					dataType: 'json',
-					data: JSON.stringify(bucketItemVo),
-					contentType: 'application/json',
-		       		success: function(response) {
-		       			if(response.data == true) {
-			       			location.reload();
-		       			}
-			       		return ;
-					},
-					error: function(jqXHR, status, e) {
-						console.error('[ERROR] ' + status + ': ' + e);
-					}
-				});
-			});
-			
-			// 전체 주문 시
-			$('#allOrder').click(function() {
-				listOrder(bucketList);
-			});
-			// 선택 주문 시
-			$('#selectOrder').click(function() {
-				listOrder(selectedBucketList);
-			});
-			
-			// 체크박스 클릭 시 selectedBucketList에 추가/삭제됨
-			$('.selectbox').change(function() {
-				var index = $(this).parent().parent().children().eq(0).val();
-				var productOptionItemNo = bucketList[index].productOptionItemNo;
-				
-				if($(this).is(':checked')) {
-					var memberNo = bucketList[index].memberNo;
-					var identifier = bucketList[index].identifier;
-					var quantity = bucketList[index].quantity;
-					
-					var bucketItemVo = {
-							'memberNo': memberNo,
-							'identifier': identifier,
-							'quantity': quantity,
-							'productOptionItemNo': productOptionItemNo
-					}
-					selectedBucketList.push(bucketItemVo);
-				} else {
-					var i;
-					for(i = 0; i < selectedBucketList.length; i++) {
-						if(selectedBucketList[i].productOptionItemNo == bucketList[index].productOptionItemNo) {
-							break;
-						}
-					}
-					selectedBucketList.splice(i, 1);
-				}
-			});
-		});
 		
-		// 리스트에 담겨 있는 것 주문
-		function listOrder(list) {
-			
-			// requestbody로 선택된 상품들을 보내고, 주문 페이지로 리다이렉트 시킨다.
-// 			$.ajax({
-// 				url: '${ pageContext.servletContext.contextPath }/bucket',
-// 				type: 'post',
-// 				dataType: 'json',
-// 				data: JSON.stringify(paramMap),
-// 				contentType: 'application/json',
-// 		       	success: function(response) {
-// 		       		if(response.data == true) {
-// 		       			if(confirm('선택한 상품이 장바구니에 담겼습니다.\n장바구니를 확인하시겠습니까?')) {
-// 		       				window.location.href = '${ pageContext.servletContext.contextPath }/bucket';
-// 		       			}
-// 		       		} else {
-// 		       			alert('담기 실패!');
-// 		       		}
-// 				},
-// 				error: function(jqXHR, status, e) {
-// 					console.error('[ERROR] ' + status + ': ' + e);
-// 				}
-// 			});
-		}
 	</script>
 
 </head>
@@ -162,24 +79,20 @@
 				<div class="card mt-4">
 					<div class="card-body">
 						<h3 class="card-title">주문서 작성</h3>
-						<table class="table table-borderless" style="font-size: 0.8em;">
+						<table class="table table-borderless">
+							<caption>주문내역</caption>
 							<tbody>
 								<tr>
-									<th></th>
 									<th>상품정보</th>
 									<th>판매가</th>
 									<th>수량</th>
 									<th>합계</th>
-									<th>선택</th>
 								</tr>
 							
 								<!-- 여기에 forEach문으로 장바구니 내의 물품들을 뽑아내야 한다. -->
-								<c:forEach var="item" items="${ bucketList }" varStatus="status">
+								<c:forEach var="item" items="${ orderList }" varStatus="status">
 									<tr>
 										<input type="hidden" value="${ status.index }">
-										<td>
-											<input type="checkbox" class="custom-control custom-checkbox selectbox">
-										</td>
 										<td>
 											<span style="font-weight: bold;">
 												<a href="${ pageContext.servletContext.contextPath }/product/${ item.productNo }"><c:out value="${ item.productName }" /></a>
@@ -192,14 +105,10 @@
 											<fmt:formatNumber value="${ item.sellPrice }" pattern="#,###" />원
 										</td>
 										<td style="max-width: 100px;">
-											<input type="number" class="form-control form-control-sm quantity" value="${ item.quantity }" min="1">
+											<c:out value="${ item.quantity }" />
 										</td>
 										<td>
 											<fmt:formatNumber value="${ item.sellPrice * item.quantity }" pattern="#,###" />원
-										</td>
-										<td class="text-center">
-											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-dark">주문하기</button><br>
-											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-light"><i class="fas fa-trash-alt"></i>&nbsp;삭제</button>
 										</td>
 									</tr>
 									
@@ -225,36 +134,188 @@
 											</span>
 										</h6>
 									</td>
-								</tr>
-								
-								<tr>
-									<td colspan="5" style="font-size: 0.9em;">
-										선택상품을&nbsp;
-										<button type="button" style="font-size: 0.9em;" class="btn btn-sm btn-light">
-											<i class="fas fa-trash-alt"></i>&nbsp;삭제
-										</button>
-									</td>
-									<td colspan="1" style="font-size: 0.9em;">
-										<button type="button" style="font-size: 0.9em;" class="btn btn-sm btn-light">
-											<i class="fas fa-trash-alt"></i>&nbsp;장바구니 비우기
-										</button>
-									</td>
-								</tr>
-								
-								<tr>
-									<td colspan="6" class="text-center">
-										<button type="button" id="allOrder" class="btn btn-sm btn-dark" style="font-size: 0.9em;">
-											&nbsp;&nbsp;&nbsp;전체상품주문&nbsp;&nbsp;&nbsp;
-										</button>
-										<button type="button" id="selectOrder" class="btn btn-sm btn-secondary" style="font-size: 0.9em;">
-											&nbsp;&nbsp;&nbsp;선택상품주문&nbsp;&nbsp;&nbsp;
-										</button>
-									</td>
-								</tr>								
-								
+								</tr>						
 							</tbody>
 						</table>
 						
+						<hr>
+						
+						<table class="table table-bordered">
+							<caption>주문 정보</caption>
+							<tbody>
+								<tr>
+									<th colspan="2" class="text-right" style="font-size: 0.8em;"><span class="required">*</span>&nbsp;필수 입력 사항</th>
+								</tr>
+								<tr>
+									<th style="width: 150px;">주문하시는 분<span class="required">&nbsp;*</span></th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="ordererName">
+									</td>
+								</tr>
+								<tr>
+									<th>주소<span class="required">&nbsp;*</span></th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="ordererPostalCode">
+										<button type="button" class="btn btn-sm btn-light">
+											우편번호
+										</button>
+										<input type="text" class="form-control form-control-sm" name="ordererBaseAddress">기본주소
+										<input type="text" class="form-control form-control-sm" name="ordererDetailAddress">나머지주소
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        }
+    });
+</script>
+									</td>
+								</tr>
+								<tr>
+									<th>일반전화</th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber1">-
+										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber2">-
+										<input type="text" class="form-control form-control-sm" name="ordererHomeNumber3">
+									</td>
+								</tr>
+								<tr>
+									<th>휴대전화<span class="required">&nbsp;*</span></th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber1">-
+										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber2">-
+										<input type="text" class="form-control form-control-sm" name="ordererPhoneNumber3">
+									</td>
+								</tr>
+								<tr>
+									<th>이메일<span class="required">&nbsp;*</span></th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="ordererEmail1">@
+										<input type="text" class="form-control form-control-sm" name="ordererEmail2">
+									</td>
+								</tr>
+								<sec:authorize access="!isAuthenticated()">
+									<tr>
+										<th>주문조회 비밀번호<span class="required">&nbsp;*</span></th>
+										<td>
+											<input type="password" class="form-control form-control-sm" name="password">
+										</td>
+									</tr>
+									<tr>
+										<th>주문조회 비밀번호<br>확인<span class="required">&nbsp;*</span></th>
+										<td>
+											<input type="password" class="form-control form-control-sm" name="passwordCheck">
+										</td>
+									</tr>
+								</sec:authorize>
+							</tbody>
+						</table>
+						
+						<table class="table table-bordered">
+							<caption>배송 정보</caption>
+							<tbody>
+								<tr>
+									<th style="width: 150px;">배송지 선택</th>
+									<td>
+										<div class="custom-control custom-radio custom-control-inline">
+											<input type="radio" class="custom-control-input" id="receivePlaceOrderer" name="receivePlace" value="ORDERER">
+											<label class="custom-control-label" for="receivePlaceOrderer">주문자 정보와 동일</label>
+										</div>
+										<div class="custom-control custom-radio custom-control-inline">
+											<input type="radio" class="custom-control-input" id="receivePlaceNew" name="receivePlace" value="NEW" checked>
+											<label class="custom-control-label" for="receivePlaceNew">새로운 배송지</label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th>받으시는 분<span class="required">&nbsp;*</span></th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="receiverName">
+									</td>
+								</tr>
+								<tr>
+									<th>주소<span class="required">&nbsp;*</span></th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="receiverPostalCode">
+										<button type="button" class="btn btn-sm btn-light">
+											우편번호
+										</button>
+										<input type="text" class="form-control form-control-sm" name="receiverBaseAddress">기본주소
+										<input type="text" class="form-control form-control-sm" name="receiverDetailAddress">나머지주소
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        }
+    });
+</script>										
+									</td>
+								</tr>
+								<tr>
+									<th>일반전화</th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber1">-
+										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber2">-
+										<input type="text" class="form-control form-control-sm" name="receiverHomeNumber3">
+									</td>
+								</tr>
+								<tr>
+									<th>휴대전화<span class="required">&nbsp;*</span></th>
+									<td>
+										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber1">-
+										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber2">-
+										<input type="text" class="form-control form-control-sm" name="receiverPhoneNumber3">
+									</td>
+								</tr>
+								<tr>
+									<th>배송메시지</th>
+									<td>
+										<textarea rows="5" class="form-control" name="memo"></textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<hr>
+						
+						<table class="table">
+							<caption>결제 예정 금액</caption>
+							<tbody>
+								<tr>
+									<th>총 주문 금액</th>
+									<th>총 할인 + 부가결제 금액</th>
+									<th>총 결제예정 금액</th>
+								</tr>
+								<tr>
+									<td><fmt:formatNumber value="${ totalPrice }" pattern="#,###" />원</td>
+									<td>0원</td>
+									<td><fmt:formatNumber value="${ totalPrice - 0 }" pattern="#,###" />원</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<table class="table">
+							<caption>결제수단</caption>
+							<tr>
+								<th>결제</th>
+								<th style="width: 200px;" class="text-right">최종 결제 금액</th>
+							</tr>
+							<tr>
+								<td>아직 미구현</td>
+								<td style="color: red;" class="text-right">
+									<b style="font-size: 2em;">
+										<fmt:formatNumber value="${ totalPrice }" pattern="#,###" />
+									</b>원<br>
+									<button type="button" class="btn btn-sm btn-dark btn-block" style="font-size: 0.9em;">
+										<br>결제하기<br><br>
+									</button>
+									
+								</td>
+							</tr>
+						</table>
 
 					</div>
 				</div>
