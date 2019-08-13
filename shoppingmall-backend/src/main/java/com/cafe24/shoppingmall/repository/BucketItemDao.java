@@ -61,4 +61,9 @@ public class BucketItemDao {
 	public Boolean updateQuantity(BucketItemVo bucketItemVo) {
 		return 1 == sqlSession.update("bucketitem.updateQuantity", bucketItemVo);
 	}
+
+	// 장바구니에 담긴 물품들의 합계 금액 계산
+	public Integer getTotalPrice(Map<String, String> paramMap) {
+		return sqlSession.selectOne("bucketitem.getTotalPrice", paramMap);
+	}
 }

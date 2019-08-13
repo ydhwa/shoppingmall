@@ -39,9 +39,11 @@ public class BucketController {
 	public String showBucketItemList(Principal principal, 
 			@CookieValue(value="identifier", required=false) String identifier,
 			Model model) {
+		Long memberNo = null;
+		
 		// 장바구니 식별자
 		if(principal != null) {	// 회원일 때
-			Long memberNo = userService.getUserNo(principal.getName());
+			memberNo = userService.getUserNo(principal.getName());
 			List<BucketItem> bucketList = productService.getMemberBucketList(memberNo);
 			model.addAttribute("bucketList", bucketList);
 		} else {				// 비회원일 때
@@ -51,6 +53,9 @@ public class BucketController {
 			List<BucketItem> bucketList = productService.getNonMemberBucketList(identifier);
 			model.addAttribute("bucketList", bucketList);
 		}
+		
+		Integer totalPrice = productService.getBucketToalPrice(memberNo, identifier);
+		model.addAttribute("totalPrice", totalPrice);
 		
 		return "/bucket/list";
 	}

@@ -139,5 +139,14 @@
 		</choose>
 	</update>
 	
+	<select id="getTotalPrice" parameterType="map" resultType="integer">
+		<![CDATA[
+			select sum((p.sell_price + poi.additional_amount) * bi.quantity)
+			from bucket_item bi, product p, product_option_item poi
+			where p.no = poi.product_no
+				and poi.no = bi.product_option_item_no
+				and (bi.member_no = '${ memberNo }' or bi.identifier = '${ identifier }');
+		]]>
+	</select>
 	
 </mapper>

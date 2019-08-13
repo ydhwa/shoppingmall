@@ -55,4 +55,9 @@ public class BucketService {
 	public Boolean modifyQuantity(BucketItemVo bucketItemVo) {
 		return bucketItemDao.updateQuantity(bucketItemVo);
 	}
+
+	// 장바구니에 담긴 물품의 합계 금액 계산
+	public Integer showTotalPrice(Map<String, String> paramMap) {
+		return bucketItemDao.getTotalPrice(paramMap);
+	}
 }

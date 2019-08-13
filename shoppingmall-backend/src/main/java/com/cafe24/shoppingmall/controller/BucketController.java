@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.shoppingmall.dto.BucketItemDto;
@@ -132,6 +133,29 @@ public class BucketController {
 		Boolean deleteResult = bucketService.deleteItems(bucketNoList);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(deleteResult));
+	}
+	
+	@ApiOperation(value="장바구니의 합계 금액 계산", response=Integer.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="memberNo", value="장바구니를 조회할 회원 번호", dataType="string", paramType="query"),
+		@ApiImplicitParam(name="identifier", value="장바구니를 조회할 비회원 식별자", dataType="string", paramType="query")
+	})
+	@RequestMapping(value="/price", method=RequestMethod.GET)
+	public ResponseEntity<JSONResult> showTotalPrice(
+			@RequestParam(value="memberNo", defaultValue="0", required=false) String memberNo,
+			@RequestParam(value="identifier", defaultValue="", required=false) String identifier) {
+		
+		if("".equals(memberNo) && "".equals(identifier)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("장바구니 합계 금액 계산에 실패했습니다."));
+		}
+		
+		Map<String, String> paramMap = new HashMap<>();
+		paramMap.put("memberNo", memberNo);
+		paramMap.put("identifier", identifier);
+		
+		Integer totalAmount = bucketService.showTotalPrice(paramMap);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(totalAmount));
 	}
 	
 }

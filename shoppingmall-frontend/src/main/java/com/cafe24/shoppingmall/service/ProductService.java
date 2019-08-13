@@ -93,6 +93,18 @@ public class ProductService {
 		return result.getData();
 	}
 	
+	public Integer getBucketToalPrice(Long memberNo, String identifier) {
+		String endpoint = "http://localhost:8888/api/buckets/price?";
+		if(memberNo != null) {
+			endpoint += "memberNo=" + memberNo;
+		} else {
+			endpoint += "identifier=" + identifier;
+		}
+		JSONResultInteger result = restTemplate.getForObject(endpoint, JSONResultInteger.class);
+
+		return result.getData();
+	}
+	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
 	}
 	private static class JSONResultProduct extends JSONResult<ProductDetails> {
@@ -102,5 +114,7 @@ public class ProductService {
 	private static class JSONResultProductOptoinItem extends JSONResult<ProductOptionItemVo> {
 	}
 	private static class JSONResultBucketList extends JSONResult<List<BucketItem>> {
+	}
+	private static class JSONResultInteger extends JSONResult<Integer> {
 	}
 }

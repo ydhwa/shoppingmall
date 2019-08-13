@@ -27,6 +27,13 @@
 			min-height: 95%;
 		}
 	</style>
+	
+	<script type="text/javascript">
+		$(function() {
+			$('.quantity').change(function() {
+			});
+		});
+	</script>
 
 </head>
 <body>
@@ -88,8 +95,8 @@
 										<td>
 											<fmt:formatNumber value="${ item.sellPrice }" pattern="#,###" />원
 										</td>
-										<td>
-											<c:out value="${ item.quantity }" />
+										<td style="max-width: 100px;">
+											<input type="number" class="form-control form-control-sm quantity" value="${ item.quantity }" min="1">
 										</td>
 										<td>
 											<fmt:formatNumber value="${ item.sellPrice * item.quantity }" pattern="#,###" />원
@@ -105,7 +112,7 @@
 									<td colspan="6" class="text-right" style="padding-right: 5%;">
 										<h6>총 상품금액: 
 											<span style="color: #AF4848;">
-												<fmt:formatNumber value="${ item.sellPrice * item.quantity }" pattern="#,###" />원
+												<fmt:formatNumber value="${ totalPrice }" pattern="#,###" />원
 											</span>
 										</h6>
 									</td>
