@@ -75,4 +75,21 @@ public class BucketController {
 		
 		return JSONResult2.success(result);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="", method=RequestMethod.DELETE)
+	public JSONResult2 deleteBucketItemList(@RequestBody List<BucketItemVo> bucketList) {
+		for(BucketItemVo bucketItemVo: bucketList) {
+			if(bucketItemVo.getMemberNo() == null) {
+				bucketItemVo.setMemberNo(0L);
+			}
+			if(bucketItemVo.getIdentifier() == null) {
+				bucketItemVo.setIdentifier("111111111");
+			}
+		}
+		
+		Boolean result = productService.deleteBucketList(bucketList);
+		
+		return JSONResult2.success(result);
+	}
 }

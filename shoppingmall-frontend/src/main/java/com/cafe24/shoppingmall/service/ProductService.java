@@ -6,14 +6,15 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult;
-import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
@@ -114,6 +115,15 @@ public class ProductService {
 		
 		HttpEntity<BucketItemVo> requestEntity = new HttpEntity<>(bucketItemVo);
 		ResponseEntity<JSONResultBoolean> responseEntity = restTemplate.exchange(endpoint, HttpMethod.PUT, requestEntity, JSONResultBoolean.class);
+		
+		return responseEntity.getBody().getData();
+	}
+	// 장바구니 삭제
+	public Boolean deleteBucketList(List<BucketItemVo> bucketList) {
+		String endpoint = "http://localhost:8888/api/buckets";
+		
+		HttpEntity<Object> requestEntity = new HttpEntity<>(bucketList);
+		ResponseEntity<JSONResultBoolean> responseEntity = restTemplate.exchange(endpoint, HttpMethod.DELETE, requestEntity, JSONResultBoolean.class);
 		
 		return responseEntity.getBody().getData();
 	}

@@ -52,21 +52,8 @@
 				delete
 				from bucket_item
 				where 
-			]]>
-			<choose>
-				<when test="item.memberNo != null">
-					<![CDATA[
-						member_no = #{ item.memberNo }
-					]]>
-				</when>
-				<otherwise>
-					<![CDATA[
-						identifier = #{ identifier }
-					]]>
-				</otherwise>
-			</choose>
-			<![CDATA[
-				and product_option_item_no = #{ item.productOptionItemNo };
+					(member_no = '${ item.memberNo }' or identifier = '${ item.identifier }')
+					and product_option_item_no = #{ item.productOptionItemNo };
 			]]>
 		</foreach>
 	</delete>

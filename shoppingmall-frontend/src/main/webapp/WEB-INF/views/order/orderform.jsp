@@ -73,19 +73,7 @@
 			});
 			// 선택 주문 시
 			$('#selectOrder').click(function() {
-				if(selectedBucketList.length > 0) {
-					listOrder(selectedBucketList);
-				}
-			});
-			// 전체 삭제 시
-			$('#allDelete').click(function() {
-				listDelete(bucketList);
-			});
-			// 선택 삭제 시
-			$('#selectDelete').click(function() {
-				if(selectedBucketList.length > 0) {
-					listDelete(selectedBucketList);
-				}
+				listOrder(selectedBucketList);
 			});
 			
 			// 체크박스 클릭 시 selectedBucketList에 추가/삭제됨
@@ -116,63 +104,30 @@
 				}
 			});
 		});
-		// 하나만 주문
-		function oneOrder(obj) {
-			var index = $(obj).parent().parent().children().eq(0).val();
-			var oneBucketList = new Array();
-			oneBucketList.push(bucketList[index]);
-			
-			listOrder(oneBucketList);
-		}
-		// 하나만 삭제
-		function oneDelete(obj) {
-			var index = $(obj).parent().parent().children().eq(0).val();
-			var oneBucketList = new Array();
-			oneBucketList.push(bucketList[index]);
-			
-			listDelete(oneBucketList);
-		}
 		
 		// 리스트에 담겨 있는 것 주문
 		function listOrder(list) {
-			console.log(list);
 			
 			// requestbody로 선택된 상품들을 보내고, 주문 페이지로 리다이렉트 시킨다.
-			/*
-			$.ajax({
-				url: '${ pageContext.servletContext.contextPath }/order',
-				type: 'post',
-				dataType: 'text',
-				data: JSON.stringify(list),
-				contentType: 'application/json',
-		       	success: function(response) {
-       				window.location.href = '${ pageContext.servletContext.contextPath }/order';
-				},
-				error: function(jqXHR, status, e) {
-					console.error('[ERROR] ' + status + ': ' + e);
-				}
-			});
-			*/
-		}
-		
-		// 리스트에 담겨 있는 것 삭제
-		function listDelete(list) {
-			$.ajax({
-				url: '${ pageContext.servletContext.contextPath }/bucket',
-				type: 'delete',
-				dataType: 'json',
-				data: JSON.stringify(list),
-				contentType: 'application/json',
-		       	success: function(response) {
-		       		if(response.data == true) {
-		       			location.reload();
-	       			}
-		       		return ;
-				},
-				error: function(jqXHR, status, e) {
-					console.error('[ERROR] ' + status + ': ' + e);
-				}
-			});
+// 			$.ajax({
+// 				url: '${ pageContext.servletContext.contextPath }/bucket',
+// 				type: 'post',
+// 				dataType: 'json',
+// 				data: JSON.stringify(paramMap),
+// 				contentType: 'application/json',
+// 		       	success: function(response) {
+// 		       		if(response.data == true) {
+// 		       			if(confirm('선택한 상품이 장바구니에 담겼습니다.\n장바구니를 확인하시겠습니까?')) {
+// 		       				window.location.href = '${ pageContext.servletContext.contextPath }/bucket';
+// 		       			}
+// 		       		} else {
+// 		       			alert('담기 실패!');
+// 		       		}
+// 				},
+// 				error: function(jqXHR, status, e) {
+// 					console.error('[ERROR] ' + status + ': ' + e);
+// 				}
+// 			});
 		}
 	</script>
 
@@ -180,7 +135,6 @@
 <body>
 	<!-- Navigation -->
 	<c:import url='/WEB-INF/views/includes/navigation.jsp'>
-		<c:param name="active" value="bucket" />
 	</c:import>
 	<!-- /.Navigation -->
 
@@ -207,7 +161,7 @@
 
 				<div class="card mt-4">
 					<div class="card-body">
-						<h3 class="card-title">장바구니</h3>
+						<h3 class="card-title">주문서 작성</h3>
 						<table class="table table-borderless" style="font-size: 0.8em;">
 							<tbody>
 								<tr>
@@ -244,8 +198,8 @@
 											<fmt:formatNumber value="${ item.sellPrice * item.quantity }" pattern="#,###" />원
 										</td>
 										<td class="text-center">
-											<button onclick="oneOrder(this);" style="font-size: 0.6em;" type="button" class="btn btn-sm btn-dark">주문하기</button><br>
-											<button onclick="oneDelete(this);" style="font-size: 0.6em;" type="button" class="btn btn-sm btn-light"><i class="fas fa-trash-alt"></i>&nbsp;삭제</button>
+											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-dark">주문하기</button><br>
+											<button style="font-size: 0.6em;" type="button" class="btn btn-sm btn-light"><i class="fas fa-trash-alt"></i>&nbsp;삭제</button>
 										</td>
 									</tr>
 									
@@ -276,12 +230,12 @@
 								<tr>
 									<td colspan="5" style="font-size: 0.9em;">
 										선택상품을&nbsp;
-										<button type="button" id="selectDelete" style="font-size: 0.9em;" class="btn btn-sm btn-light">
+										<button type="button" style="font-size: 0.9em;" class="btn btn-sm btn-light">
 											<i class="fas fa-trash-alt"></i>&nbsp;삭제
 										</button>
 									</td>
 									<td colspan="1" style="font-size: 0.9em;">
-										<button type="button" id="allDelete" style="font-size: 0.9em;" class="btn btn-sm btn-light">
+										<button type="button" style="font-size: 0.9em;" class="btn btn-sm btn-light">
 											<i class="fas fa-trash-alt"></i>&nbsp;장바구니 비우기
 										</button>
 									</td>
