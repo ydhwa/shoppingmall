@@ -342,6 +342,12 @@
 				return result;
 			}
 		}
+		
+		// 품목 정보 초기화
+		function deleteOptions() {
+			productOptionItemList = [];
+			$('#optionItemTable').empty();
+		}
 	</script>
 </head>
 <body>
@@ -691,7 +697,7 @@
 								<button type="button" class="btn btn-secondary btn-sm" onclick="makeOptions();">
 									옵션품목 만들기
 								</button>
-								<button type="button" class="btn btn-outline-secondary btn-sm">
+								<button type="button" class="btn btn-outline-secondary btn-sm" onclick="deleteOptions();">
 									품목정보 초기화
 								</button>
 							</div>
