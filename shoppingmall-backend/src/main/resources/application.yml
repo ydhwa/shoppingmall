@@ -7,6 +7,9 @@ server:
 
 
 spring:
+   application:
+      name: shoppingmall-backend
+
    profiles:
       active: developer
       
@@ -37,6 +40,14 @@ spring:
       always-use-message-format: true
       basename: messages/messages_ko
       encoding: UTF-8
+      
+   zipkin:
+      baseUrl: http://192.168.219.101:9411/
+      
+   sleuth:
+      enabled: true
+      sampler:
+         probability: 1
 
 
 mybatis:
