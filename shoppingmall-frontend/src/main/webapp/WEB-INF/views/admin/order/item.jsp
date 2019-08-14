@@ -81,7 +81,7 @@
 								</td>
 								<td>
 									<span style="font-weight: bold;">
-										<a href="${ pageContext.servletContext.contextPath }/product/${ item.productNo }">
+										<a href="${ pageContext.servletContext.contextPath }/admin/product/${ item.productNo }">
 											<c:out value="${ item.productName }" />
 										</a>
 									</span><br>

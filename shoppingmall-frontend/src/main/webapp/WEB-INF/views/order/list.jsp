@@ -73,7 +73,7 @@
 								<td><c:out value="${ order.ordersDate }" /></td>
 								<td><a href="${pageContext.servletContext.contextPath }/admin/order/${ order.ordersNo }"><c:out value="${ order.details }" /></a></td>
 								<td><fmt:formatNumber value="${ order.ordersTotalOrderAccount }" pattern="#,###" /></td>
-								<td><c:out value="${ order.status }" /></td>
+								<td><c:out value="${ order.ordersStatus }" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>

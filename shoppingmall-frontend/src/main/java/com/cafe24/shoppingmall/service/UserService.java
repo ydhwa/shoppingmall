@@ -48,10 +48,17 @@ public class UserService {
 		return result.getData().getNo();
 	}
 	
+	public User getUserByNo(Long memberNo) {
+		String endpoint = "http://localhost:8888/api/admin/members/" + memberNo;
+		JSONResultUserNo result = restTemplate.getForObject(endpoint, JSONResultUserNo.class);
+		
+		return result.getData();
+	}
+	
 	private static class JSONResultBoolean extends JSONResult<Boolean> {
 	}
 	private static class JSONResultUserList extends JSONResult<List<User>> {
 	}
 	private static class JSONResultUserNo extends JSONResult<User> {
 	}
- }
+}

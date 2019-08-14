@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.shoppingmall.dto.Category;
 import com.cafe24.shoppingmall.dto.JSONResult2;
+import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
+import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
 import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.dto.User;
@@ -115,5 +116,37 @@ public class AdminController {
 		model.addAttribute("product", product);
 
 		return "admin/product/item";
+	}
+	
+	@RequestMapping(value="/order", method=RequestMethod.GET)
+	public String adminOrderList(Model model, @RequestParam HashMap<String, String> paramMap) {
+		if(!paramMap.containsKey("offset")) {
+			paramMap.put("offset", "0");
+		} else if(!isInteger(paramMap.get("offset"))) {
+			paramMap.replace("offset", "0");
+		}
+		int offset = Integer.parseInt(paramMap.get("offset"));
+		
+		List<OrdersSummaryDto> orderList = productService.getOrderListAsAdmin(offset, PRODUCT_PER_PAGE, paramMap);
+		
+		model.addAttribute("orderSummaryList", orderList);
+		
+		return "admin/order/list";
+	}
+	
+	@RequestMapping(value="/order/{no}", method=RequestMethod.GET)
+	public String adminOrderDetails(Model model, @PathVariable("no") Optional<Long> no) {
+		if(!no.isPresent()) {
+			return "redirect:/admin";
+		}
+		OrdersDetailsDto order = productService.getOrderByNoAsAdmin(no.get());
+		model.addAttribute("order", order);
+		
+		if(order.getMemberNo() != null) {
+			User user = userService.getUserByNo(order.getMemberNo());
+			model.addAttribute("user", user);
+		}
+
+		return "admin/order/item";
 	}
 }

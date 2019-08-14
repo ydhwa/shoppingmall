@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult;
+import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
+import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
 import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
@@ -135,6 +137,23 @@ public class ProductService {
 		
 		return result.getData();
 	}
+	// 관리자 주문 목록 조회
+	public List<OrdersSummaryDto> getOrderListAsAdmin(int startIndex, int productPerPage, HashMap<String, String> paramMap) {
+		String endpoint = String.format("http://localhost:8888/api/admin/orders?offset=%d&limit=%d", startIndex, productPerPage);
+		
+		// 검색 조건 미생성
+		
+		JSONResultOrderSummaryListDto result = restTemplate.getForObject(endpoint, JSONResultOrderSummaryListDto.class);
+		
+		return result.getData();
+	}
+	// 관리자 주문 상세 조회
+	public OrdersDetailsDto getOrderByNoAsAdmin(Long no) {
+		String endpoint = "http://localhost:8888/api/admin/orders/" + no;
+		JSONResultOrderDetailsDto result = restTemplate.getForObject(endpoint, JSONResultOrderDetailsDto.class);
+		
+		return result.getData();
+	}
 	
 	private static class JSONResultProductList extends JSONResult<List<ProductSummary>> {
 	}
@@ -149,5 +168,9 @@ public class ProductService {
 	private static class JSONResultInteger extends JSONResult<Integer> {
 	}
 	private static class JSONResultString extends JSONResult<String> {
+	}
+	private static class JSONResultOrderSummaryListDto extends JSONResult<List<OrdersSummaryDto>> {
+	}
+	private static class JSONResultOrderDetailsDto extends JSONResult<OrdersDetailsDto> {
 	}
 }

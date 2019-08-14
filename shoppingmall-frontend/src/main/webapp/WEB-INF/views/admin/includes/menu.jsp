@@ -15,6 +15,9 @@
 					<a href="${ pageContext.servletContext.contextPath }/admin/bucket" class="list-group-item list-group-item-dark">
 						장바구니목록
 					</a>
+					<a href="${ pageContext.servletContext.contextPath }/admin/order" class="list-group-item list-group-item-dark">
+						주문목록
+					</a>
 				</div>
 			</div>
 
