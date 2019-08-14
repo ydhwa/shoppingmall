@@ -36,17 +36,28 @@
 	</style>
 </head>
 <body>
-	<!-- Navigation -->
+<!-- Navigation -->
 	<c:import url='/WEB-INF/views/includes/navigation.jsp'>
-		<c:param name="active" value="admin" />
 	</c:import>
 	<!-- /.Navigation -->
-	
+
+	<!-- Page Content -->
 	<div class="container">
-		<div class="row">
+		<div class="row" style="margin-bottom: 5%;">
 
-			<c:import url='/WEB-INF/views/admin/includes/menu.jsp' />
-
+			<div class="col-lg-3">
+				<a href="${pageContext.servletContext.contextPath }" style="color: black; text-decoration: none;"><h1 class="my-4" style="letter-spacing: 3px; font-family: consolas; text-transform: uppercase; text-align: center;">Shopping<br>Mall</h1></a>
+				<div class="list-group">
+					<c:forEach var="category" items="${ categories }">
+						<a href="${ pageContext.servletContext.contextPath }/list?categoryNo=${ category.no }" class="list-group-item" style="padding-left: ${ category.level * 15 + 20 }px;">
+							<c:if test="${ category.level > 0 }">
+								<img src="">
+							</c:if>
+							<c:out value="${ category.name }" />
+						</a>
+					</c:forEach>
+				</div>
+			</div>
 			<!-- /.col-lg-3 -->
 
 			<div class="col-lg-9">
@@ -71,7 +82,7 @@
 								<td><c:out value="${ order.ordersNo }" /></td>
 								<td><c:out value="${ order.ordersCode }" /></td>
 								<td><c:out value="${ order.ordersDate }" /></td>
-								<td><a href="${pageContext.servletContext.contextPath }/admin/order/${ order.ordersNo }"><c:out value="${ order.details }" /></a></td>
+								<td><a href="${pageContext.servletContext.contextPath }/order/member/view/${ order.ordersNo }"><c:out value="${ order.details }" /></a></td>
 								<td><fmt:formatNumber value="${ order.ordersTotalOrderAccount }" pattern="#,###" /></td>
 								<td><c:out value="${ order.ordersStatus }" /></td>
 							</tr>

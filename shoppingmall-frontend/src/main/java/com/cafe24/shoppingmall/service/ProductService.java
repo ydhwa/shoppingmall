@@ -3,6 +3,7 @@ package com.cafe24.shoppingmall.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -155,8 +156,26 @@ public class ProductService {
 		
 		return result.getData();
 	}
+	
+	// 비회원 주문 상세 조회
 	public OrdersDetailsDto getOrderAsNonMember(OrdersVo orderVo) {
 		String endpoint = "http://localhost:8888/api/orders/" + 0;
+		JSONResultOrderDetailsDto result = restTemplate.postForObject(endpoint, orderVo, JSONResultOrderDetailsDto.class);
+		
+		return result.getData();
+	}
+	
+	// 회원 주문 목록 조회
+	public List<OrdersSummaryDto> getOrderList(Long no, int startPage, int productPerPage) {
+		String endpoint = "http://localhost:8888/api/orders/members/" + no + "?offset=" + startPage + "&limit=" + productPerPage;
+		JSONResultOrderSummaryListDto result = restTemplate.getForObject(endpoint, JSONResultOrderSummaryListDto.class);
+		
+		return result.getData();
+	}
+	// 회원 주문 상세 조회
+	public OrdersDetailsDto getOrderAsMember(Long no, OrdersVo orderVo) {
+		String endpoint = "http://localhost:8888/api/orders/" + no;
+		orderVo.setMemberStatus("Y");
 		JSONResultOrderDetailsDto result = restTemplate.postForObject(endpoint, orderVo, JSONResultOrderDetailsDto.class);
 		
 		return result.getData();
