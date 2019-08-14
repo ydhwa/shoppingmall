@@ -71,6 +71,9 @@
 							</li>
 						</c:otherwise>
 					</c:choose>
+					<li class="nav-item">
+						<a class="nav-link" href="${pageContext.servletContext.contextPath }/order/non-member">주문조회(비회원)</a>
+					</li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<c:choose>
@@ -87,6 +90,9 @@
 					</c:choose>
 					<li class="nav-item">
 						<a class="nav-link" href="${pageContext.servletContext.contextPath }/user/logout">로그아웃</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="${pageContext.servletContext.contextPath }/order/member">주문목록조회</a>
 					</li>
 				</sec:authorize>
 				

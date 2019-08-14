@@ -274,7 +274,7 @@
 	
 	<select id="getToAdmin" parameterType="long" resultType="ordersdetailsdto">
 		<![CDATA[
-			select * 
+			select no, code, to_char(date, 'YYYY-MM-DD HH24:mm:ss') as date, memo, status, orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address, receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address, total_order_account, member_no
 			from orders 
 			where no = #{ value };
 		]]>
