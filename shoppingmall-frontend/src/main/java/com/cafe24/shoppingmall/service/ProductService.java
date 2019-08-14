@@ -20,6 +20,7 @@ import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
 import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
+import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 
 @Service
@@ -151,6 +152,12 @@ public class ProductService {
 	public OrdersDetailsDto getOrderByNoAsAdmin(Long no) {
 		String endpoint = "http://localhost:8888/api/admin/orders/" + no;
 		JSONResultOrderDetailsDto result = restTemplate.getForObject(endpoint, JSONResultOrderDetailsDto.class);
+		
+		return result.getData();
+	}
+	public OrdersDetailsDto getOrderAsNonMember(OrdersVo orderVo) {
+		String endpoint = "http://localhost:8888/api/orders/" + 0;
+		JSONResultOrderDetailsDto result = restTemplate.postForObject(endpoint, orderVo, JSONResultOrderDetailsDto.class);
 		
 		return result.getData();
 	}

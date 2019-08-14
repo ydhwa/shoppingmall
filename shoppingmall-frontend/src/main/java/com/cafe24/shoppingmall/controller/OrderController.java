@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult2;
+import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
 import com.cafe24.shoppingmall.service.ProductService;
+import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -52,9 +55,16 @@ public class OrderController {
 		}
 	}
 	
-	@RequestMapping(value="/result", method=RequestMethod.GET)
+	@RequestMapping(value="/non-member", method=RequestMethod.GET)
 	public String orderResult() {
 		
-		return "order/orderresult";
+		return "order/certification";
+	}
+	@RequestMapping(value="/non-member", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public String orderCertificate(Model model, OrdersVo ordersVo) {
+		OrdersDetailsDto order = productService.getOrderAsNonMember(ordersVo);
+		model.addAttribute("order", order);
+		
+		return "order/item";
 	}
 }

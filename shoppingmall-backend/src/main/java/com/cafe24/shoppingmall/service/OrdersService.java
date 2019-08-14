@@ -103,4 +103,8 @@ public class OrdersService {
 	public Boolean modifyOrderStatusToAdmin(OrdersVo ordersVo) {
 		return ordersDao.modifyStatusToAdmin(ordersVo);
 	}
+
+	public Long getOrdersNoByOrdersCode(String code) {
+		return ordersDao.getNoByCode(code);
+	}
 }

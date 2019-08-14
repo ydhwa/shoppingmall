@@ -100,6 +100,11 @@ public class OrdersController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(JSONResult.failure("주문 상세 조회에 실패했습니다."));
 		}
 		
+		if(no.get() == 0L) {
+			Long newPathNo = ordersService.getOrdersNoByOrdersCode(ordersVo.getCode());
+			no = Optional.of(newPathNo);
+		}
+		
 		OrdersDetailsDto orderResult = ordersService.showOrdersDetails(no.get(), ordersVo);
 
 		return ResponseEntity.status(HttpStatus.OK).body(JSONResult.success(orderResult));

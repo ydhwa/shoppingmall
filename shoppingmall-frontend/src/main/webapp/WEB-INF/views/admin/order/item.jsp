@@ -90,13 +90,13 @@
 									</span>
 								</td>
 								<td>
-									<fmt:formatNumber value="${ item.sellPrice }" pattern="#,###" />원
+									<fmt:formatNumber value="${ item.sellPrice / item.quantity }" pattern="#,###" />원
 								</td>
 								<td style="max-width: 100px;">
 									<c:out value="${ item.quantity }" />
 								</td>
 								<td>
-									<fmt:formatNumber value="${ item.sellPrice * item.quantity }" pattern="#,###" />원
+									<fmt:formatNumber value="${ item.sellPrice }" pattern="#,###" />원
 								</td>
 							</tr>
 						</c:forEach>

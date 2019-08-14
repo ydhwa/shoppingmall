@@ -98,4 +98,7 @@ public class OrdersDao {
 	public String getRecentCode() {
 		return sqlSession.selectOne("orders.getRecentCode");
 	}
+	public Long getNoByCode(String code) {
+		return sqlSession.selectOne("orders.getNoByCode", code);
+	}
 }

@@ -128,17 +128,17 @@
 			select no, code, to_char(date, 'YYYY-MM-DD HH24:mm:ss') as date, memo, status, orderer_name, orderer_home_number, orderer_phone_number, orderer_email, orderer_postal_code, orderer_base_address, orderer_detail_address, receiver_name, receiver_home_number, receiver_phone_number, receiver_postal_code, receiver_base_address, receiver_detail_address, total_order_account
 			from orders
 			where 
+				no = #{ no }
 		]]>
 		<choose>
 			<when test='orders.memberStatus == "Y"'>
 				<![CDATA[
-					no = #{ no }
 					and member_no = #{ orders.memberNo };
 				]]>
 			</when>
 			<otherwise>
 				<![CDATA[
-					code = #{ code }
+					and code = #{ orders.code }
 					and password = encode(digest('${ orders.password }', 'sha512'), 'hex');
 				]]>
 			</otherwise>
@@ -303,6 +303,14 @@
 			select code
 			from orders
 			where no = currval('seq_orders_no');
+		]]>
+	</select>
+	
+	<select id="getNoByCode" resultType="long" parameterType="string">
+		<![CDATA[
+			select no
+			from orders
+			where code = #{ value };
 		]]>
 	</select>
 	
