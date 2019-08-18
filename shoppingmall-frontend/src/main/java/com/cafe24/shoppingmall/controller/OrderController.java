@@ -21,7 +21,6 @@ import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
 import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
-import com.cafe24.shoppingmall.service.BucketService;
 import com.cafe24.shoppingmall.service.OrderService;
 import com.cafe24.shoppingmall.service.UserService;
 import com.cafe24.shoppingmall.vo.OrdersVo;
@@ -38,8 +37,6 @@ public class OrderController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private BucketService bucketService;
-	@Autowired
 	private OrderService orderService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
@@ -48,7 +45,11 @@ public class OrderController {
 		List<BucketItem> orderList = mapper.readValue(listStr, new TypeReference<List<BucketItem>>(){});
 		model.addAttribute("orderList", orderList);
 		
-		Integer totalPrice = bucketService.getBucketTotalPrice(orderList.get(0).getMemberNo(), orderList.get(0).getIdentifier());
+		int totalPrice = 0;
+		for(BucketItem bucketItem: orderList) {
+			totalPrice += (bucketItem.getSellPrice() * bucketItem.getQuantity());
+		}
+		
 		model.addAttribute("totalPrice", totalPrice);
 		
 		return "order/orderform";
