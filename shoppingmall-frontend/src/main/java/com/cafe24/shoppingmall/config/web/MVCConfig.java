@@ -47,36 +47,36 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
-			.indentOutput( true )
-			.dateFormat(new SimpleDateFormat("yyyy-MM-dd"))
-			.modulesToInstall(new ParameterNamesModule() );
-		
+				.indentOutput( true )
+				.dateFormat(new SimpleDateFormat("yyyy-MM-dd"))
+				.modulesToInstall(new ParameterNamesModule() );
+
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(builder.build());  		
 		converter.setSupportedMediaTypes(Arrays.asList(new MediaType("application", "json", Charset.forName("UTF-8"))));	
 
 		return converter;		
 	}
-	
+
 	@Bean
 	public StringHttpMessageConverter  stringHttpMessageConverter() {
 		StringHttpMessageConverter converter = new StringHttpMessageConverter();
 		converter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "html", Charset.forName("UTF-8"))));	
-		
+
 		return converter;
 	}
-	
+
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(mappingJackson2HttpMessageConverter());
 		converters.add(stringHttpMessageConverter());
 	}
-	
+
 	// Argument Resolver
 	@Bean
 	public AuthUserHandlerMethodArgumentResolver authUserHandlerMethodArgumentResolver() {
 		return new AuthUserHandlerMethodArgumentResolver();
 	}
-	
+
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		argumentResolvers.add(authUserHandlerMethodArgumentResolver());
