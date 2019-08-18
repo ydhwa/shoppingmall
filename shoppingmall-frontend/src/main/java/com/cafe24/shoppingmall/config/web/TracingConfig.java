@@ -38,7 +38,7 @@ public class TracingConfig extends WebMvcConfigurerAdapter {
 
 	/** Configuration for how to send spans to Zipkin */
 	@Bean Sender sender() {
-		return OkHttpSender.create("http://192.168.219.101:9411/");
+		return OkHttpSender.create("http://192.168.219.101:9411/api/v2/spans");
 	}
 
 	/** Configuration for how to buffer spans into messages for Zipkin */

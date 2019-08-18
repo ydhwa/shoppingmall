@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Import;
 
 import com.cafe24.shoppingmall.config.web.FileUploadConfig;
 import com.cafe24.shoppingmall.config.web.MVCConfig;
-import com.cafe24.shoppingmall.config.web.TracingConfig;
 
 @Configuration
 @EnableAspectJAutoProxy
