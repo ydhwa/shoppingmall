@@ -21,7 +21,8 @@ import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.dto.OrdersDetailsDto;
 import com.cafe24.shoppingmall.dto.OrdersSummaryDto;
-import com.cafe24.shoppingmall.service.ProductService;
+import com.cafe24.shoppingmall.service.BucketService;
+import com.cafe24.shoppingmall.service.OrderService;
 import com.cafe24.shoppingmall.service.UserService;
 import com.cafe24.shoppingmall.vo.OrdersVo;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -35,10 +36,11 @@ public class OrderController {
 	private final static int PRODUCT_PER_PAGE = 10000000;
 	
 	@Autowired
-	private ProductService productService;
-	
-	@Autowired
 	private UserService userService;
+	@Autowired
+	private BucketService bucketService;
+	@Autowired
+	private OrderService orderService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String orderItems(Model model, @RequestParam("listStr") String listStr) throws JsonParseException, JsonMappingException, IOException {
@@ -46,7 +48,7 @@ public class OrderController {
 		List<BucketItem> orderList = mapper.readValue(listStr, new TypeReference<List<BucketItem>>(){});
 		model.addAttribute("orderList", orderList);
 		
-		Integer totalPrice = productService.getBucketToalPrice(orderList.get(0).getMemberNo(), orderList.get(0).getIdentifier());
+		Integer totalPrice = bucketService.getBucketTotalPrice(orderList.get(0).getMemberNo(), orderList.get(0).getIdentifier());
 		model.addAttribute("totalPrice", totalPrice);
 		
 		return "order/orderform";
@@ -55,7 +57,7 @@ public class OrderController {
 	@ResponseBody
 	@RequestMapping(value="/regist", method=RequestMethod.POST)
 	public JSONResult2 registOrder(@RequestBody Map<String, Object> paramMap) {
-		String result = productService.registOrder(paramMap);
+		String result = orderService.registOrder(paramMap);
 		
 		if(result != null) {
 			return JSONResult2.success(result);
@@ -71,7 +73,7 @@ public class OrderController {
 	}
 	@RequestMapping(value="/non-member", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String orderCertificate(Model model, OrdersVo ordersVo) {
-		OrdersDetailsDto order = productService.getOrderAsNonMember(ordersVo);
+		OrdersDetailsDto order = orderService.getOrderAsNonMember(ordersVo);
 		model.addAttribute("order", order);
 		
 		return "order/item";
@@ -86,7 +88,7 @@ public class OrderController {
 		}
 		int offset = Integer.parseInt(paramMap.get("offset"));
 		
-		List<OrdersSummaryDto> orderList = productService.getOrderList(userService.getUserNo(principal.getName()), offset, PRODUCT_PER_PAGE);
+		List<OrdersSummaryDto> orderList = orderService.getOrderList(userService.getUserNo(principal.getName()), offset, PRODUCT_PER_PAGE);
 		
 		model.addAttribute("orderSummaryList", orderList);
 		
@@ -109,7 +111,7 @@ public class OrderController {
 
 		OrdersVo ordersVo = new OrdersVo();
 		ordersVo.setMemberNo(userService.getUserNo(principal.getName()));
-		OrdersDetailsDto order = productService.getOrderAsMember(no.get(), ordersVo);
+		OrdersDetailsDto order = orderService.getOrderAsMember(no.get(), ordersVo);
 		
 		model.addAttribute("order", order);
 		

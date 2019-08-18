@@ -23,6 +23,7 @@ import com.cafe24.shoppingmall.dto.ProductDetails;
 import com.cafe24.shoppingmall.dto.ProductSummary;
 import com.cafe24.shoppingmall.dto.User;
 import com.cafe24.shoppingmall.service.CategoryService;
+import com.cafe24.shoppingmall.service.OrderService;
 import com.cafe24.shoppingmall.service.ProductService;
 import com.cafe24.shoppingmall.service.UserService;
 
@@ -36,6 +37,8 @@ public class AdminController {
 	private ProductService productService;
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private OrderService orderService;
 	
 	private static final int PRODUCT_PER_PAGE = 1000000;
 
@@ -127,7 +130,7 @@ public class AdminController {
 		}
 		int offset = Integer.parseInt(paramMap.get("offset"));
 		
-		List<OrdersSummaryDto> orderList = productService.getOrderListAsAdmin(offset, PRODUCT_PER_PAGE, paramMap);
+		List<OrdersSummaryDto> orderList = orderService.getOrderListAsAdmin(offset, PRODUCT_PER_PAGE, paramMap);
 		
 		model.addAttribute("orderSummaryList", orderList);
 		
@@ -139,7 +142,7 @@ public class AdminController {
 		if(!no.isPresent()) {
 			return "redirect:/admin";
 		}
-		OrdersDetailsDto order = productService.getOrderByNoAsAdmin(no.get());
+		OrdersDetailsDto order = orderService.getOrderByNoAsAdmin(no.get());
 		model.addAttribute("order", order);
 		
 		if(order.getMemberNo() != null) {

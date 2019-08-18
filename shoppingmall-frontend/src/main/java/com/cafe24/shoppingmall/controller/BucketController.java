@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cafe24.shoppingmall.dto.BucketItem;
 import com.cafe24.shoppingmall.dto.JSONResult2;
-import com.cafe24.shoppingmall.service.ProductService;
+import com.cafe24.shoppingmall.service.BucketService;
 import com.cafe24.shoppingmall.service.UserService;
 import com.cafe24.shoppingmall.vo.BucketItemVo;
 
@@ -26,12 +26,12 @@ public class BucketController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private ProductService productService;
+	private BucketService bucketService;
 	
 	@ResponseBody
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public JSONResult2 registBucket(@RequestBody Map<String, Object> bucketList) {
-		Boolean result = productService.registBucket(bucketList);
+		Boolean result = bucketService.registBucket(bucketList);
 		
 		return JSONResult2.success(result);
 	}
@@ -45,17 +45,17 @@ public class BucketController {
 		// 장바구니 식별자
 		if(principal != null) {	// 회원일 때
 			memberNo = userService.getUserNo(principal.getName());
-			List<BucketItem> bucketList = productService.getMemberBucketList(memberNo);
+			List<BucketItem> bucketList = bucketService.getMemberBucketList(memberNo);
 			model.addAttribute("bucketList", bucketList);
 		} else {				// 비회원일 때
 			if(identifier == null) {
 				identifier = "111111111";
 			}
-			List<BucketItem> bucketList = productService.getNonMemberBucketList(identifier);
+			List<BucketItem> bucketList = bucketService.getNonMemberBucketList(identifier);
 			model.addAttribute("bucketList", bucketList);
 		}
 		
-		Integer totalPrice = productService.getBucketToalPrice(memberNo, identifier);
+		Integer totalPrice = bucketService.getBucketTotalPrice(memberNo, identifier);
 		model.addAttribute("totalPrice", totalPrice);
 		
 		return "/bucket/list";
@@ -71,7 +71,7 @@ public class BucketController {
 			bucketItemVo.setIdentifier("111111111");
 		}
 		
-		Boolean result = productService.modifyBucket(bucketItemVo);
+		Boolean result = bucketService.modifyBucket(bucketItemVo);
 		
 		return JSONResult2.success(result);
 	}
@@ -88,7 +88,7 @@ public class BucketController {
 			}
 		}
 		
-		Boolean result = productService.deleteBucketList(bucketList);
+		Boolean result = bucketService.deleteBucketList(bucketList);
 		
 		return JSONResult2.success(result);
 	}
