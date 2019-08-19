@@ -12,30 +12,19 @@ public class ProductImageVo {
 	private String extension;			// 확장자명
 	private String path;				// 저장경로
 	
-	private String base64EncodingData;	// BASE64 인코딩 데이터
-	
-	public String getBase64EncodingData() {
-		return base64EncodingData;
-	}
-	public void setBase64EncodingData(String base64EncodingData) {
-		this.base64EncodingData = base64EncodingData;
-	}
-
 	private String status;	// 상품 이미지 상태(메인, 서브, ...)
 	
 	public ProductImageVo() {}
-	public ProductImageVo(String name, String extension, String path, String status) {
+	public ProductImageVo(String name, String extension, String path) {
 		this.name = name;
 		this.extension = extension;
 		this.path = path;
-		this.status = status;
 	}
-	public ProductImageVo(Long productNo, String name, String extension, String path, String status) {
+	public ProductImageVo(Long productNo, String name, String extension, String path) {
 		this.productNo = productNo;
 		this.name = name;
 		this.extension = extension;
 		this.path = path;
-		this.status = status;
 	}
 
 	public Long getProductNo() {

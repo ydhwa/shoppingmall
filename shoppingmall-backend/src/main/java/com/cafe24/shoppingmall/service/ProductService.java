@@ -16,6 +16,7 @@ import com.cafe24.shoppingmall.repository.OrdersDao;
 import com.cafe24.shoppingmall.repository.ProductDao;
 import com.cafe24.shoppingmall.repository.ProductOptionDao;
 import com.cafe24.shoppingmall.vo.CategoryVo;
+import com.cafe24.shoppingmall.vo.Enum.ProductImageStatus;
 import com.cafe24.shoppingmall.vo.ProductImageVo;
 import com.cafe24.shoppingmall.vo.ProductOptionItemVo;
 import com.cafe24.shoppingmall.vo.ProductOptionVo;
@@ -64,8 +65,14 @@ public class ProductService {
 			return false;
 		}
 		// 5. 상품 이미지 정보가 있다면 상품 이미지 정보를 등록한다.
-		if(productImageList != null && !productDao.insertImages(productImageList)) {
-			return false;
+		if(productImageList != null) {
+			for(ProductImageVo productImage: productImageList) {
+				productImage.setStatus(ProductImageStatus.MAIN);
+			}
+				
+			if(!productDao.insertImages(productImageList)) {
+				return false;
+			}
 		}
 
 		return true;

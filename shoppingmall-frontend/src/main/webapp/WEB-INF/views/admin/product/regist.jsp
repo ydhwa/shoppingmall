@@ -493,7 +493,6 @@
 	}
 	
 	function selectFile(files) {
-		console.log(files);
 		if(files != null) {
 			for(var i = 0; i < files.length; i++) {
 				var fileFullName = files[i].name;
@@ -505,9 +504,9 @@
                 if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml']) >= 0) {
 					alert('등록 불가 확장자');
 					break;
-                } else if(fileSize > uploadSize) {
-                	alert('용량 초과\n업로드 가능 용량: ' +  uploadSize + ' MB');
-                	break;
+//                 } else if(fileSize > uploadSize) {
+//                 	alert('용량 초과\n업로드 가능 용량: ' +  uploadSize + ' MB');
+//                 	break;
                 } else {
                 	totalFileSize += fileSize;
                 	fileList[fileIndex] = files[i];
@@ -541,6 +540,7 @@
 	
 	function uploadFile() {
 		var uploadFileList = Object.keys(fileList);
+		console.log(fileList);
 		
 		if(uploadFileList.length == 0) {
 			return ;
@@ -560,7 +560,7 @@
 			}
 			
 			$.ajax({
-				url: '',
+				url: '${ pageContext.servletContext.contextPath }/admin/file/upload',
 				data: formData,
 				type: 'post',
 				enctype: 'multipart/form-data',
@@ -570,6 +570,10 @@
 				cache: false,
 				success: function(result) {
 					if(result.data.length> 0) {
+						for(var i = 0; i < result.data.length; i++) {
+							productImageList.push(result.data[i]);
+						}
+						console.log(productImageList);
 						alert('성공');
 					} else {
 						alert('실패');

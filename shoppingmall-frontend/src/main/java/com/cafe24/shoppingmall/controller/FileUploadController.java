@@ -2,16 +2,19 @@ package com.cafe24.shoppingmall.controller;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.shoppingmall.dto.JSONResult2;
 import com.cafe24.shoppingmall.vo.ProductImageVo;
@@ -21,40 +24,51 @@ import com.cafe24.shoppingmall.vo.ProductImageVo;
 public class FileUploadController {
 	private static final String SAVE_IMAGE_PATH = "/shoppingmall-uploads/";
 	private static final String IMAGE_URL = "/assets/images/";
-	
+
+
+
 	@RequestMapping(method=RequestMethod.POST, value="")
-	public ResponseEntity<JSONResult2> uploadImageBase64(@RequestBody ProductImageVo productImageVo) {
-		System.out.println(productImageVo);
-		
-		FileOutputStream fileOutputStream = null;
-		
+	public ResponseEntity<JSONResult2> uploadImages(
+			MultipartFile[] files,
+			Model model) {
+
+		String url = "";
+		List<ProductImageVo> imageList = new ArrayList<>();
+
 		try {
-			byte[] imgBytes = Base64.decodeBase64(productImageVo.getBase64EncodingData());
-			String fileName = generateSaveFileName(productImageVo.getName());
-			
-			fileOutputStream = new FileOutputStream(SAVE_IMAGE_PATH + fileName);
-			fileOutputStream.write(imgBytes);
-			
-			productImageVo.setPath(IMAGE_URL + fileName);
-			
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.OK).body(JSONResult2.fail("파일 업로드 에러"));
-		} finally {
-			if(fileOutputStream != null) {
-				try {
-					fileOutputStream.close();
-				} catch (IOException e) {
-					return ResponseEntity.status(HttpStatus.OK).body(JSONResult2.fail("fileOutputStream close error!!"));
+			for(MultipartFile multipartFile: files) {
+				if (multipartFile.isEmpty()) {
+					ResponseEntity.status(HttpStatus.OK).body(JSONResult2.fail(url));
 				}
+
+				String originalFileName = multipartFile.getOriginalFilename();
+				String extName = originalFileName.substring(originalFileName.lastIndexOf('.') + 1);
+				String saveFileName = generateSaveFileName(extName);
+
+//				System.out.printf("########### %s\n########### %s\n########### %s\n########### %d\n",
+//						originalFileName, extName, saveFileName, fileSize);
+				
+				ProductImageVo productImageVo = new ProductImageVo(saveFileName, extName, IMAGE_URL);
+				imageList.add(productImageVo);
+
+				byte[] fileData = multipartFile.getBytes();
+				OutputStream os = new FileOutputStream(SAVE_IMAGE_PATH + "/" + saveFileName + "." + extName);
+				os.write(fileData);
+				os.close();
+
+				url = IMAGE_URL + "/" + saveFileName;
 			}
+
+		} catch (IOException e) {
+			throw new RuntimeException("Fileupload ERROR: " + e);
 		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(JSONResult2.success(productImageVo));
+
+		return ResponseEntity.status(HttpStatus.OK).body(JSONResult2.success(imageList));
 	}
 
 	private String generateSaveFileName(String extName) {
 		Calendar calendar = Calendar.getInstance();
-		String filename = String.format("%s%s%s%s%s%s%s%s.%s", 
+		String filename = String.format("%s%s%s%s%s%s%s%s", 
 				calendar.get(Calendar.YEAR), 
 				calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DATE),
@@ -62,8 +76,7 @@ public class FileUploadController {
 				calendar.get(Calendar.MINUTE),
 				calendar.get(Calendar.SECOND),
 				calendar.get(Calendar.MILLISECOND),
-				UUID.randomUUID().toString(),	// 동시에 다른 사용자가 파일 업로드를 진행할 수 있으므로
-				extName);
+				UUID.randomUUID().toString()).replace("-", "");
 
 		return filename;
 	}
