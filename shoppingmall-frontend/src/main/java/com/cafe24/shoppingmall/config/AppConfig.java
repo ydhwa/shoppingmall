@@ -12,7 +12,7 @@ import com.cafe24.shoppingmall.config.web.TracingConfig;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({ "com.cafe24.shoppingmall.controller", "com.cafe24.shoppingmall.security", "com.cafe24.shoppingmall.service", "com.cafe24.shoppingmall.repository", "com.cafe24.shoppingmall.aspect" })
+@ComponentScan({ "com.cafe24.shoppingmall.security", "com.cafe24.shoppingmall.service", "com.cafe24.shoppingmall.repository", "com.cafe24.shoppingmall.aspect" })
 @Import({ AppSecurityConfig.class, OAuth2ClientConfig.class, TracingConfig.class, MVCConfig.class })
 public class AppConfig {
 }

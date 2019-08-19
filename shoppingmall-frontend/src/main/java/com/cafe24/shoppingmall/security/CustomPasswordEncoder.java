@@ -2,7 +2,6 @@ package com.cafe24.shoppingmall.security;
 
 import java.security.MessageDigest;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class CustomPasswordEncoder implements PasswordEncoder {

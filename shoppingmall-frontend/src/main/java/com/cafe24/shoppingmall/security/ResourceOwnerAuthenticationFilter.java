@@ -1,7 +1,5 @@
 package com.cafe24.shoppingmall.security;
 
-import java.security.MessageDigest;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
