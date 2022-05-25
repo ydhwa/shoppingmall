@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<org.springframework-version>4.3.1.RELEASE</org.springframework-version>
-		<org.springsecurity-version>4.2.0.RELEASE</org.springsecurity-version>
+		<org.springsecurity-version>5.5.7</org.springsecurity-version>
 		<jcloverslf4j.version>1.7.6</jcloverslf4j.version>
 		<logback.version>1.1.1</logback.version>
 		<log4j.version>2.11.2</log4j.version>
